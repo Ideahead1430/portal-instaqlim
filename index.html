@@ -532,10 +532,10 @@
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ 
-            action, 
-            ...payload,
-                   });
+         body: JSON.stringify({
+  action,
+  ...payload
+})
         
         // Periksa jika respons adalah HTML (mungkin halaman ralat)
         const contentType = res.headers.get('content-type');
@@ -1891,5 +1891,6 @@
   </script>
 </body>
 </html>
+
 
 
