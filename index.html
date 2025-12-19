@@ -1490,94 +1490,63 @@
     }
   }
 
-  // === LAPORAN MENGAJAR ===
-  async function loadTeachingReports() {
-    try {
-      const res = await apiCall('getTeachingReports');
-      const reports = res.reports || [];
-      saveLocalData('getTeachingReports', res);
-      renderTeachingReports(reports);
-    } catch (e) {
-      const res = getLocalData('getTeachingReports');
-      if (res) {
-        renderTeachingReports(res.reports || []);
-        showToast('Menggunakan data tempatan', 'warning');
+ // === LAPORAN MENGAJAR ===
+async function loadTeachingReports() {
+  try {
+    const res = await apiCall('getTeachingReports');
+    let reports = res.reports || [];
+    saveLocalData('getTeachingReports', res);
+
+    // Jika pengguna Guru, filter laporan miliknya sahaja
+    if (currentUser && currentUser.role !== 'admin') {
+      reports = reports.filter(r => r.teacherId === currentUser.id || r.teacher === currentUser.name);
+    }
+
+    renderTeachingReports(reports);
+  } catch (e) {
+    console.error('Error loading teaching reports:', e);
+    const localRes = getLocalData('getTeachingReports');
+    if (localRes && localRes.reports) {
+      let reports = localRes.reports;
+      if (currentUser && currentUser.role !== 'admin') {
+        reports = reports.filter(r => r.teacherId === currentUser.id || r.teacher === currentUser.name);
       }
-    }
-  }
-
-  function renderTeachingReports(reports) {
-    document.getElementById('printDate').textContent = new Date().toLocaleDateString('ms-MY');
-    const tbody = document.querySelector('#teachingReportTable tbody');
-    tbody.innerHTML = '';
-    reports.forEach((r, index) => {
-      tbody.innerHTML += `
-        <tr>
-          <td>${index + 1}</td>
-          <td>${r.teacher}</td>
-          <td>${r.date}</td>
-          <td>${r.class}</td>
-          <td>${r.topic}</td>
-          <td>${r.notes}</td>
-          <td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat</a>` : '-'}</td>
-        </tr>`;
-    });
-  }
-
-  async function saveTeachingReport() {
-    const report = {
-      date: document.getElementById('reportDate').value,
-      class: document.getElementById('reportClass').value,
-      topic: document.getElementById('reportTopic').value.trim(),
-      notes: document.getElementById('reportNotes').value.trim(),
-      teacher: currentUser.name,
-      teacherId: currentUser.id
-    };
-  
-    if (!report.date || !report.class || !report.topic || !report.notes) {
-      return showToast('Isi semua medan', 'error');
-    }
-  
-    try {
-      await apiCall('addTeachingReport', report);
-      showToast('Laporan berjaya dihantar');
-      // Kosongkan form
-      document.getElementById('reportDate').value = '';
-      document.getElementById('reportClass').value = '';
-      document.getElementById('reportTopic').value = '';
-      document.getElementById('reportNotes').value = '';
-      document.getElementById('reportAttachment').value = '';
-      document.getElementById('attachmentPreview').innerHTML = '';
-    } catch (e) {
-      showToast(e.message, 'error');
-    }
-  }
-
-  window.onload = () => {
-    const theme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', theme);
-    document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-  
-    const today = new Date().toISOString().slice(0,10);
-    const attendanceDateInput = document.getElementById('attendanceDate');
-    if (attendanceDateInput) attendanceDateInput.value = today;
-  
-    const reportDateInput = document.getElementById('reportDate');
-    if (reportDateInput) reportDateInput.value = today;
-  
-    const savedPendingOperations = localStorage.getItem('pendingOperations');
-    if (savedPendingOperations) {
-      pendingOperations = JSON.parse(savedPendingOperations);
-    }
-  
-    if (navigator.onLine) {
-      isOnline = true;
-      if (pendingOperations.length > 0) syncPendingOperations();
+      renderTeachingReports(reports);
+      showToast('Menggunakan data tempatan', 'warning');
     } else {
-      isOnline = false;
+      renderTeachingReports([]);
+      showToast('Tiada laporan dijumpai', 'warning');
     }
-  };
+  }
+}
+
+function renderTeachingReports(reports) {
+  document.getElementById('printDate').textContent = new Date().toLocaleDateString('ms-MY');
+
+  const tbody = document.querySelector('#teachingReportTable tbody');
+  tbody.innerHTML = '';
+
+  if (reports.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" class="text-center">Tiada laporan dijumpai</td></tr>';
+    return;
+  }
+
+  reports.forEach((r, index) => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${r.teacher || 'Tiada Nama'}</td>
+        <td>${r.date || '-'}</td>
+        <td>${r.class || '-'}</td>
+        <td>${r.topic || '-'}</td>
+        <td>${r.notes || '-'}</td>
+        <td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : '-'}</td>
+      </tr>`;
+    });
+  });
+}
 </script>
 </body>
 </html>
+
 
