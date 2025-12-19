@@ -951,7 +951,7 @@
       students.forEach(s => {
         tbody.innerHTML += `
           <tr>
-            <td>${s.id}</td><td>${s.name}</td><td>${s.ic}</td><td>${s.class}</td><td>${s.guardian}</td><td>${s.guardian_phone}</td>
+            <td>${s.id}</td><td>${s.name}</td><td>${s.ic}</td><td>${s.class}</td><td>${s.}</td><td>${s._phone}</td>
             <td>
               <button class="btn btn-edit" onclick="editStudent('${s.id}')">Kemaskini</button>
               <button class="btn btn-danger" onclick="deleteStudent('${s.id}')">Padam</button>
@@ -966,8 +966,8 @@
         <div class="form-group"><label>Nama</label><input type="text" id="s_name" required></div>
         <div class="form-group"><label>No. KP</label><input type="text" id="s_ic" required></div>
         <div class="form-group"><label>Kelas</label><select id="s_class" required><option value="">Pilih Kelas</option></select></div>
-        <div class="form-group"><label>Nama Wali</label><input type="text" id="s_guardian" required></div>
-        <div class="form-group"><label>No. HP Wali</label><input type="text" id="s_guardian_phone" required></div>
+        <div class="form-group"><label>Nama Wali</label><input type="text" id="s_" required></div>
+        <div class="form-group"><label>No. HP Wali</label><input type="text" id="s__phone" required></div>
         <input type="hidden" id="s_id">
       `;
       
@@ -993,7 +993,7 @@
         ic: document.getElementById('s_ic').value.trim(),
         class: document.getElementById('s_class').value,
         guardian: document.getElementById('s_guardian').value.trim(),
-        guardian_phone: document.getElementById('s_guardian_phone').value.trim()
+        guardianphone: document.getElementById('s_guardian_phone').value.trim()
       };
       
       // Jika pelajar baru, jana ID sebagai teks
@@ -1888,6 +1888,7 @@
   </script>
 </body>
 </html>
+
 
 
 
