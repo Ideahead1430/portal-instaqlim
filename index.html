@@ -513,10 +513,7 @@
   <script>
     // URL API Netlify Functions
     const API_URL = 'https://script.google.com/macros/s/AKfycbyZE4UFh7V5V7Wak2chMN1Kz3kJjfXif_LRGlLkrweiC3X8qloJ-tjMhhJgb-uqHmsJ/exec';
-    
-    // URL Google Apps Script untuk kegunaan rujukan
-    const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyZE4UFh7V5V7Wak2chMN1Kz3kJjfXif_LRGlLkrweiC3X8qloJ-tjMhhJgb-uqHmsJ/exec';
-
+       
     let currentUser = null;
     let currentSection = '';
     let classes = [], students = [], teachers = [], staff = [], users = [], schedule = Array(5).fill().map(() => Array(5).fill(''));
@@ -538,10 +535,7 @@
           body: JSON.stringify({ 
             action, 
             ...payload,
-            // Sertakan URL Google Apps Script sebagai parameter
-            googleAppsScriptUrl: https://script.google.com/macros/s/AKfycbyZE4UFh7V5V7Wak2chMN1Kz3kJjfXif_LRGlLkrweiC3X8qloJ-tjMhhJgb-uqHmsJ/exec
-          })
-        });
+                   });
         
         // Periksa jika respons adalah HTML (mungkin halaman ralat)
         const contentType = res.headers.get('content-type');
@@ -1897,4 +1891,5 @@
   </script>
 </body>
 </html>
+
 
