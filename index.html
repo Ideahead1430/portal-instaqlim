@@ -426,14 +426,13 @@
             <h3>Jadual Waktu</h3>
             <button class="btn btn-success" onclick="saveSchedule()">Simpan Jadual</button>
             <table id="scheduleTable">
-              <thead><tr><th>Waktu/Hari</th><th>Isnin</th><th>Selasa</th><th>Rabu</th><th>Khamis</th><th>Jumaat</th></tr></thead>
+              <thead><tr><th>Waktu/Hari</th><th>Isnin</th><th>Selasa</th><th>Rabu</th><th>Khamis</th><th>Jumaat</th><th>Sabtu</th><th>Ahad</th></tr></thead>
               <tbody>
-                <tr><td>8:00-9:00</td><td><input type="text" data-row="0" data-col="0"></td><td><input type="text" data-row="0" data-col="1"></td><td><input type="text" data-row="0" data-col="2"></td><td><input type="text" data-row="0" data-col="3"></td><td><input type="text" data-row="0" data-col="4"></td></tr>
-                <tr><td>9:00-10:00</td><td><input type="text" data-row="1" data-col="0"></td><td><input type="text" data-row="1" data-col="1"></td><td><input type="text" data-row="1" data-col="2"></td><td><input type="text" data-row="1" data-col="3"></td><td><input type="text" data-row="1" data-col="4"></td></tr>
-                <tr><td>10:00-11:00</td><td><input type="text" data-row="2" data-col="0"></td><td><input type="text" data-row="2" data-col="1"></td><td><input type="text" data-row="2" data-col="2"></td><td><input type="text" data-row="2" data-col="3"></td><td><input type="text" data-row="2" data-col="4"></td></tr>
-                <tr><td>11:00-12:00</td><td><input type="text" data-row="3" data-col="0"></td><td><input type="text" data-row="3" data-col="1"></td><td><input type="text" data-row="3" data-col="2"></td><td><input type="text" data-row="3" data-col="3"></td><td><input type="text" data-row="3" data-col="4"></td></tr>
-                <tr><td>12:00-13:00</td><td><input type="text" data-row="4" data-col="0"></td><td><input type="text" data-row="4" data-col="1"></td><td><input type="text" data-row="4" data-col="2"></td><td><input type="text" data-row="4" data-col="3"></td><td><input type="text" data-row="4" data-col="4"></td></tr>
-              </tbody>
+  <tr><td>06:00-07:00</td><td><input type="text" data-row="0" data-col="0"></td><td><input type="text" data-row="0" data-col="1"></td><td><input type="text" data-row="0" data-col="2"></td><td><input type="text" data-row="0" data-col="3"></td><td><input type="text" data-row="0" data-col="4"></td><td><input type="text" data-row="0" data-col="5"></td><td><input type="text" data-row="0" data-col="6"></td></tr>
+  <tr><td>07:00-08:00</td><td><input type="text" data-row="1" data-col="0"></td><td><input type="text" data-row="1" data-col="1"></td><td><input type="text" data-row="1" data-col="2"></td><td><input type="text" data-row="1" data-col="3"></td><td><input type="text" data-row="1" data-col="4"></td><td><input type="text" data-row="1" data-col="5"></td><td><input type="text" data-row="1" data-col="6"></td></tr>
+  <!-- Ulang hingga 22:00-23:00 (total 17 row) -->
+  <tr><td>22:00-23:00</td><td><input type="text" data-row="16" data-col="0"></td><td><input type="text" data-row="16" data-col="1"></td><td><input type="text" data-row="16" data-col="2"></td><td><input type="text" data-row="16" data-col="3"></td><td><input type="text" data-row="16" data-col="4"></td><td><input type="text" data-row="16" data-col="5"></td><td><input type="text" data-row="16" data-col="6"></td></tr>
+</tbody>
             </table>
           </div>
           <!-- Kehadiran -->
@@ -1831,6 +1830,7 @@ async function saveAttendance() {
   </script>
 </body>
 </html>
+
 
 
 
