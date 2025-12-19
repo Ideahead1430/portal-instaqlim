@@ -436,6 +436,20 @@
               </tbody>
             </table>
           </div>
+          <!-- Kehadiran -->
+<div id="manageAttendance" class="card hidden">
+  <h3>Kehadiran Pelajar</h3>
+  <div class="form-group">
+    <label>Tarikh</label>
+    <input type="date" id="attendanceDate" value="${new Date().toISOString().slice(0,10)}">
+    <button class="btn btn-primary" onclick="loadAttendance()">Muat Kehadiran</button>
+  </div>
+  <table id="attendanceTable">
+    <thead><tr><th>Bil</th><th>Nama Pelajar</th><th>Kelas</th><th>Hadir</th><th>Tidak Hadir</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <button class="btn btn-success" onclick="saveAttendance()">Simpan Kehadiran</button>
+</div>
           <!-- Lihat Jadual Guru -->
           <div id="viewSchedule" class="card hidden">
             <h3>Jadual Waktu Saya</h3>
@@ -1773,9 +1787,51 @@
         document.getElementById('offlineMode').classList.remove('hidden');
       }
     };
+    async function loadAttendance() {
+  const date = document.getElementById('attendanceDate').value;
+  if (!date) return showToast('Pilih tarikh', 'error');
+  try {
+    const res = await apiCall('getAttendance', { date });
+    renderAttendance(res.attendance || {}, date);
+  } catch (e) {
+    showToast(e.message, 'error');
+  }
+}
+
+function renderAttendance(attendance, date) {
+  const tbody = document.querySelector('#attendanceTable tbody');
+  tbody.innerHTML = '';
+  students.forEach((s, i) => {
+    const hadir = attendance[s.id] !== false; // default hadir jika tiada data
+    tbody.innerHTML += `
+      <tr>
+        <td>${i+1}</td>
+        <td>${s.name}</td>
+        <td>${s.class}</td>
+        <td><input type="radio" name="att_${s.id}" value="true" ${hadir ? 'checked' : ''}></td>
+        <td><input type="radio" name="att_${s.id}" value="false" ${!hadir ? 'checked' : ''}></td>
+      </tr>`;
+  });
+}
+
+async function saveAttendance() {
+  const date = document.getElementById('attendanceDate').value;
+  const att = {};
+  students.forEach(s => {
+    const radio = document.querySelector(`input[name="att_${s.id}"]:checked`);
+    att[s.id] = radio ? radio.value === 'true' : true;
+  });
+  try {
+    await apiCall('saveAttendance', { date, attendance: att });
+    showToast('Kehadiran berjaya disimpan');
+  } catch (e) {
+    showToast(e.message, 'error');
+  }
+}
   </script>
 </body>
 </html>
+
 
 
 
