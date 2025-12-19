@@ -1,4 +1,4 @@
-}<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ms">
 <head>
   <meta charset="UTF-8" />
@@ -6,302 +6,302 @@
   <title>INSTAQLIM - Institut Tahfiz Al-Quran lil Muttaqin</title>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    :root { 
-      --primary: #10b981; 
-      --secondary: #f59e0b; 
-      --danger: #ef4444; 
-      --light: #f0fdf4; 
+    :root {
+      --primary: #10b981;
+      --secondary: #f59e0b;
+      --danger: #ef4444;
+      --light: #f0fdf4;
       --dark: #1f2937;
-      --warning: #f59e0b; 
-      --indigo: #6366f1; 
-      --red: #dc2626; 
-      --success: #10b981; 
+      --warning: #f59e0b;
+      --indigo: #6366f1;
+      --red: #dc2626;
+      --success: #10b981;
     }
-    [data-theme="dark"] { 
-      --bg-color: #0f172a; 
-      --card-bg: #1e293b; 
-      --text-color: #e2e8f0; 
-      --border-color: #4a5568; 
-      --light: #1e293b; 
+    [data-theme="dark"] {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --text-color: #e2e8f0;
+      --border-color: #4a5568;
+      --light: #1e293b;
     }
-    * { 
-      margin:0; 
-      padding:0; 
-      box-sizing:border-box; 
+    * {
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
     }
-    body { 
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-      background: var(--light); 
-      color: #333; 
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--light);
+      color: #333;
       line-height: 1.6;
       background-image: radial-gradient(circle at top left, rgba(16,185,129,0.05) 0%, transparent 50%), radial-gradient(circle at bottom right, rgba(245,158,11,0.05) 0%, transparent 50%);
-      position: relative; 
+      position: relative;
     }
-    body::before { 
-      content: ''; 
-      position: absolute; 
-      top: 0; 
-      left: 0; 
-      right: 0; 
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
       bottom: 0;
       background-image: linear-gradient(45deg, transparent 49%, rgba(16,185,129,0.03) 49%, rgba(16,185,129,0.03) 51%, transparent 51%),
                        linear-gradient(-45deg, transparent 49%, rgba(245,158,11,0.03) 49%, rgba(245,158,11,0.03) 51%, transparent 51%);
-      background-size: 50px 50px; 
-      pointer-events: none; 
-      z-index: -1; 
+      background-size: 50px 50px;
+      pointer-events: none;
+      z-index: -1;
     }
-    h1, h2, h3, .logo h2 { 
-      font-family: 'Amiri', serif; 
-      color: var(--primary); 
+    h1, h2, h3, .logo h2 {
+      font-family: 'Amiri', serif;
+      color: var(--primary);
     }
-    header { 
-      background: linear-gradient(to right, var(--primary), #059669); 
-      color: white; 
-      padding: 1rem 0; 
-      position: relative; 
-      overflow: hidden; 
+    header {
+      background: linear-gradient(to right, var(--primary), #059669);
+      color: white;
+      padding: 1rem 0;
+      position: relative;
+      overflow: hidden;
     }
-    header::after { 
-      content: "بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"; 
-      position: absolute; 
-      top: 50%; 
-      left: 50%; 
+    header::after {
+      content: "بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
+      position: absolute;
+      top: 50%;
+      left: 50%;
       transform: translate(-50%, -50%);
-      font-family: 'Amiri', serif; 
-      font-size: 4rem; 
-      opacity: 0.07; 
-      pointer-events: none; 
-      color: white; 
+      font-family: 'Amiri', serif;
+      font-size: 4rem;
+      opacity: 0.07;
+      pointer-events: none;
+      color: white;
     }
-    .container { 
-      max-width: 1200px; 
-      margin: 0 auto; 
-      padding: 0 1rem; 
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
     }
-    .flex { 
-      display: flex; 
-      align-items: center; 
-      justify-content: space-between; 
+    .flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    .btn-logout { 
-      background: var(--danger); 
-      color: white; 
-      padding: 0.5rem 1rem; 
-      border-radius: 5px; 
-      text-decoration: none; 
-      font-weight: 500; 
+    .btn-logout {
+      background: var(--danger);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 500;
     }
-    main { 
-      padding: 2rem 0; 
+    main {
+      padding: 2rem 0;
     }
-    .card { 
-      background: var(--card-bg, white); 
-      border-radius: 10px; 
-      padding: 1.5rem; 
-      margin-bottom: 1.5rem; 
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+    .card {
+      background: var(--card-bg, white);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     }
-    .grid { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-      gap: 1.5rem; 
-      margin-top: 1rem; 
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
     }
     .menu-card {
-  background: var(--primary);
-  color: white !important;           ← tambah baris ni
-  font-weight: bold;                 ← tambah baris ni
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);  ← tambah baris ni
-  text-align: center;
-  padding: 2rem;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-    .menu-card:hover { 
-      transform: translateY(-10px); 
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
+      background: var(--primary);
+      color: white !important;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+      text-align: center;
+      padding: 2rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
-    .menu-card i { 
-      font-size: 3rem; 
-      margin-bottom: 1rem; 
+    .menu-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
-    table { 
-      width: 100%; 
-      border-collapse: collapse; 
-      margin-top: 1rem; 
+    .menu-card i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
     }
-    th, td { 
-      padding: 0.75rem; 
-      text-align: left; 
-      border-bottom: 1px solid var(--border-color, #ddd); 
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
     }
-    th { 
-      background: var(--light); 
+    th, td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color, #ddd);
     }
-    .btn { 
-      padding: 0.5rem 1rem; 
-      border: none; 
-      border-radius: 5px; 
-      cursor: pointer; 
-      margin-right: 0.5rem; 
+    th {
+      background: var(--light);
     }
-    .btn-primary { 
-      background: var(--primary); 
-      color: white; 
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 0.5rem;
     }
-    .btn-success { 
-      background: var(--secondary); 
-      color: white; 
+    .btn-primary {
+      background: var(--primary);
+      color: white;
     }
-    .btn-danger { 
-      background: var(--danger); 
-      color: white; 
+    .btn-success {
+      background: var(--secondary);
+      color: white;
     }
-    .btn-edit { 
-      background: #f59e0b; 
-      color: white; 
+    .btn-danger {
+      background: var(--danger);
+      color: white;
     }
-    .form-group { 
-      margin-bottom: 1rem; 
+    .btn-edit {
+      background: #f59e0b;
+      color: white;
     }
-    label { 
-      display: block; 
-      margin-bottom: 0.5rem; 
-      font-weight: 600; 
+    .form-group {
+      margin-bottom: 1rem;
     }
-    input, textarea, select { 
-      width: 100%; 
-      padding: 0.75rem; 
-      border: 1px solid var(--border-color, #ccc); 
-      border-radius: 5px; 
-      background-color: var(--card-bg, white); 
-      color: var(--text-color, #333); 
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
     }
-    .hidden { 
-      display: none !important; 
+    input, textarea, select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border-color, #ccc);
+      border-radius: 5px;
+      background-color: var(--card-bg, white);
+      color: var(--text-color, #333);
     }
-    .text-center { 
-      text-align: center; 
+    .hidden {
+      display: none !important;
     }
-    .login-container { 
-      max-width: 400px; 
-      margin: 5rem auto; 
-      padding: 2rem; 
-      background: var(--card-bg, white); 
-      border-radius: 10px; 
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+    .text-center {
+      text-align: center;
     }
-    .logo { 
-      text-align: center; 
-      margin-bottom: 2rem; 
-      font-size: 2rem; 
-      color: var(--primary); 
+    .login-container {
+      max-width: 400px;
+      margin: 5rem auto;
+      padding: 2rem;
+      background: var(--card-bg, white);
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
-    #modal { 
-      position: fixed; 
-      top: 0; 
-      left: 0; 
-      width: 100%; 
-      height: 100%; 
-      background: rgba(0,0,0,0.6); 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      z-index: 1000; 
+    .logo {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      color: var(--primary);
     }
-    #modal > div { 
-      background: var(--card-bg, white); 
-      border-radius: 10px; 
-      padding: 1.5rem; 
-      width: 90%; 
-      max-width: 600px; 
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
-      max-height: 90vh; 
-      overflow-y: auto; 
+    #modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
     }
-    .toast { 
-      position: fixed; 
-      bottom: 20px; 
-      right: 20px; 
-      padding: 15px 25px; 
-      background: var(--success); 
-      color: white; 
-      border-radius: 5px; 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
-      transform: translateY(100px); 
-      opacity: 0; 
-      transition: transform 0.3s, opacity 0.3s; 
-      z-index: 2000; 
+    #modal > div {
+      background: var(--card-bg, white);
+      border-radius: 10px;
+      padding: 1.5rem;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      max-height: 90vh;
+      overflow-y: auto;
     }
-    .toast.show { 
-      transform: translateY(0); 
-      opacity: 1; 
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      background: var(--success);
+      color: white;
+      border-radius: 5px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: transform 0.3s, opacity 0.3s;
+      z-index: 2000;
     }
-    .theme-toggle { 
-      position: fixed; 
-      bottom: 20px; 
-      left: 20px; 
-      background: var(--primary); 
-      color: white; 
-      border-radius: 50%; 
-      width: 50px; 
-      height: 50px; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      cursor: pointer; 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
-      z-index: 1000; 
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
     }
-    .search-filter { 
-      display: flex; 
-      gap: 1rem; 
-      margin-bottom: 1rem; 
-      flex-wrap: wrap; 
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 1000;
     }
-    .search-filter input, .search-filter select { 
-      flex: 1; 
-      min-width: 200px; 
+    .search-filter {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
     }
-    .loading { 
-      display: inline-block; 
-      width: 20px; 
-      height: 20px; 
-      border: 3px solid rgba(255,255,255,.3); 
-      border-radius: 50%; 
-      border-top-color: #fff; 
-      animation: spin 1s ease-in-out infinite; 
+    .search-filter input, .search-filter select {
+      flex: 1;
+      min-width: 200px;
     }
-    @keyframes spin { 
-      to { 
-        transform: rotate(360deg); 
-      } 
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
     }
-    .connection-status { 
-      position: fixed; 
-      top: 10px; 
-      right: 10px; 
-      padding: 5px 10px; 
-      border-radius: 5px; 
-      font-size: 12px; 
-      z-index: 3000; 
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
     }
-    .connection-status.online { 
-      background: var(--success); 
-      color: white; 
+    .connection-status {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 12px;
+      z-index: 3000;
     }
-    .connection-status.offline { 
-      background: var(--danger); 
-      color: white; 
+    .connection-status.online {
+      background: var(--success);
+      color: white;
     }
-    .offline-mode { 
-      background: #f8f9fa; 
-      color: #6c757d; 
-      padding: 10px; 
-      text-align: center; 
-      border-radius: 5px; 
-      margin-bottom: 10px; 
+    .connection-status.offline {
+      background: var(--danger);
+      color: white;
+    }
+    .offline-mode {
+      background: #f8f9fa;
+      color: #6c757d;
+      padding: 10px;
+      text-align: center;
+      border-radius: 5px;
+      margin-bottom: 10px;
     }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
@@ -325,7 +325,6 @@
       <i class="fas fa-wifi"></i> Mod Luar Talian - Sesetengah fungsi mungkin tidak tersedia
     </div>
   </div>
-
   <!-- Main App -->
   <div id="mainApp" class="hidden">
     <header>
@@ -337,7 +336,6 @@
         </div>
       </div>
     </header>
-
     <div class="container">
       <main>
         <!-- Admin Dashboard -->
@@ -354,7 +352,6 @@
             <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Mengajar</h3></div>
           </div>
         </div>
-
         <!-- Guru Dashboard -->
         <div id="guruDashboard" class="hidden">
           <h2 class="text-center">Papan Pemuka Guru</h2>
@@ -364,10 +361,8 @@
             <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Saya</h3></div>
           </div>
         </div>
-
         <!-- Sections -->
         <div id="sections" class="hidden">
-
           <!-- Pengurusan Pengguna -->
           <div id="manageUsers" class="card hidden">
             <h3>Pengurusan Pengguna Sistem</h3>
@@ -386,7 +381,6 @@
               <tbody></tbody>
             </table>
           </div>
-
           <!-- Pengurusan Pelajar -->
           <div id="manageStudents" class="card hidden">
             <h3>Pengurusan Pelajar</h3>
@@ -400,7 +394,6 @@
               <tbody></tbody>
             </table>
           </div>
-
           <!-- Pengurusan Guru -->
           <div id="manageTeachers" class="card hidden">
             <h3>Pengurusan Guru</h3>
@@ -410,7 +403,6 @@
               <tbody></tbody>
             </table>
           </div>
-
           <!-- Pengurusan Kakitangan -->
           <div id="manageStaff" class="card hidden">
             <h3>Pengurusan Kakitangan</h3>
@@ -420,7 +412,6 @@
               <tbody></tbody>
             </table>
           </div>
-
           <!-- Pengurusan Kelas -->
           <div id="manageClasses" class="card hidden">
             <h3>Pengurusan Kelas</h3>
@@ -430,7 +421,6 @@
               <tbody></tbody>
             </table>
           </div>
-
           <!-- Jadual Waktu -->
           <div id="manageSchedule" class="card hidden">
             <h3>Jadual Waktu</h3>
@@ -446,7 +436,6 @@
               </tbody>
             </table>
           </div>
-
           <!-- Lihat Jadual Guru -->
           <div id="viewSchedule" class="card hidden">
             <h3>Jadual Waktu Saya</h3>
@@ -455,7 +444,6 @@
               <tbody></tbody>
             </table>
           </div>
-
           <!-- Laporan Mengajar -->
           <div id="viewTeachingReports" class="card hidden">
             <h3>Laporan Mengajar Guru</h3>
@@ -475,7 +463,6 @@
               </table>
             </div>
           </div>
-
           <!-- Form Laporan Mengajar -->
           <div id="teachingReportForm" class="card hidden">
             <h3>Laporan Mengajar Harian</h3>
@@ -490,12 +477,10 @@
             </div>
             <button class="btn btn-success" onclick="saveTeachingReport()">Hantar Laporan</button>
           </div>
-
         </div>
       </main>
     </div>
   </div>
-
   <!-- Modal -->
   <div id="modal" class="hidden">
     <div>
@@ -507,46 +492,36 @@
       </div>
     </div>
   </div>
-
   <div id="toast" class="toast"></div>
   <div class="theme-toggle" onclick="toggleTheme()" title="Tukar Tema"><i class="fas fa-moon" id="themeIcon"></i></div>
   <div id="connectionStatus" class="connection-status hidden">Memeriksa sambungan...</div>
-
   <script>
-    // URL API GitHub Functions
     const API_URL = 'https://script.google.com/macros/s/AKfycbyEyKDMYpJ38mwNhK-R0jGIml6RcPGZLSR6OIYWO-XRJDnp7v4ygBdiuL8X2ZUGA0mN/exec';
-       
+      
     let currentUser = null;
     let currentSection = '';
     let classes = [], students = [], teachers = [], staff = [], users = [], schedule = Array(5).fill().map(() => Array(5).fill(''));
     let isOnline = navigator.onLine;
     let pendingOperations = [];
 
-    // Fungsi untuk panggilan API dengan pemprosesan ralat yang lebih baik
     async function apiCall(action, payload = {}) {
       try {
-        // Paparkan status sambungan
         updateConnectionStatus('Memuat...', 'loading');
-        
-        // Gunakan Functions untuk mengatasi isu CORS
-       const res = await fetch(API_URL, {
-  method: 'POST',
-  // Hapus headers Content-Type supaya jadi simple request (tiada preflight)
-  // headers: { 'Content-Type': 'application/json' },  ← HAPUS BARIS INI
-  body: JSON.stringify({
-  action,
-  ...payload
-})
-        
-        // Periksa jika respons adalah HTML (mungkin halaman ralat)
+       
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          body: JSON.stringify({
+            action,
+            ...payload
+          })
+        });
+       
         const contentType = res.headers.get('content-type');
         console.log('Response content type:', contentType);
-        
-        // Dapatkan teks respons terlebih dahulu
+       
         const responseText = await res.text();
         console.log('Response text:', responseText);
-        
-        // Cuba menghurai JSON
+       
         let data;
         try {
           data = JSON.parse(responseText);
@@ -555,62 +530,55 @@
           updateConnectionStatus('Ralat server', 'error');
           throw new Error('Server mengembalikan respons yang tidak dijangka. Sila cuba lagi.');
         }
-        
-        // Periksa status respons
+       
         if (data.status !== 'success') {
           updateConnectionStatus('Ralat', 'error');
           throw new Error(data.message || 'Ralat server');
         }
-        
+       
         updateConnectionStatus('Dalam talian', 'success');
         return data;
       } catch (e) {
         console.error('API call error:', e);
         updateConnectionStatus('Luar talian', 'error');
-        
-        // Jika ralat berkaitan CORS atau fetch, simpan operasi untuk kemudian
+       
         if (e.message.includes('CORS') || e.message.includes('fetch') || !isOnline) {
-          // Simpan operasi untuk kemudian
           pendingOperations.push({ action, payload });
           localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          
-          // Kembalikan data tempatan jika ada
+         
           const localData = getLocalData(action);
           if (localData) {
             showToast('Menggunakan data tempatan', 'warning');
             return { status: 'success', ...localData };
           }
-          
+         
           throw new Error('Tidak dapat menyambung ke pelayan. Data akan disegerakkan apabila sambungan dipulihkan.');
         }
-        
+       
         throw e;
       }
     }
 
-    // Fungsi untuk mendapatkan data tempatan
     function getLocalData(action) {
       const dataKey = `local_${action}`;
       const data = localStorage.getItem(dataKey);
       return data ? JSON.parse(data) : null;
     }
 
-    // Fungsi untuk menyimpan data tempatan
     function saveLocalData(action, data) {
       const dataKey = `local_${action}`;
       localStorage.setItem(dataKey, JSON.stringify(data));
     }
 
-    // Fungsi untuk menyegerakkan operasi yang tertangguh
     async function syncPendingOperations() {
       if (pendingOperations.length === 0) return;
-      
+     
       showToast(`Menyegerakkan ${pendingOperations.length} operasi...`);
-      
+     
       const operations = [...pendingOperations];
       pendingOperations = [];
       localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-      
+     
       for (const op of operations) {
         try {
           await apiCall(op.action, op.payload);
@@ -619,9 +587,9 @@
           pendingOperations.push(op);
         }
       }
-      
+     
       localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-      
+     
       if (pendingOperations.length === 0) {
         showToast('Semua operasi disegerakkan');
       } else {
@@ -629,31 +597,29 @@
       }
     }
 
-    // Fungsi untuk mengemas kini status sambungan
     function updateConnectionStatus(message, type) {
       const statusEl = document.getElementById('connectionStatus');
       statusEl.textContent = message;
       statusEl.className = 'connection-status';
-      
+     
       if (type === 'loading') {
         statusEl.style.background = 'var(--warning)';
       } else if (type === 'error') {
         statusEl.style.background = 'var(--danger)';
       } else if (type === 'success') {
         statusEl.style.background = 'var(--success)';
-        // Sembunyikan status selepas 3 saat
         setTimeout(() => {
           statusEl.classList.add('hidden');
         }, 3000);
       }
-      
+     
       statusEl.classList.remove('hidden');
     }
 
     function showToast(msg, type = 'success') {
       const t = document.getElementById('toast');
       t.textContent = msg;
-      t.style.background = type === 'success' ? 'var(--success)' : 
+      t.style.background = type === 'success' ? 'var(--success)' :
                          type === 'warning' ? 'var(--warning)' : 'var(--danger)';
       t.classList.add('show');
       setTimeout(() => t.classList.remove('show'), 4000);
@@ -664,27 +630,24 @@
       document.getElementById('dataForm').innerHTML = '';
     }
 
-    // Fungsi login yang dipindahkan ke atas untuk memastikan ia tersedia
     async function login() {
       const u = document.getElementById('username').value.trim();
       const p = document.getElementById('password').value;
       const errorEl = document.getElementById('loginError');
-      
+     
       if (!u || !p) {
         errorEl.textContent = 'Isi username dan kata laluan';
         errorEl.classList.remove('hidden');
         return;
       }
-      
-      // Sembunyikan mesej ralat sebelumnya
+     
       errorEl.classList.add('hidden');
-      
-      // Tampilkan indikator loading
+     
       const loginBtn = document.querySelector('#loginPage button');
       const originalText = loginBtn.innerHTML;
       loginBtn.innerHTML = '<span class="loading"></span> Memuat...';
       loginBtn.disabled = true;
-      
+     
       try {
         const r = await apiCall('login', { username: u, password: p });
         currentUser = r.user;
@@ -700,7 +663,6 @@
         errorEl.textContent = err.message || 'Login gagal';
         errorEl.classList.remove('hidden');
       } finally {
-        // Kembalikan butang ke keadaan asal
         loginBtn.innerHTML = originalText;
         loginBtn.disabled = false;
       }
@@ -729,11 +691,10 @@
         populateClassSelects();
       } catch (e) {
         console.error('Error loading common data:', e);
-        
-        // Cuba gunakan data tempatan jika ada
+       
         const c = getLocalData('getClasses');
         const s = getLocalData('getSchedule');
-        
+       
         if (c && s) {
           classes = c.classes || [];
           schedule = s.schedule || Array(5).fill().map(() => Array(5).fill(''));
@@ -763,13 +724,11 @@
       if (sec) sec.classList.remove('hidden');
       document.getElementById('sections').classList.remove('hidden');
       currentSection = id;
-
       if (id === 'manageUsers') loadUsers();
       if (id === 'manageStudents') loadStudents();
       if (id === 'manageTeachers') loadTeachers();
       if (id === 'manageStaff') loadStaff();
       if (id === 'manageClasses') {
-        // Muatkan guru terlebih dahulu sebelum memaparkan kelas
         loadTeachers().then(() => {
           loadClasses();
         });
@@ -788,8 +747,7 @@
         renderUsers();
       } catch (e) {
         console.error('Error loading users:', e);
-        
-        // Cuba gunakan data tempatan jika ada
+       
         const res = getLocalData('getUsers');
         if (res) {
           users = res.users || [];
@@ -830,7 +788,6 @@
       document.getElementById('modal').classList.remove('hidden');
     }
 
-    // Gantikan fungsi saveUser yang sedia ada
     async function saveUser() {
       const id = document.getElementById('u_id').value;
       const user = {
@@ -840,38 +797,35 @@
         name: document.getElementById('u_name').value.trim(),
         role: document.getElementById('u_role').value
       };
-      
-      // Jika pengguna baru, jana ID sebagai teks
+     
       if (!id) {
         user.id = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
       }
-      
+     
       if (!user.username || !user.name || !user.role || (!id && !user.password)) {
         return showToast('Isi semua medan', 'error');
       }
-      
+     
       try {
         if (isOnline) {
           if (id) await apiCall('updateUser', { user });
           else await apiCall('addUser', { user });
         } else {
-          // Simpan operasi untuk kemudian
           pendingOperations.push({ action: id ? 'updateUser' : 'addUser', payload: { user } });
           localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          
-          // Kemas kini data tempatan
+         
           if (id) {
             const index = users.findIndex(u => u.id === id);
             if (index !== -1) users[index] = user;
           } else {
             users.push(user);
           }
-          
+         
           saveLocalData('getUsers', { users });
           renderUsers();
           showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
         }
-        
+       
         closeModal();
         if (isOnline) loadUsers();
         showToast('Pengguna berjaya disimpan');
@@ -880,11 +834,10 @@
       }
     }
 
-    // Fungsi untuk mengedit pengguna
     function editUser(id) {
       const user = users.find(u => u.id === id);
       if (!user) return;
-      
+     
       document.getElementById('modalTitle').textContent = 'Kemaskini Pengguna';
       document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Username</label><input type="text" id="u_username" value="${user.username}" required></div>
@@ -901,25 +854,22 @@
       document.getElementById('modal').classList.remove('hidden');
     }
 
-    // Fungsi untuk memadam pengguna
     async function deleteUser(id) {
       if (!confirm('Adakah anda pasti ingin memadam pengguna ini?')) return;
-      
+     
       try {
         if (isOnline) {
           await apiCall('deleteUser', { id });
         } else {
-          // Simpan operasi untuk kemudian
           pendingOperations.push({ action: 'deleteUser', payload: { id } });
           localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          
-          // Kemas kini data tempatan
+         
           users = users.filter(u => u.id !== id);
           saveLocalData('getUsers', { users });
           renderUsers();
           showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
         }
-        
+       
         if (isOnline) loadUsers();
         showToast('Pengguna berjaya dipadam');
       } catch (err) {
@@ -936,8 +886,7 @@
         renderStudents();
       } catch (e) {
         console.error('Error loading students:', e);
-        
-        // Cuba gunakan data tempatan jika ada
+       
         const res = getLocalData('getStudents');
         if (res) {
           students = res.students || [];
@@ -955,7 +904,7 @@
       students.forEach(s => {
         tbody.innerHTML += `
           <tr>
-            <td>${s.id}</td><td>${s.name}</td><td>${s.ic}</td><td>${s.class}</td><td>${s.}</td><td>${s._phone}</td>
+            <td>${s.id}</td><td>${s.name}</td><td>${s.ic}</td><td>${s.class}</td><td>${s.guardian}</td><td>${s.guardianphone}</td>
             <td>
               <button class="btn btn-edit" onclick="editStudent('${s.id}')">Kemaskini</button>
               <button class="btn btn-danger" onclick="deleteStudent('${s.id}')">Padam</button>
@@ -970,12 +919,11 @@
         <div class="form-group"><label>Nama</label><input type="text" id="s_name" required></div>
         <div class="form-group"><label>No. KP</label><input type="text" id="s_ic" required></div>
         <div class="form-group"><label>Kelas</label><select id="s_class" required><option value="">Pilih Kelas</option></select></div>
-        <div class="form-group"><label>Nama Wali</label><input type="text" id="s_" required></div>
-        <div class="form-group"><label>No. HP Wali</label><input type="text" id="s__phone" required></div>
+        <div class="form-group"><label>Nama Wali</label><input type="text" id="s_guardian" required></div>
+        <div class="form-group"><label>No. HP Wali</label><input type="text" id="s_guardian_phone" required></div>
         <input type="hidden" id="s_id">
       `;
-      
-      // Isi pilihan kelas
+     
       const classSelect = document.getElementById('s_class');
       classes.forEach(cls => {
         const opt = document.createElement('option');
@@ -983,12 +931,11 @@
         opt.textContent = cls.name;
         classSelect.appendChild(opt);
       });
-      
+     
       document.getElementById('saveBtn').onclick = saveStudent;
       document.getElementById('modal').classList.remove('hidden');
     }
 
-    // Gantikan fungsi saveStudent
     async function saveStudent() {
       const id = document.getElementById('s_id').value;
       const student = {
@@ -999,38 +946,35 @@
         guardian: document.getElementById('s_guardian').value.trim(),
         guardianphone: document.getElementById('s_guardian_phone').value.trim()
       };
-      
-      // Jika pelajar baru, jana ID sebagai teks
+     
       if (!id) {
         student.id = 'student_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
       }
-      
-      if (!student.name || !student.ic || !student.class || !student.guardian || !student.guardian_phone) {
+     
+      if (!student.name || !student.ic || !student.class || !student.guardian || !student.guardianphone) {
         return showToast('Isi semua medan', 'error');
       }
-      
+     
       try {
         if (isOnline) {
           if (id) await apiCall('updateStudent', { student });
           else await apiCall('addStudent', { student });
         } else {
-          // Simpan operasi untuk kemudian
           pendingOperations.push({ action: id ? 'updateStudent' : 'addStudent', payload: { student } });
           localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          
-          // Kemas kini data tempatan
+         
           if (id) {
             const index = students.findIndex(s => s.id === id);
             if (index !== -1) students[index] = student;
           } else {
             students.push(student);
           }
-          
+         
           saveLocalData('getStudents', { students });
           renderStudents();
           showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
         }
-        
+       
         closeModal();
         if (isOnline) loadStudents();
         showToast('Pelajar berjaya disimpan');
@@ -1042,18 +986,17 @@
     function editStudent(id) {
       const student = students.find(s => s.id === id);
       if (!student) return;
-      
+     
       document.getElementById('modalTitle').textContent = 'Kemaskini Pelajar';
       document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Nama</label><input type="text" id="s_name" value="${student.name}" required></div>
         <div class="form-group"><label>No. KP</label><input type="text" id="s_ic" value="${student.ic}" required></div>
         <div class="form-group"><label>Kelas</label><select id="s_class" required><option value="">Pilih Kelas</option></select></div>
         <div class="form-group"><label>Nama Wali</label><input type="text" id="s_guardian" value="${student.guardian}" required></div>
-        <div class="form-group"><label>No. HP Wali</label><input type="text" id="s_guardian_phone" value="${student.guardian_phone}" required></div>
+        <div class="form-group"><label>No. HP Wali</label><input type="text" id="s_guardian_phone" value="${student.guardianphone}" required></div>
         <input type="hidden" id="s_id" value="${student.id}">
       `;
-      
-      // Isi pilihan kelas
+     
       const classSelect = document.getElementById('s_class');
       classes.forEach(cls => {
         const opt = document.createElement('option');
@@ -1062,29 +1005,27 @@
         if (cls.name === student.class) opt.selected = true;
         classSelect.appendChild(opt);
       });
-      
+     
       document.getElementById('saveBtn').onclick = saveStudent;
       document.getElementById('modal').classList.remove('hidden');
     }
 
     async function deleteStudent(id) {
       if (!confirm('Adakah anda pasti ingin memadam pelajar ini?')) return;
-      
+     
       try {
         if (isOnline) {
           await apiCall('deleteStudent', { id });
         } else {
-          // Simpan operasi untuk kemudian
           pendingOperations.push({ action: 'deleteStudent', payload: { id } });
           localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          
-          // Kemas kini data tempatan
+         
           students = students.filter(s => s.id !== id);
           saveLocalData('getStudents', { students });
           renderStudents();
           showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
         }
-        
+       
         if (isOnline) loadStudents();
         showToast('Pelajar berjaya dipadam');
       } catch (err) {
@@ -1101,8 +1042,7 @@
         renderTeachers();
       } catch (e) {
         console.error('Error loading teachers:', e);
-        
-        // Cuba gunakan data tempatan jika ada
+       
         const res = getLocalData('getTeachers');
         if (res) {
           teachers = res.teachers || [];
@@ -1142,7 +1082,6 @@
       document.getElementById('modal').classList.remove('hidden');
     }
 
-    // Gantikan fungsi saveTeacher
     async function saveTeacher() {
       const id = document.getElementById('t_id').value;
       const teacher = {
@@ -1152,38 +1091,35 @@
         subject: document.getElementById('t_subject').value.trim(),
         phone: document.getElementById('t_phone').value.trim()
       };
-      
-      // Jika guru baru, jana ID sebagai teks
+     
       if (!id) {
         teacher.id = 'teacher_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
       }
-      
+     
       if (!teacher.name || !teacher.ic || !teacher.subject || !teacher.phone) {
         return showToast('Isi semua medan', 'error');
       }
-      
+     
       try {
         if (isOnline) {
           if (id) await apiCall('updateTeacher', { teacher });
           else await apiCall('addTeacher', { teacher });
         } else {
-          // Simpan operasi untuk kemudian
           pendingOperations.push({ action: id ? 'updateTeacher' : 'addTeacher', payload: { teacher } });
           localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          
-          // Kemas kini data tempatan
+         
           if (id) {
             const index = teachers.findIndex(t => t.id === id);
             if (index !== -1) teachers[index] = teacher;
           } else {
             teachers.push(teacher);
           }
-          
+         
           saveLocalData('getTeachers', { teachers });
           renderTeachers();
           showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
         }
-        
+       
         closeModal();
         if (isOnline) loadTeachers();
         showToast('Guru berjaya disimpan');
@@ -1195,7 +1131,7 @@
     function editTeacher(id) {
       const teacher = teachers.find(t => t.id === id);
       if (!teacher) return;
-      
+     
       document.getElementById('modalTitle').textContent = 'Kemaskini Guru';
       document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Nama</label><input type="text" id="t_name" value="${teacher.name}" required></div>
@@ -1210,22 +1146,20 @@
 
     async function deleteTeacher(id) {
       if (!confirm('Adakah anda pasti ingin memadam guru ini?')) return;
-      
+     
       try {
         if (isOnline) {
           await apiCall('deleteTeacher', { id });
         } else {
-          // Simpan operasi untuk kemudian
           pendingOperations.push({ action: 'deleteTeacher', payload: { id } });
           localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          
-          // Kemas kini data tempatan
+         
           teachers = teachers.filter(t => t.id !== id);
           saveLocalData('getTeachers', { teachers });
           renderTeachers();
           showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
         }
-        
+       
         if (isOnline) loadTeachers();
         showToast('Guru berjaya dipadam');
       } catch (err) {
@@ -1242,8 +1176,7 @@
         renderStaff();
       } catch (e) {
         console.error('Error loading staff:', e);
-        
-        // Cuba gunakan data tempatan jika ada
+       
         const res = getLocalData('getStaff');
         if (res) {
           staff = res.staff || [];
@@ -1283,7 +1216,6 @@
       document.getElementById('modal').classList.remove('hidden');
     }
 
-    // Gantikan fungsi saveStaff
     async function saveStaff() {
       const id = document.getElementById('st_id').value;
       const staffMember = {
@@ -1293,38 +1225,35 @@
         position: document.getElementById('st_position').value.trim(),
         phone: document.getElementById('st_phone').value.trim()
       };
-      
-      // Jika kakitangan baru, jana ID sebagai teks
+     
       if (!id) {
         staffMember.id = 'staff_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
       }
-      
+     
       if (!staffMember.name || !staffMember.ic || !staffMember.position || !staffMember.phone) {
         return showToast('Isi semua medan', 'error');
       }
-      
+     
       try {
         if (isOnline) {
           if (id) await apiCall('updateStaff', { staff: staffMember });
           else await apiCall('addStaff', { staff: staffMember });
         } else {
-          // Simpan operasi untuk kemudian
           pendingOperations.push({ action: id ? 'updateStaff' : 'addStaff', payload: { staff: staffMember } });
           localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          
-          // Kemas kini data tempatan
+         
           if (id) {
             const index = staff.findIndex(s => s.id === id);
             if (index !== -1) staff[index] = staffMember;
           } else {
             staff.push(staffMember);
           }
-          
+         
           saveLocalData('getStaff', { staff });
           renderStaff();
           showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
         }
-        
+       
         closeModal();
         if (isOnline) loadStaff();
         showToast('Kakitangan berjaya disimpan');
@@ -1336,7 +1265,7 @@
     function editStaff(id) {
       const staffMember = staff.find(s => s.id === id);
       if (!staffMember) return;
-      
+     
       document.getElementById('modalTitle').textContent = 'Kemaskini Kakitangan';
       document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Nama</label><input type="text" id="st_name" value="${staffMember.name}" required></div>
@@ -1351,22 +1280,20 @@
 
     async function deleteStaff(id) {
       if (!confirm('Adakah anda pasti ingin memadam kakitangan ini?')) return;
-      
+     
       try {
         if (isOnline) {
           await apiCall('deleteStaff', { id });
         } else {
-          // Simpan operasi untuk kemudian
           pendingOperations.push({ action: 'deleteStaff', payload: { id } });
           localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          
-          // Kemas kini data tempatan
+         
           staff = staff.filter(s => s.id !== id);
           saveLocalData('getStaff', { staff });
           renderStaff();
           showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
         }
-        
+       
         if (isOnline) loadStaff();
         showToast('Kakitangan berjaya dipadam');
       } catch (err) {
@@ -1383,8 +1310,7 @@
         renderClasses();
       } catch (e) {
         console.error('Error loading classes:', e);
-        
-        // Cuba gunakan data tempatan jika ada
+       
         const res = getLocalData('getClasses');
         if (res) {
           classes = res.classes || [];
@@ -1411,22 +1337,19 @@
       });
     }
 
-    // Kemas kini fungsi openAddClass untuk memastikan guru dimuatkan
     function openAddClass() {
-      // Pastikan guru dimuatkan terlebih dahulu
       if (teachers.length === 0) {
         showToast('Sila muatkan data guru terlebih dahulu', 'warning');
         return;
       }
-      
+     
       document.getElementById('modalTitle').textContent = 'Tambah Kelas';
       document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Nama Kelas</label><input type="text" id="c_name" required></div>
         <div class="form-group"><label>Guru Kelas</label><select id="c_teacher" required><option value="">Pilih Guru</option></select></div>
         <input type="hidden" id="c_id">
       `;
-      
-      // Isi pilihan guru
+     
       const teacherSelect = document.getElementById('c_teacher');
       teachers.forEach(t => {
         const opt = document.createElement('option');
@@ -1434,12 +1357,11 @@
         opt.textContent = t.name;
         teacherSelect.appendChild(opt);
       });
-      
+     
       document.getElementById('saveBtn').onclick = saveClass;
       document.getElementById('modal').classList.remove('hidden');
     }
 
-    // Gantikan fungsi saveClass
     async function saveClass() {
       const id = document.getElementById('c_id').value;
       const classData = {
@@ -1447,38 +1369,35 @@
         name: document.getElementById('c_name').value.trim(),
         teacher: document.getElementById('c_teacher').value
       };
-      
-      // Jika kelas baru, jana ID sebagai teks
+     
       if (!id) {
         classData.id = 'class_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
       }
-      
+     
       if (!classData.name || !classData.teacher) {
         return showToast('Isi semua medan', 'error');
       }
-      
+     
       try {
         if (isOnline) {
-          if (id) await apiCall('updateClass', { class: classData });
-          else await apiCall('addClass', { class: classData });
+          if (id) await apiCall('updateClass', { cls: classData });
+          else await apiCall('addClass', { cls: classData });
         } else {
-          // Simpan operasi untuk kemudian
-          pendingOperations.push({ action: id ? 'updateClass' : 'addClass', payload: { class: classData } });
+          pendingOperations.push({ action: id ? 'updateClass' : 'addClass', payload: { cls: classData } });
           localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          
-          // Kemas kini data tempatan
+         
           if (id) {
             const index = classes.findIndex(c => c.id === id);
             if (index !== -1) classes[index] = classData;
           } else {
             classes.push(classData);
           }
-          
+         
           saveLocalData('getClasses', { classes });
           renderClasses();
           showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
         }
-        
+       
         closeModal();
         if (isOnline) loadClasses();
         showToast('Kelas berjaya disimpan');
@@ -1488,23 +1407,21 @@
     }
 
     function editClass(id) {
-      // Pastikan guru dimuatkan terlebih dahulu
       if (teachers.length === 0) {
         showToast('Sila muatkan data guru terlebih dahulu', 'warning');
         return;
       }
-      
+     
       const classData = classes.find(c => c.id === id);
       if (!classData) return;
-      
+     
       document.getElementById('modalTitle').textContent = 'Kemaskini Kelas';
       document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Nama Kelas</label><input type="text" id="c_name" value="${classData.name}" required></div>
         <div class="form-group"><label>Guru Kelas</label><select id="c_teacher" required><option value="">Pilih Guru</option></select></div>
         <input type="hidden" id="c_id" value="${classData.id}">
       `;
-      
-      // Isi pilihan guru
+     
       const teacherSelect = document.getElementById('c_teacher');
       teachers.forEach(t => {
         const opt = document.createElement('option');
@@ -1513,29 +1430,27 @@
         if (t.name === classData.teacher) opt.selected = true;
         teacherSelect.appendChild(opt);
       });
-      
+     
       document.getElementById('saveBtn').onclick = saveClass;
       document.getElementById('modal').classList.remove('hidden');
     }
 
     async function deleteClass(id) {
       if (!confirm('Adakah anda pasti ingin memadam kelas ini?')) return;
-      
+     
       try {
         if (isOnline) {
           await apiCall('deleteClass', { id });
         } else {
-          // Simpan operasi untuk kemudian
           pendingOperations.push({ action: 'deleteClass', payload: { id } });
           localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          
-          // Kemas kini data tempatan
+         
           classes = classes.filter(c => c.id !== id);
           saveLocalData('getClasses', { classes });
           renderClasses();
           showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
         }
-        
+       
         if (isOnline) loadClasses();
         showToast('Kelas berjaya dipadam');
       } catch (err) {
@@ -1552,8 +1467,7 @@
         renderSchedule();
       } catch (e) {
         console.error('Error loading schedule:', e);
-        
-        // Cuba gunakan data tempatan jika ada
+       
         const res = getLocalData('getSchedule');
         if (res) {
           schedule = res.schedule || Array(5).fill().map(() => Array(5).fill(''));
@@ -1566,7 +1480,6 @@
     }
 
     function renderSchedule() {
-      // Isi jadual dengan data
       for (let row = 0; row < 5; row++) {
         for (let col = 0; col < 5; col++) {
           const input = document.querySelector(`input[data-row="${row}"][data-col="${col}"]`);
@@ -1576,7 +1489,6 @@
     }
 
     async function saveSchedule() {
-      // Kumpulkan data dari jadual
       const newSchedule = Array(5).fill().map(() => Array(5).fill(''));
       for (let row = 0; row < 5; row++) {
         for (let col = 0; col < 5; col++) {
@@ -1584,22 +1496,20 @@
           if (input) newSchedule[row][col] = input.value;
         }
       }
-      
+     
       try {
         if (isOnline) {
           await apiCall('saveSchedule', { schedule: newSchedule });
         } else {
-          // Simpan operasi untuk kemudian
           pendingOperations.push({ action: 'saveSchedule', payload: { schedule: newSchedule } });
           localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          
-          // Kemas kini data tempatan
+         
           schedule = newSchedule;
           saveLocalData('getSchedule', { schedule });
           renderSchedule();
           showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
         }
-        
+       
         showToast('Jadual berjaya disimpan');
       } catch (e) {
         showToast(e.message, 'error');
@@ -1614,8 +1524,7 @@
         renderViewSchedule();
       } catch (e) {
         console.error('Error loading view schedule:', e);
-        
-        // Cuba gunakan data tempatan jika ada
+       
         const res = getLocalData('getSchedule');
         if (res) {
           schedule = res.schedule || Array(5).fill().map(() => Array(5).fill(''));
@@ -1630,11 +1539,10 @@
     function renderViewSchedule() {
       const tbody = document.querySelector('#viewScheduleTable tbody');
       tbody.innerHTML = '';
-      
-      // Paparkan jadual
+     
       const timeSlots = ['8:00-9:00', '9:00-10:00', '10:00-11:00', '11:00-12:00', '12:00-13:00'];
       const days = ['Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat'];
-      
+     
       for (let row = 0; row < 5; row++) {
         let rowHtml = `<tr><td>${timeSlots[row]}</td>`;
         for (let col = 0; col < 5; col++) {
@@ -1654,8 +1562,7 @@
         renderTeachingReports(reports);
       } catch (e) {
         console.error('Error loading teaching reports:', e);
-        
-        // Cuba gunakan data tempatan jika ada
+       
         const res = getLocalData('getTeachingReports');
         if (res) {
           const reports = res.reports || [];
@@ -1668,12 +1575,11 @@
     }
 
     function renderTeachingReports(reports) {
-      // Set tarikh cetakan
       document.getElementById('printDate').textContent = new Date().toLocaleDateString('ms-MY');
-      
+     
       const tbody = document.querySelector('#teachingReportTable tbody');
       tbody.innerHTML = '';
-      
+     
       reports.forEach((r, index) => {
         tbody.innerHTML += `
           <tr>
@@ -1697,37 +1603,33 @@
         teacher: currentUser.name,
         teacherId: currentUser.id
       };
-      
+     
       if (!report.date || !report.class || !report.topic || !report.notes) {
         return showToast('Isi semua medan', 'error');
       }
-      
+     
       try {
         if (isOnline) {
-          await apiCall('saveTeachingReport', { report });
+          await apiCall('addTeachingReport', report);
         } else {
-          // Simpan operasi untuk kemudian
-          pendingOperations.push({ action: 'saveTeachingReport', payload: { report } });
+          pendingOperations.push({ action: 'addTeachingReport', payload: report });
           localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          
-          // Kemas kini data tempatan
+         
           const res = getLocalData('getTeachingReports') || { reports: [] };
           res.reports.push(report);
           saveLocalData('getTeachingReports', res);
           showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
         }
-        
+       
         showToast('Laporan berjaya dihantar');
-        
-        // Kosongkan borang
+       
         document.getElementById('reportDate').value = '';
         document.getElementById('reportClass').value = '';
         document.getElementById('reportTopic').value = '';
         document.getElementById('reportNotes').value = '';
         document.getElementById('reportAttachment').value = '';
         document.getElementById('attachmentPreview').innerHTML = '';
-        
-        // Jika guru, kembali ke dashboard
+       
         if (currentUser.role === 'guru') {
           document.getElementById('sections').classList.add('hidden');
           document.getElementById('guruDashboard').classList.remove('hidden');
@@ -1737,72 +1639,59 @@
       }
     }
 
-    // Fungsi untuk mengepam laporan mengajar ke PDF
     function exportTeachingReportPDF() {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
-      
-      // Tambah tajuk
+     
       doc.setFontSize(18);
       doc.text('Laporan Mengajar Harian Guru', 105, 15, { align: 'center' });
       doc.setFontSize(12);
       doc.text('INSTAQLIM - Institut Tahfiz Al-Quran lil Muttaqin', 105, 22, { align: 'center' });
       doc.text(`Tarikh: ${new Date().toLocaleDateString('ms-MY')}`, 105, 29, { align: 'center' });
-      
-      // Tambah jadual
+     
       const table = document.getElementById('teachingReportTable');
       const rows = table.querySelectorAll('tr');
-      
+     
       let yPosition = 40;
-      
+     
       rows.forEach((row, index) => {
-        if (index === 0) {
-          // Header jadual
-          doc.setFont(undefined, 'bold');
-        } else {
-          doc.setFont(undefined, 'normal');
-        }
-        
+        if (index === 0) doc.setFont(undefined, 'bold');
+        else doc.setFont(undefined, 'normal');
+       
         const cells = row.querySelectorAll('td, th');
         let xPosition = 15;
-        
+       
         cells.forEach(cell => {
           const text = cell.textContent.trim();
           const cellWidth = 25;
-          
-          // Potong teks jika terlalu panjang
           const maxLength = Math.floor(cellWidth / 3);
           const truncatedText = text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
-          
+         
           doc.text(truncatedText, xPosition, yPosition);
           xPosition += cellWidth;
         });
-        
+       
         yPosition += 10;
-        
-        // Jika melebihi halaman, buat halaman baru
+       
         if (yPosition > 280) {
           doc.addPage();
           yPosition = 20;
         }
       });
-      
-      // Simpan PDF
+     
       doc.save('laporan_mengajar.pdf');
     }
 
-    // Fungsi untuk menapis jadual
     function filterTable(tableId, searchValue, filterValue = '') {
       const table = document.getElementById(tableId);
       const tbody = table.querySelector('tbody');
       const rows = tbody.querySelectorAll('tr');
-      
+     
       searchValue = searchValue.toLowerCase();
-      
+     
       rows.forEach(row => {
         let showRow = true;
-        
-        // Semak nilai carian
+       
         if (searchValue) {
           let found = false;
           row.querySelectorAll('td').forEach(cell => {
@@ -1812,8 +1701,7 @@
           });
           showRow = found;
         }
-        
-        // Semak nilai penapis (jika ada)
+       
         if (filterValue && showRow) {
           let found = false;
           row.querySelectorAll('td').forEach(cell => {
@@ -1823,63 +1711,55 @@
           });
           showRow = found;
         }
-        
+       
         row.style.display = showRow ? '' : 'none';
       });
     }
 
-    // Fungsi untuk menukar tema
     function toggleTheme() {
       const currentTheme = document.documentElement.getAttribute('data-theme');
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      
+     
       document.documentElement.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
-      
+     
       const icon = document.getElementById('themeIcon');
       icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
     }
 
-    // Fungsi untuk memuatkan tema yang disimpan
     window.onload = () => {
       const theme = localStorage.getItem('theme') || 'light';
       document.documentElement.setAttribute('data-theme', theme);
       document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-      
-      // Muatkan operasi yang tertangguh
+     
       const savedPendingOperations = localStorage.getItem('pendingOperations');
       if (savedPendingOperations) {
         pendingOperations = JSON.parse(savedPendingOperations);
       }
-      
-      // Semak status sambungan
+     
       updateConnectionStatus('Memeriksa sambungan...', 'loading');
-      
-      // Tambah event listener untuk status sambungan
+     
       window.addEventListener('online', () => {
         isOnline = true;
         updateConnectionStatus('Dalam talian', 'success');
         document.getElementById('offlineMode').classList.add('hidden');
-        
-        // Cuba menyegerakkan operasi yang tertangguh
+       
         if (pendingOperations.length > 0) {
           syncPendingOperations();
         }
       });
-      
+     
       window.addEventListener('offline', () => {
         isOnline = false;
         updateConnectionStatus('Luar talian', 'error');
         document.getElementById('offlineMode').classList.remove('hidden');
       });
-      
-      // Semak status sambungan awal
+     
       if (navigator.onLine) {
         isOnline = true;
         updateConnectionStatus('Dalam talian', 'success');
         document.getElementById('offlineMode').classList.add('hidden');
-        
-        // Cuba menyegerakkan operasi yang tertangguh
+       
         if (pendingOperations.length > 0) {
           syncPendingOperations();
         }
@@ -1892,16 +1772,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
