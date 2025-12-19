@@ -528,14 +528,15 @@
         
         // Gunakan Netlify Functions untuk mengatasi isu CORS
         const res = await fetch(API_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-         body: JSON.stringify({
-  action,
-  ...payload
-})
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    action,
+    ...payload
+  })
+});
         
         // Periksa jika respons adalah HTML (mungkin halaman ralat)
         const contentType = res.headers.get('content-type');
@@ -1891,6 +1892,7 @@
   </script>
 </body>
 </html>
+
 
 
 
