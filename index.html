@@ -526,16 +526,12 @@
         // Paparkan status sambungan
         updateConnectionStatus('Memuat...', 'loading');
         
-        // Gunakan Netlify Functions untuk mengatasi isu CORS
-        const res = await fetch(API_URL, {
+        // Gunakan Functions untuk mengatasi isu CORS
+       const res = await fetch(API_URL, {
   method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    action,
-    ...payload
-  })
+  // Hapus headers Content-Type supaya jadi simple request (tiada preflight)
+  // headers: { 'Content-Type': 'application/json' },  ← HAPUS BARIS INI
+  body: JSON.stringify({ action, ...payload })
 });
         
         // Periksa jika respons adalah HTML (mungkin halaman ralat)
@@ -1892,6 +1888,7 @@
   </script>
 </body>
 </html>
+
 
 
 
