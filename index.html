@@ -107,15 +107,17 @@
       gap: 1.5rem; 
       margin-top: 1rem; 
     }
-    .menu-card { 
-      background: var(--primary); 
-      color: white; 
-      text-align: center; 
-      padding: 2rem; 
-      border-radius: 10px; 
-      cursor: pointer; 
-      transition: transform 0.3s, box-shadow 0.3s; 
-    }
+    .menu-card {
+  background: var(--primary);
+  color: white !important;           ← tambah baris ni
+  font-weight: bold;                 ← tambah baris ni
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);  ← tambah baris ni
+  text-align: center;
+  padding: 2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
     .menu-card:hover { 
       transform: translateY(-10px); 
       box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
@@ -1888,6 +1890,7 @@
   </script>
 </body>
 </html>
+
 
 
 
