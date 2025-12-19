@@ -6,96 +6,305 @@
   <title>INSTAQLIM - Institut Tahfiz Al-Quran lil Muttaqin</title>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
   <style>
-  :root { 
-    --primary: #10b981; 
-    --secondary: #f59e0b; 
-    --danger: #ef4444; 
-    --light: #f0fdf4; 
-    --dark: #1f2937;
-    --warning: #f59e0b; 
-    --indigo: #6366f1; 
-    --red: #dc2626; 
-    --success: #10b981; 
-  }
-  [data-theme="dark"] { 
-    --bg-color: #0f172a; 
-    --card-bg: #1e293b; 
-    --text-color: #e2e8f0; 
-    --border-color: #4a5568; 
-    --light: #1e293b; 
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { 
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-    background: var(--light); 
-    color: #333; 
-    line-height: 1.6;
-    background-image: radial-gradient(circle at top left, rgba(16,185,129,0.05) 0%, transparent 50%), radial-gradient(circle at bottom right, rgba(245,158,11,0.05) 0%, transparent 50%);
-    position: relative; 
-  }
-  body::before { 
-    content: ''; 
-    position: absolute; 
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-image: linear-gradient(45deg, transparent 49%, rgba(16,185,129,0.03) 49%, rgba(16,185,129,0.03) 51%, transparent 51%),
-                     linear-gradient(-45deg, transparent 49%, rgba(245,158,11,0.03) 49%, rgba(245,158,11,0.03) 51%, transparent 51%);
-    background-size: 50px 50px; 
-    pointer-events: none; 
-    z-index: -1; 
-  }
-  h1, h2, h3, .logo h2 { font-family: 'Amiri', serif; color: var(--primary); }
-  header { 
-    background: linear-gradient(to right, var(--primary), #059669); 
-    color: white; 
-    padding: 1rem 0; 
-    position: relative; 
-    overflow: hidden; 
-  }
-  header::after { 
-    content: "بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"; 
-    position: absolute; 
-    top: 50%; left: 50%; 
-    transform: translate(-50%, -50%);
-    font-family: 'Amiri', serif; 
-    font-size: 4rem; 
-    opacity: 0.07; 
-    pointer-events: none; 
-    color: white; 
-  }
-  .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
-  .flex { display: flex; align-items: center; justify-content: space-between; }
-  .btn-logout { background: var(--danger); color: white; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none; font-weight: 500; }
-  main { padding: 2rem 0; }
-  .card { background: var(--card-bg, white); border-radius: 10px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
-  .menu-card { background: var(--primary); color: white; text-align: center; padding: 2rem; border-radius: 10px; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
-  .menu-card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-  .menu-card i { font-size: 3rem; margin-bottom: 1rem; }
-  table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-  th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border-color, #ddd); }
-  th { background: var(--light); }
-  .btn { padding: 0.5rem 1rem; border: none; border-radius: 5px; cursor: pointer; margin-right: 0.5rem; }
-  .btn-primary { background: var(--primary); color: white; }
-  .btn-success { background: var(--secondary); color: white; }
-  .btn-danger { background: var(--danger); color: white; }
-  .btn-edit { background: #f59e0b; color: white; }
-  .form-group { margin-bottom: 1rem; }
-  label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
-  input, textarea, select { width: 100%; padding: 0.75rem; border: 1px solid var(--border-color, #ccc); border-radius: 5px; background-color: var(--card-bg, white); color: var(--text-color, #333); }
-  .hidden { display: none !important; }
-  .login-container { max-width: 400px; margin: 5rem auto; padding: 2rem; background: var(--card-bg, white); border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-  .logo { text-align: center; margin-bottom: 2rem; font-size: 2rem; color: var(--primary); }
-  #modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-  #modal > div { background: var(--card-bg, white); border-radius: 10px; padding: 1.5rem; width: 90%; max-width: 600px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto; }
-  .toast { position: fixed; bottom: 20px; right: 20px; padding: 15px 25px; background: var(--success); color: white; border-radius: 5px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transform: translateY(100px); opacity: 0; transition: transform 0.3s, opacity 0.3s; z-index: 2000; }
-  .toast.show { transform: translateY(0); opacity: 1; }
-  .theme-toggle { position: fixed; bottom: 20px; left: 20px; background: var(--primary); color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1000; }
-  .search-filter { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
-  .search-filter input, .search-filter select { flex: 1; min-width: 200px; }
-</style>
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script
+    :root { 
+      --primary: #10b981; 
+      --secondary: #f59e0b; 
+      --danger: #ef4444; 
+      --light: #f0fdf4; 
+      --dark: #1f2937;
+      --warning: #f59e0b; 
+      --indigo: #6366f1; 
+      --red: #dc2626; 
+      --success: #10b981; 
+    }
+    [data-theme="dark"] { 
+      --bg-color: #0f172a; 
+      --card-bg: #1e293b; 
+      --text-color: #e2e8f0; 
+      --border-color: #4a5568; 
+      --light: #1e293b; 
+    }
+    * { 
+      margin:0; 
+      padding:0; 
+      box-sizing:border-box; 
+    }
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      background: var(--light); 
+      color: #333; 
+      line-height: 1.6;
+      background-image: radial-gradient(circle at top left, rgba(16,185,129,0.05) 0%, transparent 50%), radial-gradient(circle at bottom right, rgba(245,158,11,0.05) 0%, transparent 50%);
+      position: relative; 
+    }
+    body::before { 
+      content: ''; 
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+      right: 0; 
+      bottom: 0;
+      background-image: linear-gradient(45deg, transparent 49%, rgba(16,185,129,0.03) 49%, rgba(16,185,129,0.03) 51%, transparent 51%),
+                       linear-gradient(-45deg, transparent 49%, rgba(245,158,11,0.03) 49%, rgba(245,158,11,0.03) 51%, transparent 51%);
+      background-size: 50px 50px; 
+      pointer-events: none; 
+      z-index: -1; 
+    }
+    h1, h2, h3, .logo h2 { 
+      font-family: 'Amiri', serif; 
+      color: var(--primary); 
+    }
+    header { 
+      background: linear-gradient(to right, var(--primary), #059669); 
+      color: white; 
+      padding: 1rem 0; 
+      position: relative; 
+      overflow: hidden; 
+    }
+    header::after { 
+      content: "بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"; 
+      position: absolute; 
+      top: 50%; 
+      left: 50%; 
+      transform: translate(-50%, -50%);
+      font-family: 'Amiri', serif; 
+      font-size: 4rem; 
+      opacity: 0.07; 
+      pointer-events: none; 
+      color: white; 
+    }
+    .container { 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 0 1rem; 
+    }
+    .flex { 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+    }
+    .btn-logout { 
+      background: var(--danger); 
+      color: white; 
+      padding: 0.5rem 1rem; 
+      border-radius: 5px; 
+      text-decoration: none; 
+      font-weight: 500; 
+    }
+    main { 
+      padding: 2rem 0; 
+    }
+    .card { 
+      background: var(--card-bg, white); 
+      border-radius: 10px; 
+      padding: 1.5rem; 
+      margin-bottom: 1.5rem; 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+    }
+    .grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+      gap: 1.5rem; 
+      margin-top: 1rem; 
+    }
+    .menu-card { 
+      background: var(--primary); 
+      color: white; 
+      text-align: center; 
+      padding: 2rem; 
+      border-radius: 10px; 
+      cursor: pointer; 
+      transition: transform 0.3s, box-shadow 0.3s; 
+    }
+    .menu-card:hover { 
+      transform: translateY(-10px); 
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
+    }
+    .menu-card i { 
+      font-size: 3rem; 
+      margin-bottom: 1rem; 
+    }
+    table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      margin-top: 1rem; 
+    }
+    th, td { 
+      padding: 0.75rem; 
+      text-align: left; 
+      border-bottom: 1px solid var(--border-color, #ddd); 
+    }
+    th { 
+      background: var(--light); 
+    }
+    .btn { 
+      padding: 0.5rem 1rem; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer; 
+      margin-right: 0.5rem; 
+    }
+    .btn-primary { 
+      background: var(--primary); 
+      color: white; 
+    }
+    .btn-success { 
+      background: var(--secondary); 
+      color: white; 
+    }
+    .btn-danger { 
+      background: var(--danger); 
+      color: white; 
+    }
+    .btn-edit { 
+      background: #f59e0b; 
+      color: white; 
+    }
+    .form-group { 
+      margin-bottom: 1rem; 
+    }
+    label { 
+      display: block; 
+      margin-bottom: 0.5rem; 
+      font-weight: 600; 
+    }
+    input, textarea, select { 
+      width: 100%; 
+      padding: 0.75rem; 
+      border: 1px solid var(--border-color, #ccc); 
+      border-radius: 5px; 
+      background-color: var(--card-bg, white); 
+      color: var(--text-color, #333); 
+    }
+    .hidden { 
+      display: none !important; 
+    }
+    .text-center { 
+      text-align: center; 
+    }
+    .login-container { 
+      max-width: 400px; 
+      margin: 5rem auto; 
+      padding: 2rem; 
+      background: var(--card-bg, white); 
+      border-radius: 10px; 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+    }
+    .logo { 
+      text-align: center; 
+      margin-bottom: 2rem; 
+      font-size: 2rem; 
+      color: var(--primary); 
+    }
+    #modal { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: rgba(0,0,0,0.6); 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      z-index: 1000; 
+    }
+    #modal > div { 
+      background: var(--card-bg, white); 
+      border-radius: 10px; 
+      padding: 1.5rem; 
+      width: 90%; 
+      max-width: 600px; 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+      max-height: 90vh; 
+      overflow-y: auto; 
+    }
+    .toast { 
+      position: fixed; 
+      bottom: 20px; 
+      right: 20px; 
+      padding: 15px 25px; 
+      background: var(--success); 
+      color: white; 
+      border-radius: 5px; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+      transform: translateY(100px); 
+      opacity: 0; 
+      transition: transform 0.3s, opacity 0.3s; 
+      z-index: 2000; 
+    }
+    .toast.show { 
+      transform: translateY(0); 
+      opacity: 1; 
+    }
+    .theme-toggle { 
+      position: fixed; 
+      bottom: 20px; 
+      left: 20px; 
+      background: var(--primary); 
+      color: white; 
+      border-radius: 50%; 
+      width: 50px; 
+      height: 50px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      cursor: pointer; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+      z-index: 1000; 
+    }
+    .search-filter { 
+      display: flex; 
+      gap: 1rem; 
+      margin-bottom: 1rem; 
+      flex-wrap: wrap; 
+    }
+    .search-filter input, .search-filter select { 
+      flex: 1; 
+      min-width: 200px; 
+    }
+    .loading { 
+      display: inline-block; 
+      width: 20px; 
+      height: 20px; 
+      border: 3px solid rgba(255,255,255,.3); 
+      border-radius: 50%; 
+      border-top-color: #fff; 
+      animation: spin 1s ease-in-out infinite; 
+    }
+    @keyframes spin { 
+      to { 
+        transform: rotate(360deg); 
+      } 
+    }
+    .connection-status { 
+      position: fixed; 
+      top: 10px; 
+      right: 10px; 
+      padding: 5px 10px; 
+      border-radius: 5px; 
+      font-size: 12px; 
+      z-index: 3000; 
+    }
+    .connection-status.online { 
+      background: var(--success); 
+      color: white; 
+    }
+    .connection-status.offline { 
+      background: var(--danger); 
+      color: white; 
+    }
+    .offline-mode { 
+      background: #f8f9fa; 
+      color: #6c757d; 
+      padding: 10px; 
+      text-align: center; 
+      border-radius: 5px; 
+      margin-bottom: 10px; 
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
   <!-- Login Page -->
@@ -109,7 +318,12 @@
     <div class="form-group"><label>Nama Pengguna</label><input type="text" id="username"/></div>
     <div class="form-group"><label>Kata Laluan</label><input type="password" id="password"/></div>
     <button class="btn btn-primary" style="width:100%" onclick="login()">Log Masuk</button>
+    <div id="loginError" class="hidden" style="margin-top: 1rem; color: var(--danger); text-align: center;"></div>
+    <div id="offlineMode" class="offline-mode hidden">
+      <i class="fas fa-wifi"></i> Mod Luar Talian - Sesetengah fungsi mungkin tidak tersedia
+    </div>
   </div>
+
   <!-- Main App -->
   <div id="mainApp" class="hidden">
     <header>
@@ -121,6 +335,7 @@
         </div>
       </div>
     </header>
+
     <div class="container">
       <main>
         <!-- Admin Dashboard -->
@@ -128,8 +343,16 @@
           <h2 class="text-center">Papan Pemuka Pentadbir</h2>
           <div class="grid">
             <div class="menu-card" onclick="showSection('manageUsers')"><i class="fas fa-users"></i><h3>Pengurusan Pengguna</h3></div>
-            <div class="menu-card" onclick="show
-  
+            <div class="menu-card" onclick="showSection('manageStudents')"><i class="fas fa-user-graduate"></i><h3>Pengurusan Pelajar</h3></div>
+            <div class="menu-card" onclick="showSection('manageTeachers')"><i class="fas fa-chalkboard-teacher"></i><h3>Pengurusan Guru</h3></div>
+            <div class="menu-card" onclick="showSection('manageStaff')"><i class="fas fa-users-cog"></i><h3>Pengurusan Kakitangan</h3></div>
+            <div class="menu-card" onclick="showSection('manageClasses')"><i class="fas fa-door-open"></i><h3>Pengurusan Kelas</h3></div>
+            <div class="menu-card" onclick="showSection('manageSchedule')"><i class="fas fa-calendar-alt"></i><h3>Jadual Waktu</h3></div>
+            <div class="menu-card" onclick="showSection('manageAttendance')"><i class="fas fa-check-square"></i><h3>Kehadiran</h3></div>
+            <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Mengajar</h3></div>
+          </div>
+        </div>
+
         <!-- Guru Dashboard -->
         <div id="guruDashboard" class="hidden">
           <h2 class="text-center">Papan Pemuka Guru</h2>
@@ -289,7 +512,7 @@
 
   <script>
     // URL API Netlify Functions
-    const API_URL = 'https://script.google.com/macros/s/AKfycbyZE4UFh7V5V7Wak2chMN1Kz3kJjfXif_LRGlLkrweiC3X8qloJ-tjMhhJgb-uqHmsJ/exec';
+    const API_URL = '/.netlify/functions/api';
     
     // URL Google Apps Script untuk kegunaan rujukan
     const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyZE4UFh7V5V7Wak2chMN1Kz3kJjfXif_LRGlLkrweiC3X8qloJ-tjMhhJgb-uqHmsJ/exec';
@@ -316,7 +539,7 @@
             action, 
             ...payload,
             // Sertakan URL Google Apps Script sebagai parameter
-            googleAppsScriptUrl: 'https://script.google.com/macros/s/AKfycbyZE4UFh7V5V7Wak2chMN1Kz3kJjfXif_LRGlLkrweiC3X8qloJ-tjMhhJgb-uqHmsJ/exec'
+            googleAppsScriptUrl: GOOGLE_APPS_SCRIPT_URL
           })
         });
         
@@ -1378,6 +1601,7 @@
           // Kemas kini data tempatan
           schedule = newSchedule;
           saveLocalData('getSchedule', { schedule });
+          renderSchedule();
           showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
         }
         
@@ -1673,6 +1897,3 @@
   </script>
 </body>
 </html>
-
-
-
