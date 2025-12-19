@@ -533,8 +533,10 @@
   method: 'POST',
   // Hapus headers Content-Type supaya jadi simple request (tiada preflight)
   // headers: { 'Content-Type': 'application/json' },  ← HAPUS BARIS INI
-  body: JSON.stringify({ action, ...payload })
-});
+  body: JSON.stringify({
+  action,
+  ...payload
+})
         
         // Periksa jika respons adalah HTML (mungkin halaman ralat)
         const contentType = res.headers.get('content-type');
@@ -1890,6 +1892,7 @@
   </script>
 </body>
 </html>
+
 
 
 
