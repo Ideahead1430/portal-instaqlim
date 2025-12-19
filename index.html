@@ -1,38 +1,38 @@
-} < !DOCTYPE html >
-	< html lang = "ms" >
-	< head >
-	< meta charset = "UTF-8" / >
-	< meta name = "viewport"
-content = "width=device-width, initial-scale=1.0" / >
-	< title > INSTAQLIM - Institut Tahfiz Al - Quran lil Muttaqin < /title> < link href = "https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap"
-rel = "stylesheet" >
-	< style >
-	: root {
-		--primary: #10b981; 
-      --secondary: # f59e0b;
-		--danger: #ef4444;
-		--light: #f0fdf4;
-		--dark: #1f2937;
-      --warning: # f59e0b;
-		--indigo: #6366f1; 
-      --red: # dc2626;
-		--success: #10b981; 
+}<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>INSTAQLIM - Institut Tahfiz Al-Quran lil Muttaqin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root { 
+      --primary: #10b981; 
+      --secondary: #f59e0b; 
+      --danger: #ef4444; 
+      --light: #f0fdf4; 
+      --dark: #1f2937;
+      --warning: #f59e0b; 
+      --indigo: #6366f1; 
+      --red: #dc2626; 
+      --success: #10b981; 
     }
-    [data-theme= "dark"] {
-		--bg - color: #0f172a; 
-      --card-bg: # 1e293 b;
-		--text - color: #e2e8f0;
-		--border - color: #4a5568; 
-      --light: # 1e293 b;
-	} * {
-		margin: 0;
-		padding: 0;
-		box - sizing: border - box;
-	}
-body {
-	font - family: 'Segoe UI', Tahoma, Geneva, Verdana, sans - serif;
-	background: var (--light);
-	color: #333; 
+    [data-theme="dark"] { 
+      --bg-color: #0f172a; 
+      --card-bg: #1e293b; 
+      --text-color: #e2e8f0; 
+      --border-color: #4a5568; 
+      --light: #1e293b; 
+    }
+    * { 
+      margin:0; 
+      padding:0; 
+      box-sizing:border-box; 
+    }
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      background: var(--light); 
+      color: #333; 
       line-height: 1.6;
       background-image: radial-gradient(circle at top left, rgba(16,185,129,0.05) 0%, transparent 50%), radial-gradient(circle at bottom right, rgba(245,158,11,0.05) 0%, transparent 50%);
       position: relative; 
@@ -55,132 +55,128 @@ body {
       color: var(--primary); 
     }
     header { 
-      background: linear-gradient(to right, var(--primary), # 059669);
-color: white;
-padding: 1 rem 0;
-position: relative;
-overflow: hidden;
+      background: linear-gradient(to right, var(--primary), #059669); 
+      color: white; 
+      padding: 1rem 0; 
+      position: relative; 
+      overflow: hidden; 
+    }
+    header::after { 
+      content: "بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"; 
+      position: absolute; 
+      top: 50%; 
+      left: 50%; 
+      transform: translate(-50%, -50%);
+      font-family: 'Amiri', serif; 
+      font-size: 4rem; 
+      opacity: 0.07; 
+      pointer-events: none; 
+      color: white; 
+    }
+    .container { 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 0 1rem; 
+    }
+    .flex { 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+    }
+    .btn-logout { 
+      background: var(--danger); 
+      color: white; 
+      padding: 0.5rem 1rem; 
+      border-radius: 5px; 
+      text-decoration: none; 
+      font-weight: 500; 
+    }
+    main { 
+      padding: 2rem 0; 
+    }
+    .card { 
+      background: var(--card-bg, white); 
+      border-radius: 10px; 
+      padding: 1.5rem; 
+      margin-bottom: 1.5rem; 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+    }
+    .grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+      gap: 1.5rem; 
+      margin-top: 1rem; 
+    }
+    .menu-card {
+  background: var(--primary);
+  color: white !important;           ← tambah baris ni
+  font-weight: bold;                 ← tambah baris ni
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);  ← tambah baris ni
+  text-align: center;
+  padding: 2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
-header::after {
-		content: "بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
-		position: absolute;
-		top: 50 % ;
-		left: 50 % ;
-		transform: translate(-50 % , -50 % );
-		font - family: 'Amiri',
-		serif;
-		font - size: 4 rem;
-		opacity: 0.07;
-		pointer - events: none;
-		color: white;
-	}
-	.container {
-		max - width: 1200 px;
-		margin: 0 auto;
-		padding: 0 1 rem;
-	}
-	.flex {
-		display: flex;
-		align - items: center;
-		justify - content: space - between;
-	}
-	.btn - logout {
-		background: var (--danger);
-		color: white;
-		padding: 0.5 rem 1 rem;
-		border - radius: 5 px;
-		text - decoration: none;
-		font - weight: 500;
-	}
-main {
-	padding: 2 rem 0;
-}
-.card {
-	background: var (--card - bg, white);
-	border - radius: 10 px;
-	padding: 1.5 rem;
-	margin - bottom: 1.5 rem;
-	box - shadow: 0 4 px 15 px rgba(0, 0, 0, 0.05);
-}
-.grid {
-	display: grid;
-	grid - template - columns: repeat(auto - fit, minmax(280 px, 1 fr));
-	gap: 1.5 rem;
-	margin - top: 1 rem;
-}
-.menu - card {
-		background: var (--primary);
-		color: white!important;←tambah baris ni
-		font - weight: bold;←tambah baris ni
-		text - shadow: 1 px 1 px 2 px rgba(0, 0, 0, 0.5);←tambah baris ni
-		text - align: center;
-		padding: 2 rem;
-		border - radius: 10 px;
-		cursor: pointer;
-		transition: transform 0.3 s,
-		box - shadow 0.3 s;
-	}
-	.menu - card: hover {
-		transform: translateY(-10 px);
-		box - shadow: 0 10 px 20 px rgba(0, 0, 0, 0.1);
-	}
-	.menu - card i {
-		font - size: 3 rem;
-		margin - bottom: 1 rem;
-	}
-table {
-	width: 100 % ;
-	border - collapse: collapse;
-	margin - top: 1 rem;
-}
-th, td {
-	padding: 0.75 rem;
-	text - align: left;
-	border - bottom: 1 px solid
-	var (--border - color, #ddd);
-}
-th {
-	background: var (--light);
-}
-.btn {
-	padding: 0.5 rem 1 rem;
-	border: none;
-	border - radius: 5 px;
-	cursor: pointer;
-	margin - right: 0.5 rem;
-}
-.btn - primary {
-		background: var (--primary);
-		color: white;
-	}
-	.btn - success {
-		background: var (--secondary);
-		color: white;
-	}
-	.btn - danger {
-		background: var (--danger);
-		color: white;
-	}
-	.btn - edit {
-		background: #f59e0b;
-		color: white;
-	}
-	.form - group {
-		margin - bottom: 1 rem;
-	}
-label {
-	display: block;
-	margin - bottom: 0.5 rem;
-	font - weight: 600;
-}
-input, textarea, select {
-	width: 100 % ;
-	padding: 0.75 rem;
-	border: 1 px solid
-	var (--border - color, #ccc);
-	border - radius: 5 px;
-	background - color: var (--card - bg, white);
-	color: var (--text - color, #333); 
+    .menu-card:hover { 
+      transform: translateY(-10px); 
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
+    }
+    .menu-card i { 
+      font-size: 3rem; 
+      margin-bottom: 1rem; 
+    }
+    table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      margin-top: 1rem; 
+    }
+    th, td { 
+      padding: 0.75rem; 
+      text-align: left; 
+      border-bottom: 1px solid var(--border-color, #ddd); 
+    }
+    th { 
+      background: var(--light); 
+    }
+    .btn { 
+      padding: 0.5rem 1rem; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer; 
+      margin-right: 0.5rem; 
+    }
+    .btn-primary { 
+      background: var(--primary); 
+      color: white; 
+    }
+    .btn-success { 
+      background: var(--secondary); 
+      color: white; 
+    }
+    .btn-danger { 
+      background: var(--danger); 
+      color: white; 
+    }
+    .btn-edit { 
+      background: #f59e0b; 
+      color: white; 
+    }
+    .form-group { 
+      margin-bottom: 1rem; 
+    }
+    label { 
+      display: block; 
+      margin-bottom: 0.5rem; 
+      font-weight: 600; 
+    }
+    input, textarea, select { 
+      width: 100%; 
+      padding: 0.75rem; 
+      border: 1px solid var(--border-color, #ccc); 
+      border-radius: 5px; 
+      background-color: var(--card-bg, white); 
+      color: var(--text-color, #333); 
     }
     .hidden { 
       display: none !important; 
@@ -202,711 +198,695 @@ input, textarea, select {
       font-size: 2rem; 
       color: var(--primary); 
     }
-    # modal {
-				position: fixed;
-				top: 0;
-				left: 0;
-				width: 100 % ;
-				height: 100 % ;
-				background: rgba(0, 0, 0, 0.6);
-				display: flex;
-				align - items: center;
-				justify - content: center;
-				z - index: 1000;
-			}#
-			modal > div {
-				background: var (--card - bg, white);
-				border - radius: 10 px;
-				padding: 1.5 rem;
-				width: 90 % ;
-				max - width: 600 px;
-				box - shadow: 0 10 px 30 px rgba(0, 0, 0, 0.3);
-				max - height: 90 vh;
-				overflow - y: auto;
-			}
-			.toast {
-				position: fixed;
-				bottom: 20 px;
-				right: 20 px;
-				padding: 15 px 25 px;
-				background: var (--success);
-				color: white;
-				border - radius: 5 px;
-				box - shadow: 0 4 px 12 px rgba(0, 0, 0, 0.15);
-				transform: translateY(100 px);
-				opacity: 0;
-				transition: transform 0.3 s,
-				opacity 0.3 s;
-				z - index: 2000;
-			}
-			.toast.show {
-				transform: translateY(0);
-				opacity: 1;
-			}
-			.theme - toggle {
-				position: fixed;
-				bottom: 20 px;
-				left: 20 px;
-				background: var (--primary);
-				color: white;
-				border - radius: 50 % ;
-				width: 50 px;
-				height: 50 px;
-				display: flex;
-				align - items: center;
-				justify - content: center;
-				cursor: pointer;
-				box - shadow: 0 4 px 12 px rgba(0, 0, 0, 0.15);
-				z - index: 1000;
-			}
-			.search - filter {
-				display: flex;
-				gap: 1 rem;
-				margin - bottom: 1 rem;
-				flex - wrap: wrap;
-			}
-			.search - filter input, .search - filter select {
-				flex: 1;
-				min - width: 200 px;
-			}
-			.loading {
-				display: inline - block;
-				width: 20 px;
-				height: 20 px;
-				border: 3 px solid rgba(255, 255, 255, .3);
-				border - radius: 50 % ;
-				border - top - color: #fff;
-				animation: spin 1 s ease - in -out infinite;
-			}@
-			keyframes spin {
-				to {
-					transform: rotate(360 deg);
-				}
-			}
-			.connection - status {
-				position: fixed;
-				top: 10 px;
-				right: 10 px;
-				padding: 5 px 10 px;
-				border - radius: 5 px;
-				font - size: 12 px;
-				z - index: 3000;
-			}
-			.connection - status.online {
-				background: var (--success);
-				color: white;
-			}
-			.connection - status.offline {
-				background: var (--danger);
-				color: white;
-			}
-			.offline - mode {
-				background: #f8f9fa;
-				color: #6c757d; 
+    #modal { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: rgba(0,0,0,0.6); 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      z-index: 1000; 
+    }
+    #modal > div { 
+      background: var(--card-bg, white); 
+      border-radius: 10px; 
+      padding: 1.5rem; 
+      width: 90%; 
+      max-width: 600px; 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+      max-height: 90vh; 
+      overflow-y: auto; 
+    }
+    .toast { 
+      position: fixed; 
+      bottom: 20px; 
+      right: 20px; 
+      padding: 15px 25px; 
+      background: var(--success); 
+      color: white; 
+      border-radius: 5px; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+      transform: translateY(100px); 
+      opacity: 0; 
+      transition: transform 0.3s, opacity 0.3s; 
+      z-index: 2000; 
+    }
+    .toast.show { 
+      transform: translateY(0); 
+      opacity: 1; 
+    }
+    .theme-toggle { 
+      position: fixed; 
+      bottom: 20px; 
+      left: 20px; 
+      background: var(--primary); 
+      color: white; 
+      border-radius: 50%; 
+      width: 50px; 
+      height: 50px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      cursor: pointer; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+      z-index: 1000; 
+    }
+    .search-filter { 
+      display: flex; 
+      gap: 1rem; 
+      margin-bottom: 1rem; 
+      flex-wrap: wrap; 
+    }
+    .search-filter input, .search-filter select { 
+      flex: 1; 
+      min-width: 200px; 
+    }
+    .loading { 
+      display: inline-block; 
+      width: 20px; 
+      height: 20px; 
+      border: 3px solid rgba(255,255,255,.3); 
+      border-radius: 50%; 
+      border-top-color: #fff; 
+      animation: spin 1s ease-in-out infinite; 
+    }
+    @keyframes spin { 
+      to { 
+        transform: rotate(360deg); 
+      } 
+    }
+    .connection-status { 
+      position: fixed; 
+      top: 10px; 
+      right: 10px; 
+      padding: 5px 10px; 
+      border-radius: 5px; 
+      font-size: 12px; 
+      z-index: 3000; 
+    }
+    .connection-status.online { 
+      background: var(--success); 
+      color: white; 
+    }
+    .connection-status.offline { 
+      background: var(--danger); 
+      color: white; 
+    }
+    .offline-mode { 
+      background: #f8f9fa; 
+      color: #6c757d; 
       padding: 10px; 
       text-align: center; 
       border-radius: 5px; 
       margin-bottom: 10px; 
     }
   </style>
-  <link rel= "stylesheet"
-				href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" / >
-				< script src = "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" > < /script> < script src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" > < /script> < /head> < body >
-				<!-- Login Page -->
-				< div id = "loginPage"
-				class = "login-container" >
-				< div class = "logo" >
-				< img src = "https://arleta.site/interactivelink/2950/Logo-Maahad.JPG"
-				alt = "Logo INSTAQLIM"
-				style = "width: 150px; margin-bottom: 1rem;" >
-				< h2 > INSTAQLIM < /h2> < p > Institut Tahfiz Al - Quran lil Muttaqin < /p> < /div> < h3 class = "text-center" > Log Masuk Sistem < /h3> < div class = "form-group" > < label > Nama Pengguna < /label><input type="text" id="username"/ > < /div> < div class = "form-group" > < label > Kata Laluan < /label><input type="password" id="password"/ > < /div> < button class = "btn btn-primary"
-				style = "width:100%"
-				onclick = "login()" > Log Masuk < /button> < div id = "loginError"
-				class = "hidden"
-				style = "margin-top: 1rem; color: var(--danger); text-align: center;" > < /div> < div id = "offlineMode"
-				class = "offline-mode hidden" >
-				< i class = "fas fa-wifi" > < /i> Mod Luar Talian - Sesetengah fungsi mungkin tidak tersedia < /div> < /div>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <!-- Login Page -->
+  <div id="loginPage" class="login-container">
+    <div class="logo">
+      <img src="https://arleta.site/interactivelink/2950/Logo-Maahad.JPG" alt="Logo INSTAQLIM" style="width: 150px; margin-bottom: 1rem;">
+      <h2>INSTAQLIM</h2>
+      <p>Institut Tahfiz Al-Quran lil Muttaqin</p>
+    </div>
+    <h3 class="text-center">Log Masuk Sistem</h3>
+    <div class="form-group"><label>Nama Pengguna</label><input type="text" id="username"/></div>
+    <div class="form-group"><label>Kata Laluan</label><input type="password" id="password"/></div>
+    <button class="btn btn-primary" style="width:100%" onclick="login()">Log Masuk</button>
+    <div id="loginError" class="hidden" style="margin-top: 1rem; color: var(--danger); text-align: center;"></div>
+    <div id="offlineMode" class="offline-mode hidden">
+      <i class="fas fa-wifi"></i> Mod Luar Talian - Sesetengah fungsi mungkin tidak tersedia
+    </div>
+  </div>
 
-				<!-- Main App -->
-				< div id = "mainApp"
-				class = "hidden" >
-				< header >
-				< div class = "container flex" >
-				< h1 > INSTAQLIM < /h1> < div >
-				< span > Selamat Datang,
-				< strong id = "userName" > < /strong> (<span id="userRole"></span > ) < /span> < a href = "#"
-			class = "btn-logout"
-			onclick = "logout()" > Log Keluar < /a> < /div> < /div> < /header>
+  <!-- Main App -->
+  <div id="mainApp" class="hidden">
+    <header>
+      <div class="container flex">
+        <h1>INSTAQLIM</h1>
+        <div>
+          <span>Selamat Datang, <strong id="userName"></strong> (<span id="userRole"></span>)</span>
+          <a href="#" class="btn-logout" onclick="logout()">Log Keluar</a>
+        </div>
+      </div>
+    </header>
 
-			< div class = "container" >
-			< main >
-			<!-- Admin Dashboard -->
-			< div id = "adminDashboard"
-			class = "hidden" >
-			< h2 class = "text-center" > Papan Pemuka Pentadbir < /h2> < div class = "grid" >
-			< div class = "menu-card"
-			onclick = "showSection('manageUsers')" > < i class = "fas fa-users" > < /i><h3>Pengurusan Pengguna</h
-			3 > < /div> < div class = "menu-card"
-			onclick = "showSection('manageStudents')" > < i class = "fas fa-user-graduate" > < /i><h3>Pengurusan Pelajar</h
-			3 > < /div> < div class = "menu-card"
-			onclick = "showSection('manageTeachers')" > < i class = "fas fa-chalkboard-teacher" > < /i><h3>Pengurusan Guru</h
-			3 > < /div> < div class = "menu-card"
-			onclick = "showSection('manageStaff')" > < i class = "fas fa-users-cog" > < /i><h3>Pengurusan Kakitangan</h
-			3 > < /div> < div class = "menu-card"
-			onclick = "showSection('manageClasses')" > < i class = "fas fa-door-open" > < /i><h3>Pengurusan Kelas</h
-			3 > < /div> < div class = "menu-card"
-			onclick = "showSection('manageSchedule')" > < i class = "fas fa-calendar-alt" > < /i><h3>Jadual Waktu</h
-			3 > < /div> < div class = "menu-card"
-			onclick = "showSection('manageAttendance')" > < i class = "fas fa-check-square" > < /i><h3>Kehadiran</h
-			3 > < /div> < div class = "menu-card"
-			onclick = "showSection('viewTeachingReports')" > < i class = "fas fa-file-alt" > < /i><h3>Laporan Mengajar</h
-			3 > < /div> < /div> < /div>
+    <div class="container">
+      <main>
+        <!-- Admin Dashboard -->
+        <div id="adminDashboard" class="hidden">
+          <h2 class="text-center">Papan Pemuka Pentadbir</h2>
+          <div class="grid">
+            <div class="menu-card" onclick="showSection('manageUsers')"><i class="fas fa-users"></i><h3>Pengurusan Pengguna</h3></div>
+            <div class="menu-card" onclick="showSection('manageStudents')"><i class="fas fa-user-graduate"></i><h3>Pengurusan Pelajar</h3></div>
+            <div class="menu-card" onclick="showSection('manageTeachers')"><i class="fas fa-chalkboard-teacher"></i><h3>Pengurusan Guru</h3></div>
+            <div class="menu-card" onclick="showSection('manageStaff')"><i class="fas fa-users-cog"></i><h3>Pengurusan Kakitangan</h3></div>
+            <div class="menu-card" onclick="showSection('manageClasses')"><i class="fas fa-door-open"></i><h3>Pengurusan Kelas</h3></div>
+            <div class="menu-card" onclick="showSection('manageSchedule')"><i class="fas fa-calendar-alt"></i><h3>Jadual Waktu</h3></div>
+            <div class="menu-card" onclick="showSection('manageAttendance')"><i class="fas fa-check-square"></i><h3>Kehadiran</h3></div>
+            <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Mengajar</h3></div>
+          </div>
+        </div>
 
-			<!-- Guru Dashboard -->
-			< div id = "guruDashboard"
-			class = "hidden" >
-			< h2 class = "text-center" > Papan Pemuka Guru < /h2> < div class = "grid" >
-			< div class = "menu-card"
-			onclick = "showSection('viewSchedule')" > < i class = "fas fa-calendar-alt" > < /i><h3>Lihat Jadual</h
-			3 > < /div> < div class = "menu-card"
-			onclick = "showSection('teachingReportForm')" > < i class = "fas fa-file-alt" > < /i><h3>Laporan Harian</h
-			3 > < /div> < div class = "menu-card"
-			onclick = "showSection('viewTeachingReports')" > < i class = "fas fa-file-alt" > < /i><h3>Laporan Saya</h
-			3 > < /div> < /div> < /div>
+        <!-- Guru Dashboard -->
+        <div id="guruDashboard" class="hidden">
+          <h2 class="text-center">Papan Pemuka Guru</h2>
+          <div class="grid">
+            <div class="menu-card" onclick="showSection('viewSchedule')"><i class="fas fa-calendar-alt"></i><h3>Lihat Jadual</h3></div>
+            <div class="menu-card" onclick="showSection('teachingReportForm')"><i class="fas fa-file-alt"></i><h3>Laporan Harian</h3></div>
+            <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Saya</h3></div>
+          </div>
+        </div>
 
-			<!-- Sections -->
-			< div id = "sections"
-			class = "hidden" >
+        <!-- Sections -->
+        <div id="sections" class="hidden">
 
-			<!-- Pengurusan Pengguna -->
-			< div id = "manageUsers"
-			class = "card hidden" >
-			< h3 > Pengurusan Pengguna Sistem < /h3> < button class = "btn btn-success"
-			onclick = "openAddUser()" > +Tambah Pengguna < /button> < div class = "search-filter" >
-			< input type = "text"
-			id = "userSearch"
-			placeholder = "Cari nama/username..."
-			onkeyup = "filterTable('userTable', this.value)" >
-			< select id = "userRoleFilter"
-			onchange = "filterTable('userTable', document.getElementById('userSearch').value, this.value)" >
-			< option value = "" > Semua Peranan < /option> < option value = "admin" > Pentadbir < /option> < option value = "guru" > Guru < /option> < option value = "staff" > Kakitangan < /option> < /select> < /div> < table id = "userTable" >
-			< thead > < tr > < th > Username < /th><th>Nama</th > < th > Peranan < /th><th>No. KP</th > < th > Status < /th><th>Tindakan</th > < /tr></thead >
-			< tbody > < /tbody> < /table> < /div>
+          <!-- Pengurusan Pengguna -->
+          <div id="manageUsers" class="card hidden">
+            <h3>Pengurusan Pengguna Sistem</h3>
+            <button class="btn btn-success" onclick="openAddUser()">+ Tambah Pengguna</button>
+            <div class="search-filter">
+              <input type="text" id="userSearch" placeholder="Cari nama/username..." onkeyup="filterTable('userTable', this.value)">
+              <select id="userRoleFilter" onchange="filterTable('userTable', document.getElementById('userSearch').value, this.value)">
+                <option value="">Semua Peranan</option>
+                <option value="admin">Pentadbir</option>
+                <option value="guru">Guru</option>
+                <option value="staff">Kakitangan</option>
+              </select>
+            </div>
+            <table id="userTable">
+              <thead><tr><th>Username</th><th>Nama</th><th>Peranan</th><th>No. KP</th><th>Status</th><th>Tindakan</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
 
-			<!-- Pengurusan Pelajar -->
-			< div id = "manageStudents"
-			class = "card hidden" >
-			< h3 > Pengurusan Pelajar < /h3> < button class = "btn btn-success"
-			onclick = "openAddStudent()" > +Tambah Pelajar < /button> < div class = "search-filter" >
-			< input type = "text"
-			id = "studentSearch"
-			placeholder = "Cari nama/no KP..."
-			onkeyup = "filterTable('studentTable', this.value)" >
-			< select id = "studentClassFilter" > < option value = "" > Semua Kelas < /option></select >
-			< /div> < table id = "studentTable" >
-			< thead > < tr > < th > ID < /th><th>Nama</th > < th > No.KP < /th><th>Kelas</th > < th > Wali < /th><th>No HP Wali</th > < th > Tindakan < /th></tr > < /thead> < tbody > < /tbody> < /table> < /div>
+          <!-- Pengurusan Pelajar -->
+          <div id="manageStudents" class="card hidden">
+            <h3>Pengurusan Pelajar</h3>
+            <button class="btn btn-success" onclick="openAddStudent()">+ Tambah Pelajar</button>
+            <div class="search-filter">
+              <input type="text" id="studentSearch" placeholder="Cari nama/no KP..." onkeyup="filterTable('studentTable', this.value)">
+              <select id="studentClassFilter"><option value="">Semua Kelas</option></select>
+            </div>
+            <table id="studentTable">
+              <thead><tr><th>ID</th><th>Nama</th><th>No. KP</th><th>Kelas</th><th>Wali</th><th>No HP Wali</th><th>Tindakan</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
 
-			<!-- Pengurusan Guru -->
-			< div id = "manageTeachers"
-			class = "card hidden" >
-			< h3 > Pengurusan Guru < /h3> < button class = "btn btn-success"
-			onclick = "openAddTeacher()" > +Tambah Guru < /button> < table id = "teacherTable" >
-			< thead > < tr > < th > ID < /th><th>Nama</th > < th > No.KP < /th><th>Mata Pelajaran</th > < th > No HP < /th><th>Tindakan</th > < /tr></thead >
-			< tbody > < /tbody> < /table> < /div>
+          <!-- Pengurusan Guru -->
+          <div id="manageTeachers" class="card hidden">
+            <h3>Pengurusan Guru</h3>
+            <button class="btn btn-success" onclick="openAddTeacher()">+ Tambah Guru</button>
+            <table id="teacherTable">
+              <thead><tr><th>ID</th><th>Nama</th><th>No. KP</th><th>Mata Pelajaran</th><th>No HP</th><th>Tindakan</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
 
-			<!-- Pengurusan Kakitangan -->
-			< div id = "manageStaff"
-			class = "card hidden" >
-			< h3 > Pengurusan Kakitangan < /h3> < button class = "btn btn-success"
-			onclick = "openAddStaff()" > +Tambah Kakitangan < /button> < table id = "staffTable" >
-			< thead > < tr > < th > ID < /th><th>Nama</th > < th > No.KP < /th><th>Jawatan</th > < th > No HP < /th><th>Tindakan</th > < /tr></thead >
-			< tbody > < /tbody> < /table> < /div>
+          <!-- Pengurusan Kakitangan -->
+          <div id="manageStaff" class="card hidden">
+            <h3>Pengurusan Kakitangan</h3>
+            <button class="btn btn-success" onclick="openAddStaff()">+ Tambah Kakitangan</button>
+            <table id="staffTable">
+              <thead><tr><th>ID</th><th>Nama</th><th>No. KP</th><th>Jawatan</th><th>No HP</th><th>Tindakan</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
 
-			<!-- Pengurusan Kelas -->
-			< div id = "manageClasses"
-			class = "card hidden" >
-			< h3 > Pengurusan Kelas < /h3> < button class = "btn btn-success"
-			onclick = "openAddClass()" > +Tambah Kelas < /button> < table id = "classTable" >
-			< thead > < tr > < th > ID < /th><th>Nama Kelas</th > < th > Guru Kelas < /th><th>Tindakan</th > < /tr></thead >
-			< tbody > < /tbody> < /table> < /div>
+          <!-- Pengurusan Kelas -->
+          <div id="manageClasses" class="card hidden">
+            <h3>Pengurusan Kelas</h3>
+            <button class="btn btn-success" onclick="openAddClass()">+ Tambah Kelas</button>
+            <table id="classTable">
+              <thead><tr><th>ID</th><th>Nama Kelas</th><th>Guru Kelas</th><th>Tindakan</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
 
-			<!-- Jadual Waktu -->
-			< div id = "manageSchedule"
-			class = "card hidden" >
-			< h3 > Jadual Waktu < /h3> < button class = "btn btn-success"
-			onclick = "saveSchedule()" > Simpan Jadual < /button> < table id = "scheduleTable" >
-			< thead > < tr > < th > Waktu / Hari < /th><th>Isnin</th > < th > Selasa < /th><th>Rabu</th > < th > Khamis < /th><th>Jumaat</th > < /tr></thead >
-			< tbody >
-			< tr > < td > 8: 00 - 9: 00 < /td><td><input type="text" data-row="0" data-col="0"></td > < td > < input type = "text"
-			data - row = "0"
-			data - col = "1" > < /td><td><input type="text" data-row="0" data-col="2"></td > < td > < input type = "text"
-			data - row = "0"
-			data - col = "3" > < /td><td><input type="text" data-row="0" data-col="4"></td > < /tr> < tr > < td > 9: 00 - 10: 00 < /td><td><input type="text" data-row="1" data-col="0"></td > < td > < input type = "text"
-			data - row = "1"
-			data - col = "1" > < /td><td><input type="text" data-row="1" data-col="2"></td > < td > < input type = "text"
-			data - row = "1"
-			data - col = "3" > < /td><td><input type="text" data-row="1" data-col="4"></td > < /tr> < tr > < td > 10: 00 - 11: 00 < /td><td><input type="text" data-row="2" data-col="0"></td > < td > < input type = "text"
-			data - row = "2"
-			data - col = "1" > < /td><td><input type="text" data-row="2" data-col="2"></td > < td > < input type = "text"
-			data - row = "2"
-			data - col = "3" > < /td><td><input type="text" data-row="2" data-col="4"></td > < /tr> < tr > < td > 11: 00 - 12: 00 < /td><td><input type="text" data-row="3" data-col="0"></td > < td > < input type = "text"
-			data - row = "3"
-			data - col = "1" > < /td><td><input type="text" data-row="3" data-col="2"></td > < td > < input type = "text"
-			data - row = "3"
-			data - col = "3" > < /td><td><input type="text" data-row="3" data-col="4"></td > < /tr> < tr > < td > 12: 00 - 13: 00 < /td><td><input type="text" data-row="4" data-col="0"></td > < td > < input type = "text"
-			data - row = "4"
-			data - col = "1" > < /td><td><input type="text" data-row="4" data-col="2"></td > < td > < input type = "text"
-			data - row = "4"
-			data - col = "3" > < /td><td><input type="text" data-row="4" data-col="4"></td > < /tr> < /tbody> < /table> < /div>
+          <!-- Jadual Waktu -->
+          <div id="manageSchedule" class="card hidden">
+            <h3>Jadual Waktu</h3>
+            <button class="btn btn-success" onclick="saveSchedule()">Simpan Jadual</button>
+            <table id="scheduleTable">
+              <thead><tr><th>Waktu/Hari</th><th>Isnin</th><th>Selasa</th><th>Rabu</th><th>Khamis</th><th>Jumaat</th></tr></thead>
+              <tbody>
+                <tr><td>8:00-9:00</td><td><input type="text" data-row="0" data-col="0"></td><td><input type="text" data-row="0" data-col="1"></td><td><input type="text" data-row="0" data-col="2"></td><td><input type="text" data-row="0" data-col="3"></td><td><input type="text" data-row="0" data-col="4"></td></tr>
+                <tr><td>9:00-10:00</td><td><input type="text" data-row="1" data-col="0"></td><td><input type="text" data-row="1" data-col="1"></td><td><input type="text" data-row="1" data-col="2"></td><td><input type="text" data-row="1" data-col="3"></td><td><input type="text" data-row="1" data-col="4"></td></tr>
+                <tr><td>10:00-11:00</td><td><input type="text" data-row="2" data-col="0"></td><td><input type="text" data-row="2" data-col="1"></td><td><input type="text" data-row="2" data-col="2"></td><td><input type="text" data-row="2" data-col="3"></td><td><input type="text" data-row="2" data-col="4"></td></tr>
+                <tr><td>11:00-12:00</td><td><input type="text" data-row="3" data-col="0"></td><td><input type="text" data-row="3" data-col="1"></td><td><input type="text" data-row="3" data-col="2"></td><td><input type="text" data-row="3" data-col="3"></td><td><input type="text" data-row="3" data-col="4"></td></tr>
+                <tr><td>12:00-13:00</td><td><input type="text" data-row="4" data-col="0"></td><td><input type="text" data-row="4" data-col="1"></td><td><input type="text" data-row="4" data-col="2"></td><td><input type="text" data-row="4" data-col="3"></td><td><input type="text" data-row="4" data-col="4"></td></tr>
+              </tbody>
+            </table>
+          </div>
 
-			<!-- Lihat Jadual Guru -->
-			< div id = "viewSchedule"
-			class = "card hidden" >
-			< h3 > Jadual Waktu Saya < /h3> < table id = "viewScheduleTable" >
-			< thead > < tr > < th > Waktu / Hari < /th><th>Isnin</th > < th > Selasa < /th><th>Rabu</th > < th > Khamis < /th><th>Jumaat</th > < /tr></thead >
-			< tbody > < /tbody> < /table> < /div>
+          <!-- Lihat Jadual Guru -->
+          <div id="viewSchedule" class="card hidden">
+            <h3>Jadual Waktu Saya</h3>
+            <table id="viewScheduleTable">
+              <thead><tr><th>Waktu/Hari</th><th>Isnin</th><th>Selasa</th><th>Rabu</th><th>Khamis</th><th>Jumaat</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
 
-			<!-- Laporan Mengajar -->
-			< div id = "viewTeachingReports"
-			class = "card hidden" >
-			< h3 > Laporan Mengajar Guru < /h3> < div style = "margin:1rem 0; text-align:right;" >
-			< button class = "btn btn-print"
-			onclick = "window.print()" > Cetak < /button> < button class = "btn btn-pdf"
-			onclick = "exportTeachingReportPDF()" > PDF < /button> < /div> < div id = "teachingReportPrintSection" >
-			< div class = "report-header text-center" >
-			< img src = "https://arleta.site/interactivelink/2950/Logo-Maahad.JPG"
-			alt = "Logo"
-			style = "width:120px;" >
-			< h2 > Laporan Mengajar Harian Guru < /h2> < p > < strong > INSTAQLIM < /strong> | Tarikh: <span id="printDate"></span > < /p> < /div> < table id = "teachingReportTable" >
-			< thead > < tr > < th > Bil < /th><th>Guru</th > < th > Tarikh < /th><th>Kelas</th > < th > Topik < /th><th>Catatan</th > < th > Lampiran < /th></tr > < /thead> < tbody > < /tbody> < /table> < /div> < /div>
+          <!-- Laporan Mengajar -->
+          <div id="viewTeachingReports" class="card hidden">
+            <h3>Laporan Mengajar Guru</h3>
+            <div style="margin:1rem 0; text-align:right;">
+              <button class="btn btn-print" onclick="window.print()">Cetak</button>
+              <button class="btn btn-pdf" onclick="exportTeachingReportPDF()">PDF</button>
+            </div>
+            <div id="teachingReportPrintSection">
+              <div class="report-header text-center">
+                <img src="https://arleta.site/interactivelink/2950/Logo-Maahad.JPG" alt="Logo" style="width:120px;">
+                <h2>Laporan Mengajar Harian Guru</h2>
+                <p><strong>INSTAQLIM</strong> | Tarikh: <span id="printDate"></span></p>
+              </div>
+              <table id="teachingReportTable">
+                <thead><tr><th>Bil</th><th>Guru</th><th>Tarikh</th><th>Kelas</th><th>Topik</th><th>Catatan</th><th>Lampiran</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
 
-			<!-- Form Laporan Mengajar -->
-			< div id = "teachingReportForm"
-			class = "card hidden" >
-			< h3 > Laporan Mengajar Harian < /h3> < div class = "form-group" > < label > Tarikh < /label><input type="date" id="reportDate" required></div >
-			< div class = "form-group" > < label > Kelas < /label><select id="reportClass" required><option value="">Pilih Kelas</option > < /select></div >
-			< div class = "form-group" > < label > Topik < /label><input type="text" id="reportTopic" required></div >
-			< div class = "form-group" > < label > Catatan < /label><textarea id="reportNotes" rows="5" required></textarea > < /div> < div class = "form-group" >
-			< label > Lampiran(max 5 MB) < /label> < input type = "file"
-			id = "reportAttachment"
-			accept = "image/*,.pdf" >
-			< div id = "attachmentPreview" > < /div> < /div> < button class = "btn btn-success"
-			onclick = "saveTeachingReport()" > Hantar Laporan < /button> < /div>
+          <!-- Form Laporan Mengajar -->
+          <div id="teachingReportForm" class="card hidden">
+            <h3>Laporan Mengajar Harian</h3>
+            <div class="form-group"><label>Tarikh</label><input type="date" id="reportDate" required></div>
+            <div class="form-group"><label>Kelas</label><select id="reportClass" required><option value="">Pilih Kelas</option></select></div>
+            <div class="form-group"><label>Topik</label><input type="text" id="reportTopic" required></div>
+            <div class="form-group"><label>Catatan</label><textarea id="reportNotes" rows="5" required></textarea></div>
+            <div class="form-group">
+              <label>Lampiran (max 5MB)</label>
+              <input type="file" id="reportAttachment" accept="image/*,.pdf">
+              <div id="attachmentPreview"></div>
+            </div>
+            <button class="btn btn-success" onclick="saveTeachingReport()">Hantar Laporan</button>
+          </div>
 
-			< /div> < /main> < /div> < /div>
+        </div>
+      </main>
+    </div>
+  </div>
 
-			<!-- Modal -->
-			< div id = "modal"
-			class = "hidden" >
-			< div >
-			< h3 id = "modalTitle" > Tambah Data < /h3> < div id = "dataForm" > < /div> < div style = "margin-top:1.5rem; text-align:right;" >
-			< button type = "button"
-			class = "btn"
-			onclick = "closeModal()" > Batal < /button> < button type = "button"
-			class = "btn btn-primary"
-			id = "saveBtn" > Simpan < /button> < /div> < /div> < /div>
+  <!-- Modal -->
+  <div id="modal" class="hidden">
+    <div>
+      <h3 id="modalTitle">Tambah Data</h3>
+      <div id="dataForm"></div>
+      <div style="margin-top:1.5rem; text-align:right;">
+        <button type="button" class="btn" onclick="closeModal()">Batal</button>
+        <button type="button" class="btn btn-primary" id="saveBtn">Simpan</button>
+      </div>
+    </div>
+  </div>
 
-			< div id = "toast"
-			class = "toast" > < /div> < div class = "theme-toggle"
-			onclick = "toggleTheme()"
-			title = "Tukar Tema" > < i class = "fas fa-moon"
-			id = "themeIcon" > < /i></div >
-			< div id = "connectionStatus"
-			class = "connection-status hidden" > Memeriksa sambungan... < /div>
+  <div id="toast" class="toast"></div>
+  <div class="theme-toggle" onclick="toggleTheme()" title="Tukar Tema"><i class="fas fa-moon" id="themeIcon"></i></div>
+  <div id="connectionStatus" class="connection-status hidden">Memeriksa sambungan...</div>
 
-			< script >
-			// URL API GitHub Functions
-			const API_URL = 'https://script.google.com/macros/s/AKfycbyEyKDMYpJ38mwNhK-R0jGIml6RcPGZLSR6OIYWO-XRJDnp7v4ygBdiuL8X2ZUGA0mN/exec';
+  <script>
+    // URL API GitHub Functions
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyEyKDMYpJ38mwNhK-R0jGIml6RcPGZLSR6OIYWO-XRJDnp7v4ygBdiuL8X2ZUGA0mN/exec';
+       
+    let currentUser = null;
+    let currentSection = '';
+    let classes = [], students = [], teachers = [], staff = [], users = [], schedule = Array(5).fill().map(() => Array(5).fill(''));
+    let isOnline = navigator.onLine;
+    let pendingOperations = [];
 
-			let currentUser = null;
-			let currentSection = '';
-			let classes = [], students = [], teachers = [], staff = [], users = [], schedule = Array(5).fill().map(() => Array(5).fill(''));
-			let isOnline = navigator.onLine;
-			let pendingOperations = [];
+    // Fungsi untuk panggilan API dengan pemprosesan ralat yang lebih baik
+    async function apiCall(action, payload = {}) {
+      try {
+        // Paparkan status sambungan
+        updateConnectionStatus('Memuat...', 'loading');
+        
+        // Gunakan Functions untuk mengatasi isu CORS
+       const res = await fetch(API_URL, {
+  method: 'POST',
+  // Hapus headers Content-Type supaya jadi simple request (tiada preflight)
+  // headers: { 'Content-Type': 'application/json' },  ← HAPUS BARIS INI
+  body: JSON.stringify({
+  action,
+  ...payload
+})
+        
+        // Periksa jika respons adalah HTML (mungkin halaman ralat)
+        const contentType = res.headers.get('content-type');
+        console.log('Response content type:', contentType);
+        
+        // Dapatkan teks respons terlebih dahulu
+        const responseText = await res.text();
+        console.log('Response text:', responseText);
+        
+        // Cuba menghurai JSON
+        let data;
+        try {
+          data = JSON.parse(responseText);
+        } catch (e) {
+          console.error('Failed to parse JSON:', e);
+          updateConnectionStatus('Ralat server', 'error');
+          throw new Error('Server mengembalikan respons yang tidak dijangka. Sila cuba lagi.');
+        }
+        
+        // Periksa status respons
+        if (data.status !== 'success') {
+          updateConnectionStatus('Ralat', 'error');
+          throw new Error(data.message || 'Ralat server');
+        }
+        
+        updateConnectionStatus('Dalam talian', 'success');
+        return data;
+      } catch (e) {
+        console.error('API call error:', e);
+        updateConnectionStatus('Luar talian', 'error');
+        
+        // Jika ralat berkaitan CORS atau fetch, simpan operasi untuk kemudian
+        if (e.message.includes('CORS') || e.message.includes('fetch') || !isOnline) {
+          // Simpan operasi untuk kemudian
+          pendingOperations.push({ action, payload });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          
+          // Kembalikan data tempatan jika ada
+          const localData = getLocalData(action);
+          if (localData) {
+            showToast('Menggunakan data tempatan', 'warning');
+            return { status: 'success', ...localData };
+          }
+          
+          throw new Error('Tidak dapat menyambung ke pelayan. Data akan disegerakkan apabila sambungan dipulihkan.');
+        }
+        
+        throw e;
+      }
+    }
 
-			// Fungsi untuk panggilan API dengan pemprosesan ralat yang lebih baik
-			async function apiCall(action, payload = {}) {
-				try {
-					// Paparkan status sambungan
-					updateConnectionStatus('Memuat...', 'loading');
+    // Fungsi untuk mendapatkan data tempatan
+    function getLocalData(action) {
+      const dataKey = `local_${action}`;
+      const data = localStorage.getItem(dataKey);
+      return data ? JSON.parse(data) : null;
+    }
 
-					// Gunakan Functions untuk mengatasi isu CORS
-					const res = await fetch(API_URL, {
-							method: 'POST',
-							// Hapus headers Content-Type supaya jadi simple request (tiada preflight)
-							// headers: { 'Content-Type': 'application/json' },  ← HAPUS BARIS INI
-							body: JSON.stringify({
-								action,
-								...payload
-							})
+    // Fungsi untuk menyimpan data tempatan
+    function saveLocalData(action, data) {
+      const dataKey = `local_${action}`;
+      localStorage.setItem(dataKey, JSON.stringify(data));
+    }
 
-							// Periksa jika respons adalah HTML (mungkin halaman ralat)
-							const contentType = res.headers.get('content-type');
-							console.log('Response content type:', contentType);
+    // Fungsi untuk menyegerakkan operasi yang tertangguh
+    async function syncPendingOperations() {
+      if (pendingOperations.length === 0) return;
+      
+      showToast(`Menyegerakkan ${pendingOperations.length} operasi...`);
+      
+      const operations = [...pendingOperations];
+      pendingOperations = [];
+      localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+      
+      for (const op of operations) {
+        try {
+          await apiCall(op.action, op.payload);
+        } catch (e) {
+          console.error('Failed to sync operation:', e);
+          pendingOperations.push(op);
+        }
+      }
+      
+      localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+      
+      if (pendingOperations.length === 0) {
+        showToast('Semua operasi disegerakkan');
+      } else {
+        showToast(`${pendingOperations.length} operasi gagal disegerakkan`, 'error');
+      }
+    }
 
-							// Dapatkan teks respons terlebih dahulu
-							const responseText = await res.text();
-							console.log('Response text:', responseText);
+    // Fungsi untuk mengemas kini status sambungan
+    function updateConnectionStatus(message, type) {
+      const statusEl = document.getElementById('connectionStatus');
+      statusEl.textContent = message;
+      statusEl.className = 'connection-status';
+      
+      if (type === 'loading') {
+        statusEl.style.background = 'var(--warning)';
+      } else if (type === 'error') {
+        statusEl.style.background = 'var(--danger)';
+      } else if (type === 'success') {
+        statusEl.style.background = 'var(--success)';
+        // Sembunyikan status selepas 3 saat
+        setTimeout(() => {
+          statusEl.classList.add('hidden');
+        }, 3000);
+      }
+      
+      statusEl.classList.remove('hidden');
+    }
 
-							// Cuba menghurai JSON
-							let data;
-							try {
-								data = JSON.parse(responseText);
-							} catch (e) {
-								console.error('Failed to parse JSON:', e);
-								updateConnectionStatus('Ralat server', 'error');
-								throw new Error('Server mengembalikan respons yang tidak dijangka. Sila cuba lagi.');
-							}
+    function showToast(msg, type = 'success') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.background = type === 'success' ? 'var(--success)' : 
+                         type === 'warning' ? 'var(--warning)' : 'var(--danger)';
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 4000);
+    }
 
-							// Periksa status respons
-							if (data.status !== 'success') {
-								updateConnectionStatus('Ralat', 'error');
-								throw new Error(data.message || 'Ralat server');
-							}
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
+      document.getElementById('dataForm').innerHTML = '';
+    }
 
-							updateConnectionStatus('Dalam talian', 'success');
-							return data;
-						} catch (e) {
-							console.error('API call error:', e);
-							updateConnectionStatus('Luar talian', 'error');
+    // Fungsi login yang dipindahkan ke atas untuk memastikan ia tersedia
+    async function login() {
+      const u = document.getElementById('username').value.trim();
+      const p = document.getElementById('password').value;
+      const errorEl = document.getElementById('loginError');
+      
+      if (!u || !p) {
+        errorEl.textContent = 'Isi username dan kata laluan';
+        errorEl.classList.remove('hidden');
+        return;
+      }
+      
+      // Sembunyikan mesej ralat sebelumnya
+      errorEl.classList.add('hidden');
+      
+      // Tampilkan indikator loading
+      const loginBtn = document.querySelector('#loginPage button');
+      const originalText = loginBtn.innerHTML;
+      loginBtn.innerHTML = '<span class="loading"></span> Memuat...';
+      loginBtn.disabled = true;
+      
+      try {
+        const r = await apiCall('login', { username: u, password: p });
+        currentUser = r.user;
+        document.getElementById('loginPage').classList.add('hidden');
+        document.getElementById('mainApp').classList.remove('hidden');
+        document.getElementById('userName').textContent = r.user.name || u;
+        document.getElementById('userRole').textContent = r.user.role === 'admin' ? 'Pentadbir' : 'Guru';
+        document.getElementById('adminDashboard').classList.toggle('hidden', r.user.role !== 'admin');
+        document.getElementById('guruDashboard').classList.toggle('hidden', r.user.role === 'admin');
+        await loadCommonData();
+        showToast('Log masuk berjaya');
+      } catch (err) {
+        errorEl.textContent = err.message || 'Login gagal';
+        errorEl.classList.remove('hidden');
+      } finally {
+        // Kembalikan butang ke keadaan asal
+        loginBtn.innerHTML = originalText;
+        loginBtn.disabled = false;
+      }
+    }
 
-							// Jika ralat berkaitan CORS atau fetch, simpan operasi untuk kemudian
-							if (e.message.includes('CORS') || e.message.includes('fetch') || !isOnline) {
-								// Simpan operasi untuk kemudian
-								pendingOperations.push({
-									action, payload
-								});
-								localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+    function logout() {
+      if (confirm('Log keluar?')) {
+        currentUser = null;
+        document.getElementById('mainApp').classList.add('hidden');
+        document.getElementById('loginPage').classList.remove('hidden');
+        document.getElementById('username').value = '';
+        document.getElementById('password').value = '';
+      }
+    }
 
-								// Kembalikan data tempatan jika ada
-								const localData = getLocalData(action);
-								if (localData) {
-									showToast('Menggunakan data tempatan', 'warning');
-									return {
-										status: 'success',
-										...localData
-									};
-								}
+    async function loadCommonData() {
+      try {
+        const [c, s] = await Promise.all([
+          apiCall('getClasses'),
+          apiCall('getSchedule')
+        ]);
+        classes = c.classes || [];
+        schedule = s.schedule || Array(5).fill().map(() => Array(5).fill(''));
+        saveLocalData('getClasses', c);
+        saveLocalData('getSchedule', s);
+        populateClassSelects();
+      } catch (e) {
+        console.error('Error loading common data:', e);
+        
+        // Cuba gunakan data tempatan jika ada
+        const c = getLocalData('getClasses');
+        const s = getLocalData('getSchedule');
+        
+        if (c && s) {
+          classes = c.classes || [];
+          schedule = s.schedule || Array(5).fill().map(() => Array(5).fill(''));
+          populateClassSelects();
+          showToast('Menggunakan data tempatan', 'warning');
+        }
+      }
+    }
 
-								throw new Error('Tidak dapat menyambung ke pelayan. Data akan disegerakkan apabila sambungan dipulihkan.');
-							}
+    function populateClassSelects() {
+      ['reportClass', 'studentClassFilter', 'student_class'].forEach(id => {
+        const sel = document.getElementById(id);
+        if (!sel) return;
+        sel.innerHTML = '<option value="">Pilih/Semua Kelas</option>';
+        classes.forEach(cls => {
+          const opt = document.createElement('option');
+          opt.value = cls.name;
+          opt.textContent = cls.name;
+          sel.appendChild(opt);
+        });
+      });
+    }
 
-							throw e;
-						}
-					}
+    function showSection(id) {
+      document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
+      const sec = document.getElementById(id);
+      if (sec) sec.classList.remove('hidden');
+      document.getElementById('sections').classList.remove('hidden');
+      currentSection = id;
 
-					// Fungsi untuk mendapatkan data tempatan
-					function getLocalData(action) {
-						const dataKey = `local_${action}`;
-						const data = localStorage.getItem(dataKey);
-						return data ? JSON.parse(data) : null;
-					}
+      if (id === 'manageUsers') loadUsers();
+      if (id === 'manageStudents') loadStudents();
+      if (id === 'manageTeachers') loadTeachers();
+      if (id === 'manageStaff') loadStaff();
+      if (id === 'manageClasses') {
+        // Muatkan guru terlebih dahulu sebelum memaparkan kelas
+        loadTeachers().then(() => {
+          loadClasses();
+        });
+      }
+      if (id === 'manageSchedule') loadSchedule();
+      if (id === 'viewSchedule') loadViewSchedule();
+      if (id === 'viewTeachingReports') loadTeachingReports();
+    }
 
-					// Fungsi untuk menyimpan data tempatan
-					function saveLocalData(action, data) {
-						const dataKey = `local_${action}`;
-						localStorage.setItem(dataKey, JSON.stringify(data));
-					}
+    // === PENGGUNA ===
+    async function loadUsers() {
+      try {
+        const res = await apiCall('getUsers');
+        users = res.users || [];
+        saveLocalData('getUsers', res);
+        renderUsers();
+      } catch (e) {
+        console.error('Error loading users:', e);
+        
+        // Cuba gunakan data tempatan jika ada
+        const res = getLocalData('getUsers');
+        if (res) {
+          users = res.users || [];
+          renderUsers();
+          showToast('Menggunakan data tempatan', 'warning');
+        } else {
+          showToast('Gagal memuatkan pengguna', 'error');
+        }
+      }
+    }
 
-					// Fungsi untuk menyegerakkan operasi yang tertangguh
-					async function syncPendingOperations() {
-						if (pendingOperations.length === 0) return;
-
-						showToast(`Menyegerakkan ${pendingOperations.length} operasi...`);
-
-						const operations = [...pendingOperations];
-						pendingOperations = [];
-						localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-
-						for (const op of operations) {
-							try {
-								await apiCall(op.action, op.payload);
-							} catch (e) {
-								console.error('Failed to sync operation:', e);
-								pendingOperations.push(op);
-							}
-						}
-
-						localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-
-						if (pendingOperations.length === 0) {
-							showToast('Semua operasi disegerakkan');
-						} else {
-							showToast(`${pendingOperations.length} operasi gagal disegerakkan`, 'error');
-						}
-					}
-
-					// Fungsi untuk mengemas kini status sambungan
-					function updateConnectionStatus(message, type) {
-						const statusEl = document.getElementById('connectionStatus');
-						statusEl.textContent = message;
-						statusEl.className = 'connection-status';
-
-						if (type === 'loading') {
-							statusEl.style.background = 'var(--warning)';
-						} else if (type === 'error') {
-							statusEl.style.background = 'var(--danger)';
-						} else if (type === 'success') {
-							statusEl.style.background = 'var(--success)';
-							// Sembunyikan status selepas 3 saat
-							setTimeout(() => {
-								statusEl.classList.add('hidden');
-							}, 3000);
-						}
-
-						statusEl.classList.remove('hidden');
-					}
-
-					function showToast(msg, type = 'success') {
-						const t = document.getElementById('toast');
-						t.textContent = msg;
-						t.style.background = type === 'success' ? 'var(--success)' :
-							type === 'warning' ? 'var(--warning)' : 'var(--danger)';
-						t.classList.add('show');
-						setTimeout(() => t.classList.remove('show'), 4000);
-					}
-
-					function closeModal() {
-						document.getElementById('modal').classList.add('hidden');
-						document.getElementById('dataForm').innerHTML = '';
-					}
-
-					// Fungsi login yang dipindahkan ke atas untuk memastikan ia tersedia
-					async function login() {
-						const u = document.getElementById('username').value.trim();
-						const p = document.getElementById('password').value;
-						const errorEl = document.getElementById('loginError');
-
-						if (!u || !p) {
-							errorEl.textContent = 'Isi username dan kata laluan';
-							errorEl.classList.remove('hidden');
-							return;
-						}
-
-						// Sembunyikan mesej ralat sebelumnya
-						errorEl.classList.add('hidden');
-
-						// Tampilkan indikator loading
-						const loginBtn = document.querySelector('#loginPage button');
-						const originalText = loginBtn.innerHTML;
-						loginBtn.innerHTML = '<span class="loading"></span> Memuat...';
-						loginBtn.disabled = true;
-
-						try {
-							const r = await apiCall('login', {
-								username: u,
-								password: p
-							});
-							currentUser = r.user;
-							document.getElementById('loginPage').classList.add('hidden');
-							document.getElementById('mainApp').classList.remove('hidden');
-							document.getElementById('userName').textContent = r.user.name || u;
-							document.getElementById('userRole').textContent = r.user.role === 'admin' ? 'Pentadbir' : 'Guru';
-							document.getElementById('adminDashboard').classList.toggle('hidden', r.user.role !== 'admin');
-							document.getElementById('guruDashboard').classList.toggle('hidden', r.user.role === 'admin');
-							await loadCommonData();
-							showToast('Log masuk berjaya');
-						} catch (err) {
-							errorEl.textContent = err.message || 'Login gagal';
-							errorEl.classList.remove('hidden');
-						} finally {
-							// Kembalikan butang ke keadaan asal
-							loginBtn.innerHTML = originalText;
-							loginBtn.disabled = false;
-						}
-					}
-
-					function logout() {
-						if (confirm('Log keluar?')) {
-							currentUser = null;
-							document.getElementById('mainApp').classList.add('hidden');
-							document.getElementById('loginPage').classList.remove('hidden');
-							document.getElementById('username').value = '';
-							document.getElementById('password').value = '';
-						}
-					}
-
-					async function loadCommonData() {
-						try {
-							const [c, s] = await Promise.all([
-								apiCall('getClasses'),
-								apiCall('getSchedule')
-							]);
-							classes = c.classes || [];
-							schedule = s.schedule || Array(5).fill().map(() => Array(5).fill(''));
-							saveLocalData('getClasses', c);
-							saveLocalData('getSchedule', s);
-							populateClassSelects();
-						} catch (e) {
-							console.error('Error loading common data:', e);
-
-							// Cuba gunakan data tempatan jika ada
-							const c = getLocalData('getClasses');
-							const s = getLocalData('getSchedule');
-
-							if (c && s) {
-								classes = c.classes || [];
-								schedule = s.schedule || Array(5).fill().map(() => Array(5).fill(''));
-								populateClassSelects();
-								showToast('Menggunakan data tempatan', 'warning');
-							}
-						}
-					}
-
-					function populateClassSelects() {
-						['reportClass', 'studentClassFilter', 'student_class'].forEach(id => {
-							const sel = document.getElementById(id);
-							if (!sel) return;
-							sel.innerHTML = '<option value="">Pilih/Semua Kelas</option>';
-							classes.forEach(cls => {
-								const opt = document.createElement('option');
-								opt.value = cls.name;
-								opt.textContent = cls.name;
-								sel.appendChild(opt);
-							});
-						});
-					}
-
-					function showSection(id) {
-						document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
-						const sec = document.getElementById(id);
-						if (sec) sec.classList.remove('hidden');
-						document.getElementById('sections').classList.remove('hidden');
-						currentSection = id;
-
-						if (id === 'manageUsers') loadUsers();
-						if (id === 'manageStudents') loadStudents();
-						if (id === 'manageTeachers') loadTeachers();
-						if (id === 'manageStaff') loadStaff();
-						if (id === 'manageClasses') {
-							// Muatkan guru terlebih dahulu sebelum memaparkan kelas
-							loadTeachers().then(() => {
-								loadClasses();
-							});
-						}
-						if (id === 'manageSchedule') loadSchedule();
-						if (id === 'viewSchedule') loadViewSchedule();
-						if (id === 'viewTeachingReports') loadTeachingReports();
-					}
-
-					// === PENGGUNA ===
-					async function loadUsers() {
-						try {
-							const res = await apiCall('getUsers');
-							users = res.users || [];
-							saveLocalData('getUsers', res);
-							renderUsers();
-						} catch (e) {
-							console.error('Error loading users:', e);
-
-							// Cuba gunakan data tempatan jika ada
-							const res = getLocalData('getUsers');
-							if (res) {
-								users = res.users || [];
-								renderUsers();
-								showToast('Menggunakan data tempatan', 'warning');
-							} else {
-								showToast('Gagal memuatkan pengguna', 'error');
-							}
-						}
-					}
-
-					function renderUsers() {
-						const tbody = document.querySelector('#userTable tbody');
-						tbody.innerHTML = '';
-						users.forEach(u => {
-							const roleText = u.role === 'admin' ? 'Pentadbir' : u.role === 'guru' ? 'Guru' : 'Kakitangan';
-							tbody.innerHTML += `
+    function renderUsers() {
+      const tbody = document.querySelector('#userTable tbody');
+      tbody.innerHTML = '';
+      users.forEach(u => {
+        const roleText = u.role === 'admin' ? 'Pentadbir' : u.role === 'guru' ? 'Guru' : 'Kakitangan';
+        tbody.innerHTML += `
           <tr>
             <td>${u.username}</td><td>${u.name}</td><td>${roleText}</td><td>${u.ic || '-'}</td><td>${u.status || 'active'}</td>
             <td>
               <button class="btn btn-edit" onclick="editUser('${u.id}')">Kemaskini</button>
-              ${u.username !== 'admin' ? ` < button class = "btn btn-danger"
-							onclick = "deleteUser('${u.id}')" > Padam < /button>` : ''} < /td> < /tr>`;
-						});
-					}
+              ${u.username !== 'admin' ? `<button class="btn btn-danger" onclick="deleteUser('${u.id}')">Padam</button>` : ''}
+            </td>
+          </tr>`;
+      });
+    }
 
-					function openAddUser() {
-						document.getElementById('modalTitle').textContent = 'Tambah Pengguna';
-						document.getElementById('dataForm').innerHTML = `
+    function openAddUser() {
+      document.getElementById('modalTitle').textContent = 'Tambah Pengguna';
+      document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Username</label><input type="text" id="u_username" required></div>
         <div class="form-group"><label>Kata Laluan</label><input type="password" id="u_password" required></div>
         <div class="form-group"><label>Nama Penuh</label><input type="text" id="u_name" required></div>
         <div class="form-group"><label>Peranan</label><select id="u_role" required><option value="guru">Guru</option><option value="staff">Kakitangan</option><option value="admin">Pentadbir</option></select></div>
         <input type="hidden" id="u_id">
       `;
-						document.getElementById('saveBtn').onclick = saveUser;
-						document.getElementById('modal').classList.remove('hidden');
-					}
+      document.getElementById('saveBtn').onclick = saveUser;
+      document.getElementById('modal').classList.remove('hidden');
+    }
 
-					// Gantikan fungsi saveUser yang sedia ada
-					async function saveUser() {
-						const id = document.getElementById('u_id').value;
-						const user = {
-							id: id || undefined,
-							username: document.getElementById('u_username').value.trim(),
-							password: document.getElementById('u_password').value,
-							name: document.getElementById('u_name').value.trim(),
-							role: document.getElementById('u_role').value
-						};
+    // Gantikan fungsi saveUser yang sedia ada
+    async function saveUser() {
+      const id = document.getElementById('u_id').value;
+      const user = {
+        id: id || undefined,
+        username: document.getElementById('u_username').value.trim(),
+        password: document.getElementById('u_password').value,
+        name: document.getElementById('u_name').value.trim(),
+        role: document.getElementById('u_role').value
+      };
+      
+      // Jika pengguna baru, jana ID sebagai teks
+      if (!id) {
+        user.id = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      }
+      
+      if (!user.username || !user.name || !user.role || (!id && !user.password)) {
+        return showToast('Isi semua medan', 'error');
+      }
+      
+      try {
+        if (isOnline) {
+          if (id) await apiCall('updateUser', { user });
+          else await apiCall('addUser', { user });
+        } else {
+          // Simpan operasi untuk kemudian
+          pendingOperations.push({ action: id ? 'updateUser' : 'addUser', payload: { user } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          
+          // Kemas kini data tempatan
+          if (id) {
+            const index = users.findIndex(u => u.id === id);
+            if (index !== -1) users[index] = user;
+          } else {
+            users.push(user);
+          }
+          
+          saveLocalData('getUsers', { users });
+          renderUsers();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+        
+        closeModal();
+        if (isOnline) loadUsers();
+        showToast('Pengguna berjaya disimpan');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
 
-						// Jika pengguna baru, jana ID sebagai teks
-						if (!id) {
-							user.id = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-						}
-
-						if (!user.username || !user.name || !user.role || (!id && !user.password)) {
-							return showToast('Isi semua medan', 'error');
-						}
-
-						try {
-							if (isOnline) {
-								if (id) await apiCall('updateUser', {
-									user
-								});
-								else await apiCall('addUser', {
-									user
-								});
-							} else {
-								// Simpan operasi untuk kemudian
-								pendingOperations.push({
-									action: id ? 'updateUser' : 'addUser',
-									payload: {
-										user
-									}
-								});
-								localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-
-								// Kemas kini data tempatan
-								if (id) {
-									const index = users.findIndex(u => u.id === id);
-									if (index !== -1) users[index] = user;
-								} else {
-									users.push(user);
-								}
-
-								saveLocalData('getUsers', {
-									users
-								});
-								renderUsers();
-								showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-							}
-
-							closeModal();
-							if (isOnline) loadUsers();
-							showToast('Pengguna berjaya disimpan');
-						} catch (err) {
-							showToast(err.message, 'error');
-						}
-					}
-
-					// Fungsi untuk mengedit pengguna
-					function editUser(id) {
-						const user = users.find(u => u.id === id);
-						if (!user) return;
-
-						document.getElementById('modalTitle').textContent = 'Kemaskini Pengguna';
-						document.getElementById('dataForm').innerHTML = `
+    // Fungsi untuk mengedit pengguna
+    function editUser(id) {
+      const user = users.find(u => u.id === id);
+      if (!user) return;
+      
+      document.getElementById('modalTitle').textContent = 'Kemaskini Pengguna';
+      document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Username</label><input type="text" id="u_username" value="${user.username}" required></div>
         <div class="form-group"><label>Kata Laluan (kosongkan jika tidak berubah)</label><input type="password" id="u_password"></div>
         <div class="form-group"><label>Nama Penuh</label><input type="text" id="u_name" value="${user.name}" required></div>
@@ -917,72 +897,63 @@ input, textarea, select {
         </select></div>
         <input type="hidden" id="u_id" value="${user.id}">
       `;
-						document.getElementById('saveBtn').onclick = saveUser;
-						document.getElementById('modal').classList.remove('hidden');
-					}
+      document.getElementById('saveBtn').onclick = saveUser;
+      document.getElementById('modal').classList.remove('hidden');
+    }
 
-					// Fungsi untuk memadam pengguna
-					async function deleteUser(id) {
-						if (!confirm('Adakah anda pasti ingin memadam pengguna ini?')) return;
+    // Fungsi untuk memadam pengguna
+    async function deleteUser(id) {
+      if (!confirm('Adakah anda pasti ingin memadam pengguna ini?')) return;
+      
+      try {
+        if (isOnline) {
+          await apiCall('deleteUser', { id });
+        } else {
+          // Simpan operasi untuk kemudian
+          pendingOperations.push({ action: 'deleteUser', payload: { id } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          
+          // Kemas kini data tempatan
+          users = users.filter(u => u.id !== id);
+          saveLocalData('getUsers', { users });
+          renderUsers();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+        
+        if (isOnline) loadUsers();
+        showToast('Pengguna berjaya dipadam');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
 
-						try {
-							if (isOnline) {
-								await apiCall('deleteUser', {
-									id
-								});
-							} else {
-								// Simpan operasi untuk kemudian
-								pendingOperations.push({
-									action: 'deleteUser',
-									payload: {
-										id
-									}
-								});
-								localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+    // === PELAJAR ===
+    async function loadStudents() {
+      try {
+        const res = await apiCall('getStudents');
+        students = res.students || [];
+        saveLocalData('getStudents', res);
+        renderStudents();
+      } catch (e) {
+        console.error('Error loading students:', e);
+        
+        // Cuba gunakan data tempatan jika ada
+        const res = getLocalData('getStudents');
+        if (res) {
+          students = res.students || [];
+          renderStudents();
+          showToast('Menggunakan data tempatan', 'warning');
+        } else {
+          showToast('Gagal memuatkan pelajar', 'error');
+        }
+      }
+    }
 
-								// Kemas kini data tempatan
-								users = users.filter(u => u.id !== id);
-								saveLocalData('getUsers', {
-									users
-								});
-								renderUsers();
-								showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-							}
-
-							if (isOnline) loadUsers();
-							showToast('Pengguna berjaya dipadam');
-						} catch (err) {
-							showToast(err.message, 'error');
-						}
-					}
-
-					// === PELAJAR ===
-					async function loadStudents() {
-						try {
-							const res = await apiCall('getStudents');
-							students = res.students || [];
-							saveLocalData('getStudents', res);
-							renderStudents();
-						} catch (e) {
-							console.error('Error loading students:', e);
-
-							// Cuba gunakan data tempatan jika ada
-							const res = getLocalData('getStudents');
-							if (res) {
-								students = res.students || [];
-								renderStudents();
-								showToast('Menggunakan data tempatan', 'warning');
-							} else {
-								showToast('Gagal memuatkan pelajar', 'error');
-							}
-						}
-					}
-
-					function renderStudents() {
-						const tbody = document.querySelector('#studentTable tbody');
-						tbody.innerHTML = '';
-						students.forEach(s => {
-							tbody.innerHTML += `
+    function renderStudents() {
+      const tbody = document.querySelector('#studentTable tbody');
+      tbody.innerHTML = '';
+      students.forEach(s => {
+        tbody.innerHTML += `
           <tr>
             <td>${s.id}</td><td>${s.name}</td><td>${s.ic}</td><td>${s.class}</td><td>${s.}</td><td>${s._phone}</td>
             <td>
@@ -990,12 +961,12 @@ input, textarea, select {
               <button class="btn btn-danger" onclick="deleteStudent('${s.id}')">Padam</button>
             </td>
           </tr>`;
-						});
-					}
+      });
+    }
 
-					function openAddStudent() {
-						document.getElementById('modalTitle').textContent = 'Tambah Pelajar';
-						document.getElementById('dataForm').innerHTML = `
+    function openAddStudent() {
+      document.getElementById('modalTitle').textContent = 'Tambah Pelajar';
+      document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Nama</label><input type="text" id="s_name" required></div>
         <div class="form-group"><label>No. KP</label><input type="text" id="s_ic" required></div>
         <div class="form-group"><label>Kelas</label><select id="s_class" required><option value="">Pilih Kelas</option></select></div>
@@ -1003,88 +974,77 @@ input, textarea, select {
         <div class="form-group"><label>No. HP Wali</label><input type="text" id="s__phone" required></div>
         <input type="hidden" id="s_id">
       `;
+      
+      // Isi pilihan kelas
+      const classSelect = document.getElementById('s_class');
+      classes.forEach(cls => {
+        const opt = document.createElement('option');
+        opt.value = cls.name;
+        opt.textContent = cls.name;
+        classSelect.appendChild(opt);
+      });
+      
+      document.getElementById('saveBtn').onclick = saveStudent;
+      document.getElementById('modal').classList.remove('hidden');
+    }
 
-						// Isi pilihan kelas
-						const classSelect = document.getElementById('s_class');
-						classes.forEach(cls => {
-							const opt = document.createElement('option');
-							opt.value = cls.name;
-							opt.textContent = cls.name;
-							classSelect.appendChild(opt);
-						});
+    // Gantikan fungsi saveStudent
+    async function saveStudent() {
+      const id = document.getElementById('s_id').value;
+      const student = {
+        id: id || undefined,
+        name: document.getElementById('s_name').value.trim(),
+        ic: document.getElementById('s_ic').value.trim(),
+        class: document.getElementById('s_class').value,
+        guardian: document.getElementById('s_guardian').value.trim(),
+        guardianphone: document.getElementById('s_guardian_phone').value.trim()
+      };
+      
+      // Jika pelajar baru, jana ID sebagai teks
+      if (!id) {
+        student.id = 'student_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      }
+      
+      if (!student.name || !student.ic || !student.class || !student.guardian || !student.guardian_phone) {
+        return showToast('Isi semua medan', 'error');
+      }
+      
+      try {
+        if (isOnline) {
+          if (id) await apiCall('updateStudent', { student });
+          else await apiCall('addStudent', { student });
+        } else {
+          // Simpan operasi untuk kemudian
+          pendingOperations.push({ action: id ? 'updateStudent' : 'addStudent', payload: { student } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          
+          // Kemas kini data tempatan
+          if (id) {
+            const index = students.findIndex(s => s.id === id);
+            if (index !== -1) students[index] = student;
+          } else {
+            students.push(student);
+          }
+          
+          saveLocalData('getStudents', { students });
+          renderStudents();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+        
+        closeModal();
+        if (isOnline) loadStudents();
+        showToast('Pelajar berjaya disimpan');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
 
-						document.getElementById('saveBtn').onclick = saveStudent;
-						document.getElementById('modal').classList.remove('hidden');
-					}
-
-					// Gantikan fungsi saveStudent
-					async function saveStudent() {
-						const id = document.getElementById('s_id').value;
-						const student = {
-							id: id || undefined,
-							name: document.getElementById('s_name').value.trim(),
-							ic: document.getElementById('s_ic').value.trim(),
-							class: document.getElementById('s_class').value,
-							guardian: document.getElementById('s_guardian').value.trim(),
-							guardianphone: document.getElementById('s_guardian_phone').value.trim()
-						};
-
-						// Jika pelajar baru, jana ID sebagai teks
-						if (!id) {
-							student.id = 'student_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-						}
-
-						if (!student.name || !student.ic || !student.class || !student.guardian || !student.guardian_phone) {
-							return showToast('Isi semua medan', 'error');
-						}
-
-						try {
-							if (isOnline) {
-								if (id) await apiCall('updateStudent', {
-									student
-								});
-								else await apiCall('addStudent', {
-									student
-								});
-							} else {
-								// Simpan operasi untuk kemudian
-								pendingOperations.push({
-									action: id ? 'updateStudent' : 'addStudent',
-									payload: {
-										student
-									}
-								});
-								localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-
-								// Kemas kini data tempatan
-								if (id) {
-									const index = students.findIndex(s => s.id === id);
-									if (index !== -1) students[index] = student;
-								} else {
-									students.push(student);
-								}
-
-								saveLocalData('getStudents', {
-									students
-								});
-								renderStudents();
-								showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-							}
-
-							closeModal();
-							if (isOnline) loadStudents();
-							showToast('Pelajar berjaya disimpan');
-						} catch (err) {
-							showToast(err.message, 'error');
-						}
-					}
-
-					function editStudent(id) {
-						const student = students.find(s => s.id === id);
-						if (!student) return;
-
-						document.getElementById('modalTitle').textContent = 'Kemaskini Pelajar';
-						document.getElementById('dataForm').innerHTML = `
+    function editStudent(id) {
+      const student = students.find(s => s.id === id);
+      if (!student) return;
+      
+      document.getElementById('modalTitle').textContent = 'Kemaskini Pelajar';
+      document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Nama</label><input type="text" id="s_name" value="${student.name}" required></div>
         <div class="form-group"><label>No. KP</label><input type="text" id="s_ic" value="${student.ic}" required></div>
         <div class="form-group"><label>Kelas</label><select id="s_class" required><option value="">Pilih Kelas</option></select></div>
@@ -1092,82 +1052,73 @@ input, textarea, select {
         <div class="form-group"><label>No. HP Wali</label><input type="text" id="s_guardian_phone" value="${student.guardian_phone}" required></div>
         <input type="hidden" id="s_id" value="${student.id}">
       `;
+      
+      // Isi pilihan kelas
+      const classSelect = document.getElementById('s_class');
+      classes.forEach(cls => {
+        const opt = document.createElement('option');
+        opt.value = cls.name;
+        opt.textContent = cls.name;
+        if (cls.name === student.class) opt.selected = true;
+        classSelect.appendChild(opt);
+      });
+      
+      document.getElementById('saveBtn').onclick = saveStudent;
+      document.getElementById('modal').classList.remove('hidden');
+    }
 
-						// Isi pilihan kelas
-						const classSelect = document.getElementById('s_class');
-						classes.forEach(cls => {
-							const opt = document.createElement('option');
-							opt.value = cls.name;
-							opt.textContent = cls.name;
-							if (cls.name === student.class) opt.selected = true;
-							classSelect.appendChild(opt);
-						});
+    async function deleteStudent(id) {
+      if (!confirm('Adakah anda pasti ingin memadam pelajar ini?')) return;
+      
+      try {
+        if (isOnline) {
+          await apiCall('deleteStudent', { id });
+        } else {
+          // Simpan operasi untuk kemudian
+          pendingOperations.push({ action: 'deleteStudent', payload: { id } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          
+          // Kemas kini data tempatan
+          students = students.filter(s => s.id !== id);
+          saveLocalData('getStudents', { students });
+          renderStudents();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+        
+        if (isOnline) loadStudents();
+        showToast('Pelajar berjaya dipadam');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
 
-						document.getElementById('saveBtn').onclick = saveStudent;
-						document.getElementById('modal').classList.remove('hidden');
-					}
+    // === GURU ===
+    async function loadTeachers() {
+      try {
+        const res = await apiCall('getTeachers');
+        teachers = res.teachers || [];
+        saveLocalData('getTeachers', res);
+        renderTeachers();
+      } catch (e) {
+        console.error('Error loading teachers:', e);
+        
+        // Cuba gunakan data tempatan jika ada
+        const res = getLocalData('getTeachers');
+        if (res) {
+          teachers = res.teachers || [];
+          renderTeachers();
+          showToast('Menggunakan data tempatan', 'warning');
+        } else {
+          showToast('Gagal memuatkan guru', 'error');
+        }
+      }
+    }
 
-					async function deleteStudent(id) {
-						if (!confirm('Adakah anda pasti ingin memadam pelajar ini?')) return;
-
-						try {
-							if (isOnline) {
-								await apiCall('deleteStudent', {
-									id
-								});
-							} else {
-								// Simpan operasi untuk kemudian
-								pendingOperations.push({
-									action: 'deleteStudent',
-									payload: {
-										id
-									}
-								});
-								localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-
-								// Kemas kini data tempatan
-								students = students.filter(s => s.id !== id);
-								saveLocalData('getStudents', {
-									students
-								});
-								renderStudents();
-								showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-							}
-
-							if (isOnline) loadStudents();
-							showToast('Pelajar berjaya dipadam');
-						} catch (err) {
-							showToast(err.message, 'error');
-						}
-					}
-
-					// === GURU ===
-					async function loadTeachers() {
-						try {
-							const res = await apiCall('getTeachers');
-							teachers = res.teachers || [];
-							saveLocalData('getTeachers', res);
-							renderTeachers();
-						} catch (e) {
-							console.error('Error loading teachers:', e);
-
-							// Cuba gunakan data tempatan jika ada
-							const res = getLocalData('getTeachers');
-							if (res) {
-								teachers = res.teachers || [];
-								renderTeachers();
-								showToast('Menggunakan data tempatan', 'warning');
-							} else {
-								showToast('Gagal memuatkan guru', 'error');
-							}
-						}
-					}
-
-					function renderTeachers() {
-						const tbody = document.querySelector('#teacherTable tbody');
-						tbody.innerHTML = '';
-						teachers.forEach(t => {
-							tbody.innerHTML += `
+    function renderTeachers() {
+      const tbody = document.querySelector('#teacherTable tbody');
+      tbody.innerHTML = '';
+      teachers.forEach(t => {
+        tbody.innerHTML += `
           <tr>
             <td>${t.id}</td><td>${t.name}</td><td>${t.ic}</td><td>${t.subject}</td><td>${t.phone}</td>
             <td>
@@ -1175,160 +1126,140 @@ input, textarea, select {
               <button class="btn btn-danger" onclick="deleteTeacher('${t.id}')">Padam</button>
             </td>
           </tr>`;
-						});
-					}
+      });
+    }
 
-					function openAddTeacher() {
-						document.getElementById('modalTitle').textContent = 'Tambah Guru';
-						document.getElementById('dataForm').innerHTML = `
+    function openAddTeacher() {
+      document.getElementById('modalTitle').textContent = 'Tambah Guru';
+      document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Nama</label><input type="text" id="t_name" required></div>
         <div class="form-group"><label>No. KP</label><input type="text" id="t_ic" required></div>
         <div class="form-group"><label>Mata Pelajaran</label><input type="text" id="t_subject" required></div>
         <div class="form-group"><label>No. HP</label><input type="text" id="t_phone" required></div>
         <input type="hidden" id="t_id">
       `;
-						document.getElementById('saveBtn').onclick = saveTeacher;
-						document.getElementById('modal').classList.remove('hidden');
-					}
+      document.getElementById('saveBtn').onclick = saveTeacher;
+      document.getElementById('modal').classList.remove('hidden');
+    }
 
-					// Gantikan fungsi saveTeacher
-					async function saveTeacher() {
-						const id = document.getElementById('t_id').value;
-						const teacher = {
-							id: id || undefined,
-							name: document.getElementById('t_name').value.trim(),
-							ic: document.getElementById('t_ic').value.trim(),
-							subject: document.getElementById('t_subject').value.trim(),
-							phone: document.getElementById('t_phone').value.trim()
-						};
+    // Gantikan fungsi saveTeacher
+    async function saveTeacher() {
+      const id = document.getElementById('t_id').value;
+      const teacher = {
+        id: id || undefined,
+        name: document.getElementById('t_name').value.trim(),
+        ic: document.getElementById('t_ic').value.trim(),
+        subject: document.getElementById('t_subject').value.trim(),
+        phone: document.getElementById('t_phone').value.trim()
+      };
+      
+      // Jika guru baru, jana ID sebagai teks
+      if (!id) {
+        teacher.id = 'teacher_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      }
+      
+      if (!teacher.name || !teacher.ic || !teacher.subject || !teacher.phone) {
+        return showToast('Isi semua medan', 'error');
+      }
+      
+      try {
+        if (isOnline) {
+          if (id) await apiCall('updateTeacher', { teacher });
+          else await apiCall('addTeacher', { teacher });
+        } else {
+          // Simpan operasi untuk kemudian
+          pendingOperations.push({ action: id ? 'updateTeacher' : 'addTeacher', payload: { teacher } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          
+          // Kemas kini data tempatan
+          if (id) {
+            const index = teachers.findIndex(t => t.id === id);
+            if (index !== -1) teachers[index] = teacher;
+          } else {
+            teachers.push(teacher);
+          }
+          
+          saveLocalData('getTeachers', { teachers });
+          renderTeachers();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+        
+        closeModal();
+        if (isOnline) loadTeachers();
+        showToast('Guru berjaya disimpan');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
 
-						// Jika guru baru, jana ID sebagai teks
-						if (!id) {
-							teacher.id = 'teacher_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-						}
-
-						if (!teacher.name || !teacher.ic || !teacher.subject || !teacher.phone) {
-							return showToast('Isi semua medan', 'error');
-						}
-
-						try {
-							if (isOnline) {
-								if (id) await apiCall('updateTeacher', {
-									teacher
-								});
-								else await apiCall('addTeacher', {
-									teacher
-								});
-							} else {
-								// Simpan operasi untuk kemudian
-								pendingOperations.push({
-									action: id ? 'updateTeacher' : 'addTeacher',
-									payload: {
-										teacher
-									}
-								});
-								localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-
-								// Kemas kini data tempatan
-								if (id) {
-									const index = teachers.findIndex(t => t.id === id);
-									if (index !== -1) teachers[index] = teacher;
-								} else {
-									teachers.push(teacher);
-								}
-
-								saveLocalData('getTeachers', {
-									teachers
-								});
-								renderTeachers();
-								showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-							}
-
-							closeModal();
-							if (isOnline) loadTeachers();
-							showToast('Guru berjaya disimpan');
-						} catch (err) {
-							showToast(err.message, 'error');
-						}
-					}
-
-					function editTeacher(id) {
-						const teacher = teachers.find(t => t.id === id);
-						if (!teacher) return;
-
-						document.getElementById('modalTitle').textContent = 'Kemaskini Guru';
-						document.getElementById('dataForm').innerHTML = `
+    function editTeacher(id) {
+      const teacher = teachers.find(t => t.id === id);
+      if (!teacher) return;
+      
+      document.getElementById('modalTitle').textContent = 'Kemaskini Guru';
+      document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Nama</label><input type="text" id="t_name" value="${teacher.name}" required></div>
         <div class="form-group"><label>No. KP</label><input type="text" id="t_ic" value="${teacher.ic}" required></div>
         <div class="form-group"><label>Mata Pelajaran</label><input type="text" id="t_subject" value="${teacher.subject}" required></div>
         <div class="form-group"><label>No. HP</label><input type="text" id="t_phone" value="${teacher.phone}" required></div>
         <input type="hidden" id="t_id" value="${teacher.id}">
       `;
-						document.getElementById('saveBtn').onclick = saveTeacher;
-						document.getElementById('modal').classList.remove('hidden');
-					}
+      document.getElementById('saveBtn').onclick = saveTeacher;
+      document.getElementById('modal').classList.remove('hidden');
+    }
 
-					async function deleteTeacher(id) {
-						if (!confirm('Adakah anda pasti ingin memadam guru ini?')) return;
+    async function deleteTeacher(id) {
+      if (!confirm('Adakah anda pasti ingin memadam guru ini?')) return;
+      
+      try {
+        if (isOnline) {
+          await apiCall('deleteTeacher', { id });
+        } else {
+          // Simpan operasi untuk kemudian
+          pendingOperations.push({ action: 'deleteTeacher', payload: { id } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          
+          // Kemas kini data tempatan
+          teachers = teachers.filter(t => t.id !== id);
+          saveLocalData('getTeachers', { teachers });
+          renderTeachers();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+        
+        if (isOnline) loadTeachers();
+        showToast('Guru berjaya dipadam');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
 
-						try {
-							if (isOnline) {
-								await apiCall('deleteTeacher', {
-									id
-								});
-							} else {
-								// Simpan operasi untuk kemudian
-								pendingOperations.push({
-									action: 'deleteTeacher',
-									payload: {
-										id
-									}
-								});
-								localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+    // === STAFF ===
+    async function loadStaff() {
+      try {
+        const res = await apiCall('getStaff');
+        staff = res.staff || [];
+        saveLocalData('getStaff', res);
+        renderStaff();
+      } catch (e) {
+        console.error('Error loading staff:', e);
+        
+        // Cuba gunakan data tempatan jika ada
+        const res = getLocalData('getStaff');
+        if (res) {
+          staff = res.staff || [];
+          renderStaff();
+          showToast('Menggunakan data tempatan', 'warning');
+        } else {
+          showToast('Gagal memuatkan kakitangan', 'error');
+        }
+      }
+    }
 
-								// Kemas kini data tempatan
-								teachers = teachers.filter(t => t.id !== id);
-								saveLocalData('getTeachers', {
-									teachers
-								});
-								renderTeachers();
-								showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-							}
-
-							if (isOnline) loadTeachers();
-							showToast('Guru berjaya dipadam');
-						} catch (err) {
-							showToast(err.message, 'error');
-						}
-					}
-
-					// === STAFF ===
-					async function loadStaff() {
-						try {
-							const res = await apiCall('getStaff');
-							staff = res.staff || [];
-							saveLocalData('getStaff', res);
-							renderStaff();
-						} catch (e) {
-							console.error('Error loading staff:', e);
-
-							// Cuba gunakan data tempatan jika ada
-							const res = getLocalData('getStaff');
-							if (res) {
-								staff = res.staff || [];
-								renderStaff();
-								showToast('Menggunakan data tempatan', 'warning');
-							} else {
-								showToast('Gagal memuatkan kakitangan', 'error');
-							}
-						}
-					}
-
-					function renderStaff() {
-						const tbody = document.querySelector('#staffTable tbody');
-						tbody.innerHTML = '';
-						staff.forEach(s => {
-							tbody.innerHTML += `
+    function renderStaff() {
+      const tbody = document.querySelector('#staffTable tbody');
+      tbody.innerHTML = '';
+      staff.forEach(s => {
+        tbody.innerHTML += `
           <tr>
             <td>${s.id}</td><td>${s.name}</td><td>${s.ic}</td><td>${s.position}</td><td>${s.phone}</td>
             <td>
@@ -1336,160 +1267,140 @@ input, textarea, select {
               <button class="btn btn-danger" onclick="deleteStaff('${s.id}')">Padam</button>
             </td>
           </tr>`;
-						});
-					}
+      });
+    }
 
-					function openAddStaff() {
-						document.getElementById('modalTitle').textContent = 'Tambah Kakitangan';
-						document.getElementById('dataForm').innerHTML = `
+    function openAddStaff() {
+      document.getElementById('modalTitle').textContent = 'Tambah Kakitangan';
+      document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Nama</label><input type="text" id="st_name" required></div>
         <div class="form-group"><label>No. KP</label><input type="text" id="st_ic" required></div>
         <div class="form-group"><label>Jawatan</label><input type="text" id="st_position" required></div>
         <div class="form-group"><label>No. HP</label><input type="text" id="st_phone" required></div>
         <input type="hidden" id="st_id">
       `;
-						document.getElementById('saveBtn').onclick = saveStaff;
-						document.getElementById('modal').classList.remove('hidden');
-					}
+      document.getElementById('saveBtn').onclick = saveStaff;
+      document.getElementById('modal').classList.remove('hidden');
+    }
 
-					// Gantikan fungsi saveStaff
-					async function saveStaff() {
-						const id = document.getElementById('st_id').value;
-						const staffMember = {
-							id: id || undefined,
-							name: document.getElementById('st_name').value.trim(),
-							ic: document.getElementById('st_ic').value.trim(),
-							position: document.getElementById('st_position').value.trim(),
-							phone: document.getElementById('st_phone').value.trim()
-						};
+    // Gantikan fungsi saveStaff
+    async function saveStaff() {
+      const id = document.getElementById('st_id').value;
+      const staffMember = {
+        id: id || undefined,
+        name: document.getElementById('st_name').value.trim(),
+        ic: document.getElementById('st_ic').value.trim(),
+        position: document.getElementById('st_position').value.trim(),
+        phone: document.getElementById('st_phone').value.trim()
+      };
+      
+      // Jika kakitangan baru, jana ID sebagai teks
+      if (!id) {
+        staffMember.id = 'staff_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      }
+      
+      if (!staffMember.name || !staffMember.ic || !staffMember.position || !staffMember.phone) {
+        return showToast('Isi semua medan', 'error');
+      }
+      
+      try {
+        if (isOnline) {
+          if (id) await apiCall('updateStaff', { staff: staffMember });
+          else await apiCall('addStaff', { staff: staffMember });
+        } else {
+          // Simpan operasi untuk kemudian
+          pendingOperations.push({ action: id ? 'updateStaff' : 'addStaff', payload: { staff: staffMember } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          
+          // Kemas kini data tempatan
+          if (id) {
+            const index = staff.findIndex(s => s.id === id);
+            if (index !== -1) staff[index] = staffMember;
+          } else {
+            staff.push(staffMember);
+          }
+          
+          saveLocalData('getStaff', { staff });
+          renderStaff();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+        
+        closeModal();
+        if (isOnline) loadStaff();
+        showToast('Kakitangan berjaya disimpan');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
 
-						// Jika kakitangan baru, jana ID sebagai teks
-						if (!id) {
-							staffMember.id = 'staff_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-						}
-
-						if (!staffMember.name || !staffMember.ic || !staffMember.position || !staffMember.phone) {
-							return showToast('Isi semua medan', 'error');
-						}
-
-						try {
-							if (isOnline) {
-								if (id) await apiCall('updateStaff', {
-									staff: staffMember
-								});
-								else await apiCall('addStaff', {
-									staff: staffMember
-								});
-							} else {
-								// Simpan operasi untuk kemudian
-								pendingOperations.push({
-									action: id ? 'updateStaff' : 'addStaff',
-									payload: {
-										staff: staffMember
-									}
-								});
-								localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-
-								// Kemas kini data tempatan
-								if (id) {
-									const index = staff.findIndex(s => s.id === id);
-									if (index !== -1) staff[index] = staffMember;
-								} else {
-									staff.push(staffMember);
-								}
-
-								saveLocalData('getStaff', {
-									staff
-								});
-								renderStaff();
-								showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-							}
-
-							closeModal();
-							if (isOnline) loadStaff();
-							showToast('Kakitangan berjaya disimpan');
-						} catch (err) {
-							showToast(err.message, 'error');
-						}
-					}
-
-					function editStaff(id) {
-						const staffMember = staff.find(s => s.id === id);
-						if (!staffMember) return;
-
-						document.getElementById('modalTitle').textContent = 'Kemaskini Kakitangan';
-						document.getElementById('dataForm').innerHTML = `
+    function editStaff(id) {
+      const staffMember = staff.find(s => s.id === id);
+      if (!staffMember) return;
+      
+      document.getElementById('modalTitle').textContent = 'Kemaskini Kakitangan';
+      document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Nama</label><input type="text" id="st_name" value="${staffMember.name}" required></div>
         <div class="form-group"><label>No. KP</label><input type="text" id="st_ic" value="${staffMember.ic}" required></div>
         <div class="form-group"><label>Jawatan</label><input type="text" id="st_position" value="${staffMember.position}" required></div>
         <div class="form-group"><label>No. HP</label><input type="text" id="st_phone" value="${staffMember.phone}" required></div>
         <input type="hidden" id="st_id" value="${staffMember.id}">
       `;
-						document.getElementById('saveBtn').onclick = saveStaff;
-						document.getElementById('modal').classList.remove('hidden');
-					}
+      document.getElementById('saveBtn').onclick = saveStaff;
+      document.getElementById('modal').classList.remove('hidden');
+    }
 
-					async function deleteStaff(id) {
-						if (!confirm('Adakah anda pasti ingin memadam kakitangan ini?')) return;
+    async function deleteStaff(id) {
+      if (!confirm('Adakah anda pasti ingin memadam kakitangan ini?')) return;
+      
+      try {
+        if (isOnline) {
+          await apiCall('deleteStaff', { id });
+        } else {
+          // Simpan operasi untuk kemudian
+          pendingOperations.push({ action: 'deleteStaff', payload: { id } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          
+          // Kemas kini data tempatan
+          staff = staff.filter(s => s.id !== id);
+          saveLocalData('getStaff', { staff });
+          renderStaff();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+        
+        if (isOnline) loadStaff();
+        showToast('Kakitangan berjaya dipadam');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
 
-						try {
-							if (isOnline) {
-								await apiCall('deleteStaff', {
-									id
-								});
-							} else {
-								// Simpan operasi untuk kemudian
-								pendingOperations.push({
-									action: 'deleteStaff',
-									payload: {
-										id
-									}
-								});
-								localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+    // === KELAS ===
+    async function loadClasses() {
+      try {
+        const res = await apiCall('getClasses');
+        classes = res.classes || [];
+        saveLocalData('getClasses', res);
+        renderClasses();
+      } catch (e) {
+        console.error('Error loading classes:', e);
+        
+        // Cuba gunakan data tempatan jika ada
+        const res = getLocalData('getClasses');
+        if (res) {
+          classes = res.classes || [];
+          renderClasses();
+          showToast('Menggunakan data tempatan', 'warning');
+        } else {
+          showToast('Gagal memuatkan kelas', 'error');
+        }
+      }
+    }
 
-								// Kemas kini data tempatan
-								staff = staff.filter(s => s.id !== id);
-								saveLocalData('getStaff', {
-									staff
-								});
-								renderStaff();
-								showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-							}
-
-							if (isOnline) loadStaff();
-							showToast('Kakitangan berjaya dipadam');
-						} catch (err) {
-							showToast(err.message, 'error');
-						}
-					}
-
-					// === KELAS ===
-					async function loadClasses() {
-						try {
-							const res = await apiCall('getClasses');
-							classes = res.classes || [];
-							saveLocalData('getClasses', res);
-							renderClasses();
-						} catch (e) {
-							console.error('Error loading classes:', e);
-
-							// Cuba gunakan data tempatan jika ada
-							const res = getLocalData('getClasses');
-							if (res) {
-								classes = res.classes || [];
-								renderClasses();
-								showToast('Menggunakan data tempatan', 'warning');
-							} else {
-								showToast('Gagal memuatkan kelas', 'error');
-							}
-						}
-					}
-
-					function renderClasses() {
-						const tbody = document.querySelector('#classTable tbody');
-						tbody.innerHTML = '';
-						classes.forEach(c => {
-							tbody.innerHTML += `
+    function renderClasses() {
+      const tbody = document.querySelector('#classTable tbody');
+      tbody.innerHTML = '';
+      classes.forEach(c => {
+        tbody.innerHTML += `
           <tr>
             <td>${c.id}</td><td>${c.name}</td><td>${c.teacher}</td>
             <td>
@@ -1497,303 +1408,274 @@ input, textarea, select {
               <button class="btn btn-danger" onclick="deleteClass('${c.id}')">Padam</button>
             </td>
           </tr>`;
-						});
-					}
+      });
+    }
 
-					// Kemas kini fungsi openAddClass untuk memastikan guru dimuatkan
-					function openAddClass() {
-						// Pastikan guru dimuatkan terlebih dahulu
-						if (teachers.length === 0) {
-							showToast('Sila muatkan data guru terlebih dahulu', 'warning');
-							return;
-						}
-
-						document.getElementById('modalTitle').textContent = 'Tambah Kelas';
-						document.getElementById('dataForm').innerHTML = `
+    // Kemas kini fungsi openAddClass untuk memastikan guru dimuatkan
+    function openAddClass() {
+      // Pastikan guru dimuatkan terlebih dahulu
+      if (teachers.length === 0) {
+        showToast('Sila muatkan data guru terlebih dahulu', 'warning');
+        return;
+      }
+      
+      document.getElementById('modalTitle').textContent = 'Tambah Kelas';
+      document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Nama Kelas</label><input type="text" id="c_name" required></div>
         <div class="form-group"><label>Guru Kelas</label><select id="c_teacher" required><option value="">Pilih Guru</option></select></div>
         <input type="hidden" id="c_id">
       `;
+      
+      // Isi pilihan guru
+      const teacherSelect = document.getElementById('c_teacher');
+      teachers.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t.name;
+        opt.textContent = t.name;
+        teacherSelect.appendChild(opt);
+      });
+      
+      document.getElementById('saveBtn').onclick = saveClass;
+      document.getElementById('modal').classList.remove('hidden');
+    }
 
-						// Isi pilihan guru
-						const teacherSelect = document.getElementById('c_teacher');
-						teachers.forEach(t => {
-							const opt = document.createElement('option');
-							opt.value = t.name;
-							opt.textContent = t.name;
-							teacherSelect.appendChild(opt);
-						});
+    // Gantikan fungsi saveClass
+    async function saveClass() {
+      const id = document.getElementById('c_id').value;
+      const classData = {
+        id: id || undefined,
+        name: document.getElementById('c_name').value.trim(),
+        teacher: document.getElementById('c_teacher').value
+      };
+      
+      // Jika kelas baru, jana ID sebagai teks
+      if (!id) {
+        classData.id = 'class_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      }
+      
+      if (!classData.name || !classData.teacher) {
+        return showToast('Isi semua medan', 'error');
+      }
+      
+      try {
+        if (isOnline) {
+          if (id) await apiCall('updateClass', { class: classData });
+          else await apiCall('addClass', { class: classData });
+        } else {
+          // Simpan operasi untuk kemudian
+          pendingOperations.push({ action: id ? 'updateClass' : 'addClass', payload: { class: classData } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          
+          // Kemas kini data tempatan
+          if (id) {
+            const index = classes.findIndex(c => c.id === id);
+            if (index !== -1) classes[index] = classData;
+          } else {
+            classes.push(classData);
+          }
+          
+          saveLocalData('getClasses', { classes });
+          renderClasses();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+        
+        closeModal();
+        if (isOnline) loadClasses();
+        showToast('Kelas berjaya disimpan');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
 
-						document.getElementById('saveBtn').onclick = saveClass;
-						document.getElementById('modal').classList.remove('hidden');
-					}
-
-					// Gantikan fungsi saveClass
-					async function saveClass() {
-						const id = document.getElementById('c_id').value;
-						const classData = {
-							id: id || undefined,
-							name: document.getElementById('c_name').value.trim(),
-							teacher: document.getElementById('c_teacher').value
-						};
-
-						// Jika kelas baru, jana ID sebagai teks
-						if (!id) {
-							classData.id = 'class_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-						}
-
-						if (!classData.name || !classData.teacher) {
-							return showToast('Isi semua medan', 'error');
-						}
-
-						try {
-							if (isOnline) {
-								if (id) await apiCall('updateClass', {
-									class: classData
-								});
-								else await apiCall('addClass', {
-									class: classData
-								});
-							} else {
-								// Simpan operasi untuk kemudian
-								pendingOperations.push({
-									action: id ? 'updateClass' : 'addClass',
-									payload: {
-										class: classData
-									}
-								});
-								localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-
-								// Kemas kini data tempatan
-								if (id) {
-									const index = classes.findIndex(c => c.id === id);
-									if (index !== -1) classes[index] = classData;
-								} else {
-									classes.push(classData);
-								}
-
-								saveLocalData('getClasses', {
-									classes
-								});
-								renderClasses();
-								showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-							}
-
-							closeModal();
-							if (isOnline) loadClasses();
-							showToast('Kelas berjaya disimpan');
-						} catch (err) {
-							showToast(err.message, 'error');
-						}
-					}
-
-					function editClass(id) {
-						// Pastikan guru dimuatkan terlebih dahulu
-						if (teachers.length === 0) {
-							showToast('Sila muatkan data guru terlebih dahulu', 'warning');
-							return;
-						}
-
-						const classData = classes.find(c => c.id === id);
-						if (!classData) return;
-
-						document.getElementById('modalTitle').textContent = 'Kemaskini Kelas';
-						document.getElementById('dataForm').innerHTML = `
+    function editClass(id) {
+      // Pastikan guru dimuatkan terlebih dahulu
+      if (teachers.length === 0) {
+        showToast('Sila muatkan data guru terlebih dahulu', 'warning');
+        return;
+      }
+      
+      const classData = classes.find(c => c.id === id);
+      if (!classData) return;
+      
+      document.getElementById('modalTitle').textContent = 'Kemaskini Kelas';
+      document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Nama Kelas</label><input type="text" id="c_name" value="${classData.name}" required></div>
         <div class="form-group"><label>Guru Kelas</label><select id="c_teacher" required><option value="">Pilih Guru</option></select></div>
         <input type="hidden" id="c_id" value="${classData.id}">
       `;
+      
+      // Isi pilihan guru
+      const teacherSelect = document.getElementById('c_teacher');
+      teachers.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t.name;
+        opt.textContent = t.name;
+        if (t.name === classData.teacher) opt.selected = true;
+        teacherSelect.appendChild(opt);
+      });
+      
+      document.getElementById('saveBtn').onclick = saveClass;
+      document.getElementById('modal').classList.remove('hidden');
+    }
 
-						// Isi pilihan guru
-						const teacherSelect = document.getElementById('c_teacher');
-						teachers.forEach(t => {
-							const opt = document.createElement('option');
-							opt.value = t.name;
-							opt.textContent = t.name;
-							if (t.name === classData.teacher) opt.selected = true;
-							teacherSelect.appendChild(opt);
-						});
+    async function deleteClass(id) {
+      if (!confirm('Adakah anda pasti ingin memadam kelas ini?')) return;
+      
+      try {
+        if (isOnline) {
+          await apiCall('deleteClass', { id });
+        } else {
+          // Simpan operasi untuk kemudian
+          pendingOperations.push({ action: 'deleteClass', payload: { id } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          
+          // Kemas kini data tempatan
+          classes = classes.filter(c => c.id !== id);
+          saveLocalData('getClasses', { classes });
+          renderClasses();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+        
+        if (isOnline) loadClasses();
+        showToast('Kelas berjaya dipadam');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
 
-						document.getElementById('saveBtn').onclick = saveClass;
-						document.getElementById('modal').classList.remove('hidden');
-					}
+    // === JADUAL ===
+    async function loadSchedule() {
+      try {
+        const res = await apiCall('getSchedule');
+        schedule = res.schedule || Array(5).fill().map(() => Array(5).fill(''));
+        saveLocalData('getSchedule', res);
+        renderSchedule();
+      } catch (e) {
+        console.error('Error loading schedule:', e);
+        
+        // Cuba gunakan data tempatan jika ada
+        const res = getLocalData('getSchedule');
+        if (res) {
+          schedule = res.schedule || Array(5).fill().map(() => Array(5).fill(''));
+          renderSchedule();
+          showToast('Menggunakan data tempatan', 'warning');
+        } else {
+          showToast('Gagal memuatkan jadual', 'error');
+        }
+      }
+    }
 
-					async function deleteClass(id) {
-						if (!confirm('Adakah anda pasti ingin memadam kelas ini?')) return;
+    function renderSchedule() {
+      // Isi jadual dengan data
+      for (let row = 0; row < 5; row++) {
+        for (let col = 0; col < 5; col++) {
+          const input = document.querySelector(`input[data-row="${row}"][data-col="${col}"]`);
+          if (input) input.value = schedule[row][col];
+        }
+      }
+    }
 
-						try {
-							if (isOnline) {
-								await apiCall('deleteClass', {
-									id
-								});
-							} else {
-								// Simpan operasi untuk kemudian
-								pendingOperations.push({
-									action: 'deleteClass',
-									payload: {
-										id
-									}
-								});
-								localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+    async function saveSchedule() {
+      // Kumpulkan data dari jadual
+      const newSchedule = Array(5).fill().map(() => Array(5).fill(''));
+      for (let row = 0; row < 5; row++) {
+        for (let col = 0; col < 5; col++) {
+          const input = document.querySelector(`input[data-row="${row}"][data-col="${col}"]`);
+          if (input) newSchedule[row][col] = input.value;
+        }
+      }
+      
+      try {
+        if (isOnline) {
+          await apiCall('saveSchedule', { schedule: newSchedule });
+        } else {
+          // Simpan operasi untuk kemudian
+          pendingOperations.push({ action: 'saveSchedule', payload: { schedule: newSchedule } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          
+          // Kemas kini data tempatan
+          schedule = newSchedule;
+          saveLocalData('getSchedule', { schedule });
+          renderSchedule();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+        
+        showToast('Jadual berjaya disimpan');
+      } catch (e) {
+        showToast(e.message, 'error');
+      }
+    }
 
-								// Kemas kini data tempatan
-								classes = classes.filter(c => c.id !== id);
-								saveLocalData('getClasses', {
-									classes
-								});
-								renderClasses();
-								showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-							}
+    async function loadViewSchedule() {
+      try {
+        const res = await apiCall('getSchedule');
+        schedule = res.schedule || Array(5).fill().map(() => Array(5).fill(''));
+        saveLocalData('getSchedule', res);
+        renderViewSchedule();
+      } catch (e) {
+        console.error('Error loading view schedule:', e);
+        
+        // Cuba gunakan data tempatan jika ada
+        const res = getLocalData('getSchedule');
+        if (res) {
+          schedule = res.schedule || Array(5).fill().map(() => Array(5).fill(''));
+          renderViewSchedule();
+          showToast('Menggunakan data tempatan', 'warning');
+        } else {
+          showToast('Gagal memuatkan jadual', 'error');
+        }
+      }
+    }
 
-							if (isOnline) loadClasses();
-							showToast('Kelas berjaya dipadam');
-						} catch (err) {
-							showToast(err.message, 'error');
-						}
-					}
+    function renderViewSchedule() {
+      const tbody = document.querySelector('#viewScheduleTable tbody');
+      tbody.innerHTML = '';
+      
+      // Paparkan jadual
+      const timeSlots = ['8:00-9:00', '9:00-10:00', '10:00-11:00', '11:00-12:00', '12:00-13:00'];
+      const days = ['Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat'];
+      
+      for (let row = 0; row < 5; row++) {
+        let rowHtml = `<tr><td>${timeSlots[row]}</td>`;
+        for (let col = 0; col < 5; col++) {
+          rowHtml += `<td>${schedule[row][col]}</td>`;
+        }
+        rowHtml += '</tr>';
+        tbody.innerHTML += rowHtml;
+      }
+    }
 
-					// === JADUAL ===
-					async function loadSchedule() {
-						try {
-							const res = await apiCall('getSchedule');
-							schedule = res.schedule || Array(5).fill().map(() => Array(5).fill(''));
-							saveLocalData('getSchedule', res);
-							renderSchedule();
-						} catch (e) {
-							console.error('Error loading schedule:', e);
+    // === LAPORAN MENGAJAR ===
+    async function loadTeachingReports() {
+      try {
+        const res = await apiCall('getTeachingReports');
+        const reports = res.reports || [];
+        saveLocalData('getTeachingReports', res);
+        renderTeachingReports(reports);
+      } catch (e) {
+        console.error('Error loading teaching reports:', e);
+        
+        // Cuba gunakan data tempatan jika ada
+        const res = getLocalData('getTeachingReports');
+        if (res) {
+          const reports = res.reports || [];
+          renderTeachingReports(reports);
+          showToast('Menggunakan data tempatan', 'warning');
+        } else {
+          showToast('Gagal memuatkan laporan mengajar', 'error');
+        }
+      }
+    }
 
-							// Cuba gunakan data tempatan jika ada
-							const res = getLocalData('getSchedule');
-							if (res) {
-								schedule = res.schedule || Array(5).fill().map(() => Array(5).fill(''));
-								renderSchedule();
-								showToast('Menggunakan data tempatan', 'warning');
-							} else {
-								showToast('Gagal memuatkan jadual', 'error');
-							}
-						}
-					}
-
-					function renderSchedule() {
-						// Isi jadual dengan data
-						for (let row = 0; row < 5; row++) {
-							for (let col = 0; col < 5; col++) {
-								const input = document.querySelector(`input[data-row="${row}"][data-col="${col}"]`);
-								if (input) input.value = schedule[row][col];
-							}
-						}
-					}
-
-					async function saveSchedule() {
-						// Kumpulkan data dari jadual
-						const newSchedule = Array(5).fill().map(() => Array(5).fill(''));
-						for (let row = 0; row < 5; row++) {
-							for (let col = 0; col < 5; col++) {
-								const input = document.querySelector(`input[data-row="${row}"][data-col="${col}"]`);
-								if (input) newSchedule[row][col] = input.value;
-							}
-						}
-
-						try {
-							if (isOnline) {
-								await apiCall('saveSchedule', {
-									schedule: newSchedule
-								});
-							} else {
-								// Simpan operasi untuk kemudian
-								pendingOperations.push({
-									action: 'saveSchedule',
-									payload: {
-										schedule: newSchedule
-									}
-								});
-								localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-
-								// Kemas kini data tempatan
-								schedule = newSchedule;
-								saveLocalData('getSchedule', {
-									schedule
-								});
-								renderSchedule();
-								showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-							}
-
-							showToast('Jadual berjaya disimpan');
-						} catch (e) {
-							showToast(e.message, 'error');
-						}
-					}
-
-					async function loadViewSchedule() {
-						try {
-							const res = await apiCall('getSchedule');
-							schedule = res.schedule || Array(5).fill().map(() => Array(5).fill(''));
-							saveLocalData('getSchedule', res);
-							renderViewSchedule();
-						} catch (e) {
-							console.error('Error loading view schedule:', e);
-
-							// Cuba gunakan data tempatan jika ada
-							const res = getLocalData('getSchedule');
-							if (res) {
-								schedule = res.schedule || Array(5).fill().map(() => Array(5).fill(''));
-								renderViewSchedule();
-								showToast('Menggunakan data tempatan', 'warning');
-							} else {
-								showToast('Gagal memuatkan jadual', 'error');
-							}
-						}
-					}
-
-					function renderViewSchedule() {
-						const tbody = document.querySelector('#viewScheduleTable tbody');
-						tbody.innerHTML = '';
-
-						// Paparkan jadual
-						const timeSlots = ['8:00-9:00', '9:00-10:00', '10:00-11:00', '11:00-12:00', '12:00-13:00'];
-						const days = ['Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat'];
-
-						for (let row = 0; row < 5; row++) {
-							let rowHtml = `<tr><td>${timeSlots[row]}</td>`;
-							for (let col = 0; col < 5; col++) {
-								rowHtml += `<td>${schedule[row][col]}</td>`;
-							}
-							rowHtml += '</tr>';
-							tbody.innerHTML += rowHtml;
-						}
-					}
-
-					// === LAPORAN MENGAJAR ===
-					async function loadTeachingReports() {
-						try {
-							const res = await apiCall('getTeachingReports');
-							const reports = res.reports || [];
-							saveLocalData('getTeachingReports', res);
-							renderTeachingReports(reports);
-						} catch (e) {
-							console.error('Error loading teaching reports:', e);
-
-							// Cuba gunakan data tempatan jika ada
-							const res = getLocalData('getTeachingReports');
-							if (res) {
-								const reports = res.reports || [];
-								renderTeachingReports(reports);
-								showToast('Menggunakan data tempatan', 'warning');
-							} else {
-								showToast('Gagal memuatkan laporan mengajar', 'error');
-							}
-						}
-					}
-
-					function renderTeachingReports(reports) {
-						// Set tarikh cetakan
-						document.getElementById('printDate').textContent = new Date().toLocaleDateString('ms-MY');
-
-						const tbody = document.querySelector('#teachingReportTable tbody');
-						tbody.innerHTML = '';
-
-						reports.forEach((r, index) => {
-							tbody.innerHTML += `
+    function renderTeachingReports(reports) {
+      // Set tarikh cetakan
+      document.getElementById('printDate').textContent = new Date().toLocaleDateString('ms-MY');
+      
+      const tbody = document.querySelector('#teachingReportTable tbody');
+      tbody.innerHTML = '';
+      
+      reports.forEach((r, index) => {
+        tbody.innerHTML += `
           <tr>
             <td>${index + 1}</td>
             <td>${r.teacher}</td>
@@ -1801,227 +1683,225 @@ input, textarea, select {
             <td>${r.class}</td>
             <td>${r.topic}</td>
             <td>${r.notes}</td>
-            <td>${r.attachment ? ` < a href = "${r.attachment}"
-							target = "_blank" > Lihat < /a>` : '-'}</td >
-								< /tr>`;
-						});
-					}
+            <td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat</a>` : '-'}</td>
+          </tr>`;
+      });
+    }
 
-					async function saveTeachingReport() {
-						const report = {
-							date: document.getElementById('reportDate').value,
-							class: document.getElementById('reportClass').value,
-							topic: document.getElementById('reportTopic').value.trim(),
-							notes: document.getElementById('reportNotes').value.trim(),
-							teacher: currentUser.name,
-							teacherId: currentUser.id
-						};
+    async function saveTeachingReport() {
+      const report = {
+        date: document.getElementById('reportDate').value,
+        class: document.getElementById('reportClass').value,
+        topic: document.getElementById('reportTopic').value.trim(),
+        notes: document.getElementById('reportNotes').value.trim(),
+        teacher: currentUser.name,
+        teacherId: currentUser.id
+      };
+      
+      if (!report.date || !report.class || !report.topic || !report.notes) {
+        return showToast('Isi semua medan', 'error');
+      }
+      
+      try {
+        if (isOnline) {
+          await apiCall('saveTeachingReport', { report });
+        } else {
+          // Simpan operasi untuk kemudian
+          pendingOperations.push({ action: 'saveTeachingReport', payload: { report } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          
+          // Kemas kini data tempatan
+          const res = getLocalData('getTeachingReports') || { reports: [] };
+          res.reports.push(report);
+          saveLocalData('getTeachingReports', res);
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+        
+        showToast('Laporan berjaya dihantar');
+        
+        // Kosongkan borang
+        document.getElementById('reportDate').value = '';
+        document.getElementById('reportClass').value = '';
+        document.getElementById('reportTopic').value = '';
+        document.getElementById('reportNotes').value = '';
+        document.getElementById('reportAttachment').value = '';
+        document.getElementById('attachmentPreview').innerHTML = '';
+        
+        // Jika guru, kembali ke dashboard
+        if (currentUser.role === 'guru') {
+          document.getElementById('sections').classList.add('hidden');
+          document.getElementById('guruDashboard').classList.remove('hidden');
+        }
+      } catch (e) {
+        showToast(e.message, 'error');
+      }
+    }
 
-						if (!report.date || !report.class || !report.topic || !report.notes) {
-							return showToast('Isi semua medan', 'error');
-						}
+    // Fungsi untuk mengepam laporan mengajar ke PDF
+    function exportTeachingReportPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      
+      // Tambah tajuk
+      doc.setFontSize(18);
+      doc.text('Laporan Mengajar Harian Guru', 105, 15, { align: 'center' });
+      doc.setFontSize(12);
+      doc.text('INSTAQLIM - Institut Tahfiz Al-Quran lil Muttaqin', 105, 22, { align: 'center' });
+      doc.text(`Tarikh: ${new Date().toLocaleDateString('ms-MY')}`, 105, 29, { align: 'center' });
+      
+      // Tambah jadual
+      const table = document.getElementById('teachingReportTable');
+      const rows = table.querySelectorAll('tr');
+      
+      let yPosition = 40;
+      
+      rows.forEach((row, index) => {
+        if (index === 0) {
+          // Header jadual
+          doc.setFont(undefined, 'bold');
+        } else {
+          doc.setFont(undefined, 'normal');
+        }
+        
+        const cells = row.querySelectorAll('td, th');
+        let xPosition = 15;
+        
+        cells.forEach(cell => {
+          const text = cell.textContent.trim();
+          const cellWidth = 25;
+          
+          // Potong teks jika terlalu panjang
+          const maxLength = Math.floor(cellWidth / 3);
+          const truncatedText = text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+          
+          doc.text(truncatedText, xPosition, yPosition);
+          xPosition += cellWidth;
+        });
+        
+        yPosition += 10;
+        
+        // Jika melebihi halaman, buat halaman baru
+        if (yPosition > 280) {
+          doc.addPage();
+          yPosition = 20;
+        }
+      });
+      
+      // Simpan PDF
+      doc.save('laporan_mengajar.pdf');
+    }
 
-						try {
-							if (isOnline) {
-								await apiCall('saveTeachingReport', {
-									report
-								});
-							} else {
-								// Simpan operasi untuk kemudian
-								pendingOperations.push({
-									action: 'saveTeachingReport',
-									payload: {
-										report
-									}
-								});
-								localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+    // Fungsi untuk menapis jadual
+    function filterTable(tableId, searchValue, filterValue = '') {
+      const table = document.getElementById(tableId);
+      const tbody = table.querySelector('tbody');
+      const rows = tbody.querySelectorAll('tr');
+      
+      searchValue = searchValue.toLowerCase();
+      
+      rows.forEach(row => {
+        let showRow = true;
+        
+        // Semak nilai carian
+        if (searchValue) {
+          let found = false;
+          row.querySelectorAll('td').forEach(cell => {
+            if (cell.textContent.toLowerCase().includes(searchValue)) {
+              found = true;
+            }
+          });
+          showRow = found;
+        }
+        
+        // Semak nilai penapis (jika ada)
+        if (filterValue && showRow) {
+          let found = false;
+          row.querySelectorAll('td').forEach(cell => {
+            if (cell.textContent.toLowerCase().includes(filterValue.toLowerCase())) {
+              found = true;
+            }
+          });
+          showRow = found;
+        }
+        
+        row.style.display = showRow ? '' : 'none';
+      });
+    }
 
-								// Kemas kini data tempatan
-								const res = getLocalData('getTeachingReports') || {
-									reports: []
-								};
-								res.reports.push(report);
-								saveLocalData('getTeachingReports', res);
-								showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-							}
+    // Fungsi untuk menukar tema
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      
+      const icon = document.getElementById('themeIcon');
+      icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
 
-							showToast('Laporan berjaya dihantar');
+    // Fungsi untuk memuatkan tema yang disimpan
+    window.onload = () => {
+      const theme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+      
+      // Muatkan operasi yang tertangguh
+      const savedPendingOperations = localStorage.getItem('pendingOperations');
+      if (savedPendingOperations) {
+        pendingOperations = JSON.parse(savedPendingOperations);
+      }
+      
+      // Semak status sambungan
+      updateConnectionStatus('Memeriksa sambungan...', 'loading');
+      
+      // Tambah event listener untuk status sambungan
+      window.addEventListener('online', () => {
+        isOnline = true;
+        updateConnectionStatus('Dalam talian', 'success');
+        document.getElementById('offlineMode').classList.add('hidden');
+        
+        // Cuba menyegerakkan operasi yang tertangguh
+        if (pendingOperations.length > 0) {
+          syncPendingOperations();
+        }
+      });
+      
+      window.addEventListener('offline', () => {
+        isOnline = false;
+        updateConnectionStatus('Luar talian', 'error');
+        document.getElementById('offlineMode').classList.remove('hidden');
+      });
+      
+      // Semak status sambungan awal
+      if (navigator.onLine) {
+        isOnline = true;
+        updateConnectionStatus('Dalam talian', 'success');
+        document.getElementById('offlineMode').classList.add('hidden');
+        
+        // Cuba menyegerakkan operasi yang tertangguh
+        if (pendingOperations.length > 0) {
+          syncPendingOperations();
+        }
+      } else {
+        isOnline = false;
+        updateConnectionStatus('Luar talian', 'error');
+        document.getElementById('offlineMode').classList.remove('hidden');
+      }
+    };
+  </script>
+</body>
+</html>
 
-							// Kosongkan borang
-							document.getElementById('reportDate').value = '';
-							document.getElementById('reportClass').value = '';
-							document.getElementById('reportTopic').value = '';
-							document.getElementById('reportNotes').value = '';
-							document.getElementById('reportAttachment').value = '';
-							document.getElementById('attachmentPreview').innerHTML = '';
 
-							// Jika guru, kembali ke dashboard
-							if (currentUser.role === 'guru') {
-								document.getElementById('sections').classList.add('hidden');
-								document.getElementById('guruDashboard').classList.remove('hidden');
-							}
-						} catch (e) {
-							showToast(e.message, 'error');
-						}
-					}
 
-					// Fungsi untuk mengepam laporan mengajar ke PDF
-					function exportTeachingReportPDF() {
-						const {
-							jsPDF
-						} = window.jspdf;
-						const doc = new jsPDF();
 
-						// Tambah tajuk
-						doc.setFontSize(18);
-						doc.text('Laporan Mengajar Harian Guru', 105, 15, {
-							align: 'center'
-						});
-						doc.setFontSize(12);
-						doc.text('INSTAQLIM - Institut Tahfiz Al-Quran lil Muttaqin', 105, 22, {
-							align: 'center'
-						});
-						doc.text(`Tarikh: ${new Date().toLocaleDateString('ms-MY')}`, 105, 29, {
-							align: 'center'
-						});
 
-						// Tambah jadual
-						const table = document.getElementById('teachingReportTable');
-						const rows = table.querySelectorAll('tr');
 
-						let yPosition = 40;
 
-						rows.forEach((row, index) => {
-							if (index === 0) {
-								// Header jadual
-								doc.setFont(undefined, 'bold');
-							} else {
-								doc.setFont(undefined, 'normal');
-							}
 
-							const cells = row.querySelectorAll('td, th');
-							let xPosition = 15;
 
-							cells.forEach(cell => {
-								const text = cell.textContent.trim();
-								const cellWidth = 25;
 
-								// Potong teks jika terlalu panjang
-								const maxLength = Math.floor(cellWidth / 3);
-								const truncatedText = text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
 
-								doc.text(truncatedText, xPosition, yPosition);
-								xPosition += cellWidth;
-							});
 
-							yPosition += 10;
 
-							// Jika melebihi halaman, buat halaman baru
-							if (yPosition > 280) {
-								doc.addPage();
-								yPosition = 20;
-							}
-						});
-
-						// Simpan PDF
-						doc.save('laporan_mengajar.pdf');
-					}
-
-					// Fungsi untuk menapis jadual
-					function filterTable(tableId, searchValue, filterValue = '') {
-						const table = document.getElementById(tableId);
-						const tbody = table.querySelector('tbody');
-						const rows = tbody.querySelectorAll('tr');
-
-						searchValue = searchValue.toLowerCase();
-
-						rows.forEach(row => {
-							let showRow = true;
-
-							// Semak nilai carian
-							if (searchValue) {
-								let found = false;
-								row.querySelectorAll('td').forEach(cell => {
-									if (cell.textContent.toLowerCase().includes(searchValue)) {
-										found = true;
-									}
-								});
-								showRow = found;
-							}
-
-							// Semak nilai penapis (jika ada)
-							if (filterValue && showRow) {
-								let found = false;
-								row.querySelectorAll('td').forEach(cell => {
-									if (cell.textContent.toLowerCase().includes(filterValue.toLowerCase())) {
-										found = true;
-									}
-								});
-								showRow = found;
-							}
-
-							row.style.display = showRow ? '' : 'none';
-						});
-					}
-
-					// Fungsi untuk menukar tema
-					function toggleTheme() {
-						const currentTheme = document.documentElement.getAttribute('data-theme');
-						const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-						document.documentElement.setAttribute('data-theme', newTheme);
-						localStorage.setItem('theme', newTheme);
-
-						const icon = document.getElementById('themeIcon');
-						icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-					}
-
-					// Fungsi untuk memuatkan tema yang disimpan
-					window.onload = () => {
-						const theme = localStorage.getItem('theme') || 'light';
-						document.documentElement.setAttribute('data-theme', theme);
-						document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-
-						// Muatkan operasi yang tertangguh
-						const savedPendingOperations = localStorage.getItem('pendingOperations');
-						if (savedPendingOperations) {
-							pendingOperations = JSON.parse(savedPendingOperations);
-						}
-
-						// Semak status sambungan
-						updateConnectionStatus('Memeriksa sambungan...', 'loading');
-
-						// Tambah event listener untuk status sambungan
-						window.addEventListener('online', () => {
-							isOnline = true;
-							updateConnectionStatus('Dalam talian', 'success');
-							document.getElementById('offlineMode').classList.add('hidden');
-
-							// Cuba menyegerakkan operasi yang tertangguh
-							if (pendingOperations.length > 0) {
-								syncPendingOperations();
-							}
-						});
-
-						window.addEventListener('offline', () => {
-							isOnline = false;
-							updateConnectionStatus('Luar talian', 'error');
-							document.getElementById('offlineMode').classList.remove('hidden');
-						});
-
-						// Semak status sambungan awal
-						if (navigator.onLine) {
-							isOnline = true;
-							updateConnectionStatus('Dalam talian', 'success');
-							document.getElementById('offlineMode').classList.add('hidden');
-
-							// Cuba menyegerakkan operasi yang tertangguh
-							if (pendingOperations.length > 0) {
-								syncPendingOperations();
-							}
-						} else {
-							isOnline = false;
-							updateConnectionStatus('Luar talian', 'error');
-							document.getElementById('offlineMode').classList.remove('hidden');
-						}
-					}; < /script> < /body> < /html>
