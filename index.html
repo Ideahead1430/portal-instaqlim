@@ -440,7 +440,7 @@
   <h3>Kehadiran Pelajar</h3>
   <div class="form-group">
     <label>Tarikh</label>
-    <input type="date" id="attendanceDate" value="${new Date().toISOString().slice(0,10)}">
+    <input type="date" id="attendanceDate">
     <button class="btn btn-primary" onclick="loadAttendance()">Muat Kehadiran</button>
   </div>
   <table id="attendanceTable">
@@ -1748,6 +1748,13 @@
       const theme = localStorage.getItem('theme') || 'light';
       document.documentElement.setAttribute('data-theme', theme);
       document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+      // Set tarikh hari ini untuk input date
+  const today = new Date().toISOString().slice(0,10);
+  const attendanceDateInput = document.getElementById('attendanceDate');
+  if (attendanceDateInput) attendanceDateInput.value = today;
+
+  // Jika ada input date lain, tambah sini
+};
      
       const savedPendingOperations = localStorage.getItem('pendingOperations');
       if (savedPendingOperations) {
@@ -1830,6 +1837,7 @@ async function saveAttendance() {
   </script>
 </body>
 </html>
+
 
 
 
