@@ -1546,52 +1546,60 @@
     }
 
     // === LAPORAN MENGAJAR ===
-    async function loadTeachingReports() {
-      try {
-        const res = await apiCall('getTeachingReports');
-        let reports = res.reports || [];
-        saveLocalData('getTeachingReports', res);
-        if (currentUser && currentUser.role !== 'admin') {
-          reports = reports.filter(r => r.teacherId === currentUser.id || r.teacher === currentUser.name);
-        }
-        renderTeachingReports(reports);
-      } catch (e) {
-        const localRes = getLocalData('getTeachingReports');
-        if (localRes && localRes.reports) {
-          let reports = localRes.reports;
-          if (currentUser && currentUser.role !== 'admin') {
-            reports = reports.filter(r => r.teacherId === currentUser.id || r.teacher === currentUser.name);
-          }
-          renderTeachingReports(reports);
-          showToast('Menggunakan data tempatan', 'warning');
-        } else {
-          renderTeachingReports([]);
-          showToast('Tiada laporan dijumpai', 'warning');
-        }
-      }
-    }
+async function loadTeachingReports() {
+  try {
+    const res = await apiCall('getTeachingReports');
+    let reports = res.reports || [];
+    saveLocalData('getTeachingReports', res);
 
-    function renderTeachingReports(reports) {
-      document.getElementById('printDate').textContent = new Date().toLocaleDateString('ms-MY');
-      const tbody = document.querySelector('#teachingReportTable tbody');
-      tbody.innerHTML = '';
-      if (reports.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" class="text-center">Tiada laporan dijumpai</td></tr>';
-        return;
-      }
-      reports.forEach((r, index) => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${index + 1}</td>
-            <td>${r.teacher || 'Tiada Nama'}</td>
-            <td>${r.date || '-'}</td>
-            <td>${r.class || '-'}</td>
-            <td>${r.topic || '-'}</td>
-            <td>${r.notes || '-'}</td>
-            <td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : '-'}</td>
-          </tr>`;
+    // Jika Guru, filter laporan miliknya sahaja
+    if (currentUser && currentUser.role !== 'admin') {
+      reports = reports.filter(r => {
+        return r.teacherId === currentUser.id || r.teacher === currentUser.name;
       });
     }
+
+    renderTeachingReports(reports);
+  } catch (e) {
+    console.error('Error loading teaching reports:', e);
+    const localRes = getLocalData('getTeachingReports');
+    if (localRes && localRes.reports) {
+      let reports = localRes.reports;
+      if (currentUser && currentUser.role !== 'admin') {
+        reports = reports.filter(r => r.teacherId === currentUser.id || r.teacher === currentUser.name);
+      }
+      renderTeachingReports(reports);
+      showToast('Menggunakan data tempatan', 'warning');
+    } else {
+      renderTeachingReports([]);
+      showToast('Tiada laporan dijumpai', 'warning');
+    }
+  }
+}
+
+function renderTeachingReports(reports) {
+  document.getElementById('printDate').textContent = new Date().toLocaleDateString('ms-MY');
+  const tbody = document.querySelector('#teachingReportTable tbody');
+  tbody.innerHTML = '';
+
+  if (reports.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" class="text-center">Tiada laporan dijumpai</td></tr>';
+    return;
+  }
+
+  reports.forEach((r, index) => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${r.teacher || 'Tiada Nama'}</td>
+        <td>${r.date || '-'}</td>
+        <td>${r.class || '-'}</td>
+        <td>${r.topic || '-'}</td>
+        <td>${r.notes || '-'}</td>
+        <td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : '-'}</td>
+      </tr>`;
+  });
+}
 
    async function saveTeachingReport() {
   const fileInput = document.getElementById('reportAttachment');
@@ -1764,3 +1772,4 @@
   </script>
 </body>
 </html>
+
