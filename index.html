@@ -839,7 +839,6 @@
       showToast(err.message, 'error');
     }
   }
-
   // === PELAJAR ===
   async function loadStudents() {
     try {
@@ -1544,9 +1543,31 @@ function renderTeachingReports(reports) {
       </tr>`;
     });
   });
-}
+}window.onload = () => {
+    const theme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+  
+    const today = new Date().toISOString().slice(0,10);
+    const attendanceDateInput = document.getElementById('attendanceDate');
+    if (attendanceDateInput) attendanceDateInput.value = today;
+  
+    const reportDateInput = document.getElementById('reportDate');
+    if (reportDateInput) reportDateInput.value = today;
+  
+    const savedPendingOperations = localStorage.getItem('pendingOperations');
+    if (savedPendingOperations) {
+      pendingOperations = JSON.parse(savedPendingOperations);
+    }
+  
+    if (navigator.onLine) {
+      isOnline = true;
+      if (pendingOperations.length > 0) syncPendingOperations();
+    } else {
+      isOnline = false;
+    }
+  };
 </script>
-</body>
-</html>
+
 
 
