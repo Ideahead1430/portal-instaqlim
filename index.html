@@ -1540,10 +1540,10 @@ function renderTeachingReports(reports) {
         <td>${r.topic || '-'}</td>
         <td>${r.notes || '-'}</td>
         <td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : '-'}</td>
-      </tr>`;
-    });
-  });
-}window.onload = () => {
+      </tr>`
+    
+}
+  window.onload = () => {
     const theme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', theme);
     document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
@@ -1568,6 +1568,7 @@ function renderTeachingReports(reports) {
     }
   };
 </script>
+
 
 
 
