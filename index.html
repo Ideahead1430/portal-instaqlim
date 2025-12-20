@@ -521,336 +521,335 @@
   <div class="theme-toggle" onclick="toggleTheme()" title="Tukar Tema"><i class="fas fa-moon" id="themeIcon"></i></div>
   <div id="connectionStatus" class="connection-status hidden">Memeriksa sambungan...</div>
   <script>
-    const API_URL = 'https://script.google.com/macros/s/AKfycbw4rhdzkqfBFyhSkPhaJzbvKmzBRWhe_98X27EJ0Mjul-rt84lH6zURX1TnwDl4tEed/exec';
-    
-    let currentUser = null;
-    let currentSection = '';
-    let classes = [], students = [], teachers = [], staff = [], users = [], schedule = [];
-    let isOnline = navigator.onLine;
-    let pendingOperations = [];
+<script>
+  const API_URL = 'https://script.google.com/macros/s/AKfycbw4rhdzkqfBFyhSkPhaJzbvKmzBRWhe_98X27EJ0Mjul-rt84lH6zURX1TnwDl4tEed/exec';
+  
+  let currentUser = null;
+  let currentSection = '';
+  let classes = [], students = [], teachers = [], staff = [], users = [], schedule = Array(17).fill().map(() => Array(7).fill(''));
+  let isOnline = navigator.onLine;
+  let pendingOperations = [];
 
-    async function apiCall(action, payload = {}) {
+  async function apiCall(action, payload = {}) {
+    try {
+      updateConnectionStatus('Memuat...', 'loading');
+     
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify({
+          action,
+          ...payload
+        })
+      });
+     
+      const responseText = await res.text();
+      let data;
       try {
-        updateConnectionStatus('Memuat...', 'loading');
-       
-        const res = await fetch(API_URL, {
-          method: 'POST',
-          body: JSON.stringify({
-            action,
-            ...payload
-          })
-        });
-       
-        const responseText = await res.text();
-        let data;
-        try {
-          data = JSON.parse(responseText);
-        } catch (e) {
-          throw new Error('Server mengembalikan respons yang tidak dijangka.');
-        }
-       
-        if (data.status !== 'success') {
-          throw new Error(data.message || 'Ralat server');
-        }
-       
-        updateConnectionStatus('Dalam talian', 'success');
-        return data;
+        data = JSON.parse(responseText);
       } catch (e) {
-        console.error('API call error:', e);
-        updateConnectionStatus('Luar talian', 'error');
-       
-        pendingOperations.push({ action, payload });
-        localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-       
-        const localData = getLocalData(action);
-        if (localData) {
-          showToast('Menggunakan data tempatan', 'warning');
-          return { status: 'success', ...localData };
-        }
-       
-        throw new Error('Tidak dapat menyambung ke pelayan. Data akan disegerakkan kemudian.');
+        throw new Error('Server mengembalikan respons yang tidak dijangka.');
       }
-    }
-
-    function getLocalData(action) {
-      const dataKey = `local_${action}`;
-      const data = localStorage.getItem(dataKey);
-      return data ? JSON.parse(data) : null;
-    }
-
-    function saveLocalData(action, data) {
-      const dataKey = `local_${action}`;
-      localStorage.setItem(dataKey, JSON.stringify(data));
-    }
-
-    function updateConnectionStatus(message, type) {
-      const statusEl = document.getElementById('connectionStatus');
-      statusEl.textContent = message;
-      statusEl.className = 'connection-status';
-      if (type === 'loading') statusEl.style.background = 'var(--warning)';
-      else if (type === 'error') statusEl.style.background = 'var(--danger)';
-      else if (type === 'success') {
-        statusEl.style.background = 'var(--success)';
-        setTimeout(() => statusEl.classList.add('hidden'), 3000);
+     
+      if (data.status !== 'success') {
+        throw new Error(data.message || 'Ralat server');
       }
-      statusEl.classList.remove('hidden');
-    }
-
-    function showToast(msg, type = 'success') {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.style.background = type === 'success' ? 'var(--success)' : type === 'warning' ? 'var(--warning)' : 'var(--danger)';
-      t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 4000);
-    }
-
-    function closeModal() {
-      document.getElementById('modal').classList.add('hidden');
-      document.getElementById('dataForm').innerHTML = '';
-    }
-
-    async function login() {
-      const u = document.getElementById('username').value.trim();
-      const p = document.getElementById('password').value;
-      const errorEl = document.getElementById('loginError');
-    
-      if (!u || !p) {
-        errorEl.textContent = 'Isi username dan kata laluan';
-        errorEl.classList.remove('hidden');
-        return;
+     
+      updateConnectionStatus('Dalam talian', 'success');
+      return data;
+    } catch (e) {
+      console.error('API call error:', e);
+      updateConnectionStatus('Luar talian', 'error');
+     
+      pendingOperations.push({ action, payload });
+      localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+     
+      const localData = getLocalData(action);
+      if (localData) {
+        showToast('Menggunakan data tempatan', 'warning');
+        return { status: 'success', ...localData };
       }
-    
-      errorEl.classList.add('hidden');
-    
-      const loginBtn = document.querySelector('#loginPage button');
-      const originalText = loginBtn.innerHTML;
-      loginBtn.innerHTML = '<span class="loading"></span> Memuat...';
-      loginBtn.disabled = true;
-    
-      try {
-        const r = await apiCall('login', { username: u, password: p });
-        currentUser = r.user;
-        document.getElementById('loginPage').classList.add('hidden');
-        document.getElementById('mainApp').classList.remove('hidden');
-        document.getElementById('userName').textContent = r.user.name || u;
-        document.getElementById('userRole').textContent = r.user.role === 'admin' ? 'Pentadbir' : 'Guru';
-        document.getElementById('adminDashboard').classList.toggle('hidden', r.user.role !== 'admin');
-        document.getElementById('guruDashboard').classList.toggle('hidden', r.user.role === 'admin');
-        await loadCommonData();
-        showToast('Log masuk berjaya');
-      } catch (err) {
-        errorEl.textContent = err.message || 'Login gagal';
-        errorEl.classList.remove('hidden');
-      } finally {
-        loginBtn.innerHTML = originalText;
-        loginBtn.disabled = false;
-      }
+     
+      throw new Error('Tidak dapat menyambung ke pelayan. Data akan disegerakkan kemudian.');
     }
+  }
 
-    function logout() {
-      if (confirm('Log keluar?')) {
-        currentUser = null;
-        document.getElementById('mainApp').classList.add('hidden');
-        document.getElementById('loginPage').classList.remove('hidden');
-        document.getElementById('username').value = '';
-        document.getElementById('password').value = '';
-      }
+  function getLocalData(action) {
+    const dataKey = `local_${action}`;
+    const data = localStorage.getItem(dataKey);
+    return data ? JSON.parse(data) : null;
+  }
+
+  function saveLocalData(action, data) {
+    const dataKey = `local_${action}`;
+    localStorage.setItem(dataKey, JSON.stringify(data));
+  }
+
+  function updateConnectionStatus(message, type) {
+    const statusEl = document.getElementById('connectionStatus');
+    statusEl.textContent = message;
+    statusEl.className = 'connection-status';
+    if (type === 'loading') statusEl.style.background = 'var(--warning)';
+    else if (type === 'error') statusEl.style.background = 'var(--danger)';
+    else if (type === 'success') {
+      statusEl.style.background = 'var(--success)';
+      setTimeout(() => statusEl.classList.add('hidden'), 3000);
     }
+    statusEl.classList.remove('hidden');
+  }
 
-    async function loadCommonData() {
-      try {
-        const [c, s] = await Promise.all([
-          apiCall('getClasses'),
-          apiCall('getSchedule')
-        ]);
+  function showToast(msg, type = 'success') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.background = type === 'success' ? 'var(--success)' : type === 'warning' ? 'var(--warning)' : 'var(--danger)';
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 4000);
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.add('hidden');
+    document.getElementById('dataForm').innerHTML = '';
+  }
+
+  async function login() {
+    const u = document.getElementById('username').value.trim();
+    const p = document.getElementById('password').value;
+    const errorEl = document.getElementById('loginError');
+  
+    if (!u || !p) {
+      errorEl.textContent = 'Isi username dan kata laluan';
+      errorEl.classList.remove('hidden');
+      return;
+    }
+  
+    errorEl.classList.add('hidden');
+  
+    const loginBtn = document.querySelector('#loginPage button');
+    const originalText = loginBtn.innerHTML;
+    loginBtn.innerHTML = '<span class="loading"></span> Memuat...';
+    loginBtn.disabled = true;
+  
+    try {
+      const r = await apiCall('login', { username: u, password: p });
+      currentUser = r.user;
+      document.getElementById('loginPage').classList.add('hidden');
+      document.getElementById('mainApp').classList.remove('hidden');
+      document.getElementById('userName').textContent = r.user.name || u;
+      document.getElementById('userRole').textContent = r.user.role === 'admin' ? 'Pentadbir' : 'Guru';
+      document.getElementById('adminDashboard').classList.toggle('hidden', r.user.role !== 'admin');
+      document.getElementById('guruDashboard').classList.toggle('hidden', r.user.role === 'admin');
+      await loadCommonData();
+      showToast('Log masuk berjaya');
+    } catch (err) {
+      errorEl.textContent = err.message || 'Login gagal';
+      errorEl.classList.remove('hidden');
+    } finally {
+      loginBtn.innerHTML = originalText;
+      loginBtn.disabled = false;
+    }
+  }
+
+  function logout() {
+    if (confirm('Log keluar?')) {
+      currentUser = null;
+      document.getElementById('mainApp').classList.add('hidden');
+      document.getElementById('loginPage').classList.remove('hidden');
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+    }
+  }
+
+  async function loadCommonData() {
+    try {
+      const [c, s] = await Promise.all([
+        apiCall('getClasses'),
+        apiCall('getSchedule')
+      ]);
+      classes = c.classes || [];
+      schedule = s.schedule || Array(17).fill().map(() => Array(7).fill(''));
+      saveLocalData('getClasses', c);
+      saveLocalData('getSchedule', s);
+      populateClassSelects();
+    } catch (e) {
+      const c = getLocalData('getClasses');
+      const s = getLocalData('getSchedule');
+      if (c && s) {
         classes = c.classes || [];
-        schedule = s.schedule || [];
-        saveLocalData('getClasses', c);
-        saveLocalData('getSchedule', s);
+        schedule = s.schedule || Array(17).fill().map(() => Array(7).fill(''));
         populateClassSelects();
-      } catch (e) {
-        const c = getLocalData('getClasses');
-        const s = getLocalData('getSchedule');
-        if (c && s) {
-          classes = c.classes || [];
-          schedule = s.schedule || [];
-          populateClassSelects();
-          showToast('Menggunakan data tempatan', 'warning');
-        }
+        showToast('Menggunakan data tempatan', 'warning');
       }
     }
+  }
 
-    function populateClassSelects() {
-      ['reportClass', 'studentClassFilter'].forEach(id => {
-        const sel = document.getElementById(id);
-        if (!sel) return;
-        sel.innerHTML = '<option value="">Pilih/Semua Kelas</option>';
-        classes.forEach(cls => {
-          const opt = document.createElement('option');
-          opt.value = cls.name;
-          opt.textContent = cls.name;
-          sel.appendChild(opt);
-        });
+  function populateClassSelects() {
+    ['reportClass', 'studentClassFilter'].forEach(id => {
+      const sel = document.getElementById(id);
+      if (!sel) return;
+      sel.innerHTML = '<option value="">Pilih/Semua Kelas</option>';
+      classes.forEach(cls => {
+        const opt = document.createElement('option');
+        opt.value = cls.name;
+        opt.textContent = cls.name;
+        sel.appendChild(opt);
       });
-    }
+    });
+  }
 
-    function showSection(id) {
-      document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
-      const sec = document.getElementById(id);
-      if (sec) sec.classList.remove('hidden');
-      document.getElementById('sections').classList.remove('hidden');
-      currentSection = id;
+  function showSection(id) {
+    document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
+    const sec = document.getElementById(id);
+    if (sec) sec.classList.remove('hidden');
+    document.getElementById('sections').classList.remove('hidden');
+    currentSection = id;
 
-      if (id === 'manageUsers') loadUsers();
-      if (id === 'manageStudents') loadStudents();
-      if (id === 'manageTeachers') loadTeachers();
-      if (id === 'manageStaff') loadStaff();
-      if (id === 'manageClasses') loadTeachers().then(() => loadClasses());
-      if (id === 'manageSchedule') loadSchedule();
-      if (id === 'manageAttendance') loadAttendance();
-      if (id === 'viewSchedule') loadViewSchedule();
-      if (id === 'viewTeachingReports') loadTeachingReports();
-    }
-
-    // === PENGGUNA ===
-    async function loadUsers() {
-      try {
-        const res = await apiCall('getUsers');
+    if (id === 'manageUsers') loadUsers();
+    if (id === 'manageStudents') loadStudents();
+    if (id === 'manageTeachers') loadTeachers();
+    if (id === 'manageStaff') loadStaff();
+    if (id === 'manageClasses') loadTeachers().then(() => loadClasses());
+    if (id === 'manageSchedule') loadSchedule();
+    if (id === 'manageAttendance') loadAttendance();
+    if (id === 'viewSchedule') loadViewSchedule();
+    if (id === 'viewTeachingReports') loadTeachingReports();
+  }
+   // === PENGGUNA ===
+  async function loadUsers() {
+    try {
+      const res = await apiCall('getUsers');
+      users = res.users || [];
+      saveLocalData('getUsers', res);
+      renderUsers();
+    } catch (e) {
+      const res = getLocalData('getUsers');
+      if (res) {
         users = res.users || [];
-        saveLocalData('getUsers', res);
         renderUsers();
-      } catch (e) {
-        const res = getLocalData('getUsers');
-        if (res) {
-          users = res.users || [];
-          renderUsers();
-          showToast('Menggunakan data tempatan', 'warning');
-        }
+        showToast('Menggunakan data tempatan', 'warning');
       }
     }
+  }
 
-    function renderUsers() {
-      const tbody = document.querySelector('#userTable tbody');
-      tbody.innerHTML = '';
-      users.forEach(u => {
-        const roleText = u.role === 'admin' ? 'Pentadbir' : u.role === 'guru' ? 'Guru' : 'Kakitangan';
-        tbody.innerHTML += `
-          <tr>
-            <td>${u.username}</td><td>${u.name}</td><td>${roleText}</td><td>${u.ic || '-'}</td><td>${u.status || 'active'}</td>
-            <td>
-              <button class="btn btn-edit" onclick="editUser('${u.id}')">Kemaskini</button>
-              ${u.username !== 'admin' ? `<button class="btn btn-danger" onclick="deleteUser('${u.id}')">Padam</button>` : ''}
-            </td>
-          </tr>`;
-      });
+  function renderUsers() {
+    const tbody = document.querySelector('#userTable tbody');
+    tbody.innerHTML = '';
+    users.forEach(u => {
+      const roleText = u.role === 'admin' ? 'Pentadbir' : u.role === 'guru' ? 'Guru' : 'Kakitangan';
+      tbody.innerHTML += `
+        <tr>
+          <td>${u.username}</td><td>${u.name}</td><td>${roleText}</td><td>${u.ic || '-'}</td><td>${u.status || 'active'}</td>
+          <td>
+            <button class="btn btn-edit" onclick="editUser('${u.id}')">Kemaskini</button>
+            ${u.username !== 'admin' ? `<button class="btn btn-danger" onclick="deleteUser('${u.id}')">Padam</button>` : ''}
+          </td>
+        </tr>`;
+    });
+  }
+
+  function openAddUser() {
+    document.getElementById('modalTitle').textContent = 'Tambah Pengguna';
+    document.getElementById('dataForm').innerHTML = `
+      <div class="form-group"><label>Username</label><input type="text" id="u_username" required></div>
+      <div class="form-group"><label>Kata Laluan</label><input type="password" id="u_password" required></div>
+      <div class="form-group"><label>Nama Penuh</label><input type="text" id="u_name" required></div>
+      <div class="form-group"><label>No. Kad Pengenalan</label><input type="text" id="u_ic"></div>
+      <div class="form-group"><label>Peranan</label><select id="u_role" required>
+        <option value="guru">Guru</option>
+        <option value="staff">Kakitangan</option>
+        <option value="admin">Pentadbir</option>
+      </select></div>
+      <input type="hidden" id="u_id">
+    `;
+    document.getElementById('saveBtn').onclick = saveUser;
+    document.getElementById('modal').classList.remove('hidden');
+  }
+
+  async function saveUser() {
+    const id = document.getElementById('u_id').value;
+    const user = {
+      id: id || undefined,
+      username: document.getElementById('u_username').value.trim(),
+      password: document.getElementById('u_password').value,
+      name: document.getElementById('u_name').value.trim(),
+      ic: document.getElementById('u_ic').value.trim(),
+      role: document.getElementById('u_role').value
+    };
+  
+    if (!id) {
+      user.id = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
     }
-
-    function openAddUser() {
-      document.getElementById('modalTitle').textContent = 'Tambah Pengguna';
-      document.getElementById('dataForm').innerHTML = `
-        <div class="form-group"><label>Username</label><input type="text" id="u_username" required></div>
-        <div class="form-group"><label>Kata Laluan</label><input type="password" id="u_password" required></div>
-        <div class="form-group"><label>Nama Penuh</label><input type="text" id="u_name" required></div>
-        <div class="form-group"><label>No. Kad Pengenalan</label><input type="text" id="u_ic"></div>
-        <div class="form-group"><label>Peranan</label><select id="u_role" required>
-          <option value="guru">Guru</option>
-          <option value="staff">Kakitangan</option>
-          <option value="admin">Pentadbir</option>
-        </select></div>
-        <input type="hidden" id="u_id">
-      `;
-      document.getElementById('saveBtn').onclick = saveUser;
-      document.getElementById('modal').classList.remove('hidden');
+  
+    if (!user.username || !user.name || !user.role || (!id && !user.password)) {
+      return showToast('Isi semua medan', 'error');
     }
-
-    async function saveUser() {
-      const id = document.getElementById('u_id').value;
-      const user = {
-        id: id || undefined,
-        username: document.getElementById('u_username').value.trim(),
-        password: document.getElementById('u_password').value,
-        name: document.getElementById('u_name').value.trim(),
-        ic: document.getElementById('u_ic').value.trim(),
-        role: document.getElementById('u_role').value
-      };
-    
-      if (!id) {
-        user.id = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-      }
-    
-      if (!user.username || !user.name || !user.role || (!id && !user.password)) {
-        return showToast('Isi semua medan', 'error');
-      }
-    
-      try {
-        if (isOnline) {
-          if (id) await apiCall('updateUser', { user });
-          else await apiCall('addUser', { user });
+  
+    try {
+      if (isOnline) {
+        if (id) await apiCall('updateUser', { user });
+        else await apiCall('addUser', { user });
+      } else {
+        pendingOperations.push({ action: id ? 'updateUser' : 'addUser', payload: { user } });
+        localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+        if (id) {
+          const index = users.findIndex(u => u.id === id);
+          if (index !== -1) users[index] = user;
         } else {
-          pendingOperations.push({ action: id ? 'updateUser' : 'addUser', payload: { user } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          if (id) {
-            const index = users.findIndex(u => u.id === id);
-            if (index !== -1) users[index] = user;
-          } else {
-            users.push(user);
-          }
-          saveLocalData('getUsers', { users });
-          renderUsers();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+          users.push(user);
         }
-      
-        closeModal();
-        if (isOnline) loadUsers();
-        showToast('Pengguna berjaya disimpan');
-      } catch (err) {
-        showToast(err.message, 'error');
+        saveLocalData('getUsers', { users });
+        renderUsers();
+        showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
       }
-    }
-
-    function editUser(id) {
-      const user = users.find(u => u.id === id);
-      if (!user) return;
     
-      document.getElementById('modalTitle').textContent = 'Kemaskini Pengguna';
-      document.getElementById('dataForm').innerHTML = `
-        <div class="form-group"><label>Username</label><input type="text" id="u_username" value="${user.username}" required></div>
-        <div class="form-group"><label>Kata Laluan (kosongkan jika tidak berubah)</label><input type="password" id="u_password"></div>
-        <div class="form-group"><label>Nama Penuh</label><input type="text" id="u_name" value="${user.name}" required></div>
-        <div class="form-group"><label>No. Kad Pengenalan</label><input type="text" id="u_ic" value="${user.ic || ''}"></div>
-        <div class="form-group"><label>Peranan</label><select id="u_role" required>
-          <option value="guru" ${user.role === 'guru' ? 'selected' : ''}>Guru</option>
-          <option value="staff" ${user.role === 'staff' ? 'selected' : ''}>Kakitangan</option>
-          <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Pentadbir</option>
-        </select></div>
-        <input type="hidden" id="u_id" value="${user.id}">
-      `;
-      document.getElementById('saveBtn').onclick = saveUser;
-      document.getElementById('modal').classList.remove('hidden');
+      closeModal();
+      if (isOnline) loadUsers();
+      showToast('Pengguna berjaya disimpan');
+    } catch (err) {
+      showToast(err.message, 'error');
     }
+  }
 
-    async function deleteUser(id) {
-      if (!confirm('Adakah anda pasti ingin memadam pengguna ini?')) return;
-    
-      try {
-        if (isOnline) {
-          await apiCall('deleteUser', { id });
-        } else {
-          pendingOperations.push({ action: 'deleteUser', payload: { id } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          users = users.filter(u => u.id !== id);
-          saveLocalData('getUsers', { users });
-          renderUsers();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-      
-        if (isOnline) loadUsers();
-        showToast('Pengguna berjaya dipadam');
-      } catch (err) {
-        showToast(err.message, 'error');
+  function editUser(id) {
+    const user = users.find(u => u.id === id);
+    if (!user) return;
+  
+    document.getElementById('modalTitle').textContent = 'Kemaskini Pengguna';
+    document.getElementById('dataForm').innerHTML = `
+      <div class="form-group"><label>Username</label><input type="text" id="u_username" value="${user.username}" required></div>
+      <div class="form-group"><label>Kata Laluan (kosongkan jika tidak berubah)</label><input type="password" id="u_password"></div>
+      <div class="form-group"><label>Nama Penuh</label><input type="text" id="u_name" value="${user.name}" required></div>
+      <div class="form-group"><label>No. Kad Pengenalan</label><input type="text" id="u_ic" value="${user.ic || ''}"></div>
+      <div class="form-group"><label>Peranan</label><select id="u_role" required>
+        <option value="guru" ${user.role === 'guru' ? 'selected' : ''}>Guru</option>
+        <option value="staff" ${user.role === 'staff' ? 'selected' : ''}>Kakitangan</option>
+        <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Pentadbir</option>
+      </select></div>
+      <input type="hidden" id="u_id" value="${user.id}">
+    `;
+    document.getElementById('saveBtn').onclick = saveUser;
+    document.getElementById('modal').classList.remove('hidden');
+  }
+
+  async function deleteUser(id) {
+    if (!confirm('Adakah anda pasti ingin memadam pengguna ini?')) return;
+  
+    try {
+      if (isOnline) {
+        await apiCall('deleteUser', { id });
+      } else {
+        pendingOperations.push({ action: 'deleteUser', payload: { id } });
+        localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+        users = users.filter(u => u.id !== id);
+        saveLocalData('getUsers', { users });
+        renderUsers();
+        showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
       }
+    
+      if (isOnline) loadUsers();
+      showToast('Pengguna berjaya dipadam');
+    } catch (err) {
+      showToast(err.message, 'error');
     }
-
+  }
     // === PELAJAR ===
     async function loadStudents() {
       try {
@@ -1404,38 +1403,128 @@
       }
     }
 
-    // === JADUAL ===
-async function loadSchedule() {
-  try {
-    const res = await apiCall('getSchedule');
-    schedule = res.schedule || Array(17).fill().map(() => Array(7).fill(''));
-    saveLocalData('getSchedule', res);
-    renderSchedule();
-  } catch (e) {
-    const res = getLocalData('getSchedule');
-    if (res) {
+   // === JADUAL ===
+  async function loadSchedule() {
+    try {
+      const res = await apiCall('getSchedule');
       schedule = res.schedule || Array(17).fill().map(() => Array(7).fill(''));
+      saveLocalData('getSchedule', res);
       renderSchedule();
-      showToast('Menggunakan data tempatan', 'warning');
+    } catch (e) {
+      const res = getLocalData('getSchedule');
+      if (res) {
+        schedule = res.schedule || Array(17).fill().map(() => Array(7).fill(''));
+        renderSchedule();
+        showToast('Menggunakan data tempatan', 'warning');
+      }
     }
   }
-}
 
-async function saveSchedule() {
-  const newSchedule = Array(17).fill().map(() => Array(7).fill(''));
-  for (let row = 0; row < 17; row++) {
-    for (let col = 0; col < 7; col++) {
-      const input = document.querySelector(`input[data-row="${row}"][data-col="${col}"]`);
-      if (input) newSchedule[row][col] = input.value.trim();
+  function renderSchedule() {
+    for (let row = 0; row < 17; row++) {
+      for (let col = 0; col < 7; col++) {
+        const input = document.querySelector(`input[data-row="${row}"][data-col="${col}"]`);
+        if (input) input.value = schedule[row] ? schedule[row][col] || '' : '';
+      }
     }
   }
-  try {
-    await apiCall('saveSchedule', { schedule: newSchedule });
-    showToast('Jadual berjaya disimpan');
-  } catch (e) {
-    showToast(e.message, 'error');
+
+  async function saveSchedule() {
+    const newSchedule = Array(17).fill().map(() => Array(7).fill(''));
+    for (let row = 0; row < 17; row++) {
+      for (let col = 0; col < 7; col++) {
+        const input = document.querySelector(`input[data-row="${row}"][data-col="${col}"]`);
+        if (input) newSchedule[row][col] = input.value.trim();
+      }
+    }
+    try {
+      await apiCall('saveSchedule', { schedule: newSchedule });
+      schedule = newSchedule;
+      showToast('Jadual berjaya disimpan');
+    } catch (e) {
+      showToast(e.message, 'error');
+    }
   }
-}
+
+  async function loadViewSchedule() {
+    try {
+      const res = await apiCall('getSchedule');
+      schedule = res.schedule || Array(17).fill().map(() => Array(7).fill(''));
+      renderViewSchedule();
+    } catch (e) {
+      const res = getLocalData('getSchedule');
+      if (res) {
+        schedule = res.schedule || Array(17).fill().map(() => Array(7).fill(''));
+        renderViewSchedule();
+      }
+    }
+  }
+
+  function renderViewSchedule() {
+    const tbody = document.querySelector('#viewScheduleTable tbody');
+    tbody.innerHTML = '';
+    const timeSlots = [
+      '06:00-07:00', '07:00-08:00', '08:00-09:00', '09:00-10:00', '10:00-11:00',
+      '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00',
+      '16:00-17:00', '17:00-18:00', '18:00-19:00', '19:00-20:00', '20:00-21:00',
+      '21:00-22:00', '22:00-23:00'
+    ];
+    const days = ['Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu', 'Ahad'];
+    for (let row = 0; row < 17; row++) {
+      let rowHtml = `<tr><td>${timeSlots[row]}</td>`;
+      for (let col = 0; col < 7; col++) {
+        rowHtml += `<td>${schedule[row][col] || ''}</td>`;
+      }
+      rowHtml += '</tr>';
+      tbody.innerHTML += rowHtml;
+    }
+  }
+
+  // Fungsi syncPendingOperations (untuk offline mode)
+  async function syncPendingOperations() {
+    if (pendingOperations.length === 0) return;
+    showToast(`Menyegerakkan ${pendingOperations.length} operasi...`);
+    const operations = [...pendingOperations];
+    pendingOperations = [];
+    localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+    for (const op of operations) {
+      try {
+        await apiCall(op.action, op.payload);
+      } catch (e) {
+        pendingOperations.push(op);
+      }
+    }
+    localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+    if (pendingOperations.length === 0) {
+      showToast('Semua operasi disegerakkan');
+    } else {
+      showToast(`${pendingOperations.length} operasi gagal disegerakkan`, 'error');
+    }
+  }
+
+  window.onload = () => {
+    const theme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+  
+    const today = new Date().toISOString().slice(0,10);
+    const attendanceDateInput = document.getElementById('attendanceDate');
+    if (attendanceDateInput) attendanceDateInput.value = today;
+  
+    const reportDateInput = document.getElementById('reportDate');
+    if (reportDateInput) reportDateInput.value = today;
+  
+    const savedPendingOperations = localStorage.getItem('pendingOperations');
+    if (savedPendingOperations) {
+      pendingOperations = JSON.parse(savedPendingOperations);
+    }
+  
+    if (navigator.onLine) {
+      isOnline = true;
+      if (pendingOperations.length > 0) syncPendingOperations();
+    } else {
+      isOnline = false;
+    }
 
     // === KEHADIRAN ===
     async function loadAttendance() {
@@ -1700,5 +1789,6 @@ async function saveSchedule() {
   </script>
 </body>
 </html>
+
 
 
