@@ -522,7 +522,7 @@
   <div id="connectionStatus" class="connection-status hidden">Memeriksa sambungan...</div>
   
 <script>
-  const API_URL = 'https://script.google.com/macros/s/AKfycbw4rhdzkqfBFyhSkPhaJzbvKmzBRWhe_98X27EJ0Mjul-rt84lH6zURX1TnwDl4tEed/exec';
+  const API_URL = 'https://script.google.com/macros/s/AKfycbxF_QwIdBzXU7_w5a8ORDEKsCUrdcis7ZbrKXENg52l7aVk37fEU5ZmKdQYY4TQAIJH/exec';
   
   let currentUser = null;
   let currentSection = '';
@@ -1461,24 +1461,23 @@
   }
 
   function renderViewSchedule() {
-    const tbody = document.querySelector('#viewScheduleTable tbody');
-    tbody.innerHTML = '';
-    const timeSlots = [
-      '06:00-07:00', '07:00-08:00', '08:00-09:00', '09:00-10:00', '10:00-11:00',
-      '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00',
-      '16:00-17:00', '17:00-18:00', '18:00-19:00', '19:00-20:00', '20:00-21:00',
-      '21:00-22:00', '22:00-23:00'
-    ];
-    const days = ['Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu', 'Ahad'];
-    for (let row = 0; row < 17; row++) {
-      let rowHtml = `<tr><td>${timeSlots[row]}</td>`;
-      for (let col = 0; col < 7; col++) {
-        rowHtml += `<td>${schedule[row][col] || ''}</td>`;
-      }
-      rowHtml += '</tr>';
-      tbody.innerHTML += rowHtml;
+  const tbody = document.querySelector('#viewScheduleTable tbody');
+  tbody.innerHTML = '';
+  const timeSlots = [
+    '06:00-07:00', '07:00-08:00', '08:00-09:00', '09:00-10:00', '10:00-11:00',
+    '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00',
+    '16:00-17:00', '17:00-18:00', '18:00-19:00', '19:00-20:00', '20:00-21:00',
+    '21:00-22:00', '22:00-23:00'
+  ];
+  for (let row = 0; row < 17; row++) {
+    let rowHtml = `<tr><td>${timeSlots[row]}</td>`;
+    for (let col = 0; col < 7; col++) {
+      rowHtml += `<td>${(schedule[row] && schedule[row][col]) || ''}</td>`;
     }
+    rowHtml += '</tr>';
+    tbody.innerHTML += rowHtml;
   }
+}
 
   // Fungsi syncPendingOperations (untuk offline mode)
   async function syncPendingOperations() {
@@ -1765,6 +1764,7 @@
   </script>
 </body>
 </html>
+
 
 
 
