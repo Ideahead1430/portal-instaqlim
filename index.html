@@ -460,7 +460,7 @@
           <div id="viewTeachingReports" class="card hidden">
             <h3>Laporan Mengajar Guru</h3>
             <div style="margin:1rem 0; text-align:right;">
-              <button class="btn btn-primary" onclick="printSelectedReports()">Cetak Terpilih</button>
+              <button class="btn btn-primary" onclick="Reports()">Cetak Terpilih</button>
               <button class="btn btn-print" onclick="window.print()">Cetak Semua</button>
               <button class="btn btn-pdf" onclick="exportTeachingReportPDF()">PDF</button>
             </div>
@@ -1587,7 +1587,7 @@
       document.getElementById('notesModal').classList.remove('hidden');
     }
 
-    // Fungsi lain seperti saveTeachingReport, exportTeachingReportPDF, toggleSelectAll, printSelectedReports, dll - pastikan ada
+    // Fungsi lain seperti saveTeachingReport, exportTeachingReportPDF, toggleSelectAll, Reports, dll - pastikan ada
 // Toggle semua checkbox
 function toggleSelectAll() {
   const selectAll = document.getElementById('selectAll');
@@ -1606,11 +1606,18 @@ function printSelectedReports() {
   const selectedReports = [];
   checkboxes.forEach(cb => {
     const row = cb.closest('tr');
-    const indexCell = row.querySelector('td:nth-child(3)'); // Column Bil (ke-3)
-    if (!indexCell) return;
+    const indexCell = row.querySelector('td:nth-child(3)'); // Column "Bil" (ke-3)
+    if (!indexCell) {
+      showToast('Ralat: Column Bil tidak dijumpai', 'error');
+      return;
+    }
     const index = parseInt(indexCell.textContent.trim());
-    const r = reports[index - 1]; // reports adalah global
-    if (r) selectedReports.push(r);
+    const r = reports[index - 1]; // reports adalah global dari loadTeachingReports
+    if (r) {
+      selectedReports.push(r);
+    } else {
+      console.warn('Laporan index tidak dijumpai:', index);
+    }
   });
 
   if (selectedReports.length === 0) {
@@ -1631,6 +1638,35 @@ function printSelectedReports() {
       th { background-color: #10b981; color: white; }
       .notes { white-space: pre-wrap; }
       @media print { .report:last-child { page-break-after: avoid; } }
+    </style>
+    </head><body>
+      <div class="header">
+        <img src="https://arleta.site/interactivelink/2950/Logo-Maahad.JPG" alt="Logo">
+        <h2>INSTAQLIM - Laporan Mengajar Harian Terpilih</h2>
+        <p>Tarikh Cetak: ${new Date().toLocaleDateString('ms-MY')}</p>
+      </div>
+  `;
+
+  selectedReports.forEach((r, i) => {
+    content += `
+      <div class="report">
+        <h3>Laporan #${i+1}</h3>
+        <table>
+          <tr><th>Guru</th><td>${r.teacher || '-'}</td></tr>
+          <tr><th>Tarikh</th><td>${r.date || '-'}</td></tr>
+          <tr><th>Kelas</th><td>${r.class || '-'}</td></tr>
+          <tr><th>Topik</th><td>${r.topic || '-'}</td></tr>
+          <tr><th>Catatan</th><td class="notes">${r.notes || '-'}</td></tr>
+          <tr><th>Lampiran</th><td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : 'Tiada'}</td></tr>
+        </table>
+      </div>
+    `;
+  });
+
+  content += `<script>window.print();<\/script></body></html>`;
+  printWindow.document.write(content);
+  printWindow.document.close();
+}
     </style>
     </head><body>
       <div class="header">
@@ -1728,6 +1764,7 @@ function exportTeachingReportPDF() {
   </script>
 </body>
 </html>
+
 
 
 
