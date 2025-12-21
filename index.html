@@ -275,17 +275,17 @@
               </div>
               <table id="teachingReportTable">
                 <thead>
-                  <tr>
-                    <th><input type="checkbox" id="selectAll" onclick="toggleSelectAll()"></th>
-                    <th>Bil</th>
-                    <th>Guru</th>
-                    <th>Tarikh</th>
-                    <th>Kelas</th>
-                    <th>Topik</th>
-                    <th>Catatan</th>
-                    <th>Lampiran</th>
-                  </tr>
-                </thead>
+  <tr>
+    <th><input type="checkbox" id="selectAll" onclick="toggleSelectAll()"></th> <!-- Column 1: Checkbox -->
+    <th>Bil</th> <!-- Column 2: Bil -->
+    <th>Guru</th>
+    <th>Tarikh</th>
+    <th>Kelas</th>
+    <th>Topik</th>
+    <th>Catatan</th>
+    <th>Lampiran</th>
+  </tr>
+</thead>
                 <tbody></tbody>
               </table>
             </div>
@@ -628,119 +628,126 @@
       }
     }
 
-    function toggleSelectAll() {
-      const selectAll = document.getElementById('selectAll');
-      const checkboxes = document.querySelectorAll('#teachingReportTable tbody input[type="checkbox"]');
-      checkboxes.forEach(cb => cb.checked = selectAll.checked);
+    // Toggle semua checkbox
+function toggleSelectAll() {
+  const selectAll = document.getElementById('selectAll');
+  const checkboxes = document.querySelectorAll('#teachingReportTable tbody input[type="checkbox"]');
+  checkboxes.forEach(cb => cb.checked = selectAll.checked);
+}
+
+// Cetak laporan terpilih (BETULKAN INDEX COLUMN "Bil" = ke-2)
+function printSelectedReports() {
+  const checkboxes = document.querySelectorAll('#teachingReportTable tbody input[type="checkbox"]:checked');
+  if (checkboxes.length === 0) {
+    showToast('Sila pilih sekurang-kurangnya satu laporan', 'warning');
+    return;
+  }
+
+  const selectedReports = [];
+  checkboxes.forEach(cb => {
+    const row = cb.closest('tr');
+    const indexCell = row.querySelector('td:nth-child(2)'); // "Bil" adalah column ke-2 (selepas checkbox)
+    if (!indexCell) {
+      console.warn('Column Bil tidak dijumpai');
+      return;
     }
+    const index = parseInt(indexCell.textContent.trim());
+    const r = reports[index - 1];
+    if (r) selectedReports.push(r);
+    else console.warn('Laporan index tidak wujud:', index);
+  });
 
-    function printSelectedReports() {
-      const checkboxes = document.querySelectorAll('#teachingReportTable tbody input[type="checkbox"]:checked');
-      if (checkboxes.length === 0) {
-        showToast('Sila pilih sekurang-kurangnya satu laporan', 'warning');
-        return;
-      }
+  if (selectedReports.length === 0) {
+    showToast('Tiada laporan dipilih atau data tidak lengkap', 'error');
+    return;
+  }
 
-      const selectedReports = [];
-      checkboxes.forEach(cb => {
-        const row = cb.closest('tr');
-        const indexCell = row.querySelector('td:nth-child(3)'); // Bil column ke-3
-        if (!indexCell) return;
-        const index = parseInt(indexCell.textContent.trim());
-        const r = reports[index - 1];
-        if (r) selectedReports.push(r);
-      });
+  const printWindow = window.open('', '', 'width=800,height=600');
+  let content = `
+    <html><head><title>Cetak Laporan Terpilih - INSTAQLIM</title>
+    <style>
+      body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
+      .header { text-align: center; margin-bottom: 30px; }
+      .header img { width: 120px; }
+      .report { margin-bottom: 40px; page-break-after: always; }
+      table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+      th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+      th { background-color: #10b981; color: white; }
+      .notes { white-space: pre-wrap; word-break: break-word; }
+      @media print { .report:last-child { page-break-after: avoid; } }
+    </style>
+    </head><body>
+      <div class="header">
+        <img src="https://arleta.site/interactivelink/2950/Logo-Maahad.JPG" alt="Logo">
+        <h2>INSTAQLIM - Laporan Mengajar Harian Terpilih</h2>
+        <p>Tarikh Cetak: ${new Date().toLocaleDateString('ms-MY')}</p>
+      </div>
+  `;
 
-      if (selectedReports.length === 0) {
-        showToast('Tiada laporan dipilih atau data tidak lengkap', 'error');
-        return;
-      }
+  selectedReports.forEach((r, i) => {
+    content += `
+      <div class="report">
+        <h3>Laporan #${i+1}</h3>
+        <table>
+          <tr><th>Guru</th><td>${r.teacher || '-'}</td></tr>
+          <tr><th>Tarikh</th><td>${r.date || '-'}</td></tr>
+          <tr><th>Kelas</th><td>${r.class || '-'}</td></tr>
+          <tr><th>Topik</th><td>${r.topic || '-'}</td></tr>
+          <tr><th>Catatan</th><td class="notes">${r.notes || '-'}</td></tr>
+          <tr><th>Lampiran</th><td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : 'Tiada'}</td></tr>
+        </table>
+      </div>
+    `;
+  });
 
-      const printWindow = window.open('', '', 'width=800,height=600');
-      let content = `
-        <html><head><title>Cetak Laporan Terpilih - INSTAQLIM</title>
-        <style>
-          body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
-          .header { text-align: center; margin-bottom: 30px; }
-          .header img { width: 100px; }
-          .report { margin-bottom: 40px; page-break-after: always; }
-          table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-          th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-          th { background-color: #10b981; color: white; }
-          .notes { white-space: pre-wrap; }
-          @media print { .report:last-child { page-break-after: avoid; } }
-        </style>
-        </head><body>
-          <div class="header">
-            <img src="https://arleta.site/interactivelink/2950/Logo-Maahad.JPG" alt="Logo">
-            <h2>INSTAQLIM - Laporan Mengajar Harian Terpilih</h2>
-            <p>Tarikh Cetak: ${new Date().toLocaleDateString('ms-MY')}</p>
-          </div>
-      `;
+  content += `<script>window.print();<\/script></body></html>`;
+  printWindow.document.write(content);
+  printWindow.document.close();
+}
 
-      selectedReports.forEach((r, i) => {
-        content += `
-          <div class="report">
-            <h3>Laporan #${i+1}</h3>
-            <table>
-              <tr><th>Guru</th><td>${r.teacher || '-'}</td></tr>
-              <tr><th>Tarikh</th><td>${r.date || '-'}</td></tr>
-              <tr><th>Kelas</th><td>${r.class || '-'}</td></tr>
-              <tr><th>Topik</th><td>${r.topic || '-'}</td></tr>
-              <tr><th>Catatan</th><td class="notes">${r.notes || '-'}</td></tr>
-              <tr><th>Lampiran</th><td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : 'Tiada'}</td></tr>
-            </table>
-          </div>
-        `;
-      });
+// Export ke PDF (CETAK SEMUA, FORMAT KEMAS)
+function exportTeachingReportPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
 
-      content += `<script>window.print();<\/script></body></html>`;
-      printWindow.document.write(content);
-      printWindow.document.close();
+  doc.setFontSize(18);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Laporan Mengajar Harian Guru', 105, 15, { align: 'center' });
+  doc.setFontSize(12);
+  doc.setFont('helvetica', 'normal');
+  doc.text('INSTAQLIM - Institut Tahfiz Al-Quran lil Muttaqin', 105, 22, { align: 'center' });
+  doc.text(`Tarikh: ${new Date().toLocaleDateString('ms-MY')}`, 105, 29, { align: 'center' });
+
+  const table = document.getElementById('teachingReportTable');
+  const rows = table.querySelectorAll('tr');
+
+  let yPosition = 40;
+  let page = 1;
+
+  rows.forEach((row, index) => {
+    if (index === 0) doc.setFont('helvetica', 'bold');
+    else doc.setFont('helvetica', 'normal');
+
+    const cells = row.querySelectorAll('td, th');
+    let xPosition = 15;
+
+    cells.forEach(cell => {
+      const text = cell.textContent.trim();
+      doc.text(text, xPosition, yPosition);
+      xPosition += 30; // Lebar column yang lebih kemas
+    });
+
+    yPosition += 10;
+
+    if (yPosition > 270) { // Margins bawah
+      doc.addPage();
+      yPosition = 20;
+      page++;
     }
+  });
 
-    function exportTeachingReportPDF() {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-
-      doc.setFontSize(18);
-      doc.text('Laporan Mengajar Harian Guru', 105, 15, { align: 'center' });
-      doc.setFontSize(12);
-      doc.text('INSTAQLIM - Institut Tahfiz Al-Quran lil Muttaqin', 105, 22, { align: 'center' });
-      doc.text(`Tarikh: ${new Date().toLocaleDateString('ms-MY')}`, 105, 29, { align: 'center' });
-
-      const table = document.getElementById('teachingReportTable');
-      const rows = table.querySelectorAll('tr');
-
-      let yPosition = 40;
-
-      rows.forEach((row, index) => {
-        if (index === 0) doc.setFont(undefined, 'bold');
-        else doc.setFont(undefined, 'normal');
-
-        const cells = row.querySelectorAll('td, th');
-        let xPosition = 15;
-
-        cells.forEach(cell => {
-          const text = cell.textContent.trim();
-          const cellWidth = 25;
-          const maxLength = Math.floor(cellWidth / 3);
-          const truncatedText = text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
-
-          doc.text(truncatedText, xPosition, yPosition);
-          xPosition += cellWidth;
-        });
-
-        yPosition += 10;
-
-        if (yPosition > 280) {
-          doc.addPage();
-          yPosition = 20;
-        }
-      });
-
-      doc.save('laporan_mengajar.pdf');
-    }
+  doc.save('laporan_mengajar.pdf');
+}
 
     window.onload = () => {
       const theme = localStorage.getItem('theme') || 'light';
@@ -767,3 +774,4 @@
   </script>
 </body>
 </html>
+
