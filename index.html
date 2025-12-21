@@ -551,54 +551,43 @@
 
   
 <script>
-  const API_URL = 'https://script.google.com/macros/s/AKfycby4PHmYXY6q6MyTD7bP48-kdoCHLeqBmlG_1qh0k-JRKIEnRVb-KT2W77t6_KeiYbsX/exec';
-  
+const API_URL = 'https://script.google.com/macros/s/AKfycby4PHmYXY6q6MyTD7bP48-kdoCHLeqBmlG_1qh0k-JRKIEnRVb-KT2W77t6_KeiYbsX/exec';
+
   let currentUser = null;
   let currentSection = '';
   let classes = [], students = [], teachers = [], staff = [], users = [], schedule = Array(17).fill().map(() => Array(7).fill(''));
   let isOnline = navigator.onLine;
   let pendingOperations = [];
+  let reports = []; // Tambah global untuk reports
 
   async function apiCall(action, payload = {}) {
     try {
       updateConnectionStatus('Memuat...', 'loading');
-     
       const res = await fetch(API_URL, {
         method: 'POST',
-        body: JSON.stringify({
-          action,
-          ...payload
-        })
+        body: JSON.stringify({ action, ...payload })
       });
-     
       const responseText = await res.text();
       let data;
       try {
         data = JSON.parse(responseText);
       } catch (e) {
-        throw new Error('Server mengembalikan respons yang tidak dijangka.');
+        throw new Error('Server mengembalikan respons tidak dijangka.');
       }
-     
-      if (data.status !== 'success') {
-        throw new Error(data.message || 'Ralat server');
-      }
-     
+      if (data.status !== 'success') throw new Error(data.message || 'Ralat server');
       updateConnectionStatus('Dalam talian', 'success');
       return data;
     } catch (e) {
       console.error('API call error:', e);
       updateConnectionStatus('Luar talian', 'error');
-     
       pendingOperations.push({ action, payload });
       localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-     
       const localData = getLocalData(action);
       if (localData) {
         showToast('Menggunakan data tempatan', 'warning');
         return { status: 'success', ...localData };
       }
-     
-      throw new Error('Tidak dapat menyambung ke pelayan. Data akan disegerakkan kemudian.');
+      throw new Error('Tidak dapat menyambung ke pelayan.');
     }
   }
 
@@ -643,20 +632,20 @@
     const u = document.getElementById('username').value.trim();
     const p = document.getElementById('password').value;
     const errorEl = document.getElementById('loginError');
-  
+
     if (!u || !p) {
       errorEl.textContent = 'Isi username dan kata laluan';
       errorEl.classList.remove('hidden');
       return;
     }
-  
+
     errorEl.classList.add('hidden');
-  
+
     const loginBtn = document.querySelector('#loginPage button');
     const originalText = loginBtn.innerHTML;
     loginBtn.innerHTML = '<span class="loading"></span> Memuat...';
     loginBtn.disabled = true;
-  
+
     try {
       const r = await apiCall('login', { username: u, password: p });
       currentUser = r.user;
@@ -739,7 +728,7 @@
     if (id === 'manageSchedule') loadSchedule();
     if (id === 'manageAttendance') loadAttendance();
     if (id === 'viewSchedule') loadViewSchedule();
-    if (id === 'viewTeachingReports') ();
+    if (id === 'viewTeachingReports') loadTeachingReports();
   }
    // === PENGGUNA ===
   async function loadUsers() {
@@ -1531,111 +1520,247 @@
   }
 
       // === KEHADIRAN ===
-    async function loadAttendance() {
-      const date = document.getElementById('attendanceDate').value || new Date().toISOString().slice(0,10);
+const API_URL = 'https://script.google.com/macros/s/AKfycby4PHmYXY6q6MyTD7bP48-kdoCHLeqBmlG_1qh0k-JRKIEnRVb-KT2W77t6_KeiYbsX/exec';
+
+  let currentUser = null;
+  let currentSection = '';
+  let classes = [], students = [], teachers = [], staff = [], users = [], schedule = Array(17).fill().map(() => Array(7).fill(''));
+  let isOnline = navigator.onLine;
+  let pendingOperations = [];
+  let reports = []; // Tambah global untuk reports
+
+  async function apiCall(action, payload = {}) {
+    try {
+      updateConnectionStatus('Memuat...', 'loading');
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify({ action, ...payload })
+      });
+      const responseText = await res.text();
+      let data;
       try {
-        const res = await apiCall('getAttendance', { date });
-        renderAttendance(res.attendance || {});
+        data = JSON.parse(responseText);
       } catch (e) {
-        renderAttendance({});
-        showToast('Tiada data kehadiran untuk tarikh ini', 'warning');
+        throw new Error('Server mengembalikan respons tidak dijangka.');
+      }
+      if (data.status !== 'success') throw new Error(data.message || 'Ralat server');
+      updateConnectionStatus('Dalam talian', 'success');
+      return data;
+    } catch (e) {
+      console.error('API call error:', e);
+      updateConnectionStatus('Luar talian', 'error');
+      pendingOperations.push({ action, payload });
+      localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+      const localData = getLocalData(action);
+      if (localData) {
+        showToast('Menggunakan data tempatan', 'warning');
+        return { status: 'success', ...localData };
+      }
+      throw new Error('Tidak dapat menyambung ke pelayan.');
+    }
+  }
+
+  function getLocalData(action) {
+    const dataKey = `local_${action}`;
+    const data = localStorage.getItem(dataKey);
+    return data ? JSON.parse(data) : null;
+  }
+
+  function saveLocalData(action, data) {
+    const dataKey = `local_${action}`;
+    localStorage.setItem(dataKey, JSON.stringify(data));
+  }
+
+  function updateConnectionStatus(message, type) {
+    const statusEl = document.getElementById('connectionStatus');
+    statusEl.textContent = message;
+    statusEl.className = 'connection-status';
+    if (type === 'loading') statusEl.style.background = 'var(--warning)';
+    else if (type === 'error') statusEl.style.background = 'var(--danger)';
+    else if (type === 'success') {
+      statusEl.style.background = 'var(--success)';
+      setTimeout(() => statusEl.classList.add('hidden'), 3000);
+    }
+    statusEl.classList.remove('hidden');
+  }
+
+  function showToast(msg, type = 'success') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.background = type === 'success' ? 'var(--success)' : type === 'warning' ? 'var(--warning)' : 'var(--danger)';
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 4000);
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.add('hidden');
+    document.getElementById('dataForm').innerHTML = '';
+  }
+
+  async function login() {
+    const u = document.getElementById('username').value.trim();
+    const p = document.getElementById('password').value;
+    const errorEl = document.getElementById('loginError');
+
+    if (!u || !p) {
+      errorEl.textContent = 'Isi username dan kata laluan';
+      errorEl.classList.remove('hidden');
+      return;
+    }
+
+    errorEl.classList.add('hidden');
+
+    const loginBtn = document.querySelector('#loginPage button');
+    const originalText = loginBtn.innerHTML;
+    loginBtn.innerHTML = '<span class="loading"></span> Memuat...';
+    loginBtn.disabled = true;
+
+    try {
+      const r = await apiCall('login', { username: u, password: p });
+      currentUser = r.user;
+      document.getElementById('loginPage').classList.add('hidden');
+      document.getElementById('mainApp').classList.remove('hidden');
+      document.getElementById('userName').textContent = r.user.name || u;
+      document.getElementById('userRole').textContent = r.user.role === 'admin' ? 'Pentadbir' : 'Guru';
+      document.getElementById('adminDashboard').classList.toggle('hidden', r.user.role !== 'admin');
+      document.getElementById('guruDashboard').classList.toggle('hidden', r.user.role === 'admin');
+      await loadCommonData();
+      showToast('Log masuk berjaya');
+    } catch (err) {
+      errorEl.textContent = err.message || 'Login gagal';
+      errorEl.classList.remove('hidden');
+    } finally {
+      loginBtn.innerHTML = originalText;
+      loginBtn.disabled = false;
+    }
+  }
+
+  function logout() {
+    if (confirm('Log keluar?')) {
+      currentUser = null;
+      document.getElementById('mainApp').classList.add('hidden');
+      document.getElementById('loginPage').classList.remove('hidden');
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+    }
+  }
+
+  async function loadCommonData() {
+    try {
+      const [c, s] = await Promise.all([
+        apiCall('getClasses'),
+        apiCall('getSchedule')
+      ]);
+      classes = c.classes || [];
+      schedule = s.schedule || Array(17).fill().map(() => Array(7).fill(''));
+      saveLocalData('getClasses', c);
+      saveLocalData('getSchedule', s);
+      populateClassSelects();
+    } catch (e) {
+      const c = getLocalData('getClasses');
+      const s = getLocalData('getSchedule');
+      if (c && s) {
+        classes = c.classes || [];
+        schedule = s.schedule || Array(17).fill().map(() => Array(7).fill(''));
+        populateClassSelects();
+        showToast('Menggunakan data tempatan', 'warning');
       }
     }
+  }
 
-    function renderAttendance(attendance) {
-      const tbody = document.querySelector('#attendanceTable tbody');
-      tbody.innerHTML = '';
-      students.forEach((s, i) => {
-        const hadir = attendance[s.id] !== false;
-        tbody.innerHTML += `
-          <tr>
-            <td>${i+1}</td>
-            <td>${s.name}</td>
-            <td>${s.class || '-'}</td>
-            <td><input type="radio" name="att_${s.id}" value="true" ${hadir ? 'checked' : ''}></td>
-            <td><input type="radio" name="att_${s.id}" value="false" ${!hadir ? 'checked' : ''}></td>
-          </tr>`;
+  function populateClassSelects() {
+    ['reportClass', 'studentClassFilter'].forEach(id => {
+      const sel = document.getElementById(id);
+      if (!sel) return;
+      sel.innerHTML = '<option value="">Pilih/Semua Kelas</option>';
+      classes.forEach(cls => {
+        const opt = document.createElement('option');
+        opt.value = cls.name;
+        opt.textContent = cls.name;
+        sel.appendChild(opt);
       });
-    }
+    });
+  }
 
-    async function saveAttendance() {
-      const date = document.getElementById('attendanceDate').value;
-      if (!date) return showToast('Pilih tarikh', 'error');
-      const att = {};
-      students.forEach(s => {
-        const radio = document.querySelector(`input[name="att_${s.id}"]:checked`);
-        att[s.id] = radio ? radio.value === 'true' : true;
-      });
-      try {
-        await apiCall('saveAttendance', { date, attendance: att });
-        showToast('Kehadiran berjaya disimpan');
-      } catch (e) {
-        showToast(e.message, 'error');
-      }
-    }
+  function showSection(id) {
+    document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
+    const sec = document.getElementById(id);
+    if (sec) sec.classList.remove('hidden');
+    document.getElementById('sections').classList.remove('hidden');
+    currentSection = id;
 
-    // === LAPORAN MENGAJAR ===
-async function loadTeachingReports() {
-  try {
-    const res = await apiCall('getTeachingReports');
-    let reports = res.reports || [];
-    console.log('Data laporan dari server:', reports); // Debug: semak console
-    saveLocalData('getTeachingReports', res);
+    if (id === 'manageUsers') loadUsers();
+    if (id === 'manageStudents') loadStudents();
+    if (id === 'manageTeachers') loadTeachers();
+    if (id === 'manageStaff') loadStaff();
+    if (id === 'manageClasses') loadTeachers().then(() => loadClasses());
+    if (id === 'manageSchedule') loadSchedule();
+    if (id === 'manageAttendance') loadAttendance();
+    if (id === 'viewSchedule') loadViewSchedule();
+    if (id === 'viewTeachingReports') loadTeachingReports();
+  }
 
-    if (currentUser && currentUser.role !== 'admin') {
-      reports = reports.filter(r => {
-        return r.teacherId === currentUser.id || r.teacher === currentUser.name;
-      });
-      console.log('Laporan guru ini:', reports); // Debug
-    }
+  // ... (sambung dengan semua fungsi lain seperti loadUsers, loadStudents, dll - pastikan semua fungsi ada seperti sebelum ini)
 
-    renderTeachingReports(reports);
-  } catch (e) {
-    console.error('Error loading reports:', e);
-    const localRes = getLocalData('getTeachingReports');
-    if (localRes && localRes.reports) {
-      let reports = localRes.reports;
+  // Fungsi loadTeachingReports & renderTeachingReports (pastikan ini ada)
+  async function loadTeachingReports() {
+    try {
+      const res = await apiCall('getTeachingReports');
+      reports = res.reports || []; // Simpan global
+      console.log('Data laporan dari server:', reports);
+      saveLocalData('getTeachingReports', res);
+
       if (currentUser && currentUser.role !== 'admin') {
         reports = reports.filter(r => r.teacherId === currentUser.id || r.teacher === currentUser.name);
+        console.log('Laporan guru ini:', reports);
       }
+
       renderTeachingReports(reports);
-      showToast('Menggunakan data tempatan', 'warning');
-    } else {
-      renderTeachingReports([]);
-      showToast('Tiada laporan dijumpai', 'warning');
+    } catch (e) {
+      console.error('Error loading reports:', e);
+      const localRes = getLocalData('getTeachingReports');
+      if (localRes && localRes.reports) {
+        reports = localRes.reports;
+        if (currentUser && currentUser.role !== 'admin') {
+          reports = reports.filter(r => r.teacherId === currentUser.id || r.teacher === currentUser.name);
+        }
+        renderTeachingReports(reports);
+        showToast('Menggunakan data tempatan', 'warning');
+      } else {
+        renderTeachingReports([]);
+        showToast('Tiada laporan dijumpai', 'warning');
+      }
     }
   }
-}
 
-function renderTeachingReports(reports) {
-  document.getElementById('printDate').textContent = new Date().toLocaleDateString('ms-MY');
-  const tbody = document.querySelector('#teachingReportTable tbody');
-  tbody.innerHTML = '';
-
-  if (reports.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="8" class="text-center">Tiada laporan dijumpai</td></tr>';
-    return;
+  function renderTeachingReports(reports) {
+    document.getElementById('printDate').textContent = new Date().toLocaleDateString('ms-MY');
+    const tbody = document.querySelector('#teachingReportTable tbody');
+    tbody.innerHTML = '';
+    if (reports.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" class="text-center">Tiada laporan dijumpai</td></tr>';
+      return;
+    }
+    reports.forEach((r, index) => {
+      const notesPreview = r.notes ? (r.notes.length > 100 ? r.notes.substring(0, 100) + '...' : r.notes) : '-';
+      tbody.innerHTML += `
+        <tr onclick="showFullNotes('${r.notes ? r.notes.replace(/'/g, "\\'") : ''}')" style="cursor:pointer;">
+          <td><input type="checkbox" class="report-checkbox"></td>
+          <td>${index + 1}</td>
+          <td>${r.teacher || 'Tiada Nama'}</td>
+          <td>${r.date || '-'}</td>
+          <td>${r.class || '-'}</td>
+          <td>${r.topic || '-'}</td>
+          <td>${notesPreview}</td>
+          <td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : '-'}</td>
+        </tr>`;
+    });
   }
 
-  reports.forEach((r, index) => {
-    const notesPreview = r.notes ? (r.notes.length > 100 ? r.notes.substring(0, 100) + '...' : r.notes) : '-';
-    tbody.innerHTML += `
-      <tr onclick="showFullNotes('${r.notes ? r.notes.replace(/'/g, "\\'") : ''}')" style="cursor:pointer;">
-        <td><input type="checkbox" class="report-checkbox"></td>
-        <td>${index + 1}</td>
-        <td>${r.teacher || 'Tiada Nama'}</td>
-        <td>${r.date || '-'}</td>
-        <td>${r.class || '-'}</td>
-        <td>${r.topic || '-'}</td>
-        <td>${notesPreview}</td>
-        <td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : '-'}</td>
-      </tr>`;
-  });
-}
-function showFullNotes(notes) {
-  document.getElementById('fullNotes').textContent = notes || 'Tiada catatan';
-  document.getElementById('notesModal').classList.remove('hidden');
-}
+  function showFullNotes(notes) {
+    document.getElementById('fullNotes').textContent = notes || 'Tiada catatan';
+    document.getElementById('notesModal').classList.remove('hidden');
+  }
 
    async function saveTeachingReport() {
   const fileInput = document.getElementById('reportAttachment');
@@ -1846,33 +1971,32 @@ function printSelectedReports() {
   printWindow.document.close();
 }
 
-    window.onload = () => {
+   window.onload = () => {
     const theme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', theme);
     document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-  
+
     const today = new Date().toISOString().slice(0,10);
     const attendanceDateInput = document.getElementById('attendanceDate');
     if (attendanceDateInput) attendanceDateInput.value = today;
-  
+
     const reportDateInput = document.getElementById('reportDate');
     if (reportDateInput) reportDateInput.value = today;
-  
+
     const savedPendingOperations = localStorage.getItem('pendingOperations');
-    if (savedPendingOperations) {
-      pendingOperations = JSON.parse(savedPendingOperations);
-    }
-  
+    if (savedPendingOperations) pendingOperations = JSON.parse(savedPendingOperations);
+
     if (navigator.onLine) {
       isOnline = true;
       if (pendingOperations.length > 0) syncPendingOperations();
     } else {
       isOnline = false;
     }
-    };
-  </script>
+  };
+</script>
 </body>
 </html>
+
 
 
 
