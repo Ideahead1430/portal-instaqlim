@@ -551,14 +551,15 @@
 
   
 <script>
-const API_URL = 'https://script.google.com/macros/s/AKfycby4PHmYXY6q6MyTD7bP48-kdoCHLeqBmlG_1qh0k-JRKIEnRVb-KT2W77t6_KeiYbsX/exec';
+<script>
+  const API_URL = 'https://script.google.com/macros/s/AKfycby4PHmYXY6q6MyTD7bP48-kdoCHLeqBmlG_1qh0k-JRKIEnRVb-KT2W77t6_KeiYbsX/exec';
 
   let currentUser = null;
   let currentSection = '';
   let classes = [], students = [], teachers = [], staff = [], users = [], schedule = Array(17).fill().map(() => Array(7).fill(''));
   let isOnline = navigator.onLine;
   let pendingOperations = [];
-  let reports = []; // Tambah global untuk reports
+  let reports = []; // Global untuk laporan
 
   async function apiCall(action, payload = {}) {
     try {
@@ -1996,6 +1997,7 @@ function printSelectedReports() {
 </script>
 </body>
 </html>
+
 
 
 
