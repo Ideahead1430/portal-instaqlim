@@ -1537,8 +1537,7 @@
 
         if (currentUser && currentUser.role !== 'admin') {
           reports = reports.filter(r => r.teacherId === currentUser.id || r.teacher === currentUser.name);
-          console.log('Laporan guru ini:', reports);
-          reports = res.reports || [];
+          console.log('Laporan guru ini:', reports);          
         }
 
         renderTeachingReports(reports);
@@ -1729,5 +1728,6 @@ function exportTeachingReportPDF() {
   </script>
 </body>
 </html>
+
 
 
