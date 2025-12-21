@@ -1612,14 +1612,15 @@ function renderTeachingReports(reports) {
   tbody.innerHTML = '';
 
   if (reports.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="7" class="text-center">Tiada laporan dijumpai</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8" class="text-center">Tiada laporan dijumpai</td></tr>';
     return;
   }
 
   reports.forEach((r, index) => {
     const notesPreview = r.notes ? (r.notes.length > 100 ? r.notes.substring(0, 100) + '...' : r.notes) : '-';
-    const rowHtml = `
+    tbody.innerHTML += `
       <tr onclick="showFullNotes('${r.notes ? r.notes.replace(/'/g, "\\'") : ''}')" style="cursor:pointer;">
+        <td><input type="checkbox" class="report-checkbox"></td>
         <td>${index + 1}</td>
         <td>${r.teacher || 'Tiada Nama'}</td>
         <td>${r.date || '-'}</td>
@@ -1628,10 +1629,8 @@ function renderTeachingReports(reports) {
         <td>${notesPreview}</td>
         <td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : '-'}</td>
       </tr>`;
-    tbody.innerHTML += rowHtml;
   });
 }
-
 function showFullNotes(notes) {
   document.getElementById('fullNotes').textContent = notes || 'Tiada catatan';
   document.getElementById('notesModal').classList.remove('hidden');
@@ -1873,6 +1872,7 @@ function printSelectedReports() {
   </script>
 </body>
 </html>
+
 
 
 
