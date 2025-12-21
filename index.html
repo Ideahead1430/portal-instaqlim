@@ -739,7 +739,7 @@
     if (id === 'manageSchedule') loadSchedule();
     if (id === 'manageAttendance') loadAttendance();
     if (id === 'viewSchedule') loadViewSchedule();
-    if (id === 'viewTeachingReports') loadTeachingReports();
+    if (id === 'viewTeachingReports') ();
   }
    // === PENGGUNA ===
   async function loadUsers() {
@@ -1579,18 +1579,19 @@ async function loadTeachingReports() {
   try {
     const res = await apiCall('getTeachingReports');
     let reports = res.reports || [];
+    console.log('Data laporan dari server:', reports); // Debug: semak console
     saveLocalData('getTeachingReports', res);
 
-    // Jika Guru, filter laporan miliknya sahaja
     if (currentUser && currentUser.role !== 'admin') {
       reports = reports.filter(r => {
         return r.teacherId === currentUser.id || r.teacher === currentUser.name;
       });
+      console.log('Laporan guru ini:', reports); // Debug
     }
 
     renderTeachingReports(reports);
   } catch (e) {
-    console.error('Error loading teaching reports:', e);
+    console.error('Error loading reports:', e);
     const localRes = getLocalData('getTeachingReports');
     if (localRes && localRes.reports) {
       let reports = localRes.reports;
@@ -1872,6 +1873,7 @@ function printSelectedReports() {
   </script>
 </body>
 </html>
+
 
 
 
