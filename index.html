@@ -712,25 +712,22 @@
     }
 
     function showSection(id) {
-  document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
-  const sec = document.getElementById(id);
-  if (sec) sec.classList.remove('hidden');
-  document.getElementById('sections').classList.remove('hidden');
-  currentSection = id;
+      document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
+      const sec = document.getElementById(id);
+      if (sec) sec.classList.remove('hidden');
+      document.getElementById('sections').classList.remove('hidden');
+      currentSection = id;
 
-  if (id === 'manageUsers') loadUsers();
-  if (id === 'manageStudents') loadStudents();
-  if (id === 'manageTeachers') loadTeachers();
-  if (id === 'manageStaff') loadStaff();
-  if (id === 'manageClasses') loadTeachers().then(() => loadClasses());
-  if (id === 'manageSchedule') loadSchedule();
-  if (id === 'manageAttendance') {
-    loadStudents(); // Tambah ini — pastikan data pelajar ada sebelum render kehadiran
-    loadAttendance();
-  }
-  if (id === 'viewSchedule') loadViewSchedule();
-  if (id === 'viewTeachingReports') loadTeachingReports();
-}
+      if (id === 'manageUsers') loadUsers();
+      if (id === 'manageStudents') loadStudents();
+      if (id === 'manageTeachers') loadTeachers();
+      if (id === 'manageStaff') loadStaff();
+      if (id === 'manageClasses') loadTeachers().then(() => loadClasses());
+      if (id === 'manageSchedule') loadSchedule();
+      if (id === 'manageAttendance') loadAttendance();
+      if (id === 'viewSchedule') loadViewSchedule();
+      if (id === 'viewTeachingReports') loadTeachingReports();
+    }
 
     // === PENGGUNA ===
     async function loadUsers() {
@@ -765,45 +762,23 @@
       });
     }
 
-  function openAddUser() {
-  document.getElementById('modalTitle').textContent = 'Tambah Pengguna';
-  document.getElementById('dataForm').innerHTML = `
-    <div class="form-group"><label>Username</label><input type="text" id="u_username" required></div>
-    <div class="form-group"><label>Kata Laluan</label><input type="password" id="u_password" required></div>
-    <div class="form-group"><label>Nama Penuh</label><input type="text" id="u_name" required></div>
-    <div class="form-group"><label>No. Kad Pengenalan</label><input type="text" id="u_ic"></div>
-    <div class="form-group"><label>Peranan</label><select id="u_role" required>
-      <option value="guru">Guru</option>
-      <option value="staff">Kakitangan</option>
-      <option value="admin">Pentadbir</option>
-      <option value="viewer">Penonton (Lihat Sahaja)</option>
-    </select></div>
-    <input type="hidden" id="u_id">
-  `;
-  document.getElementById('saveBtn').onclick = saveUser;
-  document.getElementById('modal').classList.remove('hidden');
-}
-
-function editUser(id) {
-  const user = users.find(u => u.id === id);
-  if (!user) return;
-  document.getElementById('modalTitle').textContent = 'Kemaskini Pengguna';
-  document.getElementById('dataForm').innerHTML = `
-    <div class="form-group"><label>Username</label><input type="text" id="u_username" value="${user.username}" required></div>
-    <div class="form-group"><label>Kata Laluan (kosongkan jika tidak berubah)</label><input type="password" id="u_password"></div>
-    <div class="form-group"><label>Nama Penuh</label><input type="text" id="u_name" value="${user.name}" required></div>
-    <div class="form-group"><label>No. Kad Pengenalan</label><input type="text" id="u_ic" value="${user.ic || ''}"></div>
-    <div class="form-group"><label>Peranan</label><select id="u_role" required>
-      <option value="guru" ${user.role === 'guru' ? 'selected' : ''}>Guru</option>
-      <option value="staff" ${user.role === 'staff' ? 'selected' : ''}>Kakitangan</option>
-      <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Pentadbir</option>
-      <option value="viewer" ${user.role === 'viewer' ? 'selected' : ''}>Penonton (Lihat Sahaja)</option>
-    </select></div>
-    <input type="hidden" id="u_id" value="${user.id}">
-  `;
-  document.getElementById('saveBtn').onclick = saveUser;
-  document.getElementById('modal').classList.remove('hidden');
-}
+    function openAddUser() {
+      document.getElementById('modalTitle').textContent = 'Tambah Pengguna';
+      document.getElementById('dataForm').innerHTML = `
+        <div class="form-group"><label>Username</label><input type="text" id="u_username" required></div>
+        <div class="form-group"><label>Kata Laluan</label><input type="password" id="u_password" required></div>
+        <div class="form-group"><label>Nama Penuh</label><input type="text" id="u_name" required></div>
+        <div class="form-group"><label>No. Kad Pengenalan</label><input type="text" id="u_ic"></div>
+        <div class="form-group"><label>Peranan</label><select id="u_role" required>
+          <option value="guru">Guru</option>
+          <option value="staff">Kakitangan</option>
+          <option value="admin">Pentadbir</option>
+        </select></div>
+        <input type="hidden" id="u_id">
+      `;
+      document.getElementById('saveBtn').onclick = saveUser;
+      document.getElementById('modal').classList.remove('hidden');
+    }
 
     async function saveUser() {
       const id = document.getElementById('u_id').value;
@@ -1533,25 +1508,21 @@ function editUser(id) {
       }
     }
 
-   function renderAttendance(attendance) {
-  const tbody = document.querySelector('#attendanceTable tbody');
-  tbody.innerHTML = '';
-  if (students.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" class="text-center">Tiada data pelajar dijumpai. Sila muatkan data pelajar terlebih dahulu.</td></tr>';
-    return;
-  }
-  students.forEach((s, i) => {
-    const hadir = attendance[s.id] !== false;
-    tbody.innerHTML += `
-      <tr>
-        <td>${i+1}</td>
-        <td>${s.name}</td>
-        <td>${s.class || '-'}</td>
-        <td><input type="radio" name="att_${s.id}" value="true" ${hadir ? 'checked' : ''}></td>
-        <td><input type="radio" name="att_${s.id}" value="false" ${!hadir ? 'checked' : ''}></td>
-      </tr>`;
-  });
-}
+    function renderAttendance(attendance) {
+      const tbody = document.querySelector('#attendanceTable tbody');
+      tbody.innerHTML = '';
+      students.forEach((s, i) => {
+        const hadir = attendance[s.id] !== false;
+        tbody.innerHTML += `
+          <tr>
+            <td>${i+1}</td>
+            <td>${s.name}</td>
+            <td>${s.class || '-'}</td>
+            <td><input type="radio" name="att_${s.id}" value="true" ${hadir ? 'checked' : ''}></td>
+            <td><input type="radio" name="att_${s.id}" value="false" ${!hadir ? 'checked' : ''}></td>
+          </tr>`;
+      });
+    }
 
     async function saveAttendance() {
       const date = document.getElementById('attendanceDate').value;
@@ -1863,42 +1834,9 @@ async function syncPendingOperations() {
         isOnline = false;
       }
     };
-    // Sembunyikan butang edit/padam/tambah untuk viewer
-function restrictViewerAccess() {
-  if (currentUser.role === 'viewer') {
-    // Sembunyikan butang Tambah di semua section
-    document.querySelectorAll('.btn-success').forEach(btn => {
-      btn.style.display = 'none';
-    });
-    // Sembunyikan butang Kemaskini & Padam di table
-    document.querySelectorAll('.btn-edit, .btn-danger').forEach(btn => {
-      btn.style.display = 'none';
-    });
-    // Sembunyikan butang Simpan di modal
-    document.getElementById('saveBtn').style.display = 'none';
-    // Sembunyikan butang Simpan Jadual & Kehadiran
-    document.querySelectorAll('#manageSchedule .btn-success, #manageAttendance .btn-success').forEach(btn => {
-      btn.style.display = 'none';
-    });
-    // Benarkan cetak & PDF sahaja di Laporan
-    document.querySelectorAll('#viewTeachingReports .btn-primary, #viewTeachingReports .btn-pdf').forEach(btn => {
-      btn.style.display = 'inline-block';
-    });
-  }
-}
-
-// Panggil fungsi ini setiap kali section dibuka
-function showSection(id) {
-  // ... (kod asal anda)
-  // Tambah di hujung fungsi
-  setTimeout(restrictViewerAccess, 500); // Tunggu table dimuat
-}
   </script>
 </body>
 </html>
-
-
-
 
 
 
