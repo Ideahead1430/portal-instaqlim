@@ -1864,43 +1864,60 @@ async function syncPendingOperations() {
       } else {
         isOnline = false;
       }
-      // Sembunyikan butang edit/padam/tambah untuk viewer
+      
+// Fungsi untuk hadkan akses viewer (sembunyikan butang edit/padam/tambah)
 function restrictViewerAccess() {
-  if (currentUser.role === 'viewer') {
-    // Sembunyikan semua butang tambah/kemaskini/padam
-    document.querySelectorAll('.btn-success, .btn-edit, .btn-danger').forEach(btn => {
-      btn.style.display = 'none';
-    });
-    // Sembunyikan butang Simpan di modal
-    const saveBtn = document.getElementById('saveBtn');
-    if (saveBtn) saveBtn.style.display = 'none';
-    // Benarkan cetak & PDF di Laporan
-    document.querySelectorAll('#viewTeachingReports .btn-primary, #viewTeachingReports .btn-pdf').forEach(btn => {
-      btn.style.display = 'inline-block';
-    });
-  }
+  if (!currentUser || currentUser.role !== 'viewer') return;
+
+  // Sembunyikan semua butang Tambah, Kemaskini, Padam
+  document.querySelectorAll('.btn-success, .btn-edit, .btn-danger').forEach(btn => {
+    btn.style.display = 'none';
+  });
+
+  // Sembunyikan butang Simpan di modal (jika ada)
+  const saveBtn = document.getElementById('saveBtn');
+  if (saveBtn) saveBtn.style.display = 'none';
+
+  // Benarkan butang Cetak & PDF di Laporan Mengajar
+  document.querySelectorAll('#viewTeachingReports .btn-primary, #viewTeachingReports .btn-pdf').forEach(btn => {
+    btn.style.display = 'inline-block';
+  });
 }
 
-// Panggil fungsi ini selepas login dan setiap showSection
-// Tambah di akhir login():
-restrictViewerAccess();
+// Panggil fungsi ini selepas login
+async function login() {
+  // ... (kod login asal anda)
 
-// Dan di akhir showSection(id):
-restrictViewerAccess();
-    });
+  try {
+    // ... (kod login asal)
+    await loadCommonData();
+    restrictViewerAccess(); // Tambah di sini
+    showToast('Log masuk berjaya');
+  } catch (err) {
+    // ...
+  } finally {
+    // ...
   }
 }
 
 // Panggil fungsi ini setiap kali section dibuka
 function showSection(id) {
-  // ... (kod asal anda)
+  document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
+  const sec = document.getElementById(id);
+  if (sec) sec.classList.remove('hidden');
+  document.getElementById('sections').classList.remove('hidden');
+  currentSection = id;
+
+  // ... (kod asal showSection anda)
+
   // Tambah di hujung fungsi
-  setTimeout(restrictViewerAccess, 500); // Tunggu table dimuat
+  restrictViewerAccess(); // Panggil terus (tiada setTimeout diperlukan)
 }
     };
   </script>
 </body>
 </html>
+
 
 
 
