@@ -530,7 +530,7 @@
   let isOnline = navigator.onLine;
   let pendingOperations = [];
 
-  async function Call(action, payload = {}) {
+  async function apiCall(action, payload = {}) {
     try {
       updateConnectionStatus('Memuat...', 'loading');
      
@@ -1772,6 +1772,7 @@ function renderTeachingReports(reports) {
   </script>
 </body>
 </html>
+
 
 
 
