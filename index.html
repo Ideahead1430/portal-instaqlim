@@ -1538,6 +1538,7 @@
         if (currentUser && currentUser.role !== 'admin') {
           reports = reports.filter(r => r.teacherId === currentUser.id || r.teacher === currentUser.name);
           console.log('Laporan guru ini:', reports);
+          reports = res.reports || [];
         }
 
         renderTeachingReports(reports);
@@ -1606,10 +1607,17 @@ function printSelectedReports() {
   const selectedReports = [];
   checkboxes.forEach(cb => {
     const row = cb.closest('tr');
-    const index = row.querySelector('td:nth-child(3)').textContent.trim(); // Bil adalah column ke-2
-    const r = reports[parseInt(index) - 1]; // reports adalah global
-    selectedReports.push(r);
+    const indexCell = row.querySelector('td:nth-child(3)'); // Column Bil (ke-3)
+    if (!indexCell) return;
+    const index = parseInt(indexCell.textContent.trim());
+    const r = reports[index - 1]; // reports adalah global
+    if (r) selectedReports.push(r);
   });
+
+  if (selectedReports.length === 0) {
+    showToast('Tiada laporan dipilih atau data tidak lengkap', 'error');
+    return;
+  }
 
   const printWindow = window.open('', '', 'width=800,height=600');
   let content = `
@@ -1653,7 +1661,6 @@ function printSelectedReports() {
   printWindow.document.write(content);
   printWindow.document.close();
 }
-
 // Export ke PDF (cetak semua)
 function exportTeachingReportPDF() {
   const { jsPDF } = window.jspdf;
@@ -1722,4 +1729,5 @@ function exportTeachingReportPDF() {
   </script>
 </body>
 </html>
+
 
