@@ -301,9 +301,10 @@
       border-radius: 5px;
       margin-bottom: 10px;
     }
-    #notesModal { display: none; }
+#notesModal { display: none; }
 #notesModal:not(.hidden) { display: flex; }
-#fullNotes { font-size: 1.1rem; line-height: 1.6; }
+#fullNotes { font-size: 1.1rem; line-height: 1.6; word-wrap: break-word; }
+    
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -525,7 +526,7 @@
   <div class="theme-toggle" onclick="toggleTheme()" title="Tukar Tema"><i class="fas fa-moon" id="themeIcon"></i></div>
   <div id="connectionStatus" class="connection-status hidden">Memeriksa sambungan...</div>
   
-  <!-- Modal Popup untuk Catatan Penuh -->
+<!-- Modal Popup untuk Catatan Penuh -->
 <div id="notesModal" class="hidden" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:2000;">
   <div style="background:var(--card-bg,white);border-radius:10px;padding:2rem;width:90%;max-width:800px;max-height:80vh;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,0.3);">
     <h3>Catatan Penuh</h3>
@@ -1605,7 +1606,7 @@ function renderTeachingReports(reports) {
   reports.forEach((r, index) => {
     const notesPreview = r.notes ? (r.notes.length > 100 ? r.notes.substring(0, 100) + '...' : r.notes) : '-';
     const rowHtml = `
-      <tr onclick="showFullNotes('${r.notes || ''}')" style="cursor:pointer;">
+      <tr onclick="showFullNotes('${r.notes ? r.notes.replace(/'/g, "\\'") : ''}')" style="cursor:pointer;">
         <td>${index + 1}</td>
         <td>${r.teacher || 'Tiada Nama'}</td>
         <td>${r.date || '-'}</td>
@@ -1618,7 +1619,6 @@ function renderTeachingReports(reports) {
   });
 }
 
-// Fungsi popup catatan penuh
 function showFullNotes(notes) {
   document.getElementById('fullNotes').textContent = notes || 'Tiada catatan';
   document.getElementById('notesModal').classList.remove('hidden');
@@ -1795,6 +1795,7 @@ function showFullNotes(notes) {
   </script>
 </body>
 </html>
+
 
 
 
