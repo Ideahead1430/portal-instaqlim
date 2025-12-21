@@ -348,7 +348,7 @@
             <div class="menu-card" onclick="showSection('manageTeachers')"><i class="fas fa-chalkboard-teacher"></i><h3>Pengurusan Guru</h3></div>
             <div class="menu-card" onclick="showSection('manageStaff')"><i class="fas fa-users-cog"></i><h3>Pengurusan Kakitangan</h3></div>
             <div class="menu-card" onclick="showSection('manageClasses')"><i class="fas fa-door-open"></i><h3>Pengurusan Kelas</h3></div>
-            <div class="menu-card" onclick="showSection('manageSchedule')"><i class="fas fa-calendar-alt"></i><h3>Jadual Waktu</h3></div>
+            <div class="menu-card" onclick="showSection('manage')"><i class="fas fa-calendar-alt"></i><h3>Jadual Waktu</h3></div>
             <div class="menu-card" onclick="showSection('manageAttendance')"><i class="fas fa-check-square"></i><h3>Kehadiran</h3></div>
             <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Mengajar</h3></div>
           </div>
@@ -357,7 +357,7 @@
         <div id="guruDashboard" class="hidden">
           <h2 class="text-center">Papan Pemuka Guru</h2>
           <div class="grid">
-            <div class="menu-card" onclick="showSection('viewSchedule')"><i class="fas fa-calendar-alt"></i><h3>Lihat Jadual</h3></div>
+            <div class="menu-card" onclick="showSection('view')"><i class="fas fa-calendar-alt"></i><h3>Lihat Jadual</h3></div>
             <div class="menu-card" onclick="showSection('teachingReportForm')"><i class="fas fa-file-alt"></i><h3>Laporan Harian</h3></div>
             <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Saya</h3></div>
           </div>
@@ -430,7 +430,22 @@
               <thead><tr><th>Waktu/Hari</th><th>Isnin</th><th>Selasa</th><th>Rabu</th><th>Khamis</th><th>Jumaat</th><th>Sabtu</th><th>Ahad</th></tr></thead>
               <tbody>
                 <tr><td>06:00-07:00</td><td><input type="text" data-row="0" data-col="0"></td><td><input type="text" data-row="0" data-col="1"></td><td><input type="text" data-row="0" data-col="2"></td><td><input type="text" data-row="0" data-col="3"></td><td><input type="text" data-row="0" data-col="4"></td><td><input type="text" data-row="0" data-col="5"></td><td><input type="text" data-row="0" data-col="6"></td></tr>
-                <!-- Tambah row lain jika perlu -->
+                <tr><td>07:00-08:00</td><td><input type="text" data-row="1" data-col="0"></td><td><input type="text" data-row="1" data-col="1"></td><td><input type="text" data-row="1" data-col="2"></td><td><input type="text" data-row="1" data-col="3"></td><td><input type="text" data-row="1" data-col="4"></td><td><input type="text" data-row="1" data-col="5"></td><td><input type="text" data-row="1" data-col="6"></td></tr>
+                <tr><td>08:00-09:00</td><td><input type="text" data-row="2" data-col="0"></td><td><input type="text" data-row="2" data-col="1"></td><td><input type="text" data-row="2" data-col="2"></td><td><input type="text" data-row="2" data-col="3"></td><td><input type="text" data-row="2" data-col="4"></td><td><input type="text" data-row="2" data-col="5"></td><td><input type="text" data-row="2" data-col="6"></td></tr>
+                <tr><td>09:00-10:00</td><td><input type="text" data-row="3" data-col="0"></td><td><input type="text" data-row="3" data-col="1"></td><td><input type="text" data-row="3" data-col="2"></td><td><input type="text" data-row="3" data-col="3"></td><td><input type="text" data-row="3" data-col="4"></td><td><input type="text" data-row="3" data-col="5"></td><td><input type="text" data-row="3" data-col="6"></td></tr>
+                <tr><td>10:00-11:00</td><td><input type="text" data-row="4" data-col="0"></td><td><input type="text" data-row="4" data-col="1"></td><td><input type="text" data-row="4" data-col="2"></td><td><input type="text" data-row="4" data-col="3"></td><td><input type="text" data-row="4" data-col="4"></td><td><input type="text" data-row="4" data-col="5"></td><td><input type="text" data-row="4" data-col="6"></td></tr>
+                <tr><td>11:00-12:00</td><td><input type="text" data-row="5" data-col="0"></td><td><input type="text" data-row="5" data-col="1"></td><td><input type="text" data-row="5" data-col="2"></td><td><input type="text" data-row="5" data-col="3"></td><td><input type="text" data-row="5" data-col="4"></td><td><input type="text" data-row="5" data-col="5"></td><td><input type="text" data-row="5" data-col="6"></td></tr>
+                <tr><td>12:00-13:00</td><td><input type="text" data-row="6" data-col="0"></td><td><input type="text" data-row="6" data-col="1"></td><td><input type="text" data-row="6" data-col="2"></td><td><input type="text" data-row="6" data-col="3"></td><td><input type="text" data-row="6" data-col="4"></td><td><input type="text" data-row="6" data-col="5"></td><td><input type="text" data-row="6" data-col="6"></td></tr>
+                <tr><td>13:00-14:00</td><td><input type="text" data-row="7" data-col="0"></td><td><input type="text" data-row="7" data-col="1"></td><td><input type="text" data-row="7" data-col="2"></td><td><input type="text" data-row="7" data-col="3"></td><td><input type="text" data-row="7" data-col="4"></td><td><input type="text" data-row="7" data-col="5"></td><td><input type="text" data-row="7" data-col="6"></td></tr>
+                <tr><td>14:00-15:00</td><td><input type="text" data-row="8" data-col="0"></td><td><input type="text" data-row="8" data-col="1"></td><td><input type="text" data-row="8" data-col="2"></td><td><input type="text" data-row="8" data-col="3"></td><td><input type="text" data-row="8" data-col="4"></td><td><input type="text" data-row="8" data-col="5"></td><td><input type="text" data-row="8" data-col="6"></td></tr>
+                <tr><td>15:00-16:00</td><td><input type="text" data-row="9" data-col="0"></td><td><input type="text" data-row="9" data-col="1"></td><td><input type="text" data-row="9" data-col="2"></td><td><input type="text" data-row="9" data-col="3"></td><td><input type="text" data-row="9" data-col="4"></td><td><input type="text" data-row="9" data-col="5"></td><td><input type="text" data-row="9" data-col="6"></td></tr>
+                <tr><td>16:00-17:00</td><td><input type="text" data-row="10" data-col="0"></td><td><input type="text" data-row="10" data-col="1"></td><td><input type="text" data-row="10" data-col="2"></td><td><input type="text" data-row="10" data-col="3"></td><td><input type="text" data-row="10" data-col="4"></td><td><input type="text" data-row="10" data-col="5"></td><td><input type="text" data-row="10" data-col="6"></td></tr>
+                <tr><td>17:00-18:00</td><td><input type="text" data-row="11" data-col="0"></td><td><input type="text" data-row="11" data-col="1"></td><td><input type="text" data-row="11" data-col="2"></td><td><input type="text" data-row="11" data-col="3"></td><td><input type="text" data-row="11" data-col="4"></td><td><input type="text" data-row="11" data-col="5"></td><td><input type="text" data-row="11" data-col="6"></td></tr>
+                <tr><td>18:00-19:00</td><td><input type="text" data-row="12" data-col="0"></td><td><input type="text" data-row="12" data-col="1"></td><td><input type="text" data-row="12" data-col="2"></td><td><input type="text" data-row="12" data-col="3"></td><td><input type="text" data-row="12" data-col="4"></td><td><input type="text" data-row="12" data-col="5"></td><td><input type="text" data-row="12" data-col="6"></td></tr>
+                <tr><td>19:00-20:00</td><td><input type="text" data-row="13" data-col="0"></td><td><input type="text" data-row="13" data-col="1"></td><td><input type="text" data-row="13" data-col="2"></td><td><input type="text" data-row="13" data-col="3"></td><td><input type="text" data-row="13" data-col="4"></td><td><input type="text" data-row="13" data-col="5"></td><td><input type="text" data-row="13" data-col="6"></td></tr>
+                <tr><td>20:00-21:00</td><td><input type="text" data-row="14" data-col="0"></td><td><input type="text" data-row="14" data-col="1"></td><td><input type="text" data-row="14" data-col="2"></td><td><input type="text" data-row="14" data-col="3"></td><td><input type="text" data-row="14" data-col="4"></td><td><input type="text" data-row="14" data-col="5"></td><td><input type="text" data-row="14" data-col="6"></td></tr>
+                <tr><td>21:00-22:00</td><td><input type="text" data-row="15" data-col="0"></td><td><input type="text" data-row="15" data-col="1"></td><td><input type="text" data-row="15" data-col="2"></td><td><input type="text" data-row="15" data-col="3"></td><td><input type="text" data-row="15" data-col="4"></td><td><input type="text" data-row="15" data-col="5"></td><td><input type="text" data-row="15" data-col="6"></td></tr>
+                <tr><td>22:00-23:00</td><td><input type="text" data-row="16" data-col="0"></td><td><input type="text" data-row="16" data-col="1"></td><td><input type="text" data-row="16" data-col="2"></td><td><input type="text" data-row="16" data-col="3"></td><td><input type="text" data-row="16" data-col="4"></td><td><input type="text" data-row="16" data-col="5"></td><td><input type="text" data-row="16" data-col="6"></td></tr>
               </tbody>
             </table>
           </div>
@@ -1820,6 +1835,7 @@ async function syncPendingOperations() {
   </script>
 </body>
 </html>
+
 
 
 
