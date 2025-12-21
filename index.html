@@ -352,7 +352,7 @@
             <div class="menu-card" onclick="showSection('manageClasses')"><i class="fas fa-door-open"></i><h3>Pengurusan Kelas</h3></div>
             <div class="menu-card" onclick="showSection('manageSchedule')"><i class="fas fa-calendar-alt"></i><h3>Jadual Waktu</h3></div>
             <div class="menu-card" onclick="showSection('manageAttendance')"><i class="fas fa-check-square"></i><h3>Kehadiran</h3></div>
-            <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Mengajar</h3></div>
+            <div class="menu-card" onclick="showSection('Reports')"><i class="fas fa-file-alt"></i><h3>Laporan Mengajar</h3></div>
           </div>
         </div>
         <!-- Guru Dashboard -->
@@ -361,7 +361,7 @@
           <div class="grid">
             <div class="menu-card" onclick="showSection('viewSchedule')"><i class="fas fa-calendar-alt"></i><h3>Lihat Jadual</h3></div>
             <div class="menu-card" onclick="showSection('teachingReportForm')"><i class="fas fa-file-alt"></i><h3>Laporan Harian</h3></div>
-            <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Saya</h3></div>
+            <div class="menu-card" onclick="showSection('Reports')"><i class="fas fa-file-alt"></i><h3>Laporan Saya</h3></div>
           </div>
         </div>
         <!-- Sections -->
@@ -476,23 +476,35 @@
           </div>
           <!-- Laporan Mengajar -->
           <div id="viewTeachingReports" class="card hidden">
-            <h3>Laporan Mengajar Guru</h3>
-            <div style="margin:1rem 0; text-align:right;">
-              <button class="btn btn-print" onclick="window.print()">Cetak</button>
-              <button class="btn btn-pdf" onclick="exportTeachingReportPDF()">PDF</button>
-            </div>
-            <div id="teachingReportPrintSection">
-              <div class="report-header text-center">
-                <img src="https://arleta.site/interactivelink/2950/Logo-Maahad.JPG" alt="Logo" style="width:120px;">
-                <h2>Laporan Mengajar Harian Guru</h2>
-                <p><strong>INSTAQLIM</strong> | Tarikh: <span id="printDate"></span></p>
-              </div>
-              <table id="teachingReportTable">
-                <thead><tr><th>Bil</th><th>Guru</th><th>Tarikh</th><th>Kelas</th><th>Topik</th><th>Catatan</th><th>Lampiran</th></tr></thead>
-                <tbody></tbody>
-              </table>
-            </div>
-          </div>
+  <h3>Laporan Mengajar Guru</h3>
+  <div style="margin:1rem 0; text-align:right;">
+    <button class="btn btn-primary" onclick="printSelectedReports()">Cetak Terpilih</button>
+    <button class="btn btn-print" onclick="window.print()">Cetak Semua</button>
+    <button class="btn btn-pdf" onclick="exportTeachingReportPDF()">PDF</button>
+  </div>
+  <div id="teachingReportPrintSection">
+    <div class="report-header text-center">
+      <img src="https://arleta.site/interactivelink/2950/Logo-Maahad.JPG" alt="Logo" style="width:120px;">
+      <h2>Laporan Mengajar Harian Guru</h2>
+      <p><strong>INSTAQLIM</strong> | Tarikh: <span id="printDate"></span></p>
+    </div>
+    <table id="teachingReportTable">
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="selectAll" onclick="toggleSelectAll()"></th>
+          <th>Bil</th>
+          <th>Guru</th>
+          <th>Tarikh</th>
+          <th>Kelas</th>
+          <th>Topik</th>
+          <th>Catatan</th>
+          <th>Lampiran</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
           <!-- Form Laporan Mengajar -->
           <div id="teachingReportForm" class="card hidden">
             <h3>Laporan Mengajar Harian</h3>
@@ -1768,6 +1780,71 @@ function showFullNotes(notes) {
       const icon = document.getElementById('themeIcon');
       icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
     }
+  // Toggle semua checkbox
+function toggleSelectAll() {
+  const selectAll = document.getElementById('selectAll');
+  const checkboxes = document.querySelectorAll('#teachingReportTable tbody input[type="checkbox"]');
+  checkboxes.forEach(cb => cb.checked = selectAll.checked);
+}
+
+// Cetak laporan terpilih
+function printSelectedReports() {
+  const checkboxes = document.querySelectorAll('#teachingReportTable tbody input[type="checkbox"]:checked');
+  if (checkboxes.length === 0) {
+    showToast('Sila pilih sekurang-kurangnya satu laporan', 'warning');
+    return;
+  }
+
+  const selectedReports = [];
+  checkboxes.forEach(cb => {
+    const row = cb.closest('tr');
+    const index = row.querySelector('td:nth-child(2)').textContent.trim();
+    const r = reports[parseInt(index) - 1]; // reports adalah global dari loadTeachingReports
+    selectedReports.push(r);
+  });
+
+  const printWindow = window.open('', '', 'width=800,height=600');
+  let content = `
+    <html><head><title>Cetak Laporan Terpilih - INSTAQLIM</title>
+    <style>
+      body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
+      .header { text-align: center; margin-bottom: 30px; }
+      .header img { width: 100px; }
+      .report { margin-bottom: 40px; page-break-after: always; }
+      table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+      th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+      th { background-color: #10b981; color: white; }
+      .notes { white-space: pre-wrap; }
+      @media print { .report:last-child { page-break-after: avoid; } }
+    </style>
+    </head><body>
+      <div class="header">
+        <img src="https://arleta.site/interactivelink/2950/Logo-Maahad.JPG" alt="Logo">
+        <h2>INSTAQLIM - Laporan Mengajar Harian Terpilih</h2>
+        <p>Tarikh Cetak: ${new Date().toLocaleDateString('ms-MY')}</p>
+      </div>
+  `;
+
+  selectedReports.forEach((r, i) => {
+    content += `
+      <div class="report">
+        <h3>Laporan #${i+1}</h3>
+        <table>
+          <tr><th>Guru</th><td>${r.teacher || '-'}</td></tr>
+          <tr><th>Tarikh</th><td>${r.date || '-'}</td></tr>
+          <tr><th>Kelas</th><td>${r.class || '-'}</td></tr>
+          <tr><th>Topik</th><td>${r.topic || '-'}</td></tr>
+          <tr><th>Catatan</th><td class="notes">${r.notes || '-'}</td></tr>
+          <tr><th>Lampiran</th><td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : 'Tiada'}</td></tr>
+        </table>
+      </div>
+    `;
+  });
+
+  content += `<script>window.print();<\/script></body></html>`;
+  printWindow.document.write(content);
+  printWindow.document.close();
+}
 
     window.onload = () => {
     const theme = localStorage.getItem('theme') || 'light';
@@ -1796,6 +1873,7 @@ function showFullNotes(notes) {
   </script>
 </body>
 </html>
+
 
 
 
