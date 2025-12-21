@@ -1667,35 +1667,6 @@ function printSelectedReports() {
   printWindow.document.write(content);
   printWindow.document.close();
 }
-    </style>
-    </head><body>
-      <div class="header">
-        <img src="https://arleta.site/interactivelink/2950/Logo-Maahad.JPG" alt="Logo">
-        <h2>INSTAQLIM - Laporan Mengajar Harian Terpilih</h2>
-        <p>Tarikh Cetak: ${new Date().toLocaleDateString('ms-MY')}</p>
-      </div>
-  `;
-
-  selectedReports.forEach((r, i) => {
-    content += `
-      <div class="report">
-        <h3>Laporan #${i+1}</h3>
-        <table>
-          <tr><th>Guru</th><td>${r.teacher || '-'}</td></tr>
-          <tr><th>Tarikh</th><td>${r.date || '-'}</td></tr>
-          <tr><th>Kelas</th><td>${r.class || '-'}</td></tr>
-          <tr><th>Topik</th><td>${r.topic || '-'}</td></tr>
-          <tr><th>Catatan</th><td class="notes">${r.notes || '-'}</td></tr>
-          <tr><th>Lampiran</th><td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : 'Tiada'}</td></tr>
-        </table>
-      </div>
-    `;
-  });
-
-  content += `<script>window.print();<\/script></body></html>`;
-  printWindow.document.write(content);
-  printWindow.document.close();
-}
 // Export ke PDF (cetak semua)
 function exportTeachingReportPDF() {
   const { jsPDF } = window.jspdf;
@@ -1764,6 +1735,7 @@ function exportTeachingReportPDF() {
   </script>
 </body>
 </html>
+
 
 
 
