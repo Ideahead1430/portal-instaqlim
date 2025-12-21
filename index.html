@@ -522,7 +522,7 @@
   <div id="connectionStatus" class="connection-status hidden">Memeriksa sambungan...</div>
   
 <script>
-  const API_URL = 'https://script.google.com/macros/s/AKfycbyn4CjfescESyCGU-XF_oMXYEvYBCuK4ACQUqTW04Vc1VJTu96Jj6ZrR7i8LfeP09Z4/exec';
+  const API_URL = 'https://script.google.com/macros/s/AKfycbyjynr86b_ZKlyVmdJp6vFyvxQLgM8q6cWz_7idtwNQv8mIu3Jt3EEaZUNqx8B7cQNt/exec';
   
   let currentUser = null;
   let currentSection = '';
@@ -530,7 +530,7 @@
   let isOnline = navigator.onLine;
   let pendingOperations = [];
 
-  async function apiCall(action, payload = {}) {
+  async function Call(action, payload = {}) {
     try {
       updateConnectionStatus('Memuat...', 'loading');
      
@@ -1772,6 +1772,7 @@ function renderTeachingReports(reports) {
   </script>
 </body>
 </html>
+
 
 
 
