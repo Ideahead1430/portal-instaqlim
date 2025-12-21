@@ -350,7 +350,7 @@
             <div class="menu-card" onclick="showSection('manageClasses')"><i class="fas fa-door-open"></i><h3>Pengurusan Kelas</h3></div>
             <div class="menu-card" onclick="showSection('manageSchedule')"><i class="fas fa-calendar-alt"></i><h3>Jadual Waktu</h3></div>
             <div class="menu-card" onclick="showSection('manageAttendance')"><i class="fas fa-check-square"></i><h3>Kehadiran</h3></div>
-            <div class="menu-card" onclick="showSection('views')"><i class="fas fa-file-alt"></i><h3>Laporan Mengajar</h3></div>
+            <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Mengajar</h3></div>
           </div>
         </div>
         <!-- Guru Dashboard -->
@@ -358,8 +358,8 @@
           <h2 class="text-center">Papan Pemuka Guru</h2>
           <div class="grid">
             <div class="menu-card" onclick="showSection('viewSchedule')"><i class="fas fa-calendar-alt"></i><h3>Lihat Jadual</h3></div>
-            <div class="menu-card" onclick="showSection('Form')"><i class="fas fa-file-alt"></i><h3>Laporan Harian</h3></div>
-            <div class="menu-card" onclick="showSection('views')"><i class="fas fa-file-alt"></i><h3>Laporan Saya</h3></div>
+            <div class="menu-card" onclick="showSection('teachingReportForm')"><i class="fas fa-file-alt"></i><h3>Laporan Harian</h3></div>
+            <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Saya</h3></div>
           </div>
         </div>
         <!-- Sections -->
@@ -430,7 +430,7 @@
               <thead><tr><th>Waktu/Hari</th><th>Isnin</th><th>Selasa</th><th>Rabu</th><th>Khamis</th><th>Jumaat</th><th>Sabtu</th><th>Ahad</th></tr></thead>
               <tbody>
                 <tr><td>06:00-07:00</td><td><input type="text" data-row="0" data-col="0"></td><td><input type="text" data-row="0" data-col="1"></td><td><input type="text" data-row="0" data-col="2"></td><td><input type="text" data-row="0" data-col="3"></td><td><input type="text" data-row="0" data-col="4"></td><td><input type="text" data-row="0" data-col="5"></td><td><input type="text" data-row="0" data-col="6"></td></tr>
-                <!-- ... (row lain) ... -->
+                <!-- Tambah row lain jika perlu -->
               </tbody>
             </table>
           </div>
@@ -457,14 +457,14 @@
             </table>
           </div>
           <!-- Laporan Mengajar -->
-          <div id="views" class="card hidden">
+          <div id="viewTeachingReports" class="card hidden">
             <h3>Laporan Mengajar Guru</h3>
             <div style="margin:1rem 0; text-align:right;">
-              <button class="btn btn-primary" onclick="Reports()">Cetak Terpilih</button>
+              <button class="btn btn-primary" onclick="printSelectedReports()">Cetak Terpilih</button>
               <button class="btn btn-print" onclick="window.print()">Cetak Semua</button>
-              <button class="btn btn-pdf" onclick="exportPDF()">PDF</button>
+              <button class="btn btn-pdf" onclick="exportTeachingReportPDF()">PDF</button>
             </div>
-            <div id="PrintSection">
+            <div id="teachingReportPrintSection">
               <div class="report-header text-center">
                 <img src="https://arleta.site/interactivelink/2950/Logo-Maahad.JPG" alt="Logo" style="width:120px;">
                 <h2>Laporan Mengajar Harian Guru</h2>
@@ -712,8 +712,7 @@
       if (id === 'viewTeachingReports') loadTeachingReports();
     }
 
-    // ... (sambung dengan semua fungsi lain seperti loadUsers, loadStudents, loadTeachers, loadStaff, loadClasses, loadSchedule, loadAttendance, dll - pastikan semua ada seperti sebelum ini)
-// === PENGGUNA ===
+    // === PENGGUNA ===
     async function loadUsers() {
       try {
         const res = await apiCall('getUsers');
@@ -722,14 +721,11 @@
         renderUsers();
       } catch (e) {
         console.error('Error loading users:', e);
-       
         const res = getLocalData('getUsers');
         if (res) {
           users = res.users || [];
           renderUsers();
           showToast('Menggunakan data tempatan', 'warning');
-        } else {
-          showToast('Gagal memuatkan pengguna', 'error');
         }
       }
     }
@@ -756,7 +752,12 @@
         <div class="form-group"><label>Username</label><input type="text" id="u_username" required></div>
         <div class="form-group"><label>Kata Laluan</label><input type="password" id="u_password" required></div>
         <div class="form-group"><label>Nama Penuh</label><input type="text" id="u_name" required></div>
-        <div class="form-group"><label>Peranan</label><select id="u_role" required><option value="guru">Guru</option><option value="staff">Kakitangan</option><option value="admin">Pentadbir</option></select></div>
+        <div class="form-group"><label>No. Kad Pengenalan</label><input type="text" id="u_ic"></div>
+        <div class="form-group"><label>Peranan</label><select id="u_role" required>
+          <option value="guru">Guru</option>
+          <option value="staff">Kakitangan</option>
+          <option value="admin">Pentadbir</option>
+        </select></div>
         <input type="hidden" id="u_id">
       `;
       document.getElementById('saveBtn').onclick = saveUser;
@@ -770,17 +771,18 @@
         username: document.getElementById('u_username').value.trim(),
         password: document.getElementById('u_password').value,
         name: document.getElementById('u_name').value.trim(),
+        ic: document.getElementById('u_ic').value.trim(),
         role: document.getElementById('u_role').value
       };
-     
+
       if (!id) {
         user.id = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
       }
-     
+
       if (!user.username || !user.name || !user.role || (!id && !user.password)) {
         return showToast('Isi semua medan', 'error');
       }
-     
+
       try {
         if (isOnline) {
           if (id) await apiCall('updateUser', { user });
@@ -788,19 +790,17 @@
         } else {
           pendingOperations.push({ action: id ? 'updateUser' : 'addUser', payload: { user } });
           localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-         
           if (id) {
             const index = users.findIndex(u => u.id === id);
             if (index !== -1) users[index] = user;
           } else {
             users.push(user);
           }
-         
           saveLocalData('getUsers', { users });
           renderUsers();
           showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
         }
-       
+
         closeModal();
         if (isOnline) loadUsers();
         showToast('Pengguna berjaya disimpan');
@@ -812,932 +812,14 @@
     function editUser(id) {
       const user = users.find(u => u.id === id);
       if (!user) return;
-     
+
       document.getElementById('modalTitle').textContent = 'Kemaskini Pengguna';
       document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Username</label><input type="text" id="u_username" value="${user.username}" required></div>
         <div class="form-group"><label>Kata Laluan (kosongkan jika tidak berubah)</label><input type="password" id="u_password"></div>
         <div class="form-group"><label>Nama Penuh</label><input type="text" id="u_name" value="${user.name}" required></div>
+        <div class="form-group"><label>No. Kad Pengenalan</label><input type="text" id="u_ic" value="${user.ic || ''}"></div>
         <div class="form-group"><label>Peranan</label><select id="u_role" required>
           <option value="guru" ${user.role === 'guru' ? 'selected' : ''}>Guru</option>
           <option value="staff" ${user.role === 'staff' ? 'selected' : ''}>Kakitangan</option>
-          <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Pentadbir</option>
-        </select></div>
-        <input type="hidden" id="u_id" value="${user.id}">
-      `;
-      document.getElementById('saveBtn').onclick = saveUser;
-      document.getElementById('modal').classList.remove('hidden');
-    }
-
-    async function deleteUser(id) {
-      if (!confirm('Adakah anda pasti ingin memadam pengguna ini?')) return;
-     
-      try {
-        if (isOnline) {
-          await apiCall('deleteUser', { id });
-        } else {
-          pendingOperations.push({ action: 'deleteUser', payload: { id } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-         
-          users = users.filter(u => u.id !== id);
-          saveLocalData('getUsers', { users });
-          renderUsers();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-       
-        if (isOnline) loadUsers();
-        showToast('Pengguna berjaya dipadam');
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
-    }
-
-    // === PELAJAR ===
-    async function loadStudents() {
-      try {
-        const res = await apiCall('getStudents');
-        students = res.students || [];
-        saveLocalData('getStudents', res);
-        renderStudents();
-      } catch (e) {
-        console.error('Error loading students:', e);
-       
-        const res = getLocalData('getStudents');
-        if (res) {
-          students = res.students || [];
-          renderStudents();
-          showToast('Menggunakan data tempatan', 'warning');
-        } else {
-          showToast('Gagal memuatkan pelajar', 'error');
-        }
-      }
-    }
-
-    function renderStudents() {
-      const tbody = document.querySelector('#studentTable tbody');
-      tbody.innerHTML = '';
-      students.forEach(s => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${s.id}</td><td>${s.name}</td><td>${s.ic}</td><td>${s.class}</td><td>${s.guardian}</td><td>${s.guardianphone}</td>
-            <td>
-              <button class="btn btn-edit" onclick="editStudent('${s.id}')">Kemaskini</button>
-              <button class="btn btn-danger" onclick="deleteStudent('${s.id}')">Padam</button>
-            </td>
-          </tr>`;
-      });
-    }
-
-    function openAddStudent() {
-      document.getElementById('modalTitle').textContent = 'Tambah Pelajar';
-      document.getElementById('dataForm').innerHTML = `
-        <div class="form-group"><label>Nama</label><input type="text" id="s_name" required></div>
-        <div class="form-group"><label>No. KP</label><input type="text" id="s_ic" required></div>
-        <div class="form-group"><label>Kelas</label><select id="s_class" required><option value="">Pilih Kelas</option></select></div>
-        <div class="form-group"><label>Nama Wali</label><input type="text" id="s_guardian" required></div>
-        <div class="form-group"><label>No. HP Wali</label><input type="text" id="s_guardian_phone" required></div>
-        <input type="hidden" id="s_id">
-      `;
-     
-      const classSelect = document.getElementById('s_class');
-      classes.forEach(cls => {
-        const opt = document.createElement('option');
-        opt.value = cls.name;
-        opt.textContent = cls.name;
-        classSelect.appendChild(opt);
-      });
-     
-      document.getElementById('saveBtn').onclick = saveStudent;
-      document.getElementById('modal').classList.remove('hidden');
-    }
-
-    async function saveStudent() {
-      const id = document.getElementById('s_id').value;
-      const student = {
-        id: id || undefined,
-        name: document.getElementById('s_name').value.trim(),
-        ic: document.getElementById('s_ic').value.trim(),
-        class: document.getElementById('s_class').value,
-        guardian: document.getElementById('s_guardian').value.trim(),
-        guardianphone: document.getElementById('s_guardian_phone').value.trim()
-      };
-     
-      if (!id) {
-        student.id = 'student_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-      }
-     
-      if (!student.name || !student.ic || !student.class || !student.guardian || !student.guardianphone) {
-        return showToast('Isi semua medan', 'error');
-      }
-     
-      try {
-        if (isOnline) {
-          if (id) await apiCall('updateStudent', { student });
-          else await apiCall('addStudent', { student });
-        } else {
-          pendingOperations.push({ action: id ? 'updateStudent' : 'addStudent', payload: { student } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-         
-          if (id) {
-            const index = students.findIndex(s => s.id === id);
-            if (index !== -1) students[index] = student;
-          } else {
-            students.push(student);
-          }
-         
-          saveLocalData('getStudents', { students });
-          renderStudents();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-       
-        closeModal();
-        if (isOnline) loadStudents();
-        showToast('Pelajar berjaya disimpan');
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
-    }
-
-    function editStudent(id) {
-      const student = students.find(s => s.id === id);
-      if (!student) return;
-     
-      document.getElementById('modalTitle').textContent = 'Kemaskini Pelajar';
-      document.getElementById('dataForm').innerHTML = `
-        <div class="form-group"><label>Nama</label><input type="text" id="s_name" value="${student.name}" required></div>
-        <div class="form-group"><label>No. KP</label><input type="text" id="s_ic" value="${student.ic}" required></div>
-        <div class="form-group"><label>Kelas</label><select id="s_class" required><option value="">Pilih Kelas</option></select></div>
-        <div class="form-group"><label>Nama Wali</label><input type="text" id="s_guardian" value="${student.guardian}" required></div>
-        <div class="form-group"><label>No. HP Wali</label><input type="text" id="s_guardian_phone" value="${student.guardianphone}" required></div>
-        <input type="hidden" id="s_id" value="${student.id}">
-      `;
-     
-      const classSelect = document.getElementById('s_class');
-      classes.forEach(cls => {
-        const opt = document.createElement('option');
-        opt.value = cls.name;
-        opt.textContent = cls.name;
-        if (cls.name === student.class) opt.selected = true;
-        classSelect.appendChild(opt);
-      });
-     
-      document.getElementById('saveBtn').onclick = saveStudent;
-      document.getElementById('modal').classList.remove('hidden');
-    }
-
-    async function deleteStudent(id) {
-      if (!confirm('Adakah anda pasti ingin memadam pelajar ini?')) return;
-     
-      try {
-        if (isOnline) {
-          await apiCall('deleteStudent', { id });
-        } else {
-          pendingOperations.push({ action: 'deleteStudent', payload: { id } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-         
-          students = students.filter(s => s.id !== id);
-          saveLocalData('getStudents', { students });
-          renderStudents();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-       
-        if (isOnline) loadStudents();
-        showToast('Pelajar berjaya dipadam');
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
-    }
-
-    // === GURU ===
-    async function loadTeachers() {
-      try {
-        const res = await apiCall('getTeachers');
-        teachers = res.teachers || [];
-        saveLocalData('getTeachers', res);
-        renderTeachers();
-      } catch (e) {
-        console.error('Error loading teachers:', e);
-       
-        const res = getLocalData('getTeachers');
-        if (res) {
-          teachers = res.teachers || [];
-          renderTeachers();
-          showToast('Menggunakan data tempatan', 'warning');
-        } else {
-          showToast('Gagal memuatkan guru', 'error');
-        }
-      }
-    }
-
-    function renderTeachers() {
-      const tbody = document.querySelector('#teacherTable tbody');
-      tbody.innerHTML = '';
-      teachers.forEach(t => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${t.id}</td><td>${t.name}</td><td>${t.ic}</td><td>${t.subject}</td><td>${t.phone}</td>
-            <td>
-              <button class="btn btn-edit" onclick="editTeacher('${t.id}')">Kemaskini</button>
-              <button class="btn btn-danger" onclick="deleteTeacher('${t.id}')">Padam</button>
-            </td>
-          </tr>`;
-      });
-    }
-
-    function openAddTeacher() {
-      document.getElementById('modalTitle').textContent = 'Tambah Guru';
-      document.getElementById('dataForm').innerHTML = `
-        <div class="form-group"><label>Nama</label><input type="text" id="t_name" required></div>
-        <div class="form-group"><label>No. KP</label><input type="text" id="t_ic" required></div>
-        <div class="form-group"><label>Mata Pelajaran</label><input type="text" id="t_subject" required></div>
-        <div class="form-group"><label>No. HP</label><input type="text" id="t_phone" required></div>
-        <input type="hidden" id="t_id">
-      `;
-      document.getElementById('saveBtn').onclick = saveTeacher;
-      document.getElementById('modal').classList.remove('hidden');
-    }
-
-    async function saveTeacher() {
-      const id = document.getElementById('t_id').value;
-      const teacher = {
-        id: id || undefined,
-        name: document.getElementById('t_name').value.trim(),
-        ic: document.getElementById('t_ic').value.trim(),
-        subject: document.getElementById('t_subject').value.trim(),
-        phone: document.getElementById('t_phone').value.trim()
-      };
-     
-      if (!id) {
-        teacher.id = 'teacher_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-      }
-     
-      if (!teacher.name || !teacher.ic || !teacher.subject || !teacher.phone) {
-        return showToast('Isi semua medan', 'error');
-      }
-     
-      try {
-        if (isOnline) {
-          if (id) await apiCall('updateTeacher', { teacher });
-          else await apiCall('addTeacher', { teacher });
-        } else {
-          pendingOperations.push({ action: id ? 'updateTeacher' : 'addTeacher', payload: { teacher } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-         
-          if (id) {
-            const index = teachers.findIndex(t => t.id === id);
-            if (index !== -1) teachers[index] = teacher;
-          } else {
-            teachers.push(teacher);
-          }
-         
-          saveLocalData('getTeachers', { teachers });
-          renderTeachers();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-       
-        closeModal();
-        if (isOnline) loadTeachers();
-        showToast('Guru berjaya disimpan');
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
-    }
-
-    function editTeacher(id) {
-      const teacher = teachers.find(t => t.id === id);
-      if (!teacher) return;
-     
-      document.getElementById('modalTitle').textContent = 'Kemaskini Guru';
-      document.getElementById('dataForm').innerHTML = `
-        <div class="form-group"><label>Nama</label><input type="text" id="t_name" value="${teacher.name}" required></div>
-        <div class="form-group"><label>No. KP</label><input type="text" id="t_ic" value="${teacher.ic}" required></div>
-        <div class="form-group"><label>Mata Pelajaran</label><input type="text" id="t_subject" value="${teacher.subject}" required></div>
-        <div class="form-group"><label>No. HP</label><input type="text" id="t_phone" value="${teacher.phone}" required></div>
-        <input type="hidden" id="t_id" value="${teacher.id}">
-      `;
-      document.getElementById('saveBtn').onclick = saveTeacher;
-      document.getElementById('modal').classList.remove('hidden');
-    }
-
-    async function deleteTeacher(id) {
-      if (!confirm('Adakah anda pasti ingin memadam guru ini?')) return;
-     
-      try {
-        if (isOnline) {
-          await apiCall('deleteTeacher', { id });
-        } else {
-          pendingOperations.push({ action: 'deleteTeacher', payload: { id } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-         
-          teachers = teachers.filter(t => t.id !== id);
-          saveLocalData('getTeachers', { teachers });
-          renderTeachers();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-       
-        if (isOnline) loadTeachers();
-        showToast('Guru berjaya dipadam');
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
-    }
-
-    // === STAFF ===
-    async function loadStaff() {
-      try {
-        const res = await apiCall('getStaff');
-        staff = res.staff || [];
-        saveLocalData('getStaff', res);
-        renderStaff();
-      } catch (e) {
-        console.error('Error loading staff:', e);
-       
-        const res = getLocalData('getStaff');
-        if (res) {
-          staff = res.staff || [];
-          renderStaff();
-          showToast('Menggunakan data tempatan', 'warning');
-        } else {
-          showToast('Gagal memuatkan kakitangan', 'error');
-        }
-      }
-    }
-
-    function renderStaff() {
-      const tbody = document.querySelector('#staffTable tbody');
-      tbody.innerHTML = '';
-      staff.forEach(s => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${s.id}</td><td>${s.name}</td><td>${s.ic}</td><td>${s.position}</td><td>${s.phone}</td>
-            <td>
-              <button class="btn btn-edit" onclick="editStaff('${s.id}')">Kemaskini</button>
-              <button class="btn btn-danger" onclick="deleteStaff('${s.id}')">Padam</button>
-            </td>
-          </tr>`;
-      });
-    }
-
-    function openAddStaff() {
-      document.getElementById('modalTitle').textContent = 'Tambah Kakitangan';
-      document.getElementById('dataForm').innerHTML = `
-        <div class="form-group"><label>Nama</label><input type="text" id="st_name" required></div>
-        <div class="form-group"><label>No. KP</label><input type="text" id="st_ic" required></div>
-        <div class="form-group"><label>Jawatan</label><input type="text" id="st_position" required></div>
-        <div class="form-group"><label>No. HP</label><input type="text" id="st_phone" required></div>
-        <input type="hidden" id="st_id">
-      `;
-      document.getElementById('saveBtn').onclick = saveStaff;
-      document.getElementById('modal').classList.remove('hidden');
-    }
-
-    async function saveStaff() {
-      const id = document.getElementById('st_id').value;
-      const staffMember = {
-        id: id || undefined,
-        name: document.getElementById('st_name').value.trim(),
-        ic: document.getElementById('st_ic').value.trim(),
-        position: document.getElementById('st_position').value.trim(),
-        phone: document.getElementById('st_phone').value.trim()
-      };
-     
-      if (!id) {
-        staffMember.id = 'staff_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-      }
-     
-      if (!staffMember.name || !staffMember.ic || !staffMember.position || !staffMember.phone) {
-        return showToast('Isi semua medan', 'error');
-      }
-     
-      try {
-        if (isOnline) {
-          if (id) await apiCall('updateStaff', { staff: staffMember });
-          else await apiCall('addStaff', { staff: staffMember });
-        } else {
-          pendingOperations.push({ action: id ? 'updateStaff' : 'addStaff', payload: { staff: staffMember } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-         
-          if (id) {
-            const index = staff.findIndex(s => s.id === id);
-            if (index !== -1) staff[index] = staffMember;
-          } else {
-            staff.push(staffMember);
-          }
-         
-          saveLocalData('getStaff', { staff });
-          renderStaff();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-       
-        closeModal();
-        if (isOnline) loadStaff();
-        showToast('Kakitangan berjaya disimpan');
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
-    }
-
-    function editStaff(id) {
-      const staffMember = staff.find(s => s.id === id);
-      if (!staffMember) return;
-     
-      document.getElementById('modalTitle').textContent = 'Kemaskini Kakitangan';
-      document.getElementById('dataForm').innerHTML = `
-        <div class="form-group"><label>Nama</label><input type="text" id="st_name" value="${staffMember.name}" required></div>
-        <div class="form-group"><label>No. KP</label><input type="text" id="st_ic" value="${staffMember.ic}" required></div>
-        <div class="form-group"><label>Jawatan</label><input type="text" id="st_position" value="${staffMember.position}" required></div>
-        <div class="form-group"><label>No. HP</label><input type="text" id="st_phone" value="${staffMember.phone}" required></div>
-        <input type="hidden" id="st_id" value="${staffMember.id}">
-      `;
-      document.getElementById('saveBtn').onclick = saveStaff;
-      document.getElementById('modal').classList.remove('hidden');
-    }
-
-    async function deleteStaff(id) {
-      if (!confirm('Adakah anda pasti ingin memadam kakitangan ini?')) return;
-     
-      try {
-        if (isOnline) {
-          await apiCall('deleteStaff', { id });
-        } else {
-          pendingOperations.push({ action: 'deleteStaff', payload: { id } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-         
-          staff = staff.filter(s => s.id !== id);
-          saveLocalData('getStaff', { staff });
-          renderStaff();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-       
-        if (isOnline) loadStaff();
-        showToast('Kakitangan berjaya dipadam');
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
-    }
-
-    // === KELAS ===
-    async function loadClasses() {
-      try {
-        const res = await apiCall('getClasses');
-        classes = res.classes || [];
-        saveLocalData('getClasses', res);
-        renderClasses();
-      } catch (e) {
-        console.error('Error loading classes:', e);
-       
-        const res = getLocalData('getClasses');
-        if (res) {
-          classes = res.classes || [];
-          renderClasses();
-          showToast('Menggunakan data tempatan', 'warning');
-        } else {
-          showToast('Gagal memuatkan kelas', 'error');
-        }
-      }
-    }
-
-    function renderClasses() {
-      const tbody = document.querySelector('#classTable tbody');
-      tbody.innerHTML = '';
-      classes.forEach(c => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${c.id}</td><td>${c.name}</td><td>${c.teacher}</td>
-            <td>
-              <button class="btn btn-edit" onclick="editClass('${c.id}')">Kemaskini</button>
-              <button class="btn btn-danger" onclick="deleteClass('${c.id}')">Padam</button>
-            </td>
-          </tr>`;
-      });
-    }
-
-    function openAddClass() {
-      if (teachers.length === 0) {
-        showToast('Sila muatkan data guru terlebih dahulu', 'warning');
-        return;
-      }
-     
-      document.getElementById('modalTitle').textContent = 'Tambah Kelas';
-      document.getElementById('dataForm').innerHTML = `
-        <div class="form-group"><label>Nama Kelas</label><input type="text" id="c_name" required></div>
-        <div class="form-group"><label>Guru Kelas</label><select id="c_teacher" required><option value="">Pilih Guru</option></select></div>
-        <input type="hidden" id="c_id">
-      `;
-     
-      const teacherSelect = document.getElementById('c_teacher');
-      teachers.forEach(t => {
-        const opt = document.createElement('option');
-        opt.value = t.name;
-        opt.textContent = t.name;
-        teacherSelect.appendChild(opt);
-      });
-     
-      document.getElementById('saveBtn').onclick = saveClass;
-      document.getElementById('modal').classList.remove('hidden');
-    }
-
-    async function saveClass() {
-      const id = document.getElementById('c_id').value;
-      const classData = {
-        id: id || undefined,
-        name: document.getElementById('c_name').value.trim(),
-        teacher: document.getElementById('c_teacher').value
-      };
-     
-      if (!id) {
-        classData.id = 'class_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-      }
-     
-      if (!classData.name || !classData.teacher) {
-        return showToast('Isi semua medan', 'error');
-      }
-     
-      try {
-        if (isOnline) {
-          if (id) await apiCall('updateClass', { cls: classData });
-          else await apiCall('addClass', { cls: classData });
-        } else {
-          pendingOperations.push({ action: id ? 'updateClass' : 'addClass', payload: { cls: classData } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-         
-          if (id) {
-            const index = classes.findIndex(c => c.id === id);
-            if (index !== -1) classes[index] = classData;
-          } else {
-            classes.push(classData);
-          }
-         
-          saveLocalData('getClasses', { classes });
-          renderClasses();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-       
-        closeModal();
-        if (isOnline) loadClasses();
-        showToast('Kelas berjaya disimpan');
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
-    }
-
-    function editClass(id) {
-      if (teachers.length === 0) {
-        showToast('Sila muatkan data guru terlebih dahulu', 'warning');
-        return;
-      }
-     
-      const classData = classes.find(c => c.id === id);
-      if (!classData) return;
-     
-      document.getElementById('modalTitle').textContent = 'Kemaskini Kelas';
-      document.getElementById('dataForm').innerHTML = `
-        <div class="form-group"><label>Nama Kelas</label><input type="text" id="c_name" value="${classData.name}" required></div>
-        <div class="form-group"><label>Guru Kelas</label><select id="c_teacher" required><option value="">Pilih Guru</option></select></div>
-        <input type="hidden" id="c_id" value="${classData.id}">
-      `;
-     
-      const teacherSelect = document.getElementById('c_teacher');
-      teachers.forEach(t => {
-        const opt = document.createElement('option');
-        opt.value = t.name;
-        opt.textContent = t.name;
-        if (t.name === classData.teacher) opt.selected = true;
-        teacherSelect.appendChild(opt);
-      });
-     
-      document.getElementById('saveBtn').onclick = saveClass;
-      document.getElementById('modal').classList.remove('hidden');
-    }
-
-    async function deleteClass(id) {
-      if (!confirm('Adakah anda pasti ingin memadam kelas ini?')) return;
-     
-      try {
-        if (isOnline) {
-          await apiCall('deleteClass', { id });
-        } else {
-          pendingOperations.push({ action: 'deleteClass', payload: { id } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-         
-          classes = classes.filter(c => c.id !== id);
-          saveLocalData('getClasses', { classes });
-          renderClasses();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-       
-        if (isOnline) loadClasses();
-        showToast('Kelas berjaya dipadam');
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
-    }
-
-    // === JADUAL ===
-    async function loadSchedule() {
-      try {
-        const res = await apiCall('getSchedule');
-        schedule = res.schedule || Array(5).fill().map(() => Array(5).fill(''));
-        saveLocalData('getSchedule', res);
-        renderSchedule();
-      } catch (e) {
-        console.error('Error loading schedule:', e);
-       
-        const res = getLocalData('getSchedule');
-        if (res) {
-          schedule = res.schedule || Array(5).fill().map(() => Array(5).fill(''));
-          renderSchedule();
-          showToast('Menggunakan data tempatan', 'warning');
-        } else {
-          showToast('Gagal memuatkan jadual', 'error');
-        }
-      }
-    }
-
-    function renderSchedule() {
-      for (let row = 0; row < 5; row++) {
-        for (let col = 0; col < 5; col++) {
-          const input = document.querySelector(`input[data-row="${row}"][data-col="${col}"]`);
-          if (input) input.value = schedule[row][col];
-        }
-      }
-    }
-
-    async function saveSchedule() {
-      const newSchedule = Array(5).fill().map(() => Array(5).fill(''));
-      for (let row = 0; row < 5; row++) {
-        for (let col = 0; col < 5; col++) {
-          const input = document.querySelector(`input[data-row="${row}"][data-col="${col}"]`);
-          if (input) newSchedule[row][col] = input.value;
-        }
-      }
-     
-      try {
-        if (isOnline) {
-          await apiCall('saveSchedule', { schedule: newSchedule });
-        } else {
-          pendingOperations.push({ action: 'saveSchedule', payload: { schedule: newSchedule } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-         
-          schedule = newSchedule;
-          saveLocalData('getSchedule', { schedule });
-          renderSchedule();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-       
-        showToast('Jadual berjaya disimpan');
-      } catch (e) {
-        showToast(e.message, 'error');
-      }
-    }
-
-    async function loadViewSchedule() {
-      try {
-        const res = await apiCall('getSchedule');
-        schedule = res.schedule || Array(5).fill().map(() => Array(5).fill(''));
-        saveLocalData('getSchedule', res);
-        renderViewSchedule();
-      } catch (e) {
-        console.error('Error loading view schedule:', e);
-       
-        const res = getLocalData('getSchedule');
-        if (res) {
-          schedule = res.schedule || Array(5).fill().map(() => Array(5).fill(''));
-          renderViewSchedule();
-          showToast('Menggunakan data tempatan', 'warning');
-        } else {
-          showToast('Gagal memuatkan jadual', 'error');
-        }
-      }
-    }
-
-    function renderViewSchedule() {
-      const tbody = document.querySelector('#viewScheduleTable tbody');
-      tbody.innerHTML = '';
-     
-      const timeSlots = ['8:00-9:00', '9:00-10:00', '10:00-11:00', '11:00-12:00', '12:00-13:00'];
-      const days = ['Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat'];
-     
-      for (let row = 0; row < 5; row++) {
-        let rowHtml = `<tr><td>${timeSlots[row]}</td>`;
-        for (let col = 0; col < 5; col++) {
-          rowHtml += `<td>${schedule[row][col]}</td>`;
-        }
-        rowHtml += '</tr>';
-        tbody.innerHTML += rowHtml;
-      }
-    }
-
-    async function loadTeachingReports() {
-      try {
-        const res = await apiCall('getTeachingReports');
-        reports = res.reports || [];
-        console.log('Data laporan dari server:', reports);
-        saveLocalData('getTeachingReports', res);
-
-        if (currentUser && currentUser.role !== 'admin') {
-          reports = reports.filter(r => r.teacherId === currentUser.id || r.teacher === currentUser.name);
-          console.log('Laporan guru ini:', reports);          
-        }
-
-        renderTeachingReports(reports);
-      } catch (e) {
-        console.error('Error loading reports:', e);
-        const localRes = getLocalData('getTeachingReports');
-        if (localRes && localRes.reports) {
-          reports = localRes.reports;
-          if (currentUser && currentUser.role !== 'admin') {
-            reports = reports.filter(r => r.teacherId === currentUser.id || r.teacher === currentUser.name);
-          }
-          renderTeachingReports(reports);
-          showToast('Menggunakan data tempatan', 'warning');
-        } else {
-          renderTeachingReports([]);
-          showToast('Tiada laporan dijumpai', 'warning');
-        }
-      }
-    }
-
-    function renderTeachingReports(reports) {
-      document.getElementById('printDate').textContent = new Date().toLocaleDateString('ms-MY');
-      const tbody = document.querySelector('#teachingReportTable tbody');
-      tbody.innerHTML = '';
-      if (reports.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" class="text-center">Tiada laporan dijumpai</td></tr>';
-        return;
-      }
-      reports.forEach((r, index) => {
-        const notesPreview = r.notes ? (r.notes.length > 100 ? r.notes.substring(0, 100) + '...' : r.notes) : '-';
-        tbody.innerHTML += `
-          <tr onclick="showFullNotes('${r.notes ? r.notes.replace(/'/g, "\\'") : ''}')" style="cursor:pointer;">
-            <td><input type="checkbox" class="report-checkbox"></td>
-            <td>${index + 1}</td>
-            <td>${r.teacher || 'Tiada Nama'}</td>
-            <td>${r.date || '-'}</td>
-            <td>${r.class || '-'}</td>
-            <td>${r.topic || '-'}</td>
-            <td>${notesPreview}</td>
-            <td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : '-'}</td>
-          </tr>`;
-      });
-    }
-
-    function showFullNotes(notes) {
-      document.getElementById('fullNotes').textContent = notes || 'Tiada catatan';
-      document.getElementById('notesModal').classList.remove('hidden');
-    }
-
-    // Fungsi lain seperti saveTeachingReport, exportTeachingReportPDF, toggleSelectAll, Reports, dll - pastikan ada
-// Toggle semua checkbox
-function toggleSelectAll() {
-  const selectAll = document.getElementById('selectAll');
-  const checkboxes = document.querySelectorAll('#teachingReportTable tbody input[type="checkbox"]');
-  checkboxes.forEach(cb => cb.checked = selectAll.checked);
-}
-
-// Cetak laporan terpilih
-function printSelectedReports() {
-  const checkboxes = document.querySelectorAll('#teachingReportTable tbody input[type="checkbox"]:checked');
-  if (checkboxes.length === 0) {
-    showToast('Sila pilih sekurang-kurangnya satu laporan', 'warning');
-    return;
-  }
-
-  const selectedReports = [];
-  checkboxes.forEach(cb => {
-    const row = cb.closest('tr');
-    const indexCell = row.querySelector('td:nth-child(2)'); // Column "Bil" (ke-3)
-    if (!indexCell) {
-      showToast('Ralat: Column Bil tidak dijumpai', 'error');
-      return;
-    }
-    const index = parseInt(indexCell.textContent.trim());
-    const r = reports[index - 1]; // reports adalah global dari loadTeachingReports
-    if (r) {
-      selectedReports.push(r);
-    } else {
-      console.warn('Laporan index tidak dijumpai:', index);
-    }
-  });
-
-  if (selectedReports.length === 0) {
-    showToast('Tiada laporan dipilih atau data tidak lengkap', 'error');
-    return;
-  }
-
-  const printWindow = window.open('', '', 'width=800,height=600');
-  let content = `
-    <html><head><title>Cetak Laporan Terpilih - INSTAQLIM</title>
-    <style>
-      body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
-      .header { text-align: center; margin-bottom: 30px; }
-      .header img { width: 100px; }
-      .report { margin-bottom: 40px; page-break-after: always; }
-      table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-      th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-      th { background-color: #10b981; color: white; }
-      .notes { white-space: pre-wrap; }
-      @media print { .report:last-child { page-break-after: avoid; } }
-    </style>
-    </head><body>
-      <div class="header">
-        <img src="https://arleta.site/interactivelink/2950/Logo-Maahad.JPG" alt="Logo">
-        <h2>INSTAQLIM - Laporan Mengajar Harian Terpilih</h2>
-        <p>Tarikh Cetak: ${new Date().toLocaleDateString('ms-MY')}</p>
-      </div>
-  `;
-
-  selectedReports.forEach((r, i) => {
-    content += `
-      <div class="report">
-        <h3>Laporan #${i+1}</h3>
-        <table>
-          <tr><th>Guru</th><td>${r.teacher || '-'}</td></tr>
-          <tr><th>Tarikh</th><td>${r.date || '-'}</td></tr>
-          <tr><th>Kelas</th><td>${r.class || '-'}</td></tr>
-          <tr><th>Topik</th><td>${r.topic || '-'}</td></tr>
-          <tr><th>Catatan</th><td class="notes">${r.notes || '-'}</td></tr>
-          <tr><th>Lampiran</th><td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : 'Tiada'}</td></tr>
-        </table>
-      </div>
-    `;
-  });
-
-  content += `<script>window.print();<\/script></body></html>`;
-  printWindow.document.write(content);
-  printWindow.document.close();
-}
-// Export ke PDF (cetak semua)
-function exportTeachingReportPDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-
-  doc.setFontSize(18);
-  doc.text('Laporan Mengajar Harian Guru', 105, 15, { align: 'center' });
-  doc.setFontSize(12);
-  doc.text('INSTAQLIM - Institut Tahfiz Al-Quran lil Muttaqin', 105, 22, { align: 'center' });
-  doc.text(`Tarikh: ${new Date().toLocaleDateString('ms-MY')}`, 105, 29, { align: 'center' });
-
-  const table = document.getElementById('teachingReportTable');
-  const rows = table.querySelectorAll('tr');
-
-  let yPosition = 40;
-
-  rows.forEach((row, index) => {
-    if (index === 0) doc.setFont(undefined, 'bold');
-    else doc.setFont(undefined, 'normal');
-
-    const cells = row.querySelectorAll('td, th');
-    let xPosition = 15;
-
-    cells.forEach(cell => {
-      const text = cell.textContent.trim();
-      const cellWidth = 25;
-      const maxLength = Math.floor(cellWidth / 3);
-      const truncatedText = text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
-
-      doc.text(truncatedText, xPosition, yPosition);
-      xPosition += cellWidth;
-    });
-
-    yPosition += 10;
-
-    if (yPosition > 280) {
-      doc.addPage();
-      yPosition = 20;
-    }
-  });
-
-  doc.save('laporan_mengajar.pdf');
-}
-    window.onload = () => {
-      const theme = localStorage.getItem('theme') || 'light';
-      document.documentElement.setAttribute('data-theme', theme);
-      document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-
-      const today = new Date().toISOString().slice(0,10);
-      const attendanceDateInput = document.getElementById('attendanceDate');
-      if (attendanceDateInput) attendanceDateInput.value = today;
-
-      const reportDateInput = document.getElementById('reportDate');
-      if (reportDateInput) reportDateInput.value = today;
-
-      const savedPendingOperations = localStorage.getItem('pendingOperations');
-      if (savedPendingOperations) pendingOperations = JSON.parse(savedPendingOperations);
-
-      if (navigator.onLine) {
-        isOnline = true;
-        if (pendingOperations.length > 0) syncPendingOperations();
-      } else {
-        isOnline = false;
-      }
-    };
-  </script>
-</body>
-</html>
-
-
-
-
-
-
+          <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Pentadbir
