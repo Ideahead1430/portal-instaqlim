@@ -712,22 +712,25 @@
     }
 
     function showSection(id) {
-      document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
-      const sec = document.getElementById(id);
-      if (sec) sec.classList.remove('hidden');
-      document.getElementById('sections').classList.remove('hidden');
-      currentSection = id;
+  document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
+  const sec = document.getElementById(id);
+  if (sec) sec.classList.remove('hidden');
+  document.getElementById('sections').classList.remove('hidden');
+  currentSection = id;
 
-      if (id === 'manageUsers') loadUsers();
-      if (id === 'manageStudents') loadStudents();
-      if (id === 'manageTeachers') loadTeachers();
-      if (id === 'manageStaff') loadStaff();
-      if (id === 'manageClasses') loadTeachers().then(() => loadClasses());
-      if (id === 'manageSchedule') loadSchedule();
-      if (id === 'manageAttendance') loadAttendance();
-      if (id === 'viewSchedule') loadViewSchedule();
-      if (id === 'viewTeachingReports') loadTeachingReports();
-    }
+  if (id === 'manageUsers') loadUsers();
+  if (id === 'manageStudents') loadStudents();
+  if (id === 'manageTeachers') loadTeachers();
+  if (id === 'manageStaff') loadStaff();
+  if (id === 'manageClasses') loadTeachers().then(() => loadClasses());
+  if (id === 'manageSchedule') loadSchedule();
+  if (id === 'manageAttendance') {
+    loadStudents(); // Tambah ini — pastikan data pelajar ada sebelum render kehadiran
+    loadAttendance();
+  }
+  if (id === 'viewSchedule') loadViewSchedule();
+  if (id === 'viewTeachingReports') loadTeachingReports();
+}
 
     // === PENGGUNA ===
     async function loadUsers() {
@@ -1508,21 +1511,25 @@
       }
     }
 
-    function renderAttendance(attendance) {
-      const tbody = document.querySelector('#attendanceTable tbody');
-      tbody.innerHTML = '';
-      students.forEach((s, i) => {
-        const hadir = attendance[s.id] !== false;
-        tbody.innerHTML += `
-          <tr>
-            <td>${i+1}</td>
-            <td>${s.name}</td>
-            <td>${s.class || '-'}</td>
-            <td><input type="radio" name="att_${s.id}" value="true" ${hadir ? 'checked' : ''}></td>
-            <td><input type="radio" name="att_${s.id}" value="false" ${!hadir ? 'checked' : ''}></td>
-          </tr>`;
-      });
-    }
+   function renderAttendance(attendance) {
+  const tbody = document.querySelector('#attendanceTable tbody');
+  tbody.innerHTML = '';
+  if (students.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" class="text-center">Tiada data pelajar dijumpai. Sila muatkan data pelajar terlebih dahulu.</td></tr>';
+    return;
+  }
+  students.forEach((s, i) => {
+    const hadir = attendance[s.id] !== false;
+    tbody.innerHTML += `
+      <tr>
+        <td>${i+1}</td>
+        <td>${s.name}</td>
+        <td>${s.class || '-'}</td>
+        <td><input type="radio" name="att_${s.id}" value="true" ${hadir ? 'checked' : ''}></td>
+        <td><input type="radio" name="att_${s.id}" value="false" ${!hadir ? 'checked' : ''}></td>
+      </tr>`;
+  });
+}
 
     async function saveAttendance() {
       const date = document.getElementById('attendanceDate').value;
@@ -1837,6 +1844,7 @@ async function syncPendingOperations() {
   </script>
 </body>
 </html>
+
 
 
 
