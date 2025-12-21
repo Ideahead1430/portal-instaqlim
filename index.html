@@ -24,7 +24,11 @@
       --border-color: #4a5568;
       --light: #1e293b;
     }
-    * { margin:0; padding:0; box-sizing:border-box; }
+    * {
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: var(--light);
@@ -46,7 +50,10 @@
       pointer-events: none;
       z-index: -1;
     }
-    h1, h2, h3, .logo h2 { font-family: 'Amiri', serif; color: var(--primary); }
+    h1, h2, h3, .logo h2 {
+      font-family: 'Amiri', serif;
+      color: var(--primary);
+    }
     header {
       background: linear-gradient(to right, var(--primary), #059669);
       color: white;
@@ -66,12 +73,40 @@
       pointer-events: none;
       color: white;
     }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
-    .flex { display: flex; align-items: center; justify-content: space-between; }
-    .btn-logout { background: var(--danger); color: white; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none; font-weight: 500; }
-    main { padding: 2rem 0; }
-    .card { background: var(--card-bg, white); border-radius: 10px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    .flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .btn-logout {
+      background: var(--danger);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    main {
+      padding: 2rem 0;
+    }
+    .card {
+      background: var(--card-bg, white);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
     .menu-card {
       background: var(--primary);
       color: white !important;
@@ -83,36 +118,189 @@
       cursor: pointer;
       transition: transform 0.3s, box-shadow 0.3s;
     }
-    .menu-card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-    .menu-card i { font-size: 3rem; margin-bottom: 1rem; }
-    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-    th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border-color, #ddd); }
-    th { background: var(--light); }
-    .btn { padding: 0.5rem 1rem; border: none; border-radius: 5px; cursor: pointer; margin-right: 0.5rem; }
-    .btn-primary { background: var(--primary); color: white; }
-    .btn-success { background: var(--secondary); color: white; }
-    .btn-danger { background: var(--danger); color: white; }
-    .btn-edit { background: #f59e0b; color: white; }
-    .form-group { margin-bottom: 1rem; }
-    label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
-    input, textarea, select { width: 100%; padding: 0.75rem; border: 1px solid var(--border-color, #ccc); border-radius: 5px; background-color: var(--card-bg, white); color: var(--text-color, #333); }
-    .hidden { display: none !important; }
-    .text-center { text-align: center; }
-    .login-container { max-width: 400px; margin: 5rem auto; padding: 2rem; background: var(--card-bg, white); border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-    .logo { text-align: center; margin-bottom: 2rem; font-size: 2rem; color: var(--primary); }
-    #modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-    #modal > div { background: var(--card-bg, white); border-radius: 10px; padding: 1.5rem; width: 90%; max-width: 600px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto; }
-    .toast { position: fixed; bottom: 20px; right: 20px; padding: 15px 25px; background: var(--success); color: white; border-radius: 5px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transform: translateY(100px); opacity: 0; transition: transform 0.3s, opacity 0.3s; z-index: 2000; }
-    .toast.show { transform: translateY(0); opacity: 1; }
-    .theme-toggle { position: fixed; bottom: 20px; left: 20px; background: var(--primary); color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1000; }
-    .search-filter { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
-    .search-filter input, .search-filter select { flex: 1; min-width: 200px; }
-    .loading { display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,.3); border-radius: 50%; border-top-color: #fff; animation: spin 1s ease-in-out infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .connection-status { position: fixed; top: 10px; right: 10px; padding: 5px 10px; border-radius: 5px; font-size: 12px; z-index: 3000; }
-    .connection-status.online { background: var(--success); color: white; }
-    .connection-status.offline { background: var(--danger); color: white; }
-    .offline-mode { background: #f8f9fa; color: #6c757d; padding: 10px; text-align: center; border-radius: 5px; margin-bottom: 10px; }
+    .menu-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .menu-card i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color, #ddd);
+    }
+    th {
+      background: var(--light);
+    }
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 0.5rem;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    .btn-success {
+      background: var(--secondary);
+      color: white;
+    }
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+    .btn-edit {
+      background: #f59e0b;
+      color: white;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border-color, #ccc);
+      border-radius: 5px;
+      background-color: var(--card-bg, white);
+      color: var(--text-color, #333);
+    }
+    .hidden {
+      display: none !important;
+    }
+    .text-center {
+      text-align: center;
+    }
+    .login-container {
+      max-width: 400px;
+      margin: 5rem auto;
+      padding: 2rem;
+      background: var(--card-bg, white);
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      color: var(--primary);
+    }
+    #modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    #modal > div {
+      background: var(--card-bg, white);
+      border-radius: 10px;
+      padding: 1.5rem;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      background: var(--success);
+      color: white;
+      border-radius: 5px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: transform 0.3s, opacity 0.3s;
+      z-index: 2000;
+    }
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 1000;
+    }
+    .search-filter {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .search-filter input, .search-filter select {
+      flex: 1;
+      min-width: 200px;
+    }
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .connection-status {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 12px;
+      z-index: 3000;
+    }
+    .connection-status.online {
+      background: var(--success);
+      color: white;
+    }
+    .connection-status.offline {
+      background: var(--danger);
+      color: white;
+    }
+    .offline-mode {
+      background: #f8f9fa;
+      color: #6c757d;
+      padding: 10px;
+      text-align: center;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
     #notesModal { display: none; }
     #notesModal:not(.hidden) { display: flex; }
     #fullNotes { font-size: 1.1rem; line-height: 1.6; word-wrap: break-word; }
@@ -176,6 +364,7 @@
         </div>
         <!-- Sections -->
         <div id="sections" class="hidden">
+          <!-- Pengurusan Pengguna -->
           <div id="manageUsers" class="card hidden">
             <h3>Pengurusan Pengguna Sistem</h3>
             <button class="btn btn-success" onclick="openAddUser()">+ Tambah Pengguna</button>
@@ -193,6 +382,7 @@
               <tbody></tbody>
             </table>
           </div>
+          <!-- Pengurusan Pelajar -->
           <div id="manageStudents" class="card hidden">
             <h3>Pengurusan Pelajar</h3>
             <button class="btn btn-success" onclick="openAddStudent()">+ Tambah Pelajar</button>
@@ -205,6 +395,7 @@
               <tbody></tbody>
             </table>
           </div>
+          <!-- Pengurusan Guru -->
           <div id="manageTeachers" class="card hidden">
             <h3>Pengurusan Guru</h3>
             <button class="btn btn-success" onclick="openAddTeacher()">+ Tambah Guru</button>
@@ -213,6 +404,7 @@
               <tbody></tbody>
             </table>
           </div>
+          <!-- Pengurusan Kakitangan -->
           <div id="manageStaff" class="card hidden">
             <h3>Pengurusan Kakitangan</h3>
             <button class="btn btn-success" onclick="openAddStaff()">+ Tambah Kakitangan</button>
@@ -221,6 +413,7 @@
               <tbody></tbody>
             </table>
           </div>
+          <!-- Pengurusan Kelas -->
           <div id="manageClasses" class="card hidden">
             <h3>Pengurusan Kelas</h3>
             <button class="btn btn-success" onclick="openAddClass()">+ Tambah Kelas</button>
@@ -229,6 +422,7 @@
               <tbody></tbody>
             </table>
           </div>
+          <!-- Jadual Waktu -->
           <div id="manageSchedule" class="card hidden">
             <h3>Jadual Waktu</h3>
             <button class="btn btn-success" onclick="saveSchedule()">Simpan Jadual</button>
@@ -240,6 +434,7 @@
               </tbody>
             </table>
           </div>
+          <!-- Kehadiran -->
           <div id="manageAttendance" class="card hidden">
             <h3>Kehadiran Pelajar</h3>
             <div class="form-group">
@@ -253,6 +448,7 @@
             </table>
             <button class="btn btn-success" onclick="saveAttendance()">Simpan Kehadiran</button>
           </div>
+          <!-- Lihat Jadual Guru -->
           <div id="viewSchedule" class="card hidden">
             <h3>Jadual Waktu Saya</h3>
             <table id="viewScheduleTable">
@@ -260,6 +456,7 @@
               <tbody></tbody>
             </table>
           </div>
+          <!-- Laporan Mengajar -->
           <div id="viewTeachingReports" class="card hidden">
             <h3>Laporan Mengajar Guru</h3>
             <div style="margin:1rem 0; text-align:right;">
@@ -275,21 +472,22 @@
               </div>
               <table id="teachingReportTable">
                 <thead>
-  <tr>
-    <th><input type="checkbox" id="selectAll" onclick="toggleSelectAll()"></th> <!-- Column 1: Checkbox -->
-    <th>Bil</th> <!-- Column 2: Bil -->
-    <th>Guru</th>
-    <th>Tarikh</th>
-    <th>Kelas</th>
-    <th>Topik</th>
-    <th>Catatan</th>
-    <th>Lampiran</th>
-  </tr>
-</thead>
+                  <tr>
+                    <th><input type="checkbox" id="selectAll" onclick="toggleSelectAll()"></th>
+                    <th>Bil</th>
+                    <th>Guru</th>
+                    <th>Tarikh</th>
+                    <th>Kelas</th>
+                    <th>Topik</th>
+                    <th>Catatan</th>
+                    <th>Lampiran</th>
+                  </tr>
+                </thead>
                 <tbody></tbody>
               </table>
             </div>
           </div>
+          <!-- Form Laporan Mengajar -->
           <div id="teachingReportForm" class="card hidden">
             <h3>Laporan Mengajar Harian</h3>
             <div class="form-group"><label>Tarikh</label><input type="date" id="reportDate" required></div>
@@ -748,7 +946,26 @@ function exportTeachingReportPDF() {
 
   doc.save('laporan_mengajar.pdf');
 }
-
+async function syncPendingOperations() {
+      if (pendingOperations.length === 0) return;
+      showToast(`Menyegerakkan ${pendingOperations.length} operasi...`);
+      const operations = [...pendingOperations];
+      pendingOperations = [];
+      localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+      for (const op of operations) {
+        try {
+          await apiCall(op.action, op.payload);
+        } catch (e) {
+          pendingOperations.push(op);
+        }
+      }
+      localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+      if (pendingOperations.length === 0) {
+        showToast('Semua operasi disegerakkan');
+      } else {
+        showToast(`${pendingOperations.length} operasi gagal disegerakkan`, 'error');
+      }
+    }
     window.onload = () => {
       const theme = localStorage.getItem('theme') || 'light';
       document.documentElement.setAttribute('data-theme', theme);
@@ -774,4 +991,5 @@ function exportTeachingReportPDF() {
   </script>
 </body>
 </html>
+
 
