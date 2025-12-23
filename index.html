@@ -1856,29 +1856,7 @@ async function syncPendingOperations() {
         showToast(`${pendingOperations.length} operasi gagal disegerakkan`, 'error');
       }
     }
-    window.onload = () => {
-      const theme = localStorage.getItem('theme') || 'light';
-      document.documentElement.setAttribute('data-theme', theme);
-      document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-
-      const today = new Date().toISOString().slice(0,10);
-      const attendanceDateInput = document.getElementById('attendanceDate');
-      if (attendanceDateInput) attendanceDateInput.value = today;
-
-      const reportDateInput = document.getElementById('reportDate');
-      if (reportDateInput) reportDateInput.value = today;
-
-      const savedPendingOperations = localStorage.getItem('pendingOperations');
-      if (savedPendingOperations) pendingOperations = JSON.parse(savedPendingOperations);
-
-      if (navigator.onLine) {
-        isOnline = true;
-        if (pendingOperations.length > 0) syncPendingOperations();
-      } else {
-        isOnline = false;
-      }
-    };
-
+    
     let currentAnnouncement = { text: '', date: '' };
 
 // Muat pengumuman dari server
@@ -1893,9 +1871,6 @@ async function loadAnnouncement() {
       currentAnnouncement = local.announcement;
       renderAnnouncement();
     }
-  }
-}
-
 // Render pengumuman di dashboard
 function renderAnnouncement() {
   const contentEl = document.getElementById('announcementContent');
@@ -1946,9 +1921,32 @@ async function saveAnnouncement() {
   } catch (e) {
     showToast('Gagal simpan pengumuman: ' + e.message, 'error');
 }
+  window.onload = () => {
+      const theme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+
+      const today = new Date().toISOString().slice(0,10);
+      const attendanceDateInput = document.getElementById('attendanceDate');
+      if (attendanceDateInput) attendanceDateInput.value = today;
+
+      const reportDateInput = document.getElementById('reportDate');
+      if (reportDateInput) reportDateInput.value = today;
+
+      const savedPendingOperations = localStorage.getItem('pendingOperations');
+      if (savedPendingOperations) pendingOperations = JSON.parse(savedPendingOperations);
+
+      if (navigator.onLine) {
+        isOnline = true;
+        if (pendingOperations.length > 0) syncPendingOperations();
+      } else {
+        isOnline = false;
+      }
+    };
   </script>
 </body>
 </html>
+
 
 
 
