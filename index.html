@@ -1848,21 +1848,6 @@ async function syncPendingOperations() {
   }
 }
 
-window.onload = () => {
-  const theme = localStorage.getItem('theme') || 'light';
-  document.documentElement.setAttribute('data-theme', theme);
-  document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-
-  const today = new Date().toISOString().slice(0,10);
-  const attendanceDateInput = document.getElementById('attendanceDate');
-  if (attendanceDateInput) attendanceDateInput.value = today;
-
-  const reportDateInput = document.getElementById('reportDate');
-  if (reportDateInput) reportDateInput.value = today;
-
-  const savedPendingOperations = localStorage.getItem('pendingOperations');
-  if (savedPendingOperations) pendingOperations = JSON.parse(savedPendingOperations);
-
   // JANGAN panggil syncPendingOperations di sini — tunggu selepas login berjaya
 };
       
@@ -2010,6 +1995,7 @@ window.onload = () => {
   </script>
 </body>
 </html>
+
 
 
 
