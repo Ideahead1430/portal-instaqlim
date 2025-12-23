@@ -656,7 +656,13 @@
         document.getElementById('guruDashboard').classList.toggle('hidden', r.user.role === 'admin');
         await loadCommonData();
         showToast('Log masuk berjaya');
-      } catch (err) {
+        if (pendingOperations.length > 0) {
+      syncPendingOperations(); // Sekarang baru jalankan sync
+    }
+    restrictViewerAccess();
+  } catch (err) {
+    // ...
+  }
         errorEl.textContent = err.message || 'Login gagal';
         errorEl.classList.remove('hidden');
       } finally {
@@ -1838,6 +1844,7 @@ window.onload = () => {
   </script>
 </body>
 </html>
+
 
 
 
