@@ -340,15 +340,19 @@
     <div class="container">
       <main>
         <!-- Pengumuman (kelihatan kepada semua role) -->
-<div id="announcementSection" class="card" style="background: linear-gradient(135deg, var(--primary), #059669); color: white; margin: 1rem 0;">
-  <div style="display: flex; justify-content: space-between; align-items: center;">
-    <h3 style="margin: 0; color: white;"><i class="fas fa-bullhorn"></i> Pengumuman Terkini</h3>
-    <button id="editAnnouncementBtn" class="btn" style="background: white; color: var(--primary); display: none;" onclick="openEditAnnouncement()">Kemaskini</button>
+<!-- Modal Edit Pengumuman -->
+<div id="announcementModal" class="hidden">
+  <div style="background: var(--card-bg, white); border-radius: 10px; padding: 2rem; width: 90%; max-width: 700px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+    <h3>Kemaskini Pengumuman</h3>
+    <div class="form-group">
+      <label>Pengumuman (boleh guna HTML ringkas seperti <strong>tebal</strong>, <em>italic</em>, <br>baris baru)</label>
+      <textarea id="announcementText" rows="8" style="width:100%; padding:0.75rem; border-radius:5px; border:1px solid #ccc;"></textarea>
+    </div>
+    <div style="text-align:right; margin-top:1rem;">
+      <button class="btn" onclick="closeAnnouncementModal()">Batal</button>
+      <button class="btn btn-primary" onclick="saveAnnouncement()">Simpan Pengumuman</button>
+    </div>
   </div>
-  <div id="announcementContent" style="margin-top: 1rem; font-size: 1.1rem; line-height: 1.6;">
-    Tiada pengumuman buat masa ini.
-  </div>
-  <small style="display: block; margin-top: 1rem; opacity: 0.9;">Tarikh kemaskini: <span id="announcementDate">-</span></small>
 </div>
         <!-- Admin Dashboard -->
         <div id="adminDashboard" class="hidden">
@@ -1822,26 +1826,32 @@ function exportTeachingReportPDF() {
   doc.save('laporan_mengajar.pdf');
 }
 async function syncPendingOperations() {
-      if (pendingOperations.length === 0) return;
-      showToast(`Menyegerakkan ${pendingOperations.length} operasi...`);
-      const operations = [...pendingOperations];
-      pendingOperations = [];
-      localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-      for (const op of operations) {
-        try {
-          await apiCall(op.action, op.payload);
-        } catch (e) {
-          pendingOperations.push(op);
-        }
-      }
-      localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-      if (pendingOperations.length === 0) {
-        showToast('Semua operasi disegerakkan');
+  if (pendingOperations.length === 0 || !currentUser) return;
+
+  showToast(`Menyegerakkan ${pendingOperations.length} operasi...`);
+  const operations = [...pendingOperations];
+  pendingOperations = [];
+
+  for (const op of operations) {
+    try {
+      await apiCall(op.action, op.payload);
+    } catch (e) {
+      // Jika action tidak sah, jangan simpan balik pending (mungkin action lama)
+      if (e.message.includes('Aksi tidak sah')) {
+        console.warn('Action lama diabaikan:', op.action);
       } else {
-        showToast(`${pendingOperations.length} operasi gagal disegerakkan`, 'error');
+        pendingOperations.push(op);
       }
     }
-    let currentAnnouncement = { text: '', date: '' };
+  }
+
+  localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+  if (pendingOperations.length === 0) {
+    showToast('Semua operasi disegerakkan');
+  } else {
+    showToast(`${pendingOperations.length} operasi gagal disegerakkan`, 'error');
+  }
+}
 
 // Muat pengumuman dari server
 async function loadAnnouncement() {
@@ -1882,7 +1892,12 @@ function renderAnnouncement() {
 
 // Buka modal edit
 function openEditAnnouncement() {
-  document.getElementById('announcementText').value = currentAnnouncement.text || '';
+  const textarea = document.getElementById('announcementText');
+  if (!textarea) {
+    showToast('Modal pengumuman belum dimuat. Cuba lagi.', 'error');
+    return;
+  }
+  textarea.value = currentAnnouncement.text || '';
   document.getElementById('announcementModal').classList.remove('hidden');
 }
 
@@ -1935,6 +1950,7 @@ async function saveAnnouncement() {
   </script>
 </body>
 </html>
+
 
 
 
