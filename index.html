@@ -607,375 +607,1413 @@
     </div>
   </div>
 
-<script>
-  const API_URL = 'https://script.google.com/macros/s/AKfycbymIHgtOJ6ERQwbrtUC3M2J-6Er6yWk7CqAsg0Ps7DL1g_B6Lt6ddVWN2xQm6LUZOgB/exec';
+  <script>
+   const API_URL = 'https://script.google.com/macros/s/AKfycbzQ4uBIgoiZOPipd3HgWkoDIXoGPHvd3wvq7dpsOPNF8SnhVhr5PLNYOxsNUEsrgeJn/exec';
+   const API_URL = 'https://script.google.com/macros/s/AKfycbymIHgtOJ6ERQwbrtUC3M2J-6Er6yWk7CqAsg0Ps7DL1g_B6Lt6ddVWN2xQm6LUZOgB/exec';
 
-  let currentUser = null;
-  let currentSection = '';
-  let classes = [], students = [], teachers = [], staff = [], users = [], schedule = Array(17).fill().map(() => Array(7).fill(''));
-  let pendingOperations = [];
-  let reports = [];
-  let announcements = []; // Senarai pengumuman V2
+    let currentUser = null;
+    let currentSection = '';
+    let classes = [], students = [], teachers = [], staff = [], users = [], schedule = Array(17).fill().map(() => Array(7).fill(''));
+    let pendingOperations = [];
+    let reports = [];
+    let currentAnnouncement = { text: '', date: '' };
 
-  async function apiCall(action, payload = {}) {
-    try {
-      updateConnectionStatus('Memuat...', 'loading');
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        body: JSON.stringify({ action, ...payload })
-      });
-      const responseText = await res.text();
-      let data;
+    async function apiCall(action, payload = {}) {
       try {
-        data = JSON.parse(responseText);
+        updateConnectionStatus('Memuat...', 'loading');
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          body: JSON.stringify({ action, ...payload })
+        });
+        const responseText = await res.text();
+        let data;
+        try {
+          data = JSON.parse(responseText);
+        } catch (e) {
+          throw new Error('Server mengembalikan respons tidak dijangka.');
+        }
+        if (data.status !== 'success') throw new Error(data.message || 'Ralat server');
+        updateConnectionStatus('Dalam talian', 'success');
+        return data;
       } catch (e) {
-        throw new Error('Server mengembalikan respons tidak dijangka.');
+        console.error('API call error:', e);
+        updateConnectionStatus('Luar talian', 'error');
+        pendingOperations.push({ action, payload });
+        localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+        const localData = getLocalData(action);
+        if (localData) {
+          showToast('Menggunakan data tempatan', 'warning');
+          return { status: 'success', ...localData };
+        }
+        throw new Error('Tidak dapat menyambung ke pelayan.');
       }
-      if (data.status !== 'success') throw new Error(data.message || 'Ralat server');
-      updateConnectionStatus('Dalam talian', 'success');
-      return data;
-    } catch (e) {
-      console.error('API call error:', e);
-      updateConnectionStatus('Luar talian', 'error');
-      pendingOperations.push({ action, payload });
-      localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-      const localData = getLocalData(action);
-      if (localData) {
-        showToast('Menggunakan data tempatan', 'warning');
-        return { status: 'success', ...localData };
+    }
+
+    function getLocalData(action) {
+      const dataKey = `local_${action}`;
+      const data = localStorage.getItem(dataKey);
+      return data ? JSON.parse(data) : null;
+    }
+
+    function saveLocalData(action, data) {
+      const dataKey = `local_${action}`;
+      localStorage.setItem(dataKey, JSON.stringify(data));
+    }
+
+    function updateConnectionStatus(message, type) {
+      const statusEl = document.getElementById('connectionStatus');
+      statusEl.textContent = message;
+      statusEl.className = 'connection-status';
+      if (type === 'loading') statusEl.style.background = 'var(--warning)';
+      else if (type === 'error') statusEl.style.background = 'var(--danger)';
+      else if (type === 'success') {
+        statusEl.style.background = 'var(--success)';
+        setTimeout(() => statusEl.classList.add('hidden'), 3000);
       }
-      throw new Error('Tidak dapat menyambung ke pelayan.');
+      statusEl.classList.remove('hidden');
     }
-  }
 
-  function getLocalData(action) {
-    const dataKey = `local_${action}`;
-    const data = localStorage.getItem(dataKey);
-    return data ? JSON.parse(data) : null;
-  }
-
-  function saveLocalData(action, data) {
-    const dataKey = `local_${action}`;
-    localStorage.setItem(dataKey, JSON.stringify(data));
-  }
-
-  function updateConnectionStatus(message, type) {
-    const statusEl = document.getElementById('connectionStatus');
-    statusEl.textContent = message;
-    statusEl.className = 'connection-status';
-    if (type === 'loading') statusEl.style.background = 'var(--warning)';
-    else if (type === 'error') statusEl.style.background = 'var(--danger)';
-    else if (type === 'success') {
-      statusEl.style.background = 'var(--success)';
-      setTimeout(() => statusEl.classList.add('hidden'), 3000);
+    function showToast(msg, type = 'success') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.background = type === 'success' ? 'var(--success)' : type === 'warning' ? 'var(--warning)' : 'var(--danger)';
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 4000);
     }
-    statusEl.classList.remove('hidden');
-  }
 
-  function showToast(msg, type = 'success') {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.style.background = type === 'success' ? 'var(--success)' : type === 'warning' ? 'var(--warning)' : 'var(--danger)';
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 4000);
-  }
-
-  function closeModal() {
-    document.getElementById('modal').classList.add('hidden');
-    document.getElementById('dataForm').innerHTML = '';
-  }
-
-  // === LOGIN ===
-  async function login() {
-    const u = document.getElementById('username').value.trim();
-    const p = document.getElementById('password').value;
-    const errorEl = document.getElementById('loginError');
-    if (!u || !p) {
-      errorEl.textContent = 'Isi username dan kata laluan';
-      errorEl.classList.remove('hidden');
-      return;
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
+      document.getElementById('dataForm').innerHTML = '';
     }
-    errorEl.classList.add('hidden');
-    const loginBtn = document.querySelector('#loginPage button');
-    const originalText = loginBtn.innerHTML;
-    loginBtn.innerHTML = '<span class="loading"></span> Memuat...';
-    loginBtn.disabled = true;
-    try {
-      const r = await apiCall('login', { username: u, password: p });
-      currentUser = r.user;
-      document.getElementById('loginPage').classList.add('hidden');
-      document.getElementById('mainApp').classList.remove('hidden');
-      document.getElementById('userName').textContent = r.user.name || u;
-      document.getElementById('userRole').textContent = r.user.role === 'admin' ? 'Pentadbir' : 'Guru';
-      document.getElementById('adminDashboard').classList.toggle('hidden', r.user.role !== 'admin');
-      document.getElementById('guruDashboard').classList.toggle('hidden', r.user.role === 'admin');
-      await loadCommonData();
-      await loadAnnouncements(); // Versi V2
-      showToast('Log masuk berjaya');
-    } catch (err) {
-      errorEl.textContent = err.message || 'Login gagal';
-      errorEl.classList.remove('hidden');
-    } finally {
-      loginBtn.innerHTML = originalText;
-      loginBtn.disabled = false;
-    }
-  }
 
-  function logout() {
-    if (confirm('Log keluar?')) {
-      currentUser = null;
-      document.getElementById('mainApp').classList.add('hidden');
-      document.getElementById('loginPage').classList.remove('hidden');
-      document.getElementById('username').value = '';
-      document.getElementById('password').value = '';
-    }
-  }
+    async function login() {
+      const u = document.getElementById('username').value.trim();
+      const p = document.getElementById('password').value;
+      const errorEl = document.getElementById('loginError');
 
-  // === COMMON DATA ===
-  async function loadCommonData() {
-    try {
-      const [c, s] = await Promise.all([
-        apiCall('getClasses'),
-        apiCall('getSchedule')
-      ]);
-      classes = c.classes || [];
-      schedule = s.schedule || Array(17).fill().map(() => Array(7).fill(''));
-      saveLocalData('getClasses', c);
-      saveLocalData('getSchedule', s);
-      populateClassSelects();
-    } catch (e) {
-      const c = getLocalData('getClasses');
-      const s = getLocalData('getSchedule');
-      if (c && s) {
+      if (!u || !p) {
+        errorEl.textContent = 'Isi username dan kata laluan';
+        errorEl.classList.remove('hidden');
+        return;
+      }
+
+      errorEl.classList.add('hidden');
+
+      const loginBtn = document.querySelector('#loginPage button');
+      const originalText = loginBtn.innerHTML;
+      loginBtn.innerHTML = '<span class="loading"></span> Memuat...';
+      loginBtn.disabled = true;
+
+      try {
+        const r = await apiCall('login', { username: u, password: p });
+        currentUser = r.user;
+        document.getElementById('loginPage').classList.add('hidden');
+        document.getElementById('mainApp').classList.remove('hidden');
+        document.getElementById('userName').textContent = r.user.name || u;
+        document.getElementById('userRole').textContent = r.user.role === 'admin' ? 'Pentadbir' : 'Guru';
+        document.getElementById('adminDashboard').classList.toggle('hidden', r.user.role !== 'admin');
+        document.getElementById('guruDashboard').classList.toggle('hidden', r.user.role === 'admin');
+        await loadCommonData();
+        await loadAnnouncements(); // Tambah ini
+    renderAnnouncement(); // Pastikan paparan pengumuman muncul
+    showToast('Log masuk berjaya');
+      } catch (err) {
+        errorEl.textContent = err.message || 'Login gagal';
+        errorEl.classList.remove('hidden');
+      } finally {
+        loginBtn.innerHTML = originalText;
+        loginBtn.disabled = false;
+      }
+    }
+
+    function logout() {
+      if (confirm('Log keluar?')) {
+        currentUser = null;
+        document.getElementById('mainApp').classList.add('hidden');
+        document.getElementById('loginPage').classList.remove('hidden');
+        document.getElementById('username').value = '';
+        document.getElementById('password').value = '';
+      }
+    }
+
+    async function loadCommonData() {
+      try {
+        const [c, s] = await Promise.all([
+          apiCall('getClasses'),
+          apiCall('getSchedule')
+        ]);
         classes = c.classes || [];
         schedule = s.schedule || Array(17).fill().map(() => Array(7).fill(''));
+        saveLocalData('getClasses', c);
+        saveLocalData('getSchedule', s);
         populateClassSelects();
-        showToast('Menggunakan data tempatan', 'warning');
+      } catch (e) {
+        const c = getLocalData('getClasses');
+        const s = getLocalData('getSchedule');
+        if (c && s) {
+          classes = c.classes || [];
+          schedule = s.schedule || Array(17).fill().map(() => Array(7).fill(''));
+          populateClassSelects();
+          showToast('Menggunakan data tempatan', 'warning');
+        }
       }
     }
-  }
 
-  function populateClassSelects() {
-    ['reportClass', 'studentClassFilter'].forEach(id => {
-      const sel = document.getElementById(id);
-      if (!sel) return;
-      sel.innerHTML = '<option value="">Pilih/Semua Kelas</option>';
+    function populateClassSelects() {
+      ['reportClass', 'studentClassFilter'].forEach(id => {
+        const sel = document.getElementById(id);
+        if (!sel) return;
+        sel.innerHTML = '<option value="">Pilih/Semua Kelas</option>';
+        classes.forEach(cls => {
+          const opt = document.createElement('option');
+          opt.value = cls.name;
+          opt.textContent = cls.name;
+          sel.appendChild(opt);
+        });
+      });
+    }
+
+    function showSection(id) {
+      document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
+      const sec = document.getElementById(id);
+      if (sec) sec.classList.remove('hidden');
+      document.getElementById('sections').classList.remove('hidden');
+      currentSection = id;
+
+      if (id === 'manageUsers') loadUsers();
+      if (id === 'manageStudents') loadStudents();
+      if (id === 'manageTeachers') loadTeachers();
+      if (id === 'manageStaff') loadStaff();
+      if (id === 'manageClasses') loadTeachers().then(() => loadClasses());
+      if (id === 'manageSchedule') loadSchedule();
+      if (id === 'manageAttendance') loadAttendance();
+      if (id === 'viewSchedule') loadViewSchedule();
+      if (id === 'viewTeachingReports') loadTeachingReports();
+      loadAnnouncement().then(() => renderAnnouncement()); // Update pengumuman setiap kali tukar section
+  restrictViewerAccess();
+    }
+
+    // === PENGGUNA ===
+    async function loadUsers() {
+      try {
+        const res = await apiCall('getUsers');
+        users = res.users || [];
+        saveLocalData('getUsers', res);
+        renderUsers();
+      } catch (e) {
+        const res = getLocalData('getUsers');
+        if (res) {
+          users = res.users || [];
+          renderUsers();
+          showToast('Menggunakan data tempatan', 'warning');
+        }
+      }
+    }
+
+    function renderUsers() {
+      const tbody = document.querySelector('#userTable tbody');
+      tbody.innerHTML = '';
+      users.forEach(u => {
+        const roleText = u.role === 'admin' ? 'Pentadbir' : u.role === 'guru' ? 'Guru' : 'Kakitangan';
+        tbody.innerHTML += `
+          <tr>
+            <td>${u.username}</td><td>${u.name}</td><td>${roleText}</td><td>${u.ic || '-'}</td><td>${u.status || 'active'}</td>
+            <td>
+              <button class="btn btn-edit" onclick="editUser('${u.id}')">Kemaskini</button>
+              ${u.username !== 'admin' ? `<button class="btn btn-danger" onclick="deleteUser('${u.id}')">Padam</button>` : ''}
+            </td>
+          </tr>`;
+      });
+    }
+
+    function openAddUser() {
+      document.getElementById('modalTitle').textContent = 'Tambah Pengguna';
+      document.getElementById('dataForm').innerHTML = `
+        <div class="form-group"><label>Username</label><input type="text" id="u_username" required></div>
+        <div class="form-group"><label>Kata Laluan</label><input type="password" id="u_password" required></div>
+        <div class="form-group"><label>Nama Penuh</label><input type="text" id="u_name" required></div>
+        <div class="form-group"><label>No. Kad Pengenalan</label><input type="text" id="u_ic"></div>
+        <div class="form-group"><label>Peranan</label><select id="u_role" required>
+          <option value="guru">Guru</option>
+          <option value="staff">Kakitangan</option>
+          <option value="admin">Pentadbir</option>
+        </select></div>
+        <input type="hidden" id="u_id">
+      `;
+      document.getElementById('saveBtn').onclick = saveUser;
+      document.getElementById('modal').classList.remove('hidden');
+    }
+
+    async function saveUser() {
+      const id = document.getElementById('u_id').value;
+      const user = {
+        id: id || undefined,
+        username: document.getElementById('u_username').value.trim(),
+        password: document.getElementById('u_password').value,
+        name: document.getElementById('u_name').value.trim(),
+        ic: document.getElementById('u_ic').value.trim(),
+        role: document.getElementById('u_role').value
+      };
+
+      if (!id) {
+        user.id = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      }
+
+      if (!user.username || !user.name || !user.role || (!id && !user.password)) {
+        return showToast('Isi semua medan', 'error');
+      }
+
+      try {
+        if (isOnline) {
+          if (id) await apiCall('updateUser', { user });
+          else await apiCall('addUser', { user });
+        } else {
+          pendingOperations.push({ action: id ? 'updateUser' : 'addUser', payload: { user } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          if (id) {
+            const index = users.findIndex(u => u.id === id);
+            if (index !== -1) users[index] = user;
+          } else {
+            users.push(user);
+          }
+          saveLocalData('getUsers', { users });
+          renderUsers();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+
+        closeModal();
+        if (isOnline) loadUsers();
+        showToast('Pengguna berjaya disimpan');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    function editUser(id) {
+      const user = users.find(u => u.id === id);
+      if (!user) return;
+
+      document.getElementById('modalTitle').textContent = 'Kemaskini Pengguna';
+      document.getElementById('dataForm').innerHTML = `
+        <div class="form-group"><label>Username</label><input type="text" id="u_username" value="${user.username}" required></div>
+        <div class="form-group"><label>Kata Laluan (kosongkan jika tidak berubah)</label><input type="password" id="u_password"></div>
+        <div class="form-group"><label>Nama Penuh</label><input type="text" id="u_name" value="${user.name}" required></div>
+        <div class="form-group"><label>No. Kad Pengenalan</label><input type="text" id="u_ic" value="${user.ic || ''}"></div>
+        <div class="form-group"><label>Peranan</label><select id="u_role" required>
+          <option value="guru" ${user.role === 'guru' ? 'selected' : ''}>Guru</option>
+          <option value="staff" ${user.role === 'staff' ? 'selected' : ''}>Kakitangan</option>
+          <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Pentadbir</option>
+        </select></div>
+        <input type="hidden" id="u_id" value="${user.id}">
+      `;
+      document.getElementById('saveBtn').onclick = saveUser;
+      document.getElementById('modal').classList.remove('hidden');
+    }
+
+    async function deleteUser(id) {
+      if (!confirm('Adakah anda pasti ingin memadam pengguna ini?')) return;
+
+      try {
+        if (isOnline) {
+          await apiCall('deleteUser', { id });
+        } else {
+          pendingOperations.push({ action: 'deleteUser', payload: { id } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          users = users.filter(u => u.id !== id);
+          saveLocalData('getUsers', { users });
+          renderUsers();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+
+        if (isOnline) loadUsers();
+        showToast('Pengguna berjaya dipadam');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // === PELAJAR ===
+    async function loadStudents() {
+      try {
+        const res = await apiCall('getStudents');
+        students = res.students || [];
+        saveLocalData('getStudents', res);
+        renderStudents();
+      } catch (e) {
+        const res = getLocalData('getStudents');
+        if (res) {
+          students = res.students || [];
+          renderStudents();
+          showToast('Menggunakan data tempatan', 'warning');
+        }
+      }
+    }
+
+    function renderStudents() {
+      const tbody = document.querySelector('#studentTable tbody');
+      tbody.innerHTML = '';
+      students.forEach(s => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${s.id}</td><td>${s.name}</td><td>${s.ic}</td><td>${s.class}</td><td>${s.guardian}</td><td>${s.guardianphone}</td>
+            <td>
+              <button class="btn btn-edit" onclick="editStudent('${s.id}')">Kemaskini</button>
+              <button class="btn btn-danger" onclick="deleteStudent('${s.id}')">Padam</button>
+            </td>
+          </tr>`;
+      });
+    }
+
+    function openAddStudent() {
+      document.getElementById('modalTitle').textContent = 'Tambah Pelajar';
+      document.getElementById('dataForm').innerHTML = `
+        <div class="form-group"><label>Nama</label><input type="text" id="s_name" required></div>
+        <div class="form-group"><label>No. KP</label><input type="text" id="s_ic" required></div>
+        <div class="form-group"><label>Kelas</label><select id="s_class" required><option value="">Pilih Kelas</option></select></div>
+        <div class="form-group"><label>Nama Wali</label><input type="text" id="s_guardian" required></div>
+        <div class="form-group"><label>No. HP Wali</label><input type="text" id="s_guardian_phone" required></div>
+        <input type="hidden" id="s_id">
+      `;
+
+      const classSelect = document.getElementById('s_class');
       classes.forEach(cls => {
         const opt = document.createElement('option');
         opt.value = cls.name;
         opt.textContent = cls.name;
-        sel.appendChild(opt);
+        classSelect.appendChild(opt);
       });
-    });
-  }
 
-  // === SHOW SECTION ===
-  function showSection(id) {
-    document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
-    const sec = document.getElementById(id);
-    if (sec) sec.classList.remove('hidden');
-    document.getElementById('sections').classList.remove('hidden');
-    currentSection = id;
+      document.getElementById('saveBtn').onclick = saveStudent;
+      document.getElementById('modal').classList.remove('hidden');
+    }
 
-    if (id === 'manageUsers') loadUsers();
-    if (id === 'manageStudents') loadStudents();
-    if (id === 'manageTeachers') loadTeachers();
-    if (id === 'manageStaff') loadStaff();
-    if (id === 'manageClasses') loadTeachers().then(() => loadClasses());
-    if (id === 'manageSchedule') loadSchedule();
-    if (id === 'manageAttendance') loadAttendance();
-    if (id === 'viewSchedule') loadViewSchedule();
-    if (id === 'viewTeachingReports') loadTeachingReports();
+    async function saveStudent() {
+      const id = document.getElementById('s_id').value;
+      const student = {
+        id: id || undefined,
+        name: document.getElementById('s_name').value.trim(),
+        ic: document.getElementById('s_ic').value.trim(),
+        class: document.getElementById('s_class').value,
+        guardian: document.getElementById('s_guardian').value.trim(),
+        guardianphone: document.getElementById('s_guardian_phone').value.trim()
+      };
 
-    loadAnnouncements(); // Update pengumuman setiap kali tukar section
-  }
-
-  // === PENGUMUMAN V2 ===
-  async function loadAnnouncements() {
-    try {
-      const res = await apiCall('getAnnouncements');
-      announcements = res.announcements || [];
-      saveLocalData('getAnnouncements', res);
-    } catch (e) {
-      const local = getLocalData('getAnnouncements');
-      if (local && local.announcements) {
-        announcements = local.announcements;
-      } else {
-        announcements = [];
+      if (!id) {
+        student.id = 'student_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
       }
-    }
-    renderAnnouncements();
-  }
 
-  function renderAnnouncements() {
-    const listEl = document.getElementById('announcementList');
-    const addBtn = document.getElementById('addAnnouncementBtn');
-
-    if (announcements.length === 0) {
-      listEl.innerHTML = '<p class="text-center"><em>Tiada pengumuman buat masa ini.</em></p>';
-    } else {
-      listEl.innerHTML = '';
-      announcements.forEach((ann, index) => {
-        const isNew = index === 0 ? '<span style="background:#ef4444;color:white;padding:2px 8px;border-radius:12px;font-size:0.8rem;margin-left:10px;">BARU</span>' : '';
-        const item = document.createElement('div');
-        item.style = 'border-left:4px solid var(--primary); padding:1rem; margin-bottom:1rem; background:#f8fafc; border-radius:8px;';
-        item.innerHTML = `
-          <div style="display:flex; justify-content:space-between; align-items:start;">
-            <div>
-              <strong>${ann.title || 'Tiada Tajuk'}</strong>${isNew}
-              <small style="display:block; color:#666; margin-top:4px;">${ann.date || ''}</small>
-              <div style="margin-top:8px; line-height:1.6;">${ann.text ? ann.text.replace(/\n/g, '<br>') : ''}</div>
-            </div>
-            ${currentUser && currentUser.role === 'admin' ? `<button class="btn btn-danger" style="font-size:0.8rem;" onclick="deleteAnnouncement('${ann.id}')">Padam</button>` : ''}
-          </div>
-        `;
-        listEl.appendChild(item);
-      });
-    }
-
-    addBtn.style.display = (currentUser && currentUser.role === 'admin') ? 'inline-block' : 'none';
-  }
-
-  function openAddAnnouncement() {
-    document.getElementById('announcementModalTitle').textContent = 'Tambah Pengumuman Baru';
-    document.getElementById('announcementTitle').value = '';
-    document.getElementById('announcementText').value = '';
-    document.getElementById('announcementModal').classList.remove('hidden');
-  }
-
-  function closeAnnouncementModal() {
-    document.getElementById('announcementModal').classList.add('hidden');
-  }
-
-  async function saveAnnouncement() {
-    const title = document.getElementById('announcementTitle').value.trim();
-    const text = document.getElementById('announcementText').value.trim();
-
-    if (!title || !text) {
-      showToast('Sila isi tajuk dan isi pengumuman', 'error');
-      return;
-    }
-
-    const newAnn = {
-      id: 'ann_' + Date.now(),
-      title: title,
-      text: text,
-      date: new Date().toLocaleDateString('ms-MY')
-    };
-
-    try {
-      await apiCall('addAnnouncement', { announcement: newAnn });
-      announcements.unshift(newAnn);
-      renderAnnouncements();
-      closeAnnouncementModal();
-      showToast('Pengumuman baru berjaya ditambah!');
-    } catch (e) {
-      showToast('Gagal tambah pengumuman: ' + e.message, 'error');
-    }
-  }
-
-  async function deleteAnnouncement(id) {
-    if (!confirm('Padam pengumuman ini?')) return;
-    try {
-      await apiCall('deleteAnnouncement', { id });
-      announcements = announcements.filter(a => a.id !== id);
-      renderAnnouncements();
-      showToast('Pengumuman berjaya dipadam');
-    } catch (e) {
-      showToast('Gagal padam: ' + e.message, 'error');
-    }
-  }
-
-  // === JADUAL GURU ===
-  async function loadViewSchedule() {
-    try {
-      const res = await apiCall('getSchedule');
-      schedule = res.schedule || Array(17).fill().map(() => Array(7).fill(''));
-      renderViewSchedule();
-    } catch (e) {
-      const local = getLocalData('getSchedule');
-      if (local) {
-        schedule = local.schedule || Array(17).fill().map(() => Array(7).fill(''));
-        renderViewSchedule();
+      if (!student.name || !student.ic || !student.class || !student.guardian || !student.guardianphone) {
+        return showToast('Isi semua medan', 'error');
       }
-    }
-  }
 
-  function renderViewSchedule() {
-    const tbody = document.querySelector('#viewScheduleTable tbody');
-    tbody.innerHTML = '';
-    const timeSlots = [
-      '06:00-07:00', '07:00-08:00', '08:00-09:00', '09:00-10:00', '10:00-11:00',
-      '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00',
-      '16:00-17:00', '17:00-18:00', '18:00-19:00', '19:00-20:00', '20:00-21:00',
-      '21:00-22:00', '22:00-23:00'
-    ];
-
-    for (let row = 0; row < 17; row++) {
-      let rowHtml = `<tr><td>${timeSlots[row]}</td>`;
-      for (let col = 0; col < 7; col++) {
-        const activity = (schedule[row] && schedule[row][col]) || '-';
-        rowHtml += `<td>${activity}</td>`;
-      }
-      rowHtml += '</tr>';
-      tbody.innerHTML += rowHtml;
-    }
-  }
-
-  // === SYNC PENDING ===
-  async function syncPendingOperations() {
-    if (pendingOperations.length === 0 || !currentUser) return;
-    showToast(`Menyegerakkan ${pendingOperations.length} operasi...`);
-    const operations = [...pendingOperations];
-    pendingOperations = [];
-    for (const op of operations) {
       try {
-        await apiCall(op.action, op.payload);
-      } catch (e) {
-        if (e.message.includes('Aksi tidak sah')) {
-          console.warn('Action lama diabaikan:', op.action);
+        if (isOnline) {
+          if (id) await apiCall('updateStudent', { student });
+          else await apiCall('addStudent', { student });
         } else {
-          pendingOperations.push(op);
+          pendingOperations.push({ action: id ? 'updateStudent' : 'addStudent', payload: { student } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          if (id) {
+            const index = students.findIndex(s => s.id === id);
+            if (index !== -1) students[index] = student;
+          } else {
+            students.push(student);
+          }
+          saveLocalData('getStudents', { students });
+          renderStudents();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+
+        closeModal();
+        if (isOnline) loadStudents();
+        showToast('Pelajar berjaya disimpan');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    function editStudent(id) {
+      const student = students.find(s => s.id === id);
+      if (!student) return;
+
+      document.getElementById('modalTitle').textContent = 'Kemaskini Pelajar';
+      document.getElementById('dataForm').innerHTML = `
+        <div class="form-group"><label>Nama</label><input type="text" id="s_name" value="${student.name}" required></div>
+        <div class="form-group"><label>No. KP</label><input type="text" id="s_ic" value="${student.ic}" required></div>
+        <div class="form-group"><label>Kelas</label><select id="s_class" required><option value="">Pilih Kelas</option></select></div>
+        <div class="form-group"><label>Nama Wali</label><input type="text" id="s_guardian" value="${student.guardian}" required></div>
+        <div class="form-group"><label>No. HP Wali</label><input type="text" id="s_guardian_phone" value="${student.guardianphone}" required></div>
+        <input type="hidden" id="s_id" value="${student.id}">
+      `;
+
+      const classSelect = document.getElementById('s_class');
+      classes.forEach(cls => {
+        const opt = document.createElement('option');
+        opt.value = cls.name;
+        opt.textContent = cls.name;
+        if (cls.name === student.class) opt.selected = true;
+        classSelect.appendChild(opt);
+      });
+
+      document.getElementById('saveBtn').onclick = saveStudent;
+      document.getElementById('modal').classList.remove('hidden');
+    }
+
+    async function deleteStudent(id) {
+      if (!confirm('Adakah anda pasti ingin memadam pelajar ini?')) return;
+
+      try {
+        if (isOnline) {
+          await apiCall('deleteStudent', { id });
+        } else {
+          pendingOperations.push({ action: 'deleteStudent', payload: { id } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          students = students.filter(s => s.id !== id);
+          saveLocalData('getStudents', { students });
+          renderStudents();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+
+        if (isOnline) loadStudents();
+        showToast('Pelajar berjaya dipadam');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // === GURU ===
+    async function loadTeachers() {
+      try {
+        const res = await apiCall('getTeachers');
+        teachers = res.teachers || [];
+        saveLocalData('getTeachers', res);
+        renderTeachers();
+      } catch (e) {
+        const res = getLocalData('getTeachers');
+        if (res) {
+          teachers = res.teachers || [];
+          renderTeachers();
+          showToast('Menggunakan data tempatan', 'warning');
         }
       }
     }
-    localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-    if (pendingOperations.length === 0) {
-      showToast('Semua operasi disegerakkan');
-    } else {
-      showToast(`${pendingOperations.length} operasi gagal disegerakkan`, 'error');
+
+    function renderTeachers() {
+      const tbody = document.querySelector('#teacherTable tbody');
+      tbody.innerHTML = '';
+      teachers.forEach(t => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${t.id}</td><td>${t.name}</td><td>${t.ic}</td><td>${t.subject}</td><td>${t.phone}</td>
+            <td>
+              <button class="btn btn-edit" onclick="editTeacher('${t.id}')">Kemaskini</button>
+              <button class="btn btn-danger" onclick="deleteTeacher('${t.id}')">Padam</button>
+            </td>
+          </tr>`;
+      });
+    }
+
+    function openAddTeacher() {
+      document.getElementById('modalTitle').textContent = 'Tambah Guru';
+      document.getElementById('dataForm').innerHTML = `
+        <div class="form-group"><label>Nama</label><input type="text" id="t_name" required></div>
+        <div class="form-group"><label>No. KP</label><input type="text" id="t_ic" required></div>
+        <div class="form-group"><label>Mata Pelajaran</label><input type="text" id="t_subject" required></div>
+        <div class="form-group"><label>No. HP</label><input type="text" id="t_phone" required></div>
+        <input type="hidden" id="t_id">
+      `;
+      document.getElementById('saveBtn').onclick = saveTeacher;
+      document.getElementById('modal').classList.remove('hidden');
+    }
+
+    async function saveTeacher() {
+      const id = document.getElementById('t_id').value;
+      const teacher = {
+        id: id || undefined,
+        name: document.getElementById('t_name').value.trim(),
+        ic: document.getElementById('t_ic').value.trim(),
+        subject: document.getElementById('t_subject').value.trim(),
+        phone: document.getElementById('t_phone').value.trim()
+      };
+
+      if (!id) {
+        teacher.id = 'teacher_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      }
+
+      if (!teacher.name || !teacher.ic || !teacher.subject || !teacher.phone) {
+        return showToast('Isi semua medan', 'error');
+      }
+
+      try {
+        if (isOnline) {
+          if (id) await apiCall('updateTeacher', { teacher });
+          else await apiCall('addTeacher', { teacher });
+        } else {
+          pendingOperations.push({ action: id ? 'updateTeacher' : 'addTeacher', payload: { teacher } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          if (id) {
+            const index = teachers.findIndex(t => t.id === id);
+            if (index !== -1) teachers[index] = teacher;
+          } else {
+            teachers.push(teacher);
+          }
+          saveLocalData('getTeachers', { teachers });
+          renderTeachers();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+
+        closeModal();
+        if (isOnline) loadTeachers();
+        showToast('Guru berjaya disimpan');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    function editTeacher(id) {
+      const teacher = teachers.find(t => t.id === id);
+      if (!teacher) return;
+
+      document.getElementById('modalTitle').textContent = 'Kemaskini Guru';
+      document.getElementById('dataForm').innerHTML = `
+        <div class="form-group"><label>Nama</label><input type="text" id="t_name" value="${teacher.name}" required></div>
+        <div class="form-group"><label>No. KP</label><input type="text" id="t_ic" value="${teacher.ic}" required></div>
+        <div class="form-group"><label>Mata Pelajaran</label><input type="text" id="t_subject" value="${teacher.subject}" required></div>
+        <div class="form-group"><label>No. HP</label><input type="text" id="t_phone" value="${teacher.phone}" required></div>
+        <input type="hidden" id="t_id" value="${teacher.id}">
+      `;
+      document.getElementById('saveBtn').onclick = saveTeacher;
+      document.getElementById('modal').classList.remove('hidden');
+    }
+
+    async function deleteTeacher(id) {
+      if (!confirm('Adakah anda pasti ingin memadam guru ini?')) return;
+
+      try {
+        if (isOnline) {
+          await apiCall('deleteTeacher', { id });
+        } else {
+          pendingOperations.push({ action: 'deleteTeacher', payload: { id } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          teachers = teachers.filter(t => t.id !== id);
+          saveLocalData('getTeachers', { teachers });
+          renderTeachers();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+
+        if (isOnline) loadTeachers();
+        showToast('Guru berjaya dipadam');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // === STAFF ===
+    async function loadStaff() {
+      try {
+        const res = await apiCall('getStaff');
+        staff = res.staff || [];
+        saveLocalData('getStaff', res);
+        renderStaff();
+      } catch (e) {
+        const res = getLocalData('getStaff');
+        if (res) {
+          staff = res.staff || [];
+          renderStaff();
+          showToast('Menggunakan data tempatan', 'warning');
+        }
+      }
+    }
+
+    function renderStaff() {
+      const tbody = document.querySelector('#staffTable tbody');
+      tbody.innerHTML = '';
+      staff.forEach(s => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${s.id}</td><td>${s.name}</td><td>${s.ic}</td><td>${s.position}</td><td>${s.phone}</td>
+            <td>
+              <button class="btn btn-edit" onclick="editStaff('${s.id}')">Kemaskini</button>
+              <button class="btn btn-danger" onclick="deleteStaff('${s.id}')">Padam</button>
+            </td>
+          </tr>`;
+      });
+    }
+
+    function openAddStaff() {
+      document.getElementById('modalTitle').textContent = 'Tambah Kakitangan';
+      document.getElementById('dataForm').innerHTML = `
+        <div class="form-group"><label>Nama</label><input type="text" id="st_name" required></div>
+        <div class="form-group"><label>No. KP</label><input type="text" id="st_ic" required></div>
+        <div class="form-group"><label>Jawatan</label><input type="text" id="st_position" required></div>
+        <div class="form-group"><label>No. HP</label><input type="text" id="st_phone" required></div>
+        <input type="hidden" id="st_id">
+      `;
+      document.getElementById('saveBtn').onclick = saveStaff;
+      document.getElementById('modal').classList.remove('hidden');
+    }
+
+    async function saveStaff() {
+      const id = document.getElementById('st_id').value;
+      const staffMember = {
+        id: id || undefined,
+        name: document.getElementById('st_name').value.trim(),
+        ic: document.getElementById('st_ic').value.trim(),
+        position: document.getElementById('st_position').value.trim(),
+        phone: document.getElementById('st_phone').value.trim()
+      };
+
+      if (!id) {
+        staffMember.id = 'staff_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      }
+
+      if (!staffMember.name || !staffMember.ic || !staffMember.position || !staffMember.phone) {
+        return showToast('Isi semua medan', 'error');
+      }
+
+      try {
+        if (isOnline) {
+          if (id) await apiCall('updateStaff', { staff: staffMember });
+          else await apiCall('addStaff', { staff: staffMember });
+        } else {
+          pendingOperations.push({ action: id ? 'updateStaff' : 'addStaff', payload: { staff: staffMember } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          if (id) {
+            const index = staff.findIndex(s => s.id === id);
+            if (index !== -1) staff[index] = staffMember;
+          } else {
+            staff.push(staffMember);
+          }
+          saveLocalData('getStaff', { staff });
+          renderStaff();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+
+        closeModal();
+        if (isOnline) loadStaff();
+        showToast('Kakitangan berjaya disimpan');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    function editStaff(id) {
+      const staffMember = staff.find(s => s.id === id);
+      if (!staffMember) return;
+
+      document.getElementById('modalTitle').textContent = 'Kemaskini Kakitangan';
+      document.getElementById('dataForm').innerHTML = `
+        <div class="form-group"><label>Nama</label><input type="text" id="st_name" value="${staffMember.name}" required></div>
+        <div class="form-group"><label>No. KP</label><input type="text" id="st_ic" value="${staffMember.ic}" required></div>
+        <div class="form-group"><label>Jawatan</label><input type="text" id="st_position" value="${staffMember.position}" required></div>
+        <div class="form-group"><label>No. HP</label><input type="text" id="st_phone" value="${staffMember.phone}" required></div>
+        <input type="hidden" id="st_id" value="${staffMember.id}">
+      `;
+      document.getElementById('saveBtn').onclick = saveStaff;
+      document.getElementById('modal').classList.remove('hidden');
+    }
+
+    async function deleteStaff(id) {
+      if (!confirm('Adakah anda pasti ingin memadam kakitangan ini?')) return;
+
+      try {
+        if (isOnline) {
+          await apiCall('deleteStaff', { id });
+        } else {
+          pendingOperations.push({ action: 'deleteStaff', payload: { id } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          staff = staff.filter(s => s.id !== id);
+          saveLocalData('getStaff', { staff });
+          renderStaff();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+
+        if (isOnline) loadStaff();
+        showToast('Kakitangan berjaya dipadam');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // === KELAS ===
+    async function loadClasses() {
+      try {
+        const res = await apiCall('getClasses');
+        classes = res.classes || [];
+        saveLocalData('getClasses', res);
+        renderClasses();
+      } catch (e) {
+        const res = getLocalData('getClasses');
+        if (res) {
+          classes = res.classes || [];
+          renderClasses();
+          showToast('Menggunakan data tempatan', 'warning');
+        }
+      }
+    }
+
+    function renderClasses() {
+      const tbody = document.querySelector('#classTable tbody');
+      tbody.innerHTML = '';
+      classes.forEach(c => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${c.id}</td><td>${c.name}</td><td>${c.teacher}</td>
+            <td>
+              <button class="btn btn-edit" onclick="editClass('${c.id}')">Kemaskini</button>
+              <button class="btn btn-danger" onclick="deleteClass('${c.id}')">Padam</button>
+            </td>
+          </tr>`;
+      });
+    }
+
+    function openAddClass() {
+      if (teachers.length === 0) {
+        showToast('Sila muatkan data guru terlebih dahulu', 'warning');
+        return;
+      }
+
+      document.getElementById('modalTitle').textContent = 'Tambah Kelas';
+      document.getElementById('dataForm').innerHTML = `
+        <div class="form-group"><label>Nama Kelas</label><input type="text" id="c_name" required></div>
+        <div class="form-group"><label>Guru Kelas</label><select id="c_teacher" required><option value="">Pilih Guru</option></select></div>
+        <input type="hidden" id="c_id">
+      `;
+
+      const teacherSelect = document.getElementById('c_teacher');
+      teachers.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t.name;
+        opt.textContent = t.name;
+        teacherSelect.appendChild(opt);
+      });
+
+      document.getElementById('saveBtn').onclick = saveClass;
+      document.getElementById('modal').classList.remove('hidden');
+    }
+
+    async function saveClass() {
+      const id = document.getElementById('c_id').value;
+      const classData = {
+        id: id || undefined,
+        name: document.getElementById('c_name').value.trim(),
+        teacher: document.getElementById('c_teacher').value
+      };
+
+      if (!id) {
+        classData.id = 'class_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      }
+
+      if (!classData.name || !classData.teacher) {
+        return showToast('Isi semua medan', 'error');
+      }
+
+      try {
+        if (isOnline) {
+          if (id) await apiCall('updateClass', { cls: classData });
+          else await apiCall('addClass', { cls: classData });
+        } else {
+          pendingOperations.push({ action: id ? 'updateClass' : 'addClass', payload: { cls: classData } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          if (id) {
+            const index = classes.findIndex(c => c.id === id);
+            if (index !== -1) classes[index] = classData;
+          } else {
+            classes.push(classData);
+          }
+          saveLocalData('getClasses', { classes });
+          renderClasses();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+
+        closeModal();
+        if (isOnline) loadClasses();
+        showToast('Kelas berjaya disimpan');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    function editClass(id) {
+      if (teachers.length === 0) {
+        showToast('Sila muatkan data guru terlebih dahulu', 'warning');
+        return;
+      }
+
+      const classData = classes.find(c => c.id === id);
+      if (!classData) return;
+
+      document.getElementById('modalTitle').textContent = 'Kemaskini Kelas';
+      document.getElementById('dataForm').innerHTML = `
+        <div class="form-group"><label>Nama Kelas</label><input type="text" id="c_name" value="${classData.name}" required></div>
+        <div class="form-group"><label>Guru Kelas</label><select id="c_teacher" required><option value="">Pilih Guru</option></select></div>
+        <input type="hidden" id="c_id" value="${classData.id}">
+      `;
+
+      const teacherSelect = document.getElementById('c_teacher');
+      teachers.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t.name;
+        opt.textContent = t.name;
+        if (t.name === classData.teacher) opt.selected = true;
+        teacherSelect.appendChild(opt);
+      });
+
+      document.getElementById('saveBtn').onclick = saveClass;
+      document.getElementById('modal').classList.remove('hidden');
+    }
+
+    async function deleteClass(id) {
+      if (!confirm('Adakah anda pasti ingin memadam kelas ini?')) return;
+
+      try {
+        if (isOnline) {
+          await apiCall('deleteClass', { id });
+        } else {
+          pendingOperations.push({ action: 'deleteClass', payload: { id } });
+          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+          classes = classes.filter(c => c.id !== id);
+          saveLocalData('getClasses', { classes });
+          renderClasses();
+          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
+        }
+
+        if (isOnline) loadClasses();
+        showToast('Kelas berjaya dipadam');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // === JADUAL ===
+    async function loadSchedule() {
+      try {
+        const res = await apiCall('getSchedule');
+        schedule = res.schedule || Array(17).fill().map(() => Array(7).fill(''));
+        saveLocalData('getSchedule', res);
+        renderSchedule();
+      } catch (e) {
+        const res = getLocalData('getSchedule');
+        if (res) {
+          schedule = res.schedule || Array(17).fill().map(() => Array(7).fill(''));
+          renderSchedule();
+          showToast('Menggunakan data tempatan', 'warning');
+        }
+      }
+    }
+
+    function renderSchedule() {
+      for (let row = 0; row < 17; row++) {
+        for (let col = 0; col < 7; col++) {
+          const input = document.querySelector(`input[data-row="${row}"][data-col="${col}"]`);
+          if (input) input.value = schedule[row] ? schedule[row][col] || '' : '';
+        }
+      }
+    }
+
+    async function saveSchedule() {
+      const newSchedule = Array(17).fill().map(() => Array(7).fill(''));
+      for (let row = 0; row < 17; row++) {
+        for (let col = 0; col < 7; col++) {
+          const input = document.querySelector(`input[data-row="${row}"][data-col="${col}"]`);
+          if (input) newSchedule[row][col] = input.value.trim();
+        }
+      }
+      try {
+        await apiCall('saveSchedule', { schedule: newSchedule });
+        schedule = newSchedule;
+        showToast('Jadual berjaya disimpan');
+      } catch (e) {
+        showToast(e.message, 'error');
+      }
+    }
+
+    async function loadViewSchedule() {
+      try {
+        const res = await apiCall('getSchedule');
+        schedule = res.schedule || Array(17).fill().map(() => Array(7).fill(''));
+        renderViewSchedule();
+      } catch (e) {
+        const res = getLocalData('getSchedule');
+        if (res) {
+          schedule = res.schedule || Array(17).fill().map(() => Array(7).fill(''));
+          renderViewSchedule();
+        }
+      }
+    }
+
+
+    async function loadAttendance() {
+      const date = document.getElementById('attendanceDate').value || new Date().toISOString().slice(0,10);
+      try {
+        const res = await apiCall('getAttendance', { date });
+        renderAttendance(res.attendance || {});
+      } catch (e) {
+        renderAttendance({});
+        showToast('Tiada data kehadiran untuk tarikh ini', 'warning');
+      }
+    }
+
+    function renderAttendance(attendance) {
+      const tbody = document.querySelector('#attendanceTable tbody');
+      tbody.innerHTML = '';
+      students.forEach((s, i) => {
+        const hadir = attendance[s.id] !== false;
+        tbody.innerHTML += `
+          <tr>
+            <td>${i+1}</td>
+            <td>${s.name}</td>
+            <td>${s.class || '-'}</td>
+            <td><input type="radio" name="att_${s.id}" value="true" ${hadir ? 'checked' : ''}></td>
+            <td><input type="radio" name="att_${s.id}" value="false" ${!hadir ? 'checked' : ''}></td>
+          </tr>`;
+      });
+    }
+
+    async function saveAttendance() {
+      const date = document.getElementById('attendanceDate').value;
+      if (!date) return showToast('Pilih tarikh', 'error');
+      const att = {};
+      students.forEach(s => {
+        const radio = document.querySelector(`input[name="att_${s.id}"]:checked`);
+        att[s.id] = radio ? radio.value === 'true' : true;
+      });
+      try {
+        await apiCall('saveAttendance', { date, attendance: att });
+        showToast('Kehadiran berjaya disimpan');
+      } catch (e) {
+        showToast(e.message, 'error');
+      }
+    }
+
+    function showSection(id) {
+      document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
+      const sec = document.getElementById(id);
+      if (sec) sec.classList.remove('hidden');
+      document.getElementById('sections').classList.remove('hidden');
+      currentSection = id;
+
+      if (id === 'manageUsers') loadUsers();
+      if (id === 'manageStudents') loadStudents();
+      if (id === 'manageTeachers') loadTeachers();
+      if (id === 'manageStaff') loadStaff();
+      if (id === 'manageClasses') loadTeachers().then(() => loadClasses());
+      if (id === 'manageSchedule') loadSchedule();
+      if (id === 'manageAttendance') loadAttendance();
+      if (id === 'viewSchedule') loadViewSchedule();
+      if (id === 'viewTeachingReports') loadTeachingReports();
+    }
+
+    async function loadTeachingReports() {
+      try {
+        const res = await apiCall('getTeachingReports');
+        reports = res.reports || [];
+        console.log('Data laporan dari server:', reports);
+        saveLocalData('getTeachingReports', res);
+
+        if (currentUser && currentUser.role !== 'admin') {
+          reports = reports.filter(r => r.teacherId === currentUser.id || r.teacher === currentUser.name);
+          console.log('Laporan guru ini:', reports);
+        }
+
+        renderTeachingReports(reports);
+      } catch (e) {
+        console.error('Error loading reports:', e);
+        const localRes = getLocalData('getTeachingReports');
+        if (localRes && localRes.reports) {
+          reports = localRes.reports;
+          if (currentUser && currentUser.role !== 'admin') {
+            reports = reports.filter(r => r.teacherId === currentUser.id || r.teacher === currentUser.name);
+          }
+          renderTeachingReports(reports);
+          showToast('Menggunakan data tempatan', 'warning');
+        } else {
+          renderTeachingReports([]);
+          showToast('Tiada laporan dijumpai', 'warning');
+        }
+      }
+    }
+
+    function renderTeachingReports(reports) {
+      document.getElementById('printDate').textContent = new Date().toLocaleDateString('ms-MY');
+      const tbody = document.querySelector('#teachingReportTable tbody');
+      tbody.innerHTML = '';
+      if (reports.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center">Tiada laporan dijumpai</td></tr>';
+        return;
+      }
+      reports.forEach((r, index) => {
+        const notesPreview = r.notes ? (r.notes.length > 100 ? r.notes.substring(0, 100) + '...' : r.notes) : '-';
+        tbody.innerHTML += `
+          <tr onclick="showFullNotes('${r.notes ? r.notes.replace(/'/g, "\\'") : ''}')" style="cursor:pointer;">
+            <td><input type="checkbox" class="report-checkbox"></td>
+            <td>${index + 1}</td>
+            <td>${r.teacher || 'Tiada Nama'}</td>
+            <td>${r.date || '-'}</td>
+            <td>${r.class || '-'}</td>
+            <td>${r.topic || '-'}</td>
+            <td>${notesPreview}</td>
+            <td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : '-'}</td>
+          </tr>`;
+      });
+    }
+
+    function showFullNotes(notes) {
+      document.getElementById('fullNotes').textContent = notes || 'Tiada catatan';
+      document.getElementById('notesModal').classList.remove('hidden');
+    }
+
+    async function saveTeachingReport() {
+      const fileInput = document.getElementById('reportAttachment');
+      let attachmentUrl = '';
+      if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        if (file.size > 5 * 1024 * 1024) return showToast('Fail terlalu besar (max 5MB)', 'error');
+
+        const reader = new FileReader();
+        reader.onload = async function(e) {
+          const base64 = e.target.result.split(',')[1];
+          try {
+            const res = await apiCall('uploadAttachment', {
+              fileName: file.name,
+              mimeType: file.type,
+              base64: base64
+            });
+            attachmentUrl = res.url;
+            await sendReport(attachmentUrl);
+          } catch (err) {
+            showToast('Gagal upload lampiran: ' + err.message, 'error');
+          }
+        };
+        reader.readAsDataURL(file);
+      } else {
+        await sendReport('');
+      }
+
+      async function sendReport(url) {
+        const report = {
+          date: document.getElementById('reportDate').value,
+          class: document.getElementById('reportClass').value,
+          topic: document.getElementById('reportTopic').value.trim(),
+          notes: document.getElementById('reportNotes').value.trim(),
+          teacher: currentUser.name,
+          teacherId: currentUser.id,
+          attachment: url
+        };
+        if (!report.date || !report.class || !report.topic || !report.notes) {
+          return showToast('Isi semua medan', 'error');
+        }
+        try {
+          await apiCall('addTeachingReport', report);
+          showToast('Laporan berjaya dihantar');
+          document.getElementById('reportDate').value = '';
+          document.getElementById('reportClass').value = '';
+          document.getElementById('reportTopic').value = '';
+          document.getElementById('reportNotes').value = '';
+          document.getElementById('reportAttachment').value = '';
+          document.getElementById('attachmentPreview').innerHTML = '';
+        } catch (e) {
+          showToast(e.message, 'error');
+        }
+      }
+    }
+
+    // Toggle semua checkbox
+function toggleSelectAll() {
+  const selectAll = document.getElementById('selectAll');
+  const checkboxes = document.querySelectorAll('#teachingReportTable tbody input[type="checkbox"]');
+  checkboxes.forEach(cb => cb.checked = selectAll.checked);
+}
+
+// Cetak laporan terpilih (BETULKAN INDEX COLUMN "Bil" = ke-2)
+function printSelectedReports() {
+  const checkboxes = document.querySelectorAll('#teachingReportTable tbody input[type="checkbox"]:checked');
+  if (checkboxes.length === 0) {
+    showToast('Sila pilih sekurang-kurangnya satu laporan', 'warning');
+    return;
+  }
+
+  const selectedReports = [];
+  checkboxes.forEach(cb => {
+    const row = cb.closest('tr');
+    const indexCell = row.querySelector('td:nth-child(2)'); // "Bil" adalah column ke-2 (selepas checkbox)
+    if (!indexCell) {
+      console.warn('Column Bil tidak dijumpai');
+      return;
+    }
+    const index = parseInt(indexCell.textContent.trim());
+    const r = reports[index - 1];
+    if (r) selectedReports.push(r);
+    else console.warn('Laporan index tidak wujud:', index);
+  });
+
+  if (selectedReports.length === 0) {
+    showToast('Tiada laporan dipilih atau data tidak lengkap', 'error');
+    return;
+  }
+
+  const printWindow = window.open('', '', 'width=800,height=600');
+  let content = `
+    <html><head><title>Cetak Laporan Terpilih - INSTAQLIM</title>
+    <style>
+      body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
+      .header { text-align: center; margin-bottom: 30px; }
+      .header img { width: 120px; }
+      .report { margin-bottom: 40px; page-break-after: always; }
+      table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+      th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+      th { background-color: #10b981; color: white; }
+      .notes { white-space: pre-wrap; word-break: break-word; }
+      @media print { .report:last-child { page-break-after: avoid; } }
+    </style>
+    </head><body>
+      <div class="header">
+        <img src="https://arleta.site/interactivelink/2950/Logo-Maahad.JPG" alt="Logo">
+        <h2>INSTAQLIM - Laporan Mengajar Harian Terpilih</h2>
+        <p>Tarikh Cetak: ${new Date().toLocaleDateString('ms-MY')}</p>
+      </div>
+  `;
+
+  selectedReports.forEach((r, i) => {
+    content += `
+      <div class="report">
+        <h3>Laporan #${i+1}</h3>
+        <table>
+          <tr><th>Guru</th><td>${r.teacher || '-'}</td></tr>
+          <tr><th>Tarikh</th><td>${r.date || '-'}</td></tr>
+          <tr><th>Kelas</th><td>${r.class || '-'}</td></tr>
+          <tr><th>Topik</th><td>${r.topic || '-'}</td></tr>
+          <tr><th>Catatan</th><td class="notes">${r.notes || '-'}</td></tr>
+          <tr><th>Lampiran</th><td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : 'Tiada'}</td></tr>
+        </table>
+      </div>
+    `;
+  });
+
+  content += `<script>window.print();<\/script></body></html>`;
+  printWindow.document.write(content);
+  printWindow.document.close();
+}
+
+// Export ke PDF (CETAK SEMUA, FORMAT KEMAS)
+function exportTeachingReportPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+  doc.setFontSize(18);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Laporan Mengajar Harian Guru', 105, 15, { align: 'center' });
+  doc.setFontSize(12);
+  doc.setFont('helvetica', 'normal');
+  doc.text('INSTAQLIM - Institut Tahfiz Al-Quran lil Muttaqin', 105, 22, { align: 'center' });
+  doc.text(`Tarikh: ${new Date().toLocaleDateString('ms-MY')}`, 105, 29, { align: 'center' });
+
+  const table = document.getElementById('teachingReportTable');
+  const rows = table.querySelectorAll('tr');
+
+  let yPosition = 40;
+  let page = 1;
+
+  rows.forEach((row, index) => {
+    if (index === 0) doc.setFont('helvetica', 'bold');
+    else doc.setFont('helvetica', 'normal');
+
+    const cells = row.querySelectorAll('td, th');
+    let xPosition = 15;
+
+    cells.forEach(cell => {
+      const text = cell.textContent.trim();
+      doc.text(text, xPosition, yPosition);
+      xPosition += 30; // Lebar column yang lebih kemas
+    });
+
+    yPosition += 10;
+
+    if (yPosition > 270) { // Margins bawah
+      doc.addPage();
+      yPosition = 20;
+      page++;
+    }
+  });
+
+  doc.save('laporan_mengajar.pdf');
+}
+async function syncPendingOperations() {
+  if (pendingOperations.length === 0 || !currentUser) return;
+
+  showToast(`Menyegerakkan ${pendingOperations.length} operasi...`);
+  const operations = [...pendingOperations];
+  pendingOperations = [];
+
+  for (const op of operations) {
+    try {
+      await apiCall(op.action, op.payload);
+    } catch (e) {
+      // Jika action tidak sah, jangan simpan balik pending (mungkin action lama)
+      if (e.message.includes('Aksi tidak sah')) {
+        console.warn('Action lama diabaikan:', op.action);
+      } else {
+        pendingOperations.push(op);
+      }
     }
   }
 
-  window.onload = () => {
-    const theme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', theme);
-    document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+  localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+  if (pendingOperations.length === 0) {
+    showToast('Semua operasi disegerakkan');
+  } else {
+    showToast(`${pendingOperations.length} operasi gagal disegerakkan`, 'error');
+  }
+}
 
-    const today = new Date().toISOString().slice(0, 10);
-    const attendanceDateInput = document.getElementById('attendanceDate');
-    if (attendanceDateInput) attendanceDateInput.value = today;
-    const reportDateInput = document.getElementById('reportDate');
-    if (reportDateInput) reportDateInput.value = today;
+// Muat pengumuman dari server
+let announcements = [];
 
-    const savedPending = localStorage.getItem('pendingOperations');
-    if (savedPending) pendingOperations = JSON.parse(savedPending);
+// Muat senarai pengumuman
+async function loadAnnouncements() {
+  try {
+    const res = await apiCall('getAnnouncements');
+    announcements = res.announcements || [];
+    saveLocalData('getAnnouncements', res);
+  } catch (e) {
+    const local = getLocalData('getAnnouncements');
+    if (local && local.announcements) {
+      announcements = local.announcements;
+    } else {
+      announcements = [];
+    }
+  }
+  renderAnnouncements();
+}
+
+// Render senarai pengumuman
+function renderAnnouncements() {
+  const listEl = document.getElementById('announcementList');
+  const addBtn = document.getElementById('addAnnouncementBtn');
+
+  if (announcements.length === 0) {
+    listEl.innerHTML = '<p class="text-center"><em>Tiada pengumuman buat masa ini.</em></p>';
+  } else {
+    listEl.innerHTML = '';
+    announcements.forEach((ann, index) => {
+      const isNew = index === 0 ? '<span style="background:#ef4444;color:white;padding:2px 8px;border-radius:12px;font-size:0.8rem;margin-left:10px;">BARU</span>' : '';
+      const item = document.createElement('div');
+      item.style = 'border-left:4px solid var(--primary); padding:1rem; margin-bottom:1rem; background:#f8fafc; border-radius:8px;';
+      item.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:start;">
+          <div>
+            <strong>${ann.title || 'Tiada Tajuk'}</strong>${isNew}
+            <small style="display:block; color:#666; margin-top:4px;">${ann.date || ''}</small>
+            <div style="margin-top:8px; line-height:1.6;">${ann.text ? ann.text.replace(/\n/g, '<br>') : ''}</div>
+          </div>
+          ${currentUser && currentUser.role === 'admin' ? `<button class="btn btn-danger btn-small" style="font-size:0.8rem; padding:0.3rem 0.6rem;" onclick="deleteAnnouncement('${ann.id}')">Padam</button>` : ''}
+        </div>
+      `;
+      listEl.appendChild(item);
+    });
+  }
+
+  // Hanya Admin boleh tambah
+  addBtn.style.display = (currentUser && currentUser.role === 'admin') ? 'inline-block' : 'none';
+}
+
+// Buka modal tambah
+function openAddAnnouncement() {
+  document.getElementById('announcementModalTitle').textContent = 'Tambah Pengumuman Baru';
+  document.getElementById('announcementTitle').value = '';
+  document.getElementById('announcementText').value = '';
+  document.getElementById('announcementModal').classList.remove('hidden');
+}
+
+// Tutup modal
+function closeAnnouncementModal() {
+  document.getElementById('announcementModal').classList.add('hidden');
+}
+
+// Simpan pengumuman baru
+async function saveAnnouncement() {
+  const title = document.getElementById('announcementTitle').value.trim();
+  const text = document.getElementById('announcementText').value.trim();
+
+  if (!title || !text) {
+    showToast('Sila isi tajuk dan isi pengumuman', 'error');
+    return;
+  }
+
+  const newAnn = {
+    id: 'ann_' + Date.now(),
+    title: title,
+    text: text,
+    date: new Date().toLocaleDateString('ms-MY')
   };
-</script>
+
+  try {
+    await apiCall('addAnnouncement', { announcement: newAnn });
+    announcements.unshift(newAnn); // Tambah di atas
+    renderAnnouncements();
+    closeAnnouncementModal();
+    showToast('Pengumuman baru berjaya ditambah!');
+  } catch (e) {
+    showToast('Gagal tambah pengumuman: ' + e.message, 'error');
+  }
+}
+
+// Padam pengumuman (Admin sahaja)
+async function deleteAnnouncement(id) {
+  if (!confirm('Padam pengumuman ini?')) return;
+
+  try {
+    await apiCall('deleteAnnouncement', { id });
+    announcements = announcements.filter(a => a.id !== id);
+    renderAnnouncements();
+    showToast('Pengumuman berjaya dipadam');
+  } catch (e) {
+    showToast('Gagal padam: ' + e.message, 'error');
+  }
+}
+  function renderViewSchedule() {
+  const tbody = document.querySelector('#viewScheduleTable tbody');
+  tbody.innerHTML = '';
+
+  const timeSlots = [
+    '06:00-07:00', '07:00-08:00', '08:00-09:00', '09:00-10:00', '10:00-11:00',
+    '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00',
+    '16:00-17:00', '17:00-18:00', '18:00-19:00', '19:00-20:00', '20:00-21:00',
+    '21:00-22:00', '22:00-23:00'
+  ];
+
+  for (let row = 0; row < 17; row++) {
+    let rowHtml = `<tr><td>${timeSlots[row]}</td>`;
+    for (let col = 0; col < 7; col++) { // 7 hari penuh
+      const activity = (schedule[row] && schedule[row][col]) || '-';
+      rowHtml += `<td>${activity}</td>`;
+    }
+    rowHtml += '</tr>';
+    tbody.innerHTML += rowHtml;
+  }
+}
+    window.onload = () => {
+      const theme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+
+      const today = new Date().toISOString().slice(0,10);
+      const attendanceDateInput = document.getElementById('attendanceDate');
+      if (attendanceDateInput) attendanceDateInput.value = today;
+
+      const reportDateInput = document.getElementById('reportDate');
+      if (reportDateInput) reportDateInput.value = today;
+
+      const savedPendingOperations = localStorage.getItem('pendingOperations');
+      if (savedPendingOperations) pendingOperations = JSON.parse(savedPendingOperations);
+
+      if (navigator.onLine) {
+        isOnline = true;
+        if (pendingOperations.length > 0) syncPendingOperations();
+      } else {
+        isOnline = false;
+      }
+    };
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
