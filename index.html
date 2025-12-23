@@ -1794,50 +1794,51 @@ function exportTeachingReportPDF() {
   doc.save('laporan_mengajar.pdf');
 }
 async function syncPendingOperations() {
-      if (pendingOperations.length === 0) return;
-      showToast(`Menyegerakkan ${pendingOperations.length} operasi...`);
-      const operations = [...pendingOperations];
-      pendingOperations = [];
-      localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-      for (const op of operations) {
-        try {
-          await apiCall(op.action, op.payload);
-        } catch (e) {
-          pendingOperations.push(op);
-        }
-      }
-      localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-      if (pendingOperations.length === 0) {
-        showToast('Semua operasi disegerakkan');
-      } else {
-        showToast(`${pendingOperations.length} operasi gagal disegerakkan`, 'error');
-      }
+  if (pendingOperations.length === 0 || !currentUser) return; // Tambah check currentUser
+
+  showToast(`Menyegerakkan ${pendingOperations.length} operasi...`);
+  const operations = [...pendingOperations];
+  pendingOperations = [];
+  localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+
+  for (const op of operations) {
+    try {
+      await apiCall(op.action, op.payload);
+    } catch (e) {
+      pendingOperations.push(op); // Jika gagal, simpan balik
+      console.error('Sync gagal untuk:', op);
     }
-    window.onload = () => {
-      const theme = localStorage.getItem('theme') || 'light';
-      document.documentElement.setAttribute('data-theme', theme);
-      document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+  }
 
-      const today = new Date().toISOString().slice(0,10);
-      const attendanceDateInput = document.getElementById('attendanceDate');
-      if (attendanceDateInput) attendanceDateInput.value = today;
+  localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+  if (pendingOperations.length === 0) {
+    showToast('Semua operasi disegerakkan');
+  } else {
+    showToast(`${pendingOperations.length} operasi gagal disegerakkan`, 'error');
+  }
+}
 
-      const reportDateInput = document.getElementById('reportDate');
-      if (reportDateInput) reportDateInput.value = today;
+window.onload = () => {
+  const theme = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
 
-      const savedPendingOperations = localStorage.getItem('pendingOperations');
-      if (savedPendingOperations) pendingOperations = JSON.parse(savedPendingOperations);
+  const today = new Date().toISOString().slice(0,10);
+  const attendanceDateInput = document.getElementById('attendanceDate');
+  if (attendanceDateInput) attendanceDateInput.value = today;
 
-      if (navigator.onLine) {
-        isOnline = true;
-        if (pendingOperations.length > 0) syncPendingOperations();
-      } else {
-        isOnline = false;
-      }
-    };
+  const reportDateInput = document.getElementById('reportDate');
+  if (reportDateInput) reportDateInput.value = today;
+
+  const savedPendingOperations = localStorage.getItem('pendingOperations');
+  if (savedPendingOperations) pendingOperations = JSON.parse(savedPendingOperations);
+
+  // JANGAN panggil syncPendingOperations di sini — tunggu selepas login berjaya
+};
   </script>
 </body>
 </html>
+
 
 
 
