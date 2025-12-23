@@ -336,6 +336,17 @@
           <a href="#" class="btn-logout" onclick="logout()">Log Keluar</a>
         </div>
       </div>
+      <!-- Pengumuman (kelihatan kepada semua role) -->
+<div id="announcementSection" class="card" style="background: linear-gradient(135deg, var(--primary), #059669); color: white; margin: 1rem 0;">
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h3 style="margin: 0; color: white;"><i class="fas fa-bullhorn"></i> Pengumuman Terkini</h3>
+    <button id="editAnnouncementBtn" class="btn" style="background: white; color: var(--primary); display: none;" onclick="openEditAnnouncement()">Kemaskini</button>
+  </div>
+  <div id="announcementContent" style="margin-top: 1rem; font-size: 1.1rem; line-height: 1.6;">
+    Tiada pengumuman buat masa ini.
+  </div>
+  <small style="display: block; margin-top: 1rem; opacity: 0.9;">Tarikh kemaskini: <span id="announcementDate">-</span></small>
+</div>
     </header>
     <div class="container">
       <main>
@@ -558,7 +569,21 @@
       </div>
     </div>
   </div>
-
+  
+<!-- Modal Edit Pengumuman -->
+<div id="announcementModal" class="hidden">
+  <div style="background: var(--card-bg, white); border-radius: 10px; padding: 2rem; width: 90%; max-width: 700px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+    <h3>Kemaskini Pengumuman</h3>
+    <div class="form-group">
+      <label>Pengumuman (boleh guna HTML ringkas seperti <strong>tebal</strong>, <em>italic</em>, <br>baris baru)</label>
+      <textarea id="announcementText" rows="8" style="width:100%; padding:0.75rem; border-radius:5px; border:1px solid #ccc;"></textarea>
+    </div>
+    <div style="text-align:right; margin-top:1rem;">
+      <button class="btn" onclick="closeAnnouncementModal()">Batal</button>
+      <button class="btn btn-primary" onclick="saveAnnouncement()">Simpan Pengumuman</button>
+    </div>
+  </div>
+</div>
   <script>
    const API_URL = 'https://script.google.com/macros/s/AKfycby4PHmYXY6q6MyTD7bP48-kdoCHLeqBmlG_1qh0k-JRKIEnRVb-KT2W77t6_KeiYbsX/exec';
 
@@ -665,6 +690,8 @@
         document.getElementById('adminDashboard').classList.toggle('hidden', r.user.role !== 'admin');
         document.getElementById('guruDashboard').classList.toggle('hidden', r.user.role === 'admin');
         await loadCommonData();
+        await loadAnnouncement();
+        renderAnnouncement();
         showToast('Log masuk berjaya');
       } catch (err) {
         errorEl.textContent = err.message || 'Login gagal';
@@ -738,6 +765,9 @@
       if (id === 'manageAttendance') loadAttendance();
       if (id === 'viewSchedule') loadViewSchedule();
       if (id === 'viewTeachingReports') loadTeachingReports();
+      loadAnnouncement().then(() => renderAnnouncement()); // Update pengumuman setiap kali tukar section
+  restrictViewerAccess();
+
     }
 
     // === PENGGUNA ===
@@ -1848,9 +1878,80 @@ async function syncPendingOperations() {
         isOnline = false;
       }
     };
+
+    let currentAnnouncement = { text: '', date: '' };
+
+// Muat pengumuman dari server
+async function loadAnnouncement() {
+  try {
+    const res = await apiCall('getAnnouncement');
+    currentAnnouncement = res.announcement || { text: '', date: '' };
+    renderAnnouncement();
+  } catch (e) {
+    const local = getLocalData('getAnnouncement');
+    if (local && local.announcement) {
+      currentAnnouncement = local.announcement;
+      renderAnnouncement();
+    }
+  }
+}
+
+// Render pengumuman di dashboard
+function renderAnnouncement() {
+  const contentEl = document.getElementById('announcementContent');
+  const dateEl = document.getElementById('announcementDate');
+  const editBtn = document.getElementById('editAnnouncementBtn');
+
+  if (currentAnnouncement.text) {
+    contentEl.innerHTML = currentAnnouncement.text;
+    dateEl.textContent = currentAnnouncement.date || new Date().toLocaleDateString('ms-MY');
+  } else {
+    contentEl.innerHTML = '<em>Tiada pengumuman buat masa ini.</em>';
+    dateEl.textContent = '-';
+  }
+
+  // Hanya Admin boleh edit
+  if (currentUser && currentUser.role === 'admin') {
+    editBtn.style.display = 'inline-block';
+  } else {
+    editBtn.style.display = 'none';
+  }
+}
+
+// Buka modal edit
+function openEditAnnouncement() {
+  document.getElementById('announcementText').value = currentAnnouncement.text || '';
+  document.getElementById('announcementModal').classList.remove('hidden');
+}
+
+// Tutup modal
+function closeAnnouncementModal() {
+  document.getElementById('announcementModal').classList.add('hidden');
+}
+
+// Simpan pengumuman
+async function saveAnnouncement() {
+  const text = document.getElementById('announcementText').value.trim();
+  const announcement = {
+    text: text,
+    date: new Date().toLocaleDateString('ms-MY')
+  };
+
+  try {
+    await apiCall('saveAnnouncement', { announcement });
+    currentAnnouncement = announcement;
+    saveLocalData('getAnnouncement', { announcement });
+    renderAnnouncement();
+    closeAnnouncementModal();
+    showToast('Pengumuman berjaya disimpan');
+  } catch (e) {
+    showToast('Gagal simpan pengumuman: ' + e.message, 'error');
+  }
+}
   </script>
 </body>
 </html>
+
 
 
 
