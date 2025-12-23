@@ -469,9 +469,20 @@
           <div id="viewSchedule" class="card hidden">
             <h3>Jadual Waktu Saya</h3>
             <table id="viewScheduleTable">
-              <thead><tr><th>Waktu/Hari</th><th>Isnin</th><th>Selasa</th><th>Rabu</th><th>Khamis</th><th>Jumaat</th></tr></thead>
-              <tbody></tbody>
-            </table>
+  <thead>
+    <tr>
+      <th>Waktu/Hari</th>
+      <th>Isnin</th>
+      <th>Selasa</th>
+      <th>Rabu</th>
+      <th>Khamis</th>
+      <th>Jumaat</th>
+      <th>Sabtu</th>
+      <th>Ahad</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
           </div>
           <!-- Laporan Mengajar -->
           <div id="viewTeachingReports" class="card hidden">
@@ -1478,21 +1489,22 @@
       }
     }
 
- function renderViewSchedule() {
+function renderViewSchedule() {
   const tbody = document.querySelector('#viewScheduleTable tbody');
   tbody.innerHTML = '';
+
   const timeSlots = [
     '06:00-07:00', '07:00-08:00', '08:00-09:00', '09:00-10:00', '10:00-11:00',
     '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00',
     '16:00-17:00', '17:00-18:00', '18:00-19:00', '19:00-20:00', '20:00-21:00',
     '21:00-22:00', '22:00-23:00'
   ];
-  const days = ['Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu', 'Ahad'];
-  
+
   for (let row = 0; row < 17; row++) {
     let rowHtml = `<tr><td>${timeSlots[row]}</td>`;
-    for (let col = 0; col < 7; col++) {
-      rowHtml += `<td>${(schedule[row] && schedule[row][col]) || '-'}</td>`;
+    for (let col = 0; col < 7; col++) { // 7 hari penuh
+      const activity = (schedule[row] && schedule[row][col]) || '-';
+      rowHtml += `<td>${activity}</td>`;
     }
     rowHtml += '</tr>';
     tbody.innerHTML += rowHtml;
@@ -1839,6 +1851,7 @@ async function syncPendingOperations() {
   </script>
 </body>
 </html>
+
 
 
 
