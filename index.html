@@ -1823,30 +1823,28 @@ function exportTeachingReportPDF() {
 
   doc.save('laporan_mengajar.pdf');
 }
-async function syncPendingOperations() {
-  if (pendingOperations.length === 0 || !currentUser) return; // Tambah check currentUser
-
-  showToast(`Menyegerakkan ${pendingOperations.length} operasi...`);
-  const operations = [...pendingOperations];
-  pendingOperations = [];
-  localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-
-  for (const op of operations) {
-    try {
-      await apiCall(op.action, op.payload);
-    } catch (e) {
-      pendingOperations.push(op); // Jika gagal, simpan balik
-      console.error('Sync gagal untuk:', op);
+/ Fungsi syncPendingOperations (hanya selepas login)
+    async function syncPendingOperations() {
+      if (pendingOperations.length === 0 || !currentUser) return;
+      showToast(`Menyegerakkan ${pendingOperations.length} operasi...`);
+      const operations = [...pendingOperations];
+      pendingOperations = [];
+      localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+      for (const op of operations) {
+        try {
+          await apiCall(op.action, op.payload);
+        } catch (e) {
+          pendingOperations.push(op);
+          console.error('Sync gagal untuk:', op);
+        }
+      }
+      localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+      if (pendingOperations.length === 0) {
+        showToast('Semua operasi disegerakkan');
+      } else {
+        showToast(`${pendingOperations.length} operasi gagal disegerakkan`, 'error');
+      }
     }
-  }
-
-  localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-  if (pendingOperations.length === 0) {
-    showToast('Semua operasi disegerakkan');
-  } else {
-    showToast(`${pendingOperations.length} operasi gagal disegerakkan`, 'error');
-  }
-}
 
   // JANGAN panggil syncPendingOperations di sini — tunggu selepas login berjaya
 };
@@ -1949,52 +1947,27 @@ function showSection(id) {
   restrictViewerAccess();
 }
 
-// Fungsi syncPendingOperations – hanya jalankan jika user sudah login
-async function syncPendingOperations() {
-  if (pendingOperations.length === 0 || !currentUser) return;
-
-  showToast(`Menyegerakkan ${pendingOperations.length} operasi...`);
-  const operations = [...pendingOperations];
-  pendingOperations = [];
-  localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-
-  for (const op of operations) {
-    try {
-      await apiCall(op.action, op.payload);
-    } catch (e) {
-      pendingOperations.push(op);
-      console.error('Sync gagal untuk:', op);
-    }
-  }
-
-  localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-  if (pendingOperations.length === 0) {
-    showToast('Semua operasi disegerakkan');
-  } else {
-    showToast(`${pendingOperations.length} operasi gagal disegerakkan`, 'error');
-  }
-}
-
 window.onload = () => {
-  const theme = localStorage.getItem('theme') || 'light';
-  document.documentElement.setAttribute('data-theme', theme);
-  document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+      const theme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
 
-  const today = new Date().toISOString().slice(0,10);
-  const attendanceDateInput = document.getElementById('attendanceDate');
-  if (attendanceDateInput) attendanceDateInput.value = today;
+      const today = new Date().toISOString().slice(0,10);
+      const attendanceDateInput = document.getElementById('attendanceDate');
+      if (attendanceDateInput) attendanceDateInput.value = today;
 
-  const reportDateInput = document.getElementById('reportDate');
-  if (reportDateInput) reportDateInput.value = today;
+      const reportDateInput = document.getElementById('reportDate');
+      if (reportDateInput) reportDateInput.value = today;
 
-  const savedPendingOperations = localStorage.getItem('pendingOperations');
-  if (savedPendingOperations) pendingOperations = JSON.parse(savedPendingOperations);
+      const savedPendingOperations = localStorage.getItem('pendingOperations');
+      if (savedPendingOperations) pendingOperations = JSON.parse(savedPendingOperations);
 
-  // JANGAN panggil syncPendingOperations di sini
-};
+      // JANGAN panggil syncPendingOperations di sini — tunggu selepas login berjaya
+    };
   </script>
 </body>
 </html>
+
 
 
 
