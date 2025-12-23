@@ -1930,7 +1930,7 @@ function closeAnnouncementModal() {
 }
 
 // Simpan pengumuman
-async function saveAnnouncement() {
+aasync function saveAnnouncement() {
   const text = document.getElementById('announcementText').value.trim();
   const announcement = {
     text: text,
@@ -1938,19 +1938,18 @@ async function saveAnnouncement() {
   };
 
   try {
-    await apiCall('saveAnnouncement', { announcement });
+    await apiCall('saveAnnouncement', { announcement }); // Pastikan action tepat "saveAnnouncement"
     currentAnnouncement = announcement;
-    saveLocalData('getAnnouncement', { announcement });
     renderAnnouncement();
     closeAnnouncementModal();
     showToast('Pengumuman berjaya disimpan');
   } catch (e) {
     showToast('Gagal simpan pengumuman: ' + e.message, 'error');
-  }
 }
   </script>
 </body>
 </html>
+
 
 
 
