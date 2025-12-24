@@ -614,7 +614,8 @@
     let classes = [], students = [], teachers = [], staff = [], users = [], schedule = Array(17).fill().map(() => Array(7).fill(''));
     let pendingOperations = [];
     let reports = [];
-    let announcements = [];
+    let currentAnnouncement = { text: '', date: '' };
+
 
 
     async function apiCall(action, payload = {}) {
@@ -2016,4 +2017,5 @@ async function deleteAnnouncement(id) {
   </script>
 </body>
 </html>
+
 
