@@ -341,7 +341,7 @@
 
     <div class="container">
       <main>
-        <!-- Pengumuman Senarai (V2 - Berbilang Pengumuman) -->
+        <!-- Pengumuman Senarai (V2) -->
         <div id="announcementSection" class="card" style="margin: 1rem 0;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
             <h3 style="margin: 0;"><i class="fas fa-bullhorn"></i> Pengumuman Terkini</h3>
@@ -364,6 +364,16 @@
             <div class="menu-card" onclick="showSection('manageSchedule')"><i class="fas fa-calendar-alt"></i><h3>Jadual Waktu</h3></div>
             <div class="menu-card" onclick="showSection('manageAttendance')"><i class="fas fa-check-square"></i><h3>Kehadiran</h3></div>
             <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Mengajar</h3></div>
+          </div>
+        </div>
+
+        <!-- Guru Dashboard -->
+        <div id="guruDashboard" class="hidden">
+          <h2 class="text-center">Papan Pemuka Guru</h2>
+          <div class="grid">
+            <div class="menu-card" onclick="showSection('viewSchedule')"><i class="fas fa-calendar-alt"></i><h3>Lihat Jadual</h3></div>
+            <div class="menu-card" onclick="showSection('teachingReportForm')"><i class="fas fa-file-alt"></i><h3>Laporan Harian</h3></div>
+            <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Saya</h3></div>
           </div>
         </div>
 
@@ -547,7 +557,27 @@
       </main>
     </div>
   </div>
-  <!-- Modal -->
+
+  <!-- Modal Tambah Pengumuman V2 (Satu-satunya) -->
+  <div id="announcementModal" class="hidden">
+    <div style="background: var(--card-bg, white); border-radius: 10px; padding: 2rem; width: 90%; max-width: 700px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+      <h3 id="announcementModalTitle">Tambah Pengumuman Baru</h3>
+      <div class="form-group">
+        <label>Tajuk Pengumuman</label>
+        <input type="text" id="announcementTitle" required>
+      </div>
+      <div class="form-group">
+        <label>Isi Pengumuman (boleh guna Enter untuk baris baru)</label>
+        <textarea id="announcementText" rows="8" required></textarea>
+      </div>
+      <div style="text-align:right; margin-top:1rem;">
+        <button class="btn" onclick="closeAnnouncementModal()">Batal</button>
+        <button class="btn btn-primary" onclick="saveAnnouncement()">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Utama -->
   <div id="modal" class="hidden">
     <div>
       <h3 id="modalTitle">Tambah Data</h3>
@@ -558,26 +588,11 @@
       </div>
     </div>
   </div>
+
+  <!-- Toast, Theme Toggle, Connection Status, Notes Modal -->
   <div id="toast" class="toast"></div>
   <div class="theme-toggle" onclick="toggleTheme()" title="Tukar Tema"><i class="fas fa-moon" id="themeIcon"></i></div>
   <div id="connectionStatus" class="connection-status hidden">Memeriksa sambungan...</div>
-
-<!-- Modal Edit Pengumuman -->
-  <div id="announcementModal" class="hidden">
-    <div style="background: var(--card-bg, white); border-radius: 10px; padding: 2rem; width: 90%; max-width: 700px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-      <h3>Kemaskini Pengumuman</h3>
-      <div class="form-group">
-        <label>Pengumuman (boleh guna HTML ringkas seperti <strong>tebal</strong>, <em>italic</em>, <br>baris baru)</label>
-        <textarea id="announcementText" rows="8" style="width:100%; padding:0.75rem; border-radius:5px; border:1px solid #ccc;"></textarea>
-      </div>
-      <div style="text-align:right; margin-top:1rem;">
-        <button class="btn" onclick="closeAnnouncementModal()">Batal</button>
-        <button class="btn btn-primary" onclick="saveAnnouncement()">Simpan Pengumuman</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Popup untuk Catatan Penuh -->
   <div id="notesModal" class="hidden" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:2000;">
     <div style="background:var(--card-bg,white);border-radius:10px;padding:2rem;width:90%;max-width:800px;max-height:80vh;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,0.3);">
       <h3>Catatan Penuh</h3>
@@ -588,39 +603,7 @@
     </div>
   </div>
 
- <!-- Modal Tambah Pengumuman V2 (Satu-satunya modal pengumuman) -->
-  <div id="announcementModal" class="hidden">
-    <div style="background: var(--card-bg, white); border-radius: 10px; padding: 2rem; width: 90%; max-width: 700px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-      <h3 id="announcementModalTitle">Tambah Pengumuman Baru</h3>
-      <div class="form-group">
-        <label>Tajuk Pengumuman</label>
-        <input type="text" id="announcementTitle" style="width:100%; padding:0.75rem; border-radius:5px; border:1px solid #ccc;" required>
-      </div>
-      <div class="form-group">
-        <label>Isi Pengumuman (boleh guna <br> untuk baris baru)</label>
-        <textarea id="announcementText" rows="8" style="width:100%; padding:0.75rem; border-radius:5px; border:1px solid #ccc;" required></textarea>
-      </div>
-      <div style="text-align:right; margin-top:1rem;">
-        <button class="btn" onclick="closeAnnouncementModal()">Batal</button>
-        <button class="btn btn-primary" onclick="saveAnnouncement()">Simpan Pengumuman</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal biasa, toast, theme toggle, notesModal, dll tetap sama -->
-  <div id="modal" class="hidden">
-    <div>
-      <h3 id="modalTitle">Tambah Data</h3>
-      <div id="dataForm"></div>
-      <div style="margin-top:1.5rem; text-align:right;">
-        <button type="button" class="btn" onclick="closeModal()">Batal</button>
-        <button type="button" class="btn btn-primary" id="saveBtn">Simpan</button>
-      </div>
-    </div>
-  </div>
-  <div id="toast" class="toast"></div>
-  <div class="theme-toggle" onclick="toggleTheme()" title="Tukar Tema"><i class="fas fa-moon" id="themeIcon"></i></div>
-  <div id="connectionStatus" class="connection-status hidden">Memeriksa sambungan...</div>
+ <!-- Modal Popup untuk Catatan Penuh -->
   <div id="notesModal" class="hidden" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:2000;">
     <div style="background:var(--card-bg,white);border-radius:10px;padding:2rem;width:90%;max-width:800px;max-height:80vh;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,0.3);">
       <h3>Catatan Penuh</h3>
@@ -640,8 +623,9 @@
     let pendingOperations = [];
     let reports = [];
     let announcements = [];
+    let isOnline = navigator.onLine;
 
-    async function apiCall(action, payload = {}) {
+ async function apiCall(action, payload = {}) {
       try {
         updateConnectionStatus('Memuat...', 'loading');
         const res = await fetch(API_URL, {
@@ -708,110 +692,6 @@
       document.getElementById('modal').classList.add('hidden');
       document.getElementById('dataForm').innerHTML = '';
     }
- // === PENGUMUMAN V2 (Versi Akhir & Sempurna) ===
-let announcements = [];
-
-async function loadAnnouncements() {
-  try {
-    const res = await apiCall('getAnnouncements');
-    announcements = res.announcements || [];
-    saveLocalData('getAnnouncements', res);
-  } catch (e) {
-    const local = getLocalData('getAnnouncements');
-    if (local && local.announcements) {
-      announcements = local.announcements;
-    } else {
-      announcements = [];
-    }
-    showToast('Menggunakan data pengumuman tempatan', 'warning');
-  }
-  renderAnnouncements();
-}
-
-function renderAnnouncements() {
-  const listEl = document.getElementById('announcementList');
-  const addBtn = document.getElementById('addAnnouncementBtn');
-
-  if (!listEl) return; // Elak error jika elemen belum wujud
-
-  if (announcements.length === 0) {
-    listEl.innerHTML = '<p class="text-center"><em>Tiada pengumuman buat masa ini.</em></p>';
-  } else {
-    listEl.innerHTML = '';
-    announcements.forEach((ann, index) => {
-      const isNew = index === 0 ? '<span style="background:#ef4444;color:white;padding:2px 8px;border-radius:12px;font-size:0.8rem;margin-left:10px;">BARU</span>' : '';
-      const item = document.createElement('div');
-      item.style = 'border-left:4px solid var(--primary); padding:1rem; margin-bottom:1rem; background:#f8fafc; border-radius:8px;';
-      item.innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:start;">
-          <div>
-            <strong>${ann.title || 'Tiada Tajuk'}</strong>${isNew}
-            <small style="display:block; color:#666; margin-top:4px;">${ann.date || ''}</small>
-            <div style="margin-top:8px; line-height:1.6;">${ann.text ? ann.text.replace(/\n/g, '<br>') : ''}</div>
-          </div>
-          ${currentUser && currentUser.role === 'admin' ? `<button class="btn btn-danger" style="font-size:0.8rem; padding:0.4rem 0.8rem;" onclick="deleteAnnouncement('${ann.id}')">Padam</button>` : ''}
-        </div>
-      `;
-      listEl.appendChild(item);
-    });
-  }
-
-  // Papar butang tambah hanya untuk Admin
-  if (addBtn) {
-    addBtn.style.display = (currentUser && currentUser.role === 'admin') ? 'inline-block' : 'none';
-  }
-}
-
-function openAddAnnouncement() {
-  document.getElementById('announcementModalTitle').textContent = 'Tambah Pengumuman Baru';
-  document.getElementById('announcementTitle').value = '';
-  document.getElementById('announcementText').value = '';
-  document.getElementById('announcementModal').classList.remove('hidden');
-}
-
-function closeAnnouncementModal() {
-  document.getElementById('announcementModal').classList.add('hidden');
-}
-
-async function saveAnnouncement() {
-  const title = document.getElementById('announcementTitle').value.trim();
-  const text = document.getElementById('announcementText').value.trim();
-
-  if (!title || !text) {
-    showToast('Sila isi tajuk dan isi pengumuman', 'error');
-    return;
-  }
-
-  const newAnn = {
-    id: 'ann_' + Date.now(),
-    title: title,
-    text: text,
-    date: new Date().toLocaleDateString('ms-MY')
-  };
-
-  try {
-    await apiCall('addAnnouncement', { announcement: newAnn });
-    announcements.unshift(newAnn); // Tambah di paling atas
-    renderAnnouncements();
-    closeAnnouncementModal();
-    showToast('Pengumuman baru berjaya ditambah!', 'success');
-  } catch (e) {
-    showToast('Gagal tambah pengumuman: ' + e.message, 'error');
-  }
-}
-
-async function deleteAnnouncement(id) {
-  if (!confirm('Adakah anda pasti ingin memadam pengumuman ini?')) return;
-
-  try {
-    await apiCall('deleteAnnouncement', { id });
-    announcements = announcements.filter(a => a.id !== id);
-    renderAnnouncements();
-    showToast('Pengumuman berjaya dipadam', 'success');
-  } catch (e) {
-    showToast('Gagal memadam pengumuman: ' + e.message, 'error');
-  }
-}
 
 // === LOGIN (Dikemaskini untuk panggil loadAnnouncements) ===
 async function login() {
@@ -865,8 +745,7 @@ async function login() {
         document.getElementById('password').value = '';
       }
     }
-
-    async function loadCommonData() {
+ async function loadCommonData() {
       try {
         const [c, s] = await Promise.all([
           apiCall('getClasses'),
@@ -1696,8 +1575,7 @@ async function login() {
         showToast(e.message, 'error');
       }
     }
-
-     // === SHOW SECTION (Kemaskini pengumuman setiap kali tukar section) ===
+// === SHOW SECTION (Kemaskini pengumuman setiap kali tukar section) ===
 function showSection(id) {
   document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
   const sec = document.getElementById(id);
@@ -2005,6 +1883,32 @@ async function syncPendingOperations() {
     tbody.innerHTML += rowHtml;
   }
 }
+// Tambah fungsi yang mungkin hilang
+    function restrictViewerAccess() {
+      // Jika ada role viewer, sembunyikan menu tertentu
+      // Contoh: jika currentUser.role === 'viewer', sembunyikan butang edit dll
+    }
+
+    function filterTable(tableId, searchValue, roleFilter = '') {
+      const table = document.getElementById(tableId);
+      if (!table) return;
+      const rows = table.querySelectorAll('tbody tr');
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        const roleCell = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
+        const matchSearch = text.includes(searchValue.toLowerCase());
+        const matchRole = roleFilter === '' || roleCell === roleFilter.toLowerCase();
+        row.style.display = matchSearch && matchRole ? '' : 'none';
+      });
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const newTheme = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      document.getElementById('themeIcon').className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
     window.onload = () => {
       const theme = localStorage.getItem('theme') || 'light';
       document.documentElement.setAttribute('data-theme', theme);
@@ -2027,7 +1931,6 @@ async function syncPendingOperations() {
         isOnline = false;
       }
     };
-  </script>
+</script>
 </body>
 </html>
-
