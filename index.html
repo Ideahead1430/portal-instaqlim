@@ -596,7 +596,7 @@ bottom right, rgba(245,158,11,0.05) 0%, transparent 50%);
   <script>
     const API_URL = 'https://script.google.com/macros/s/AKfycbymIHgtOJ6ERQwbrtUC3M2J-6Er6yWk7CqAsg0Ps7DL1g_B6Lt6ddVWN2xQm6LUZOgB/exec';
     let currentUser = null;
-    let announcements = [];
+    let announcement = [];
     let pendingOperations = [];
     // ... (pembolehubah lain kekal sama)
 
@@ -629,8 +629,8 @@ bottom right, rgba(245,158,11,0.05) 0%, transparent 50%);
         document.getElementById('guruDashboard').classList.toggle('hidden', r.user.role === 'admin');
 
         await loadCommonData();
-        await loadAnnouncements();            // Muat pengumuman
-        renderAnnouncements();                // Papar pengumuman — betulkan nama fungsi
+        await loadAnnouncement();            // Muat pengumuman
+        renderAnnouncement();                // Papar pengumuman — betulkan nama fungsi
 
         showToast('Log masuk berjaya');
       } catch (err) {
@@ -643,27 +643,27 @@ bottom right, rgba(245,158,11,0.05) 0%, transparent 50%);
     }
 
     // Fungsi pengumuman
-    async function loadAnnouncements() {
+    async function loadAnnouncement() {
       try {
-        const res = await apiCall('getAnnouncements');
-        announcements = res.announcements || [];
-        saveLocalData('getAnnouncements', res);
+        const res = await apiCall('getAnnouncement');
+        announcement= res.announcement || [];
+        saveLocalData('getAnnouncement', res);
       } catch (e) {
-        const local = getLocalData('getAnnouncements');
-        announcements = local && local.announcements ? local.announcements : [];
+        const local = getLocalData('getAnnouncement');
+        announcement = local && local.announcement ? local.announcement : [];
       }
-      renderAnnouncements();
+      renderAnnouncement();
     }
 
-    function renderAnnouncements() {
+    function renderAnnouncement() {
       const listEl = document.getElementById('announcementList');
       const addBtn = document.getElementById('addAnnouncementBtn');
 
-      if (announcements.length === 0) {
+      if (announcement.length === 0) {
         listEl.innerHTML = '<p class="text-center"><em>Tiada pengumuman buat masa ini.</em></p>';
       } else {
         listEl.innerHTML = '';
-        announcements.forEach((ann, index) => {
+        announcement.forEach((ann, index) => {
           const isNew = index === 0 ? '<span style="background:#ef4444;color:white;padding:2px 8px;border-radius:12px;font-size:0.8rem;margin-left:10px;">BARU</span>' : '';
           const item = document.createElement('div');
           item.style = 'border-left:4px solid var(--primary); padding:1rem; margin-bottom:1rem; background:#f8fafc; border-radius:8px;';
@@ -709,8 +709,8 @@ bottom right, rgba(245,158,11,0.05) 0%, transparent 50%);
       };
       try {
         await apiCall('addAnnouncement', { announcement: newAnn });
-        announcements.unshift(newAnn);
-        renderAnnouncements();
+        announcement.unshift(newAnn);
+        renderAnnouncement();
         closeAnnouncementModal();
         showToast('Pengumuman baru berjaya ditambah!');
       } catch (e) {
@@ -722,8 +722,8 @@ bottom right, rgba(245,158,11,0.05) 0%, transparent 50%);
       if (!confirm('Padam pengumuman ini?')) return;
       try {
         await apiCall('deleteAnnouncement', { id });
-        announcements = announcements.filter(a => a.id !== id);
-        renderAnnouncements();
+        announcement = announcement.filter(a => a.id !== id);
+        renderAnnouncement();
         showToast('Pengumuman berjaya dipadam');
       } catch (e) {
         showToast('Gagal padam: ' + e.message, 'error');
@@ -748,7 +748,7 @@ document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidde
       if (id === 'manageAttendance') loadAttendance();
       if (id === 'viewSchedule') loadViewSchedule();
       if (id === 'viewTeachingReports') loadTeachingReports();
-      renderAnnouncements(); // Pastikan pengumuman segar setiap kali tukar section
+      renderAnnouncement(); // Pastikan pengumuman segar setiap kali tukar section
     }
 
      // === PENGGUNA ===
@@ -1825,35 +1825,35 @@ async function syncPendingOperations() {
 }
 
 // Muat pengumuman dari server
-let announcements = [];
+let announcement = [];
 
 // Muat senarai pengumuman
-async function loadAnnouncements() {
+async function loadAnnouncement() {
   try {
-    const res = await apiCall('getAnnouncements');
-    announcements = res.announcements || [];
-    saveLocalData('getAnnouncements', res);
+    const res = await apiCall('getAnnouncement');
+    announcement = res.announcement || [];
+    saveLocalData('getAnnouncement', res);
   } catch (e) {
-    const local = getLocalData('getAnnouncements');
-    if (local && local.announcements) {
-      announcements = local.announcements;
+    const local = getLocalData('getAnnouncement');
+    if (local && local.announcement) {
+      announcement = local.announcement;
     } else {
-      announcements = [];
+      announcement = [];
     }
   }
-  renderAnnouncements();
+  renderAnnouncement();
 }
 
 // Render senarai pengumuman
-function renderAnnouncements() {
+function renderAnnouncement() {
   const listEl = document.getElementById('announcementList');
   const addBtn = document.getElementById('addAnnouncementBtn');
 
-  if (announcements.length === 0) {
+  if (announcement.length === 0) {
     listEl.innerHTML = '<p class="text-center"><em>Tiada pengumuman buat masa ini.</em></p>';
   } else {
     listEl.innerHTML = '';
-    announcements.forEach((ann, index) => {
+    announcement.forEach((ann, index) => {
       const isNew = index === 0 ? '<span style="background:#ef4444;color:white;padding:2px 8px;border-radius:12px;font-size:0.8rem;margin-left:10px;">BARU</span>' : '';
       const item = document.createElement('div');
       item.style = 'border-left:4px solid var(--primary); padding:1rem; margin-bottom:1rem; background:#f8fafc; border-radius:8px;';
@@ -1907,8 +1907,8 @@ async function saveAnnouncement() {
 
   try {
     await apiCall('addAnnouncement', { announcement: newAnn });
-    announcements.unshift(newAnn); // Tambah di atas
-    renderAnnouncements();
+    announcement.unshift(newAnn); // Tambah di atas
+    renderAnnouncement();
     closeAnnouncementModal();
     showToast('Pengumuman baru berjaya ditambah!');
   } catch (e) {
@@ -1922,8 +1922,8 @@ async function deleteAnnouncement(id) {
 
   try {
     await apiCall('deleteAnnouncement', { id });
-    announcements = announcements.filter(a => a.id !== id);
-    renderAnnouncements();
+    announcement = announcement.filter(a => a.id !== id);
+    renderAnnouncement();
     showToast('Pengumuman berjaya dipadam');
   } catch (e) {
     showToast('Gagal padam: ' + e.message, 'error');
