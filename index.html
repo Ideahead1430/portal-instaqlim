@@ -617,12 +617,16 @@
     let currentAnnouncement = { text: '', date: '' };
 
     async function apiCall(action, payload = {}) {
-      try {
-        updateConnectionStatus('Memuat...', 'loading');
-        const res = await fetch(API_URL, {
-          method: 'POST',
-          body: JSON.stringify({ action, ...payload })
-        });
+  try {
+    updateConnectionStatus('Memuat...', 'loading');
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      redirect: 'follow',  // Penting untuk ikut redirect Google
+      body: JSON.stringify({ action, ...payload }),
+      headers: {
+        'Content-Type': 'text/plain;charset=utf-8'  // Ini kunci utama!
+      }
+    });
         const responseText = await res.text();
         let data;
         try {
@@ -2015,3 +2019,4 @@ async function deleteAnnouncement(id) {
   </script>
 </body>
 </html>
+
