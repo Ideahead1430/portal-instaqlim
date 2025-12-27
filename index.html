@@ -684,25 +684,25 @@
       document.getElementById('dataForm').innerHTML = '';
     }
 
-     async function login() {
+      async function login() {
       const u = document.getElementById('username').value.trim();
       const p = document.getElementById('password').value;
       const errorEl = document.getElementById('loginError');
-      
+
       if (!u || !p) {
         errorEl.textContent = 'Isi username dan kata laluan';
         errorEl.classList.remove('hidden');
         return;
       }
-      
+
       errorEl.classList.add('hidden');
-      
+
       const loginBtn = document.querySelector('#loginPage button');
       const originalText = loginBtn.innerHTML;
       loginBtn.innerHTML = '<span class="loading"></span> Memuat...';
       loginBtn.disabled = true;
-      
-try {
+
+      try {
         const r = await apiCall('login', { username: u, password: p });
         currentUser = r.user;
         document.getElementById('loginPage').classList.add('hidden');
@@ -712,11 +712,10 @@ try {
         document.getElementById('adminDashboard').classList.toggle('hidden', r.user.role !== 'admin');
         document.getElementById('guruDashboard').classList.toggle('hidden', r.user.role === 'admin');
         await loadCommonData();
-      await loadAnnouncements();
-      showToast('Log masuk berjaya');
-    }
-       
- } catch (err) {
+        await loadAnnouncement(); // Tambah ini
+    renderAnnouncement(); // Pastikan paparan pengumuman muncul
+    showToast('Log masuk berjaya');
+      } catch (err) {
         errorEl.textContent = err.message || 'Login gagal';
         errorEl.classList.remove('hidden');
       } finally {
@@ -2088,3 +2087,4 @@ async function deleteAnnouncement(id) {
   </script>
 </body>
 </html>
+
