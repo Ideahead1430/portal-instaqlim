@@ -6,43 +6,38 @@
   <title>INSTAQLIM - Institut Tahfiz Al-Quran lil Muttaqin</title>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* (Semua CSS anda kekal sama — tiada perubahan di sini untuk ringkas) */
-    :root { 
---primary: #10b981; 
---secondary: #f59e0b; 
---danger: #ef4444; 
---light: #f0fdf4; 
---dark: #1f2937; 
---warning: #f59e0b; 
---indigo: #6366f1; 
---red: #dc2626; 
---success: #10b981; 
-}
-    [data-theme="dark"] { 
---bg-color: #0f172a; 
---card-bg: #1e293b; 
---text-color: #e2e8f0; 
---border-color: #4a5568; 
---light: #1e293b; 
-}
-    * { 
-margin:0; 
-padding:0; 
-box-sizing:border-box; 
-}
-    body { 
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-background: var(--light); 
-color: #333; 
-line-height: 1.6; 
-      background-image: radial-gradient(circle at top left, 
-rgba(16,185,129,0.05) 0%, transparent 50%), radial-gradient(circle at 
-bottom right, rgba(245,158,11,0.05) 0%, transparent 50%);
-      position: relative; 
-}
-    /* ... (semua style lain anda kekal sama) ... */
-    /* Untuk mengelakkan penulisan semula yang panjang, saya anggap CSS anda tidak diubah */
- body::before {
+    :root {
+      --primary: #10b981;
+      --secondary: #f59e0b;
+      --danger: #ef4444;
+      --light: #f0fdf4;
+      --dark: #1f2937;
+      --warning: #f59e0b;
+      --indigo: #6366f1;
+      --red: #dc2626;
+      --success: #10b981;
+    }
+    [data-theme="dark"] {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --text-color: #e2e8f0;
+      --border-color: #4a5568;
+      --light: #1e293b;
+    }
+    * {
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--light);
+      color: #333;
+      line-height: 1.6;
+      background-image: radial-gradient(circle at top left, rgba(16,185,129,0.05) 0%, transparent 50%), radial-gradient(circle at bottom right, rgba(245,158,11,0.05) 0%, transparent 50%);
+      position: relative;
+    }
+    body::before {
       content: '';
       position: absolute;
       top: 0;
@@ -310,7 +305,6 @@ bottom right, rgba(245,158,11,0.05) 0%, transparent 50%);
     #notesModal:not(.hidden) { display: flex; }
     #fullNotes { font-size: 1.1rem; line-height: 1.6; word-wrap: break-word; }
   </style>
- 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -347,38 +341,36 @@ bottom right, rgba(245,158,11,0.05) 0%, transparent 50%);
 
     <div class="container">
       <main>
-        <!-- Pengumuman Senarai -->
-        <div id="announcementSection" class="card" style="margin: 1rem 0;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-            <h3 style="margin: 0;"><i class="fas fa-bullhorn"></i> Pengumuman Terkini</h3>
-            <button id="addAnnouncementBtn" class="btn btn-success" style="display: none;" onclick="openAddAnnouncement()">+ Tambah Pengumuman</button>
-          </div>
-          <div id="announcementList">
-            <p class="text-center"><em>Tiada pengumuman buat masa ini.</em></p>
-          </div>
-        </div>
+        <!-- Pengumuman Senarai (V2 - Berbilang Pengumuman) -->
+<div id="announcementSection" class="card" style="margin: 1rem 0;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+    <h3 style="margin: 0;"><i class="fas fa-bullhorn"></i> Pengumuman Terkini</h3>
+    <button id="addAnnouncementBtn" class="btn btn-success" style="display: none;" onclick="openAddAnnouncement()">+ Tambah Pengumuman</button>
+  </div>
+  <div id="announcementList">
+    <p class="text-center"><em>Tiada pengumuman buat masa ini.</em></p>
+  </div>
+</div>
 
-        <!-- Modal Tambah/Kemaskini Pengumuman (satu sahaja) -->
-        <div id="announcementModal" class="hidden">
-          <div style="background: var(--card-bg, white); border-radius: 10px; padding: 2rem; width: 90%; max-width: 700px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-            <h3 id="announcementModalTitle">Tambah Pengumuman Baru</h3>
-            <div class="form-group">
-              <label>Tajuk Pengumuman</label>
-              <input type="text" id="announcementTitle" style="width:100%; padding:0.75rem; border-radius:5px; border:1px solid #ccc;" required>
-            </div>
-            <div class="form-group">
-              <label>Isi Pengumuman (boleh guna <br> untuk baris baru)</label>
-              <textarea id="announcementText" rows="8" style="width:100%; padding:0.75rem; border-radius:5px; border:1px solid #ccc;" required></textarea>
-            </div>
-            <div style="text-align:right; margin-top:1rem;">
-              <button class="btn" onclick="closeAnnouncementModal()">Batal</button>
-              <button class="btn btn-primary" onclick="saveAnnouncement()">Simpan Pengumuman</button>
-            </div>
-          </div>
-        </div>
+<!-- Modal Tambah/Kemaskini Pengumuman -->
+<div id="announcementModal" class="hidden">
+  <div style="background: var(--card-bg, white); border-radius: 10px; padding: 2rem; width: 90%; max-width: 700px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+    <h3 id="announcementModalTitle">Tambah Pengumuman Baru</h3>
+    <div class="form-group">
+      <label>Tajuk Pengumuman</label>
+      <input type="text" id="announcementTitle" style="width:100%; padding:0.75rem; border-radius:5px; border:1px solid #ccc;" required>
+    </div>
+    <div class="form-group">
+      <label>Isi Pengumuman (boleh guna <br> untuk baris baru)</label>
+      <textarea id="announcementText" rows="8" style="width:100%; padding:0.75rem; border-radius:5px; border:1px solid #ccc;" required></textarea>
+    </div>
+    <div style="text-align:right; margin-top:1rem;">
+      <button class="btn" onclick="closeAnnouncementModal()">Batal</button>
+      <button class="btn btn-primary" onclick="saveAnnouncement()">Simpan Pengumuman</button>
+    </div>
+  </div>
+</div>
 
-        <!-- (Seterusnya semua dashboard dan section lain anda kekal sama) -->
-        <!-- ... (saya tidak menyalin semula semua bahagian panjang untuk ringkas) ... -->
         <!-- Admin Dashboard -->
         <div id="adminDashboard" class="hidden">
           <h2 class="text-center">Papan Pemuka Pentadbir</h2>
@@ -492,24 +484,6 @@ bottom right, rgba(245,158,11,0.05) 0%, transparent 50%);
   </tbody>
 </table>
           </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
           <!-- Kehadiran -->
           <div id="manageAttendance" class="card hidden">
             <h3>Kehadiran Pelajar</h3>
@@ -519,8 +493,7 @@ bottom right, rgba(245,158,11,0.05) 0%, transparent 50%);
               <button class="btn btn-primary" onclick="loadAttendance()">Muat Kehadiran</button>
             </div>
             <table id="attendanceTable">
-              <thead><tr><th>Bil</th><th>Nama Pelajar</th><th>Kelas</th><th>Hadir</th><th>Tidak 
-Hadir</th></tr></thead>
+              <thead><tr><th>Bil</th><th>Nama Pelajar</th><th>Kelas</th><th>Hadir</th><th>Tidak Hadir</th></tr></thead>
               <tbody></tbody>
             </table>
             <button class="btn btn-success" onclick="saveAttendance()">Simpan Kehadiran</button>
@@ -591,25 +564,39 @@ Hadir</th></tr></thead>
           </div>
         </div>
       </main>
-      </main>
     </div>
   </div>
-  <!-- Modal umum, toast, theme toggle, dsb. (kekal sama) -->
+  <!-- Modal -->
   <div id="modal" class="hidden">
-<div>
+    <div>
       <h3 id="modalTitle">Tambah Data</h3>
       <div id="dataForm"></div>
       <div style="margin-top:1.5rem; text-align:right;">
         <button type="button" class="btn" onclick="closeModal()">Batal</button>
         <button type="button" class="btn btn-primary" id="saveBtn">Simpan</button>
-</div>
-</div>
+      </div>
+    </div>
   </div>
   <div id="toast" class="toast"></div>
   <div class="theme-toggle" onclick="toggleTheme()" title="Tukar Tema"><i class="fas fa-moon" id="themeIcon"></i></div>
   <div id="connectionStatus" class="connection-status hidden">Memeriksa sambungan...</div>
 
-  <!-- Modal Catatan Penuh -->
+<!-- Modal Edit Pengumuman -->
+  <div id="announcementModal" class="hidden">
+    <div style="background: var(--card-bg, white); border-radius: 10px; padding: 2rem; width: 90%; max-width: 700px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+      <h3>Kemaskini Pengumuman</h3>
+      <div class="form-group">
+        <label>Pengumuman (boleh guna HTML ringkas seperti <strong>tebal</strong>, <em>italic</em>, <br>baris baru)</label>
+        <textarea id="announcementText" rows="8" style="width:100%; padding:0.75rem; border-radius:5px; border:1px solid #ccc;"></textarea>
+      </div>
+      <div style="text-align:right; margin-top:1rem;">
+        <button class="btn" onclick="closeAnnouncementModal()">Batal</button>
+        <button class="btn btn-primary" onclick="saveAnnouncement()">Simpan Pengumuman</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Popup untuk Catatan Penuh -->
   <div id="notesModal" class="hidden" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:2000;">
     <div style="background:var(--card-bg,white);border-radius:10px;padding:2rem;width:90%;max-width:800px;max-height:80vh;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,0.3);">
       <h3>Catatan Penuh</h3>
@@ -621,12 +608,14 @@ Hadir</th></tr></thead>
   </div>
 
   <script>
-    const API_URL = 'https://script.google.com/macros/s/AKfycbymIHgtOJ6ERQwbrtUC3M2J-6Er6yWk7CqAsg0Ps7DL1g_B6Lt6ddVWN2xQm6LUZOgB/exec';
+   const API_URL = 'https://script.google.com/macros/s/AKfycbymIHgtOJ6ERQwbrtUC3M2J-6Er6yWk7CqAsg0Ps7DL1g_B6Lt6ddVWN2xQm6LUZOgB/exec';
     let currentUser = null;
-    let announcements = [];
+    let currentSection = '';
+    let classes = [], students = [], teachers = [], staff = [], users = [], schedule = Array(17).fill().map(() => Array(7).fill(''));
     let pendingOperations = [];
-let reports = [];
+    let reports = [];
     let currentAnnouncement = { text: '', date: '' };
+
     async function apiCall(action, payload = {}) {
       try {
         updateConnectionStatus('Memuat...', 'loading');
@@ -657,15 +646,18 @@ let reports = [];
         throw new Error('Tidak dapat menyambung ke pelayan.');
       }
     }
+
     function getLocalData(action) {
       const dataKey = `local_${action}`;
       const data = localStorage.getItem(dataKey);
       return data ? JSON.parse(data) : null;
     }
+
     function saveLocalData(action, data) {
       const dataKey = `local_${action}`;
       localStorage.setItem(dataKey, JSON.stringify(data));
     }
+
     function updateConnectionStatus(message, type) {
       const statusEl = document.getElementById('connectionStatus');
       statusEl.textContent = message;
@@ -678,6 +670,7 @@ let reports = [];
       }
       statusEl.classList.remove('hidden');
     }
+
     function showToast(msg, type = 'success') {
       const t = document.getElementById('toast');
       t.textContent = msg;
@@ -685,22 +678,25 @@ let reports = [];
       t.classList.add('show');
       setTimeout(() => t.classList.remove('show'), 4000);
     }
+
     function closeModal() {
       document.getElementById('modal').classList.add('hidden');
       document.getElementById('dataForm').innerHTML = '';
     }
 
-    // Fungsi login — DIPERBAIKI
     async function login() {
       const u = document.getElementById('username').value.trim();
       const p = document.getElementById('password').value;
       const errorEl = document.getElementById('loginError');
+
       if (!u || !p) {
         errorEl.textContent = 'Isi username dan kata laluan';
         errorEl.classList.remove('hidden');
         return;
       }
+
       errorEl.classList.add('hidden');
+
       const loginBtn = document.querySelector('#loginPage button');
       const originalText = loginBtn.innerHTML;
       loginBtn.innerHTML = '<span class="loading"></span> Memuat...';
@@ -709,20 +705,16 @@ let reports = [];
       try {
         const r = await apiCall('login', { username: u, password: p });
         currentUser = r.user;
-
         document.getElementById('loginPage').classList.add('hidden');
         document.getElementById('mainApp').classList.remove('hidden');
         document.getElementById('userName').textContent = r.user.name || u;
         document.getElementById('userRole').textContent = r.user.role === 'admin' ? 'Pentadbir' : 'Guru';
-
         document.getElementById('adminDashboard').classList.toggle('hidden', r.user.role !== 'admin');
         document.getElementById('guruDashboard').classList.toggle('hidden', r.user.role === 'admin');
-
         await loadCommonData();
-        await loadAnnouncements();            // Muat pengumuman
-        renderAnnouncements();                // Papar pengumuman — betulkan nama fungsi
-
-        showToast('Log masuk berjaya');
+        await loadAnnouncements(); // Tambah ini
+    renderAnnouncements(); // Pastikan paparan pengumuman muncul
+    showToast('Log masuk berjaya');
       } catch (err) {
         errorEl.textContent = err.message || 'Login gagal';
         errorEl.classList.remove('hidden');
@@ -732,97 +724,55 @@ let reports = [];
       }
     }
 
-    // Fungsi pengumuman
-    async function loadAnnouncements() {
-      try {
-        const res = await apiCall('getAnnouncements');
-        announcements = res.announcements || [];
-        saveLocalData('getAnnouncements', res);
-      } catch (e) {
-        const local = getLocalData('getAnnouncements');
-        announcements = local && local.announcements ? local.announcements : [];
+    function logout() {
+      if (confirm('Log keluar?')) {
+        currentUser = null;
+        document.getElementById('mainApp').classList.add('hidden');
+        document.getElementById('loginPage').classList.remove('hidden');
+        document.getElementById('username').value = '';
+        document.getElementById('password').value = '';
       }
-      renderAnnouncements();
     }
 
-    function renderAnnouncements() {
-      const listEl = document.getElementById('announcementList');
-      const addBtn = document.getElementById('addAnnouncementBtn');
+    async function loadCommonData() {
+      try {
+        const [c, s] = await Promise.all([
+          apiCall('getClasses'),
+          apiCall('getSchedule')
+        ]);
+        classes = c.classes || [];
+        schedule = s.schedule || Array(17).fill().map(() => Array(7).fill(''));
+        saveLocalData('getClasses', c);
+        saveLocalData('getSchedule', s);
+        populateClassSelects();
+      } catch (e) {
+        const c = getLocalData('getClasses');
+        const s = getLocalData('getSchedule');
+        if (c && s) {
+          classes = c.classes || [];
+          schedule = s.schedule || Array(17).fill().map(() => Array(7).fill(''));
+          populateClassSelects();
+          showToast('Menggunakan data tempatan', 'warning');
+        }
+      }
+    }
 
-      if (announcements.length === 0) {
-        listEl.innerHTML = '<p class="text-center"><em>Tiada pengumuman buat masa ini.</em></p>';
-      } else {
-        listEl.innerHTML = '';
-        announcements.forEach((ann, index) => {
-          const isNew = index === 0 ? '<span style="background:#ef4444;color:white;padding:2px 8px;border-radius:12px;font-size:0.8rem;margin-left:10px;">BARU</span>' : '';
-          const item = document.createElement('div');
-          item.style = 'border-left:4px solid var(--primary); padding:1rem; margin-bottom:1rem; background:#f8fafc; border-radius:8px;';
-          item.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:start;">
-              <div>
-                <strong>${ann.title || 'Tiada Tajuk'}</strong>${isNew}
-                <small style="display:block; color:#666; margin-top:4px;">${ann.date || ''}</small>
-                <div style="margin-top:8px; line-height:1.6;">${ann.text ? ann.text.replace(/\n/g, '<br>') : ''}</div>
-              </div>
-              ${currentUser && currentUser.role === 'admin' ? `<button class="btn btn-danger btn-small" style="font-size:0.8rem; padding:0.3rem 0.6rem;" onclick="deleteAnnouncement('${ann.id}')">Padam</button>` : ''}
-            </div>
-          `;
-          listEl.appendChild(item);
+    function populateClassSelects() {
+      ['reportClass', 'studentClassFilter'].forEach(id => {
+        const sel = document.getElementById(id);
+        if (!sel) return;
+        sel.innerHTML = '<option value="">Pilih/Semua Kelas</option>';
+        classes.forEach(cls => {
+          const opt = document.createElement('option');
+          opt.value = cls.name;
+          opt.textContent = cls.name;
+          sel.appendChild(opt);
         });
-      }
-      addBtn.style.display = (currentUser && currentUser.role === 'admin') ? 'inline-block' : 'none';
+      });
     }
 
-    function openAddAnnouncement() {
-      document.getElementById('announcementModalTitle').textContent = 'Tambah Pengumuman Baru';
-      document.getElementById('announcementTitle').value = '';
-      document.getElementById('announcementText').value = '';
-      document.getElementById('announcementModal').classList.remove('hidden');
-    }
-
-    function closeAnnouncementModal() {
-      document.getElementById('announcementModal').classList.add('hidden');
-    }
-
-    async function saveAnnouncement() {
-      const title = document.getElementById('announcementTitle').value.trim();
-      const text = document.getElementById('announcementText').value.trim();
-      if (!title || !text) {
-        showToast('Sila isi tajuk dan isi pengumuman', 'error');
-        return;
-      }
-      const newAnn = {
-        id: 'ann_' + Date.now(),
-        title: title,
-        text: text,
-        date: new Date().toLocaleDateString('ms-MY')
-      };
-      try {
-        await apiCall('addAnnouncement', { announcement: newAnn });
-        announcements.unshift(newAnn);
-        renderAnnouncements();
-        closeAnnouncementModal();
-        showToast('Pengumuman baru berjaya ditambah!');
-      } catch (e) {
-        showToast('Gagal tambah pengumuman: ' + e.message, 'error');
-      }
-    }
-
-    async function deleteAnnouncement(id) {
-      if (!confirm('Padam pengumuman ini?')) return;
-      try {
-        await apiCall('deleteAnnouncement', { id });
-        announcements = announcements.filter(a => a.id !== id);
-        renderAnnouncements();
-        showToast('Pengumuman berjaya dipadam');
-      } catch (e) {
-        showToast('Gagal padam: ' + e.message, 'error');
-      }
-    }
-
-    // Dalam showSection, panggil render semula pengumuman supaya sentiasa terkini
     function showSection(id) {
-document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
+      document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
       const sec = document.getElementById(id);
       if (sec) sec.classList.remove('hidden');
       document.getElementById('sections').classList.remove('hidden');
@@ -837,10 +787,11 @@ document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidde
       if (id === 'manageAttendance') loadAttendance();
       if (id === 'viewSchedule') loadViewSchedule();
       if (id === 'viewTeachingReports') loadTeachingReports();
-      renderAnnouncements(); // Pastikan pengumuman segar setiap kali tukar section
+      loadAnnouncements().then(() => renderAnnouncements()); // Update pengumuman setiap kali tukar section
+  restrictViewerAccess();
     }
 
-     // === PENGGUNA ===
+    // === PENGGUNA ===
     async function loadUsers() {
       try {
         const res = await apiCall('getUsers');
