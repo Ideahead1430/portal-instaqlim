@@ -1089,25 +1089,7 @@
       } catch (err) {
         showToast(err.message, 'error');
       }
-    async function populateHafazanStudentSelect() {
-  const sel = document.getElementById('hafazanStudent');
-  if (!sel) return;
-
-  sel.innerHTML = '<option value="">Pilih Pelajar</option>';
-
-  if (students.length === 0) {
-    sel.innerHTML += '<option value="">Tiada pelajar dijumpai</option>';
-    return;
-  }
-
-  students.forEach(s => {
-    const opt = document.createElement('option');
-    opt.value = s.id;
-    opt.textContent = `${s.name} (${s.class || 'Tiada Kelas'})`;
-    opt.dataset.class = s.class || '';
-    sel.appendChild(opt);
-  });
-}
+   
 
     // === GURU ===
     async function loadTeachers() {
