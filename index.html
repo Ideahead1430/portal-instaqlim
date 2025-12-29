@@ -2135,6 +2135,51 @@
         showToast('Gagal padam: ' + e.message, 'error');
       }
     }
+        // === HAFAZAN REPORT LIST ===
+    async function loadHafazanReports() {
+      try {
+        const res = await apiCall('getHafazanReports');
+        const reports = res.reports || [];
+        
+        const tbody = document.querySelector('#hafazanTable tbody');
+        tbody.innerHTML = '';
+        
+        if (reports.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="8" class="text-center">Tiada laporan hafazan dijumpai.</td></tr>';
+          return;
+        }
+
+        // Urutkan ikut tarikh terbaru
+        reports.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        reports.forEach(r => {
+          tbody.innerHTML += `
+            <tr>
+              <td>${r.date || '-'}</td>
+              <td>${r.studentName || 'Tanpa Nama'}<br><small style="color:#888">${r.studentId || ''}</small></td>
+              <td>${r.class || '-'}</td>
+              <td>${r.surah || '-'}</td>
+              <td>${r.ayatFrom || ''} - ${r.ayatTo || ''}</td>
+              <td>
+                <span style="
+                  padding: 4px 8px; 
+                  border-radius: 12px; 
+                  font-size: 0.8rem; 
+                  color: white; 
+                  background-color: ${r.status === 'Lancar' ? '#10b981' : r.status === 'Sederhana' ? '#f59e0b' : '#ef4444'}">
+                  ${r.status || '-'}
+                </span>
+              </td>
+              <td>${r.teacherName || '-'}</td>
+              <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${r.notes || ''}">${r.notes || '-'}</td>
+            </tr>`;
+        });
+      } catch (e) {
+        console.error(e);
+        const tbody = document.querySelector('#hafazanTable tbody');
+        if(tbody) tbody.innerHTML = '<tr><td colspan="8" class="text-center">Gagal memuat data hafazan.</td></tr>';
+      }
+    }
     
     // === UTILS ===
     function toggleTheme() {
@@ -2175,6 +2220,7 @@
   </script>
 </body>
 </html>
+
 
 
 
