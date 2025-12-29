@@ -55,7 +55,7 @@
       color: var(--primary);
     }
     header {
-background: linear-gradient(to right, var(--primary), #059669);
+      background: linear-gradient(to right, var(--primary), #059669);
       color: white;
       padding: 1rem 0;
       position: relative;
@@ -393,50 +393,10 @@ background: linear-gradient(to right, var(--primary), #059669);
             <div class="menu-card" onclick="showSection('viewSchedule')"><i class="fas fa-calendar-alt"></i><h3>Lihat Jadual</h3></div>
             <div class="menu-card" onclick="showSection('teachingReportForm')"><i class="fas fa-file-alt"></i><h3>Laporan Harian</h3></div>
             <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Saya</h3></div>
-            <!-- Dalam guruDashboard grid -->
-<div class="menu-card" onclick="showSection('hafazanReportForm')"><i class="fas fa-book-quran"></i><h3>Laporan Hafazan Harian</h3></div>
-<div class="menu-card" onclick="showSection('viewHafazanReports')"><i class="fas fa-file-alt"></i><h3>Senarai Laporan Hafazan</h3></div>
           </div>
         </div>
-        
         <!-- Sections -->
         <div id="sections" class="hidden">
-          <!-- Form Laporan Hafazan -->
-<div id="hafazanReportForm" class="card hidden">
-  <h3>Laporan Hafazan Harian</h3>
-  <div class="form-group"><label>Tarikh</label><input type="date" id="hafazanDate" required></div>
-  <div class="form-group"><label>Pelajar</label><select id="hafazanStudent" required><option value="">Pilih Pelajar</option></select></div>
-  <div class="form-group"><label>Hafazan Baru (Surah:Ayat atau Muka Surat)</label><input type="text" id="newHafazan" placeholder="Contoh: Al-Baqarah:1-10 atau M/S 15-16" required></div>
-  <div class="form-group"><label>Jumlah Muka Surat/Ayat Baru</label><input type="text" id="newPages" placeholder="Contoh: 1 muka surat"></div>
-  <div class="form-group"><label>Tasmi'/Murajaah</label><input type="text" id="tasmi" placeholder="Contoh: 2 muka surat lama"></div>
-  <div class="form-group"><label>Mutu Bacaan</label>
-    <select id="quality" required>
-      <option value="">Pilih</option>
-      <option value="Cemerlang">Cemerlang</option>
-      <option value="Baik">Baik</option>
-      <option value="Sederhana">Sederhana</option>
-      <option value="Perlu Pembetulan">Perlu Pembetulan</option>
-    </select>
-  </div>
-  <div class="form-group"><label>Catatan Guru</label><textarea id="hafazanNotes" rows="4"></textarea></div>
-  <button class="btn btn-success" onclick="saveHafazanReport()">Hantar Laporan</button>
-</div>
-
-<!-- Senarai Laporan Hafazan -->
-<div id="viewHafazanReports" class="card hidden">
-  <h3>Senarai Laporan Hafazan Pelajar</h3>
-  <div class="search-filter">
-    <input type="text" id="hafazanSearch" placeholder="Cari nama pelajar..." onkeyup="filterHafazanTable()">
-    <select id="hafazanClassFilter"><option value="">Semua Kelas</option></select>
-    <input type="date" id="hafazanDateFilter">
-  </div>
-  <table id="hafazanTable">
-    <thead><tr><th>Tarikh</th><th>Pelajar</th><th>Kelas</th><th>Hafazan Baru</th><th>Jumlah Baru</th><th>Tasmi'</th><th>Mutu</th><th>Catatan</th><th>Guru</th></tr></thead>
-    <tbody></tbody>
-  </table>
-  <button class="btn btn-primary" onclick="exportHafazanPDF()">PDF</button>
-</div>
-          
           <!-- Pengurusan Pengguna -->
           <div id="manageUsers" class="card hidden">
             <h3>Pengurusan Pengguna Sistem</h3>
@@ -648,7 +608,7 @@ background: linear-gradient(to right, var(--primary), #059669);
   </div>
 
   <script>
-   const _URL = 'https://script.google.com/macros/s/AKfycbymIHgtOJ6ERQwbrtUC3M2J-6Er6yWk7CqAsg0Ps7DL1g_B6Lt6ddVWN2xQm6LUZOgB/exec';
+   const API_URL = 'https://script.google.com/macros/s/AKfycbymIHgtOJ6ERQwbrtUC3M2J-6Er6yWk7CqAsg0Ps7DL1g_B6Lt6ddVWN2xQm6LUZOgB/exec';
     let currentUser = null;
     let currentSection = '';
     let classes = [], students = [], teachers = [], staff = [], users = [], schedule = Array(17).fill().map(() => Array(7).fill(''));
@@ -676,7 +636,7 @@ background: linear-gradient(to right, var(--primary), #059669);
     }
 
     if (data.status !== 'success') throw new Error(data.message || 'Ralat server');
-
+    
     updateConnectionStatus('Dalam talian', 'success');
     return data;
   } catch (e) {
@@ -836,12 +796,6 @@ background: linear-gradient(to right, var(--primary), #059669);
       loadAnnouncements().then(() => renderAnnouncements()); // Update pengumuman setiap kali tukar section
   restrictViewerAccess();
     }
-      if (id === 'hafazanReportForm') {
-    populateHafazanStudentSelect();
-    document.getElementById('hafazanDate').value = new Date().toISOString().slice(0,10);
-  }
-  if (id === 'viewHafazanReports') loadHafazanReports();
-}
 
     // === PENGGUNA ===
     async function loadUsers() {
@@ -1914,82 +1868,6 @@ async function syncPendingOperations() {
   } else {
     showToast(`${pendingOperations.length} operasi gagal disegerakkan`, 'error');
   }
-}
-    let hafazanReports = [];
-
-// Muat pelajar untuk select
-async function populateHafazanStudentSelect() {
-  await loadStudents(); // Pastikan students loaded
-  const sel = document.getElementById('hafazanStudent');
-  sel.innerHTML = '<option value="">Pilih Pelajar</option>';
-  students.forEach(s => {
-    const opt = document.createElement('option');
-    opt.value = s.id;
-    opt.textContent = s.name + ' (' + s.class + ')';
-    opt.dataset.class = s.class;
-    sel.appendChild(opt);
-  });
-}
-
-// Simpan laporan
-async function saveHafazanReport() {
-  const studentSel = document.getElementById('hafazanStudent');
-  const student = students.find(s => s.id === studentSel.value);
-  if (!student) return showToast('Pilih pelajar', 'error');
-
-  const report = {
-    date: document.getElementById('hafazanDate').value || new Date().toISOString().slice(0,10),
-    studentName: student.name,
-    studentId: student.id,
-    class: student.class,
-    newHafazan: document.getElementById('newHafazan').value.trim(),
-    newPages: document.getElementById('newPages').value.trim(),
-    tasmi: document.getElementById('tasmi').value.trim(),
-    quality: document.getElementById('quality').value,
-    notes: document.getElementById('hafazanNotes').value.trim(),
-    teacher: currentUser.name
-  };
-
-  try {
-    await apiCall('addHafazanReport', { report });
-    showToast('Laporan hafazan berjaya dihantar!');
-    // Kosongkan form
-    document.querySelectorAll('#hafazanReportForm input, #hafazanReportForm textarea, #hafazanReportForm select').forEach(el => el.value = '');
-    document.getElementById('hafazanDate').value = new Date().toISOString().slice(0,10);
-  } catch (e) {
-    showToast('Gagal hantar: ' + e.message, 'error');
-  }
-}
-
-// Muat senarai laporan
-async function loadHafazanReports() {
-  try {
-    const res = await apiCall('getHafazanReports');
-    hafazanReports = res.reports || [];
-    renderHafazanReports();
-  } catch (e) {
-    hafazanReports = [];
-    renderHafazanReports();
-  }
-}
-
-function renderHafazanReports() {
-  const tbody = document.querySelector('#hafazanTable tbody');
-  tbody.innerHTML = '';
-  hafazanReports.forEach(r => {
-    tbody.innerHTML += `
-      <tr>
-        <td>${r.date || '-'}</td>
-        <td>${r.studentName || '-'}</td>
-        <td>${r.class || '-'}</td>
-        <td>${r.newHafazan || '-'}</td>
-        <td>${r.newPages || '-'}</td>
-        <td>${r.tasmi || '-'}</td>
-        <td>${r.quality || '-'}</td>
-        <td>${r.notes || '-'}</td>
-        <td>${r.teacher || '-'}</td>
-      </tr>`;
-  });
 }
 
 // Muat pengumuman dari server
