@@ -1826,6 +1826,56 @@
         }
       }
     }
+        // === HAFAZAN REPORT ===
+    async function saveHafazanReport() {
+      const date = document.getElementById('hafazanDate').value;
+      const studentId = document.getElementById('hafazanStudent').value;
+      const surah = document.getElementById('hafazanSurah').value;
+      const from = document.getElementById('hafazanFrom').value;
+      const to = document.getElementById('hafazanTo').value;
+      const status = document.getElementById('hafazanStatus').value;
+      const notes = document.getElementById('hafazanNotes').value;
+
+      // Pengesahan input
+      if (!date || !studentId || !surah || !from || !to) {
+        return showToast('Sila isi semua medan wajib (Tarikh, Pelajar, Surah, Ayat)', 'error');
+      }
+
+      // Cari nama pelajar berdasarkan ID untuk rekod
+      const studentObj = students.find(s => s.id === studentId);
+      const studentName = studentObj ? studentObj.name : 'Pelajar Tidak Diketahui';
+
+      const report = {
+        id: 'hafazan_' + Date.now(),
+        date: date,
+        studentId: studentId,
+        studentName: studentName,
+        surah: surah,
+        ayatFrom: from,
+        ayatTo: to,
+        status: status,
+        notes: notes,
+        teacherId: currentUser.id,
+        teacherName: currentUser.name,
+        class: studentObj ? studentObj.class : ''
+      };
+
+      try {
+        await apiCall('addHafazanReport', { report: report });
+        showToast('Laporan Hafazan berjaya disimpan');
+        
+        // Reset borang selepas berjaya
+        document.getElementById('hafazanSurah').value = '';
+        document.getElementById('hafazanFrom').value = '';
+        document.getElementById('hafazanTo').value = '';
+        document.getElementById('hafazanNotes').value = '';
+        document.getElementById('hafazanStudent').selectedIndex = 0;
+        // Kekalkan tarikh hari ini
+        document.getElementById('hafazanDate').value = new Date().toISOString().slice(0,10);
+      } catch (err) {
+        showToast('Gagal menyimpan: ' + err.message, 'error');
+      }
+    }
 
     // Toggle semua checkbox
     function toggleSelectAll() {
@@ -2113,3 +2163,4 @@
   </script>
 </body>
 </html>
+
