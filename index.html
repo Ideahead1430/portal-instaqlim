@@ -383,9 +383,15 @@
             <div class="menu-card" onclick="showSection('manageSchedule')"><i class="fas fa-calendar-alt"></i><h3>Jadual Waktu</h3></div>
             <div class="menu-card" onclick="showSection('manageAttendance')"><i class="fas fa-check-square"></i><h3>Kehadiran</h3></div>
             <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Mengajar</h3></div>
-          </div>
-        </div>
-
+            <div class="menu-card" onclick="showSection('hafazanReportForm')">
+  <i class="fas fa-book-quran"></i>
+  <h3>Laporan Hafazan Harian</h3>
+</div>
+<div class="menu-card" onclick="showSection('viewHafazanReports')">
+  <i class="fas fa-file-alt"></i>
+  <h3>Senarai Laporan Hafazan</h3>
+</div>
+        
         <!-- Guru Dashboard -->
         <div id="guruDashboard" class="hidden">
           <h2 class="text-center">Papan Pemuka Guru</h2>
@@ -818,11 +824,11 @@
     }
 
     function showSection(id) {
-      document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
-      const sec = document.getElementById(id);
-      if (sec) sec.classList.remove('hidden');
-      document.getElementById('sections').classList.remove('hidden');
-      currentSection = id;
+  document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
+  const sec = document.getElementById(id);
+  if (sec) sec.classList.remove('hidden');
+  document.getElementById('sections').classList.remove('hidden');
+  currentSection = id;
 
       if (id === 'manageUsers') loadUsers();
       if (id === 'manageStudents') loadStudents();
@@ -835,12 +841,21 @@
       if (id === 'viewTeachingReports') loadTeachingReports();
       loadAnnouncements().then(() => renderAnnouncements()); // Update pengumuman setiap kali tukar section
   restrictViewerAccess();
-      if (id === 'hafazanReportForm') {
-    populateHafazanStudentSelect();
-    document.getElementById('hafazanDate').value = new Date().toISOString().slice(0,10);
+     // TAMBAHAN KHUSUS UNTUK HAFAZAN
+  if (id === 'hafazanReportForm') {
+    // Muat semula data pelajar dan isi dropdown
+    loadStudents().then(() => {
+      populateHafazanStudentSelect();
+      // Set tarikh hari ini
+      document.getElementById('hafazanDate').value = new Date().toISOString().slice(0,10);
+    });
   }
-  if (id === 'viewHafazanReports') loadHafazanReports();
-}
+
+  if (id === 'viewHafazanReports') {
+    loadHafazanReports();
+    // Optional: populate filter kelas
+    populateHafazanClassFilter();
+  }
 
     // === PENGGUNA ===
     async function loadUsers() {
@@ -2142,6 +2157,7 @@ async function deleteAnnouncement(id) {
   </script>
 </body>
 </html>
+
 
 
 
