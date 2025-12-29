@@ -965,6 +965,14 @@
     }
 
     function showSection(id) {
+      // === SEMAKAN KESELAMATAN: Hanya Admin boleh masuk menu Pengurusan ===
+      if (currentUser.role !== 'admin') {
+        const adminOnlySections = ['manageUsers', 'manageStudents', 'manageTeachers', 'manageStaff', 'manageClasses', 'manageSchedule', 'manageAttendance'];
+        if (adminOnlySections.includes(id)) {
+          showToast('Akses Ditolak: Hanya Admin dibenarkan.', 'error');
+          return; 
+        }
+      }
       document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
       const sec = document.getElementById(id);
       if (sec) sec.classList.remove('hidden');
@@ -1017,18 +1025,24 @@
       }
     }
 
-    function renderUsers() {
+       function renderUsers() {
       const tbody = document.querySelector('#userTable tbody');
       tbody.innerHTML = '';
       users.forEach(u => {
         const roleText = u.role === 'admin' ? 'Pentadbir' : u.role === 'guru' ? 'Guru' : 'Kakitangan';
+        
+        let actionButtons = '-';
+        if (currentUser.role === 'admin') {
+          actionButtons = `
+            <button class="btn btn-edit" onclick="editUser('${u.id}')">Kemaskini</button>
+            ${u.username !== 'admin' ? `<button class="btn btn-danger" onclick="deleteUser('${u.id}')">Padam</button>` : ''}
+          `;
+        }
+
         tbody.innerHTML += `
           <tr>
             <td>${u.username}</td><td>${u.name}</td><td>${roleText}</td><td>${u.ic || '-'}</td><td>${u.status || 'active'}</td>
-            <td>
-              <button class="btn btn-edit" onclick="editUser('${u.id}')">Kemaskini</button>
-              ${u.username !== 'admin' ? `<button class="btn btn-danger" onclick="deleteUser('${u.id}')">Padam</button>` : ''}
-            </td>
+            <td>${actionButtons}</td>
           </tr>`;
       });
     }
@@ -1156,17 +1170,23 @@
       }
     }
 
-    function renderStudents() {
+        function renderStudents() {
       const tbody = document.querySelector('#studentTable tbody');
       tbody.innerHTML = '';
       students.forEach(s => {
+        // Logik: Jika bukan admin, jangan paparkan butang Kemaskini/Padam
+        let actionButtons = '-';
+        if (currentUser.role === 'admin') {
+          actionButtons = `
+            <button class="btn btn-edit" onclick="editStudent('${s.id}')">Kemaskini</button>
+            <button class="btn btn-danger" onclick="deleteStudent('${s.id}')">Padam</button>
+          `;
+        }
+
         tbody.innerHTML += `
           <tr>
             <td>${s.id}</td><td>${s.name}</td><td>${s.ic}</td><td>${s.class}</td><td>${s.guardian}</td><td>${s.guardianphone}</td>
-            <td>
-              <button class="btn btn-edit" onclick="editStudent('${s.id}')">Kemaskini</button>
-              <button class="btn btn-danger" onclick="deleteStudent('${s.id}')">Padam</button>
-            </td>
+            <td>${actionButtons}</td>
           </tr>`;
       });
     }
@@ -1305,17 +1325,21 @@
       }
     }
 
-    function renderTeachers() {
+        function renderTeachers() {
       const tbody = document.querySelector('#teacherTable tbody');
       tbody.innerHTML = '';
       teachers.forEach(t => {
+        let actionButtons = '-';
+        if (currentUser.role === 'admin') {
+          actionButtons = `
+            <button class="btn btn-edit" onclick="editTeacher('${t.id}')">Kemaskini</button>
+            <button class="btn btn-danger" onclick="deleteTeacher('${t.id}')">Padam</button>
+          `;
+        }
         tbody.innerHTML += `
           <tr>
             <td>${t.id}</td><td>${t.name}</td><td>${t.ic}</td><td>${t.subject}</td><td>${t.phone}</td>
-            <td>
-              <button class="btn btn-edit" onclick="editTeacher('${t.id}')">Kemaskini</button>
-              <button class="btn btn-danger" onclick="deleteTeacher('${t.id}')">Padam</button>
-            </td>
+            <td>${actionButtons}</td>
           </tr>`;
       });
     }
@@ -2310,8 +2334,17 @@
       document.getElementById('themeIcon').className = target === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
     }
 
-    function restrictViewerAccess() {
-      // Logic if needed to restrict certain sections based on role
+        function restrictViewerAccess() {
+      // Jika user bukan admin, sembunyikan semua butang Tambah di seksyen pengurusan
+      if (currentUser.role !== 'admin') {
+        // Cari semua butang yang mempunyai teks "Tambah" dan sembunyikannya
+        const addButtons = document.querySelectorAll('button');
+        addButtons.forEach(btn => {
+          if (btn.textContent.includes('Tambah') || btn.textContent.includes('+ ')) {
+             btn.classList.add('hidden');
+          }
+        });
+      }
     }
 
     window.onload = () => {
@@ -2339,6 +2372,7 @@
   </script>
 </body>
 </html>
+
 
 
 
