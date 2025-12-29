@@ -2135,7 +2135,7 @@
         showToast('Gagal padam: ' + e.message, 'error');
       }
     }
-        // === HAFAZAN REPORT LIST ===
+    // === HAFAZAN REPORT LIST (SUDAH DIBETULKAN KE HURUF KECIL) ===
     async function loadHafazanReports() {
       try {
         const res = await apiCall('getHafazanReports');
@@ -2156,10 +2156,13 @@
           tbody.innerHTML += `
             <tr>
               <td>${r.date || '-'}</td>
-              <td>${r.studentName || 'Tanpa Nama'}<br><small style="color:#888">${r.studentId || ''}</small></td>
+              <td>
+                ${r.studentname || 'Tanpa Nama'} 
+                <br><small style="color:#888">${r.studentid || ''}</small>
+              </td>
               <td>${r.class || '-'}</td>
               <td>${r.surah || '-'}</td>
-              <td>${r.ayatFrom || ''} - ${r.ayatTo || ''}</td>
+              <td>${r.ayatfrom || ''} - ${r.ayatto || ''}</td>
               <td>
                 <span style="
                   padding: 4px 8px; 
@@ -2170,7 +2173,7 @@
                   ${r.status || '-'}
                 </span>
               </td>
-              <td>${r.teacherName || '-'}</td>
+              <td>${r.teachername || '-'}</td>
               <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${r.notes || ''}">${r.notes || '-'}</td>
             </tr>`;
         });
@@ -2220,6 +2223,7 @@
   </script>
 </body>
 </html>
+
 
 
 
