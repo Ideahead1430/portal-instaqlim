@@ -621,14 +621,28 @@
            <button class="btn btn-success" onclick="saveHafazanReport()">Simpan Laporan Hafazan</button>
 </div>
           <!-- Senarai Hafazan (Placehoder) -->
-          <div id="viewHafazanReports" class="card hidden">
+            <div id="viewHafazanReports" class="card hidden">
             <h3>Senarai Laporan Hafazan</h3>
-            <p style="text-align:center; padding: 20px; color: #666;">Senarai laporan hafazan akan dipaparkan di sini.</p>
+            <div style="margin:1rem 0; text-align:right;">
+               <!-- Butang untuk cetak jika perlu -->
+               <button class="btn btn-print" onclick="window.print()">Cetak Senarai</button>
+            </div>
+            <table id="hafazanTable">
+              <thead>
+                <tr>
+                  <th>Tarikh</th>
+                  <th>Nama Pelajar</th>
+                  <th>Kelas</th>
+                  <th>Surah</th>
+                  <th>Ayat</th>
+                  <th>Status</th>
+                  <th>Guru</th>
+                  <th>Catatan</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
           </div>
-        </div>
-      </main>
-    </div>
-  </div>
 
   <!-- Modal Generic -->
   <div id="modal" class="hidden">
@@ -2161,6 +2175,7 @@
   </script>
 </body>
 </html>
+
 
 
 
