@@ -1089,7 +1089,25 @@
       } catch (err) {
         showToast(err.message, 'error');
       }
-    }
+    async function populateHafazanStudentSelect() {
+  const sel = document.getElementById('hafazanStudent');
+  if (!sel) return;
+
+  sel.innerHTML = '<option value="">Pilih Pelajar</option>';
+
+  if (students.length === 0) {
+    sel.innerHTML += '<option value="">Tiada pelajar dijumpai</option>';
+    return;
+  }
+
+  students.forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = s.id;
+    opt.textContent = `${s.name} (${s.class || 'Tiada Kelas'})`;
+    opt.dataset.class = s.class || '';
+    sel.appendChild(opt);
+  });
+}
 
     // === GURU ===
     async function loadTeachers() {
@@ -1612,6 +1630,20 @@
       if (id === 'manageAttendance') loadAttendance();
       if (id === 'viewSchedule') loadViewSchedule();
       if (id === 'viewTeachingReports') loadTeachingReports();
+      // TAMBAHAN KHUSUS UNTUK HAFAZAN
+  if (id === 'hafazanReportForm') {
+    // Muat semula data pelajar dan isi dropdown
+    loadStudents().then(() => {
+      populateHafazanStudentSelect();
+      // Set tarikh hari ini
+      document.getElementById('hafazanDate').value = new Date().toISOString().slice(0,10);
+    });
+  }
+
+  if (id === 'viewHafazanReports') {
+    loadHafazanReports();
+    // Optional: populate filter kelas
+    populateHafazanClassFilter();
     }
 
     async function loadTeachingReports() {
@@ -2027,5 +2059,6 @@ async function deleteAnnouncement(id) {
   </script>
 </body>
 </html>
+
 
 
