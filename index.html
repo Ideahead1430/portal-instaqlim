@@ -391,13 +391,16 @@
           </div>
         </div>
 
-        <!-- Guru Dashboard -->
+        <!-- Guru Dashboard (DIKEMASKINI) -->
         <div id="guruDashboard" class="hidden">
           <h2 class="text-center">Papan Pemuka Guru</h2>
           <div class="grid">
             <div class="menu-card" onclick="showSection('viewSchedule')"><i class="fas fa-calendar-alt"></i><h3>Lihat Jadual</h3></div>
             <div class="menu-card" onclick="showSection('teachingReportForm')"><i class="fas fa-file-alt"></i><h3>Laporan Harian</h3></div>
             <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Saya</h3></div>
+            <!-- Menu Hafazan untuk Guru ditambah di sini -->
+            <div class="menu-card" onclick="showSection('hafazanReportForm')"><i class="fas fa-book-quran"></i><h3>Laporan Hafazan</h3></div>
+            <div class="menu-card" onclick="showSection('viewHafazanReports')"><i class="fas fa-list"></i><h3>Senarai Hafazan</h3></div>
           </div>
         </div>
 
@@ -578,7 +581,7 @@
             <button class="btn btn-success" onclick="saveTeachingReport()">Hantar Laporan</button>
           </div>
 
-          <!-- Hafazan Report Form (TAMBAHAN) -->
+          <!-- Hafazan Report Form -->
           <div id="hafazanReportForm" class="card hidden">
             <h3>Laporan Hafazan Harian</h3>
             <div class="form-group">
@@ -616,6 +619,12 @@
               <textarea id="hafazanNotes" rows="3"></textarea>
             </div>
             <button class="btn btn-success" onclick="alert('Simpan Hafazan - Fungsi ini perlu disambungkan ke API.')">Simpan Laporan Hafazan</button>
+          </div>
+
+          <!-- Senarai Hafazan (Placehoder) -->
+          <div id="viewHafazanReports" class="card hidden">
+            <h3>Senarai Laporan Hafazan</h3>
+            <p style="text-align:center; padding: 20px; color: #666;">Senarai laporan hafazan akan dipaparkan di sini.</p>
           </div>
         </div>
       </main>
@@ -784,21 +793,28 @@
 
     async function loadCommonData() {
       try {
-        const [c, s] = await Promise.all([
+        // TAMBAHAN: Muat data pelajar di sini supaya sedia ada semasa log masuk
+        const [c, s, st] = await Promise.all([
           apiCall('getClasses'),
-          apiCall('getSchedule')
+          apiCall('getSchedule'),
+          apiCall('getStudents') 
         ]);
         classes = c.classes || [];
         schedule = s.schedule || Array(17).fill().map(() => Array(7).fill(''));
+        students = st.students || []; // Simpan data pelajar
         saveLocalData('getClasses', c);
         saveLocalData('getSchedule', s);
+        saveLocalData('getStudents', st);
         populateClassSelects();
       } catch (e) {
+        // Fallback kepada data tempatan jika gagal
         const c = getLocalData('getClasses');
         const s = getLocalData('getSchedule');
+        const st = getLocalData('getStudents'); // Dapatkan pelajar dari tempatan
         if (c && s) {
           classes = c.classes || [];
           schedule = s.schedule || Array(17).fill().map(() => Array(7).fill(''));
+          if(st) students = st.students || []; // Pastikan pelajar ada
           populateClassSelects();
           showToast('Menggunakan data tempatan', 'warning');
         }
@@ -835,6 +851,22 @@
       if (id === 'manageAttendance') loadAttendance();
       if (id === 'viewSchedule') loadViewSchedule();
       if (id === 'viewTeachingReports') loadTeachingReports();
+      
+      // Logik untuk borang hafazan
+      if (id === 'hafazanReportForm') {
+        document.getElementById('hafazanDate').value = new Date().toISOString().slice(0,10);
+        // Populate dropdown pelajar. Jika array pelajar kosong, cuba muat semula.
+        populateHafazanStudentSelect();
+        if (students.length === 0) {
+           loadStudents().then(() => populateHafazanStudentSelect());
+        }
+      }
+      
+      // Logik untuk senarai hafazan
+      if (id === 'viewHafazanReports') {
+         loadHafazanReports();
+      }
+
       loadAnnouncements().then(() => renderAnnouncements());
       restrictViewerAccess();
     }
@@ -1125,7 +1157,7 @@
       } catch (err) {
         showToast(err.message, 'error');
       }
-    } // TAMBAHAN KURUNGAN PENUTUP YANG HILANG
+    }
 
     // === GURU ===
     async function loadTeachers() {
@@ -1252,7 +1284,7 @@
       } catch (err) {
         showToast(err.message, 'error');
       }
-    } // TAMBAHAN KURUNGAN PENUTUP YANG HILANG
+    }
 
     async function populateHafazanStudentSelect() {
       const sel = document.getElementById('hafazanStudent');
@@ -1399,7 +1431,7 @@
       } catch (err) {
         showToast(err.message, 'error');
       }
-    } // TAMBAHAN KURUNGAN PENUTUP YANG HILANG
+    }
 
     // === KELAS ===
     async function loadClasses() {
@@ -1673,14 +1705,13 @@
       }
     }
 
-    // TAMBAHAN: Logik asas untuk hafazan jika perlu di masa depan
     function populateHafazanClassFilter() {
       // Placeholder untuk filter hafazan
     }
     
     function loadHafazanReports() {
       // Placeholder untuk memuat laporan hafazan
-      const tbody = document.querySelector('#hafazanReportTable tbody'); // Pastikan ada ID ini jika dibuat
+      const tbody = document.querySelector('#hafazanReportTable tbody'); 
       if(tbody) tbody.innerHTML = '<tr><td colspan="5">Fungsi ini akan dikemaskini kelak.</td></tr>';
     }
 
