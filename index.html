@@ -618,9 +618,8 @@
               <label>Catatan Guru</label>
               <textarea id="hafazanNotes" rows="3"></textarea>
             </div>
-            <button class="btn btn-success" onclick="alert('Simpan Hafazan - Fungsi ini perlu disambungkan ke API.')">Simpan Laporan Hafazan</button>
-          </div>
-
+           <button class="btn btn-success" onclick="saveHafazanReport()">Simpan Laporan Hafazan</button>
+</div>
           <!-- Senarai Hafazan (Placehoder) -->
           <div id="viewHafazanReports" class="card hidden">
             <h3>Senarai Laporan Hafazan</h3>
@@ -1826,7 +1825,7 @@
         }
       }
     }
-        // === HAFAZAN REPORT ===
+               // === HAFAZAN REPORT ===
     async function saveHafazanReport() {
       const date = document.getElementById('hafazanDate').value;
       const studentId = document.getElementById('hafazanStudent').value;
@@ -1876,7 +1875,6 @@
         showToast('Gagal menyimpan: ' + err.message, 'error');
       }
     }
-
     // Toggle semua checkbox
     function toggleSelectAll() {
       const selectAll = document.getElementById('selectAll');
@@ -2163,5 +2161,6 @@
   </script>
 </body>
 </html>
+
 
 
