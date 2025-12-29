@@ -341,35 +341,35 @@
 
     <div class="container">
       <main>
-        <!-- Pengumuman Senarai (V2 - Berbilang Pengumuman) -->
-<div id="announcementSection" class="card" style="margin: 1rem 0;">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-    <h3 style="margin: 0;"><i class="fas fa-bullhorn"></i> Pengumuman Terkini</h3>
-    <button id="addAnnouncementBtn" class="btn btn-success" style="display: none;" onclick="openAddAnnouncement()">+ Tambah Pengumuman</button>
-  </div>
-  <div id="announcementList">
-    <p class="text-center"><em>Tiada pengumuman buat masa ini.</em></p>
-  </div>
-</div>
+        <!-- Pengumuman Senarai -->
+        <div id="announcementSection" class="card" style="margin: 1rem 0;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h3 style="margin: 0;"><i class="fas fa-bullhorn"></i> Pengumuman Terkini</h3>
+            <button id="addAnnouncementBtn" class="btn btn-success" style="display: none;" onclick="openAddAnnouncement()">+ Tambah Pengumuman</button>
+          </div>
+          <div id="announcementList">
+            <p class="text-center"><em>Tiada pengumuman buat masa ini.</em></p>
+          </div>
+        </div>
 
-<!-- Modal Tambah/Kemaskini Pengumuman -->
-<div id="announcementModal" class="hidden">
-  <div style="background: var(--card-bg, white); border-radius: 10px; padding: 2rem; width: 90%; max-width: 700px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-    <h3 id="announcementModalTitle">Tambah Pengumuman Baru</h3>
-    <div class="form-group">
-      <label>Tajuk Pengumuman</label>
-      <input type="text" id="announcementTitle" style="width:100%; padding:0.75rem; border-radius:5px; border:1px solid #ccc;" required>
-    </div>
-    <div class="form-group">
-      <label>Isi Pengumuman (boleh guna <br> untuk baris baru)</label>
-      <textarea id="announcementText" rows="8" style="width:100%; padding:0.75rem; border-radius:5px; border:1px solid #ccc;" required></textarea>
-    </div>
-    <div style="text-align:right; margin-top:1rem;">
-      <button class="btn" onclick="closeAnnouncementModal()">Batal</button>
-      <button class="btn btn-primary" onclick="saveAnnouncement()">Simpan Pengumuman</button>
-    </div>
-  </div>
-</div>
+        <!-- Modal Tambah Pengumuman -->
+        <div id="announcementModal" class="hidden">
+          <div style="background: var(--card-bg, white); border-radius: 10px; padding: 2rem; width: 90%; max-width: 700px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+            <h3 id="announcementModalTitle">Tambah Pengumuman Baru</h3>
+            <div class="form-group">
+              <label>Tajuk Pengumuman</label>
+              <input type="text" id="announcementTitle" style="width:100%; padding:0.75rem; border-radius:5px; border:1px solid #ccc;" required>
+            </div>
+            <div class="form-group">
+              <label>Isi Pengumuman (boleh guna <br> untuk baris baru)</label>
+              <textarea id="announcementText" rows="8" style="width:100%; padding:0.75rem; border-radius:5px; border:1px solid #ccc;" required></textarea>
+            </div>
+            <div style="text-align:right; margin-top:1rem;">
+              <button class="btn" onclick="closeAnnouncementModal()">Batal</button>
+              <button class="btn btn-primary" onclick="saveAnnouncement()">Simpan Pengumuman</button>
+            </div>
+          </div>
+        </div>
 
         <!-- Admin Dashboard -->
         <div id="adminDashboard" class="hidden">
@@ -383,12 +383,11 @@
             <div class="menu-card" onclick="showSection('manageSchedule')"><i class="fas fa-calendar-alt"></i><h3>Jadual Waktu</h3></div>
             <div class="menu-card" onclick="showSection('manageAttendance')"><i class="fas fa-check-square"></i><h3>Kehadiran</h3></div>
             <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Mengajar</h3></div>
-            <div class="menu-card" onclick="showSection('hafazanReportForm')"><i class="fas fa-book-quran"></i><h3>Laporan Hafazan Harian</h3>
-</div>
-<div class="menu-card" onclick="showSection('viewHafazanReports')">
-  <i class="fas fa-file-alt"></i>
-  <h3>Senarai Laporan Hafazan</h3>
-</div>
+            <div class="menu-card" onclick="showSection('hafazanReportForm')"><i class="fas fa-book-quran"></i><h3>Laporan Hafazan Harian</h3></div>
+            <div class="menu-card" onclick="showSection('viewHafazanReports')">
+              <i class="fas fa-file-alt"></i>
+              <h3>Senarai Laporan Hafazan</h3>
+            </div>
           </div>
         </div>
 
@@ -401,6 +400,7 @@
             <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Saya</h3></div>
           </div>
         </div>
+
         <!-- Sections -->
         <div id="sections" class="hidden">
           <!-- Pengurusan Pengguna -->
@@ -421,6 +421,7 @@
               <tbody></tbody>
             </table>
           </div>
+
           <!-- Pengurusan Pelajar -->
           <div id="manageStudents" class="card hidden">
             <h3>Pengurusan Pelajar</h3>
@@ -434,6 +435,7 @@
               <tbody></tbody>
             </table>
           </div>
+
           <!-- Pengurusan Guru -->
           <div id="manageTeachers" class="card hidden">
             <h3>Pengurusan Guru</h3>
@@ -443,6 +445,7 @@
               <tbody></tbody>
             </table>
           </div>
+
           <!-- Pengurusan Kakitangan -->
           <div id="manageStaff" class="card hidden">
             <h3>Pengurusan Kakitangan</h3>
@@ -452,6 +455,7 @@
               <tbody></tbody>
             </table>
           </div>
+
           <!-- Pengurusan Kelas -->
           <div id="manageClasses" class="card hidden">
             <h3>Pengurusan Kelas</h3>
@@ -461,35 +465,37 @@
               <tbody></tbody>
             </table>
           </div>
+
           <!-- Jadual Waktu -->
           <div id="manageSchedule" class="card hidden">
             <h3>Jadual Waktu</h3>
             <button class="btn btn-success" onclick="saveSchedule()">Simpan Jadual</button>
             <table id="scheduleTable">
-  <thead>
-    <tr><th>Waktu/Hari</th><th>Isnin</th><th>Selasa</th><th>Rabu</th><th>Khamis</th><th>Jumaat</th><th>Sabtu</th><th>Ahad</th></tr>
-  </thead>
-  <tbody>
-    <tr><td>06:00-07:00</td><td><input type="text" data-row="0" data-col="0"></td><td><input type="text" data-row="0" data-col="1"></td><td><input type="text" data-row="0" data-col="2"></td><td><input type="text" data-row="0" data-col="3"></td><td><input type="text" data-row="0" data-col="4"></td><td><input type="text" data-row="0" data-col="5"></td><td><input type="text" data-row="0" data-col="6"></td></tr>
-    <tr><td>07:00-08:00</td><td><input type="text" data-row="1" data-col="0"></td><td><input type="text" data-row="1" data-col="1"></td><td><input type="text" data-row="1" data-col="2"></td><td><input type="text" data-row="1" data-col="3"></td><td><input type="text" data-row="1" data-col="4"></td><td><input type="text" data-row="1" data-col="5"></td><td><input type="text" data-row="1" data-col="6"></td></tr>
-    <tr><td>08:00-09:00</td><td><input type="text" data-row="2" data-col="0"></td><td><input type="text" data-row="2" data-col="1"></td><td><input type="text" data-row="2" data-col="2"></td><td><input type="text" data-row="2" data-col="3"></td><td><input type="text" data-row="2" data-col="4"></td><td><input type="text" data-row="2" data-col="5"></td><td><input type="text" data-row="2" data-col="6"></td></tr>
-    <tr><td>09:00-10:00</td><td><input type="text" data-row="3" data-col="0"></td><td><input type="text" data-row="3" data-col="1"></td><td><input type="text" data-row="3" data-col="2"></td><td><input type="text" data-row="3" data-col="3"></td><td><input type="text" data-row="3" data-col="4"></td><td><input type="text" data-row="3" data-col="5"></td><td><input type="text" data-row="3" data-col="6"></td></tr>
-    <tr><td>10:00-11:00</td><td><input type="text" data-row="4" data-col="0"></td><td><input type="text" data-row="4" data-col="1"></td><td><input type="text" data-row="4" data-col="2"></td><td><input type="text" data-row="4" data-col="3"></td><td><input type="text" data-row="4" data-col="4"></td><td><input type="text" data-row="4" data-col="5"></td><td><input type="text" data-row="4" data-col="6"></td></tr>
-    <tr><td>11:00-12:00</td><td><input type="text" data-row="5" data-col="0"></td><td><input type="text" data-row="5" data-col="1"></td><td><input type="text" data-row="5" data-col="2"></td><td><input type="text" data-row="5" data-col="3"></td><td><input type="text" data-row="5" data-col="4"></td><td><input type="text" data-row="5" data-col="5"></td><td><input type="text" data-row="5" data-col="6"></td></tr>
-    <tr><td>12:00-13:00</td><td><input type="text" data-row="6" data-col="0"></td><td><input type="text" data-row="6" data-col="1"></td><td><input type="text" data-row="6" data-col="2"></td><td><input type="text" data-row="6" data-col="3"></td><td><input type="text" data-row="6" data-col="4"></td><td><input type="text" data-row="6" data-col="5"></td><td><input type="text" data-row="6" data-col="6"></td></tr>
-    <tr><td>13:00-14:00</td><td><input type="text" data-row="7" data-col="0"></td><td><input type="text" data-row="7" data-col="1"></td><td><input type="text" data-row="7" data-col="2"></td><td><input type="text" data-row="7" data-col="3"></td><td><input type="text" data-row="7" data-col="4"></td><td><input type="text" data-row="7" data-col="5"></td><td><input type="text" data-row="7" data-col="6"></td></tr>
-    <tr><td>14:00-15:00</td><td><input type="text" data-row="8" data-col="0"></td><td><input type="text" data-row="8" data-col="1"></td><td><input type="text" data-row="8" data-col="2"></td><td><input type="text" data-row="8" data-col="3"></td><td><input type="text" data-row="8" data-col="4"></td><td><input type="text" data-row="8" data-col="5"></td><td><input type="text" data-row="8" data-col="6"></td></tr>
-    <tr><td>15:00-16:00</td><td><input type="text" data-row="9" data-col="0"></td><td><input type="text" data-row="9" data-col="1"></td><td><input type="text" data-row="9" data-col="2"></td><td><input type="text" data-row="9" data-col="3"></td><td><input type="text" data-row="9" data-col="4"></td><td><input type="text" data-row="9" data-col="5"></td><td><input type="text" data-row="9" data-col="6"></td></tr>
-    <tr><td>16:00-17:00</td><td><input type="text" data-row="10" data-col="0"></td><td><input type="text" data-row="10" data-col="1"></td><td><input type="text" data-row="10" data-col="2"></td><td><input type="text" data-row="10" data-col="3"></td><td><input type="text" data-row="10" data-col="4"></td><td><input type="text" data-row="10" data-col="5"></td><td><input type="text" data-row="10" data-col="6"></td></tr>
-    <tr><td>17:00-18:00</td><td><input type="text" data-row="11" data-col="0"></td><td><input type="text" data-row="11" data-col="1"></td><td><input type="text" data-row="11" data-col="2"></td><td><input type="text" data-row="11" data-col="3"></td><td><input type="text" data-row="11" data-col="4"></td><td><input type="text" data-row="11" data-col="5"></td><td><input type="text" data-row="11" data-col="6"></td></tr>
-    <tr><td>18:00-19:00</td><td><input type="text" data-row="12" data-col="0"></td><td><input type="text" data-row="12" data-col="1"></td><td><input type="text" data-row="12" data-col="2"></td><td><input type="text" data-row="12" data-col="3"></td><td><input type="text" data-row="12" data-col="4"></td><td><input type="text" data-row="12" data-col="5"></td><td><input type="text" data-row="12" data-col="6"></td></tr>
-    <tr><td>19:00-20:00</td><td><input type="text" data-row="13" data-col="0"></td><td><input type="text" data-row="13" data-col="1"></td><td><input type="text" data-row="13" data-col="2"></td><td><input type="text" data-row="13" data-col="3"></td><td><input type="text" data-row="13" data-col="4"></td><td><input type="text" data-row="13" data-col="5"></td><td><input type="text" data-row="13" data-col="6"></td></tr>
-    <tr><td>20:00-21:00</td><td><input type="text" data-row="14" data-col="0"></td><td><input type="text" data-row="14" data-col="1"></td><td><input type="text" data-row="14" data-col="2"></td><td><input type="text" data-row="14" data-col="3"></td><td><input type="text" data-row="14" data-col="4"></td><td><input type="text" data-row="14" data-col="5"></td><td><input type="text" data-row="14" data-col="6"></td></tr>
-    <tr><td>21:00-22:00</td><td><input type="text" data-row="15" data-col="0"></td><td><input type="text" data-row="15" data-col="1"></td><td><input type="text" data-row="15" data-col="2"></td><td><input type="text" data-row="15" data-col="3"></td><td><input type="text" data-row="15" data-col="4"></td><td><input type="text" data-row="15" data-col="5"></td><td><input type="text" data-row="15" data-col="6"></td></tr>
-    <tr><td>22:00-23:00</td><td><input type="text" data-row="16" data-col="0"></td><td><input type="text" data-row="16" data-col="1"></td><td><input type="text" data-row="16" data-col="2"></td><td><input type="text" data-row="16" data-col="3"></td><td><input type="text" data-row="16" data-col="4"></td><td><input type="text" data-row="16" data-col="5"></td><td><input type="text" data-row="16" data-col="6"></td></tr>
-  </tbody>
-</table>
+              <thead>
+                <tr><th>Waktu/Hari</th><th>Isnin</th><th>Selasa</th><th>Rabu</th><th>Khamis</th><th>Jumaat</th><th>Sabtu</th><th>Ahad</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>06:00-07:00</td><td><input type="text" data-row="0" data-col="0"></td><td><input type="text" data-row="0" data-col="1"></td><td><input type="text" data-row="0" data-col="2"></td><td><input type="text" data-row="0" data-col="3"></td><td><input type="text" data-row="0" data-col="4"></td><td><input type="text" data-row="0" data-col="5"></td><td><input type="text" data-row="0" data-col="6"></td></tr>
+                <tr><td>07:00-08:00</td><td><input type="text" data-row="1" data-col="0"></td><td><input type="text" data-row="1" data-col="1"></td><td><input type="text" data-row="1" data-col="2"></td><td><input type="text" data-row="1" data-col="3"></td><td><input type="text" data-row="1" data-col="4"></td><td><input type="text" data-row="1" data-col="5"></td><td><input type="text" data-row="1" data-col="6"></td></tr>
+                <tr><td>08:00-09:00</td><td><input type="text" data-row="2" data-col="0"></td><td><input type="text" data-row="2" data-col="1"></td><td><input type="text" data-row="2" data-col="2"></td><td><input type="text" data-row="2" data-col="3"></td><td><input type="text" data-row="2" data-col="4"></td><td><input type="text" data-row="2" data-col="5"></td><td><input type="text" data-row="2" data-col="6"></td></tr>
+                <tr><td>09:00-10:00</td><td><input type="text" data-row="3" data-col="0"></td><td><input type="text" data-row="3" data-col="1"></td><td><input type="text" data-row="3" data-col="2"></td><td><input type="text" data-row="3" data-col="3"></td><td><input type="text" data-row="3" data-col="4"></td><td><input type="text" data-row="3" data-col="5"></td><td><input type="text" data-row="3" data-col="6"></td></tr>
+                <tr><td>10:00-11:00</td><td><input type="text" data-row="4" data-col="0"></td><td><input type="text" data-row="4" data-col="1"></td><td><input type="text" data-row="4" data-col="2"></td><td><input type="text" data-row="4" data-col="3"></td><td><input type="text" data-row="4" data-col="4"></td><td><input type="text" data-row="4" data-col="5"></td><td><input type="text" data-row="4" data-col="6"></td></tr>
+                <tr><td>11:00-12:00</td><td><input type="text" data-row="5" data-col="0"></td><td><input type="text" data-row="5" data-col="1"></td><td><input type="text" data-row="5" data-col="2"></td><td><input type="text" data-row="5" data-col="3"></td><td><input type="text" data-row="5" data-col="4"></td><td><input type="text" data-row="5" data-col="5"></td><td><input type="text" data-row="5" data-col="6"></td></tr>
+                <tr><td>12:00-13:00</td><td><input type="text" data-row="6" data-col="0"></td><td><input type="text" data-row="6" data-col="1"></td><td><input type="text" data-row="6" data-col="2"></td><td><input type="text" data-row="6" data-col="3"></td><td><input type="text" data-row="6" data-col="4"></td><td><input type="text" data-row="6" data-col="5"></td><td><input type="text" data-row="6" data-col="6"></td></tr>
+                <tr><td>13:00-14:00</td><td><input type="text" data-row="7" data-col="0"></td><td><input type="text" data-row="7" data-col="1"></td><td><input type="text" data-row="7" data-col="2"></td><td><input type="text" data-row="7" data-col="3"></td><td><input type="text" data-row="7" data-col="4"></td><td><input type="text" data-row="7" data-col="5"></td><td><input type="text" data-row="7" data-col="6"></td></tr>
+                <tr><td>14:00-15:00</td><td><input type="text" data-row="8" data-col="0"></td><td><input type="text" data-row="8" data-col="1"></td><td><input type="text" data-row="8" data-col="2"></td><td><input type="text" data-row="8" data-col="3"></td><td><input type="text" data-row="8" data-col="4"></td><td><input type="text" data-row="8" data-col="5"></td><td><input type="text" data-row="8" data-col="6"></td></tr>
+                <tr><td>15:00-16:00</td><td><input type="text" data-row="9" data-col="0"></td><td><input type="text" data-row="9" data-col="1"></td><td><input type="text" data-row="9" data-col="2"></td><td><input type="text" data-row="9" data-col="3"></td><td><input type="text" data-row="9" data-col="4"></td><td><input type="text" data-row="9" data-col="5"></td><td><input type="text" data-row="9" data-col="6"></td></tr>
+                <tr><td>16:00-17:00</td><td><input type="text" data-row="10" data-col="0"></td><td><input type="text" data-row="10" data-col="1"></td><td><input type="text" data-row="10" data-col="2"></td><td><input type="text" data-row="10" data-col="3"></td><td><input type="text" data-row="10" data-col="4"></td><td><input type="text" data-row="10" data-col="5"></td><td><input type="text" data-row="10" data-col="6"></td></tr>
+                <tr><td>17:00-18:00</td><td><input type="text" data-row="11" data-col="0"></td><td><input type="text" data-row="11" data-col="1"></td><td><input type="text" data-row="11" data-col="2"></td><td><input type="text" data-row="11" data-col="3"></td><td><input type="text" data-row="11" data-col="4"></td><td><input type="text" data-row="11" data-col="5"></td><td><input type="text" data-row="11" data-col="6"></td></tr>
+                <tr><td>18:00-19:00</td><td><input type="text" data-row="12" data-col="0"></td><td><input type="text" data-row="12" data-col="1"></td><td><input type="text" data-row="12" data-col="2"></td><td><input type="text" data-row="12" data-col="3"></td><td><input type="text" data-row="12" data-col="4"></td><td><input type="text" data-row="12" data-col="5"></td><td><input type="text" data-row="12" data-col="6"></td></tr>
+                <tr><td>19:00-20:00</td><td><input type="text" data-row="13" data-col="0"></td><td><input type="text" data-row="13" data-col="1"></td><td><input type="text" data-row="13" data-col="2"></td><td><input type="text" data-row="13" data-col="3"></td><td><input type="text" data-row="13" data-col="4"></td><td><input type="text" data-row="13" data-col="5"></td><td><input type="text" data-row="13" data-col="6"></td></tr>
+                <tr><td>20:00-21:00</td><td><input type="text" data-row="14" data-col="0"></td><td><input type="text" data-row="14" data-col="1"></td><td><input type="text" data-row="14" data-col="2"></td><td><input type="text" data-row="14" data-col="3"></td><td><input type="text" data-row="14" data-col="4"></td><td><input type="text" data-row="14" data-col="5"></td><td><input type="text" data-row="14" data-col="6"></td></tr>
+                <tr><td>21:00-22:00</td><td><input type="text" data-row="15" data-col="0"></td><td><input type="text" data-row="15" data-col="1"></td><td><input type="text" data-row="15" data-col="2"></td><td><input type="text" data-row="15" data-col="3"></td><td><input type="text" data-row="15" data-col="4"></td><td><input type="text" data-row="15" data-col="5"></td><td><input type="text" data-row="15" data-col="6"></td></tr>
+                <tr><td>22:00-23:00</td><td><input type="text" data-row="16" data-col="0"></td><td><input type="text" data-row="16" data-col="1"></td><td><input type="text" data-row="16" data-col="2"></td><td><input type="text" data-row="16" data-col="3"></td><td><input type="text" data-row="16" data-col="4"></td><td><input type="text" data-row="16" data-col="5"></td><td><input type="text" data-row="16" data-col="6"></td></tr>
+              </tbody>
+            </table>
           </div>
+
           <!-- Kehadiran -->
           <div id="manageAttendance" class="card hidden">
             <h3>Kehadiran Pelajar</h3>
@@ -504,25 +510,27 @@
             </table>
             <button class="btn btn-success" onclick="saveAttendance()">Simpan Kehadiran</button>
           </div>
+
           <!-- Lihat Jadual Guru -->
           <div id="viewSchedule" class="card hidden">
             <h3>Jadual Waktu Saya</h3>
             <table id="viewScheduleTable">
-  <thead>
-    <tr>
-      <th>Waktu/Hari</th>
-      <th>Isnin</th>
-      <th>Selasa</th>
-      <th>Rabu</th>
-      <th>Khamis</th>
-      <th>Jumaat</th>
-      <th>Sabtu</th>
-      <th>Ahad</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+              <thead>
+                <tr>
+                  <th>Waktu/Hari</th>
+                  <th>Isnin</th>
+                  <th>Selasa</th>
+                  <th>Rabu</th>
+                  <th>Khamis</th>
+                  <th>Jumaat</th>
+                  <th>Sabtu</th>
+                  <th>Ahad</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
           </div>
+
           <!-- Laporan Mengajar -->
           <div id="viewTeachingReports" class="card hidden">
             <h3>Laporan Mengajar Guru</h3>
@@ -554,6 +562,7 @@
               </table>
             </div>
           </div>
+
           <!-- Form Laporan Mengajar -->
           <div id="teachingReportForm" class="card hidden">
             <h3>Laporan Mengajar Harian</h3>
@@ -568,11 +577,52 @@
             </div>
             <button class="btn btn-success" onclick="saveTeachingReport()">Hantar Laporan</button>
           </div>
+
+          <!-- Hafazan Report Form (TAMBAHAN) -->
+          <div id="hafazanReportForm" class="card hidden">
+            <h3>Laporan Hafazan Harian</h3>
+            <div class="form-group">
+              <label>Tarikh</label>
+              <input type="date" id="hafazanDate" required>
+            </div>
+            <div class="form-group">
+              <label>Nama Pelajar</label>
+              <select id="hafazanStudent" required>
+                <option value="">Pilih Pelajar</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Surah / Juz</label>
+              <input type="text" id="hafazanSurah" placeholder="Contoh: Al-Baqarah" required>
+            </div>
+            <div class="form-group">
+              <label>Ayat (Dari - Hingga)</label>
+              <div style="display: flex; gap: 10px;">
+                <input type="text" id="hafazanFrom" placeholder="1" style="flex:1">
+                <input type="text" id="hafazanTo" placeholder="10" style="flex:1">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Status Hafazan</label>
+              <select id="hafazanStatus" required>
+                <option value="Lancar">Lancar</option>
+                <option value="Sederhana">Sederhana</option>
+                <option value="Lemah">Lemah</option>
+                <option value="Ulangan">Ulangan</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Catatan Guru</label>
+              <textarea id="hafazanNotes" rows="3"></textarea>
+            </div>
+            <button class="btn btn-success" onclick="alert('Simpan Hafazan - Fungsi ini perlu disambungkan ke API.')">Simpan Laporan Hafazan</button>
+          </div>
         </div>
       </main>
     </div>
   </div>
-  <!-- Modal -->
+
+  <!-- Modal Generic -->
   <div id="modal" class="hidden">
     <div>
       <h3 id="modalTitle">Tambah Data</h3>
@@ -583,24 +633,10 @@
       </div>
     </div>
   </div>
+
   <div id="toast" class="toast"></div>
   <div class="theme-toggle" onclick="toggleTheme()" title="Tukar Tema"><i class="fas fa-moon" id="themeIcon"></i></div>
   <div id="connectionStatus" class="connection-status hidden">Memeriksa sambungan...</div>
-
-<!-- Modal Edit Pengumuman -->
-  <div id="announcementModal" class="hidden">
-    <div style="background: var(--card-bg, white); border-radius: 10px; padding: 2rem; width: 90%; max-width: 700px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-      <h3>Kemaskini Pengumuman</h3>
-      <div class="form-group">
-        <label>Pengumuman (boleh guna HTML ringkas seperti <strong>tebal</strong>, <em>italic</em>, <br>baris baru)</label>
-        <textarea id="announcementText" rows="8" style="width:100%; padding:0.75rem; border-radius:5px; border:1px solid #ccc;"></textarea>
-      </div>
-      <div style="text-align:right; margin-top:1rem;">
-        <button class="btn" onclick="closeAnnouncementModal()">Batal</button>
-        <button class="btn btn-primary" onclick="saveAnnouncement()">Simpan Pengumuman</button>
-      </div>
-    </div>
-  </div>
 
   <!-- Modal Popup untuk Catatan Penuh -->
   <div id="notesModal" class="hidden" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:2000;">
@@ -623,31 +659,31 @@
     let currentAnnouncement = { text: '', date: '' };
 
     async function apiCall(action, payload = {}) {
-  try {
-    updateConnectionStatus('Memuat...', 'loading');
-   const res = await fetch(API_URL, {
-  method: 'POST',
-  body: JSON.stringify({ action, ...payload }),
-  headers: {
-    'Content-Type': 'text/plain;charset=utf-8'
-  }
-});
+      try {
+        updateConnectionStatus('Memuat...', 'loading');
+       const res = await fetch(API_URL, {
+          method: 'POST',
+          body: JSON.stringify({ action, ...payload }),
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+          }
+        });
 
-    const responseText = await res.text();
-    let data;
-    try {
-      data = JSON.parse(responseText);
-    } catch (e) {
-      throw new Error('Respons tidak sah dari server: ' + responseText.substring(0, 200));
-    }
+        const responseText = await res.text();
+        let data;
+        try {
+          data = JSON.parse(responseText);
+        } catch (e) {
+          throw new Error('Respons tidak sah dari server: ' + responseText.substring(0, 200));
+        }
 
-    if (data.status !== 'success') throw new Error(data.message || 'Ralat server');
-    
-    updateConnectionStatus('Dalam talian', 'success');
-    return data;
-  } catch (e) {
-    console.error('API call error:', e);
-    updateConnectionStatus('Luar talian', 'error');
+        if (data.status !== 'success') throw new Error(data.message || 'Ralat server');
+        
+        updateConnectionStatus('Dalam talian', 'success');
+        return data;
+      } catch (e) {
+        console.error('API call error:', e);
+        updateConnectionStatus('Luar talian', 'error');
         pendingOperations.push({ action, payload });
         localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
         const localData = getLocalData(action);
@@ -724,9 +760,9 @@
         document.getElementById('adminDashboard').classList.toggle('hidden', r.user.role !== 'admin');
         document.getElementById('guruDashboard').classList.toggle('hidden', r.user.role === 'admin');
         await loadCommonData();
-        await loadAnnouncements(); // Tambah ini
-    renderAnnouncements(); // Pastikan paparan pengumuman muncul
-    showToast('Log masuk berjaya');
+        await loadAnnouncements();
+        renderAnnouncements();
+        showToast('Log masuk berjaya');
       } catch (err) {
         errorEl.textContent = err.message || 'Login gagal';
         errorEl.classList.remove('hidden');
@@ -799,8 +835,8 @@
       if (id === 'manageAttendance') loadAttendance();
       if (id === 'viewSchedule') loadViewSchedule();
       if (id === 'viewTeachingReports') loadTeachingReports();
-      loadAnnouncements().then(() => renderAnnouncements()); // Update pengumuman setiap kali tukar section
-  restrictViewerAccess();
+      loadAnnouncements().then(() => renderAnnouncements());
+      restrictViewerAccess();
     }
 
     // === PENGGUNA ===
@@ -1089,7 +1125,7 @@
       } catch (err) {
         showToast(err.message, 'error');
       }
-   
+    } // TAMBAHAN KURUNGAN PENUTUP YANG HILANG
 
     // === GURU ===
     async function loadTeachers() {
@@ -1216,25 +1252,27 @@
       } catch (err) {
         showToast(err.message, 'error');
       }
-    }async function populateHafazanStudentSelect() {
-  const sel = document.getElementById('hafazanStudent');
-  if (!sel) return;
+    } // TAMBAHAN KURUNGAN PENUTUP YANG HILANG
 
-  sel.innerHTML = '<option value="">Pilih Pelajar</option>';
+    async function populateHafazanStudentSelect() {
+      const sel = document.getElementById('hafazanStudent');
+      if (!sel) return;
 
-  if (students.length === 0) {
-    sel.innerHTML += '<option value="">Tiada pelajar dijumpai</option>';
-    return;
-  }
+      sel.innerHTML = '<option value="">Pilih Pelajar</option>';
 
-  students.forEach(s => {
-    const opt = document.createElement('option');
-    opt.value = s.id;
-    opt.textContent = `${s.name} (${s.class || 'Tiada Kelas'})`;
-    opt.dataset.class = s.class || '';
-    sel.appendChild(opt);
-  });
-}
+      if (students.length === 0) {
+        sel.innerHTML += '<option value="">Tiada pelajar dijumpai</option>';
+        return;
+      }
+
+      students.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.id;
+        opt.textContent = `${s.name} (${s.class || 'Tiada Kelas'})`;
+        opt.dataset.class = s.class || '';
+        sel.appendChild(opt);
+      });
+    }
 
     // === STAFF ===
     async function loadStaff() {
@@ -1361,7 +1399,7 @@
       } catch (err) {
         showToast(err.message, 'error');
       }
-    }
+    } // TAMBAHAN KURUNGAN PENUTUP YANG HILANG
 
     // === KELAS ===
     async function loadClasses() {
@@ -1570,6 +1608,27 @@
       }
     }
 
+    function renderViewSchedule() {
+      const tbody = document.querySelector('#viewScheduleTable tbody');
+      tbody.innerHTML = '';
+
+      const timeSlots = [
+        '06:00-07:00', '07:00-08:00', '08:00-09:00', '09:00-10:00', '10:00-11:00',
+        '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00',
+        '16:00-17:00', '17:00-18:00', '18:00-19:00', '19:00-20:00', '20:00-21:00',
+        '21:00-22:00', '22:00-23:00'
+      ];
+
+      for (let row = 0; row < 17; row++) {
+        let rowHtml = `<tr><td>${timeSlots[row]}</td>`;
+        for (let col = 0; col < 7; col++) {
+          const activity = (schedule[row] && schedule[row][col]) || '-';
+          rowHtml += `<td>${activity}</td>`;
+        }
+        rowHtml += '</tr>';
+        tbody.innerHTML += rowHtml;
+      }
+    }
 
     async function loadAttendance() {
       const date = document.getElementById('attendanceDate').value || new Date().toISOString().slice(0,10);
@@ -1614,53 +1673,30 @@
       }
     }
 
-    function showSection(id) {
-      document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
-      const sec = document.getElementById(id);
-      if (sec) sec.classList.remove('hidden');
-      document.getElementById('sections').classList.remove('hidden');
-      currentSection = id;
-
-      if (id === 'manageUsers') loadUsers();
-      if (id === 'manageStudents') loadStudents();
-      if (id === 'manageTeachers') loadTeachers();
-      if (id === 'manageStaff') loadStaff();
-      if (id === 'manageClasses') loadTeachers().then(() => loadClasses());
-      if (id === 'manageSchedule') loadSchedule();
-      if (id === 'manageAttendance') loadAttendance();
-      if (id === 'viewSchedule') loadViewSchedule();
-      if (id === 'viewTeachingReports') loadTeachingReports();
-      // TAMBAHAN KHUSUS UNTUK HAFAZAN
-  if (id === 'hafazanReportForm') {
-    // Muat semula data pelajar dan isi dropdown
-    loadStudents().then(() => {
-      populateHafazanStudentSelect();
-      // Set tarikh hari ini
-      document.getElementById('hafazanDate').value = new Date().toISOString().slice(0,10);
-    });
-  }
-
-  if (id === 'viewHafazanReports') {
-    loadHafazanReports();
-    // Optional: populate filter kelas
-    populateHafazanClassFilter();
+    // TAMBAHAN: Logik asas untuk hafazan jika perlu di masa depan
+    function populateHafazanClassFilter() {
+      // Placeholder untuk filter hafazan
+    }
+    
+    function loadHafazanReports() {
+      // Placeholder untuk memuat laporan hafazan
+      const tbody = document.querySelector('#hafazanReportTable tbody'); // Pastikan ada ID ini jika dibuat
+      if(tbody) tbody.innerHTML = '<tr><td colspan="5">Fungsi ini akan dikemaskini kelak.</td></tr>';
     }
 
+    // === REPORTS ===
     async function loadTeachingReports() {
       try {
         const res = await apiCall('getTeachingReports');
         reports = res.reports || [];
-        console.log('Data laporan dari server:', reports);
         saveLocalData('getTeachingReports', res);
 
         if (currentUser && currentUser.role !== 'admin') {
           reports = reports.filter(r => r.teacherId === currentUser.id || r.teacher === currentUser.name);
-          console.log('Laporan guru ini:', reports);
         }
 
         renderTeachingReports(reports);
       } catch (e) {
-        console.error('Error loading reports:', e);
         const localRes = getLocalData('getTeachingReports');
         if (localRes && localRes.reports) {
           reports = localRes.reports;
@@ -1761,279 +1797,266 @@
     }
 
     // Toggle semua checkbox
-function toggleSelectAll() {
-  const selectAll = document.getElementById('selectAll');
-  const checkboxes = document.querySelectorAll('#teachingReportTable tbody input[type="checkbox"]');
-  checkboxes.forEach(cb => cb.checked = selectAll.checked);
-}
-
-// Cetak laporan terpilih (BETULKAN INDEX COLUMN "Bil" = ke-2)
-function printSelectedReports() {
-  const checkboxes = document.querySelectorAll('#teachingReportTable tbody input[type="checkbox"]:checked');
-  if (checkboxes.length === 0) {
-    showToast('Sila pilih sekurang-kurangnya satu laporan', 'warning');
-    return;
-  }
-
-  const selectedReports = [];
-  checkboxes.forEach(cb => {
-    const row = cb.closest('tr');
-    const indexCell = row.querySelector('td:nth-child(2)'); // "Bil" adalah column ke-2 (selepas checkbox)
-    if (!indexCell) {
-      console.warn('Column Bil tidak dijumpai');
-      return;
+    function toggleSelectAll() {
+      const selectAll = document.getElementById('selectAll');
+      const checkboxes = document.querySelectorAll('#teachingReportTable tbody input[type="checkbox"]');
+      checkboxes.forEach(cb => cb.checked = selectAll.checked);
     }
-    const index = parseInt(indexCell.textContent.trim());
-    const r = reports[index - 1];
-    if (r) selectedReports.push(r);
-    else console.warn('Laporan index tidak wujud:', index);
-  });
 
-  if (selectedReports.length === 0) {
-    showToast('Tiada laporan dipilih atau data tidak lengkap', 'error');
-    return;
-  }
+    // Cetak laporan terpilih
+    function printSelectedReports() {
+      const checkboxes = document.querySelectorAll('#teachingReportTable tbody input[type="checkbox"]:checked');
+      if (checkboxes.length === 0) {
+        showToast('Sila pilih sekurang-kurangnya satu laporan', 'warning');
+        return;
+      }
 
-  const printWindow = window.open('', '', 'width=800,height=600');
-  let content = `
-    <html><head><title>Cetak Laporan Terpilih - INSTAQLIM</title>
-    <style>
-      body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
-      .header { text-align: center; margin-bottom: 30px; }
-      .header img { width: 120px; }
-      .report { margin-bottom: 40px; page-break-after: always; }
-      table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-      th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-      th { background-color: #10b981; color: white; }
-      .notes { white-space: pre-wrap; word-break: break-word; }
-      @media print { .report:last-child { page-break-after: avoid; } }
-    </style>
-    </head><body>
-      <div class="header">
-        <img src="https://arleta.site/interactivelink/2950/Logo-Maahad.JPG" alt="Logo">
-        <h2>INSTAQLIM - Laporan Mengajar Harian Terpilih</h2>
-        <p>Tarikh Cetak: ${new Date().toLocaleDateString('ms-MY')}</p>
-      </div>
-  `;
+      const selectedReports = [];
+      checkboxes.forEach(cb => {
+        const row = cb.closest('tr');
+        const indexCell = row.querySelector('td:nth-child(2)');
+        if (!indexCell) {
+          console.warn('Column Bil tidak dijumpai');
+          return;
+        }
+        const index = parseInt(indexCell.textContent.trim());
+        const r = reports[index - 1];
+        if (r) selectedReports.push(r);
+        else console.warn('Laporan index tidak wujud:', index);
+      });
 
-  selectedReports.forEach((r, i) => {
-    content += `
-      <div class="report">
-        <h3>Laporan #${i+1}</h3>
-        <table>
-          <tr><th>Guru</th><td>${r.teacher || '-'}</td></tr>
-          <tr><th>Tarikh</th><td>${r.date || '-'}</td></tr>
-          <tr><th>Kelas</th><td>${r.class || '-'}</td></tr>
-          <tr><th>Topik</th><td>${r.topic || '-'}</td></tr>
-          <tr><th>Catatan</th><td class="notes">${r.notes || '-'}</td></tr>
-          <tr><th>Lampiran</th><td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : 'Tiada'}</td></tr>
-        </table>
-      </div>
-    `;
-  });
+      if (selectedReports.length === 0) {
+        showToast('Tiada laporan dipilih atau data tidak lengkap', 'error');
+        return;
+      }
 
-  content += `<script>window.print();<\/script></body></html>`;
-  printWindow.document.write(content);
-  printWindow.document.close();
-}
+      const printWindow = window.open('', '', 'width=800,height=600');
+      let content = `
+        <html><head><title>Cetak Laporan Terpilih - INSTAQLIM</title>
+        <style>
+          body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
+          .header { text-align: center; margin-bottom: 30px; }
+          .header img { width: 120px; }
+          .report { margin-bottom: 40px; page-break-after: always; }
+          table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+          th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+          th { background-color: #10b981; color: white; }
+          .notes { white-space: pre-wrap; word-break: break-word; }
+          @media print { .report:last-child { page-break-after: avoid; } }
+        </style>
+        </head><body>
+          <div class="header">
+            <img src="https://arleta.site/interactivelink/2950/Logo-Maahad.JPG" alt="Logo">
+            <h2>INSTAQLIM - Laporan Mengajar Harian Terpilih</h2>
+            <p>Tarikh Cetak: ${new Date().toLocaleDateString('ms-MY')}</p>
+          </div>
+      `;
 
-// Export ke PDF (CETAK SEMUA, FORMAT KEMAS)
-function exportTeachingReportPDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+      selectedReports.forEach((r, i) => {
+        content += `
+          <div class="report">
+            <h3>Laporan #${i+1}</h3>
+            <table>
+              <tr><th>Guru</th><td>${r.teacher || '-'}</td></tr>
+              <tr><th>Tarikh</th><td>${r.date || '-'}</td></tr>
+              <tr><th>Kelas</th><td>${r.class || '-'}</td></tr>
+              <tr><th>Topik</th><td>${r.topic || '-'}</td></tr>
+              <tr><th>Catatan</th><td class="notes">${r.notes || '-'}</td></tr>
+              <tr><th>Lampiran</th><td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : 'Tiada'}</td></tr>
+            </table>
+          </div>
+        `;
+      });
 
-  doc.setFontSize(18);
-  doc.setFont('helvetica', 'bold');
-  doc.text('Laporan Mengajar Harian Guru', 105, 15, { align: 'center' });
-  doc.setFontSize(12);
-  doc.setFont('helvetica', 'normal');
-  doc.text('INSTAQLIM - Institut Tahfiz Al-Quran lil Muttaqin', 105, 22, { align: 'center' });
-  doc.text(`Tarikh: ${new Date().toLocaleDateString('ms-MY')}`, 105, 29, { align: 'center' });
-
-  const table = document.getElementById('teachingReportTable');
-  const rows = table.querySelectorAll('tr');
-
-  let yPosition = 40;
-  let page = 1;
-
-  rows.forEach((row, index) => {
-    if (index === 0) doc.setFont('helvetica', 'bold');
-    else doc.setFont('helvetica', 'normal');
-
-    const cells = row.querySelectorAll('td, th');
-    let xPosition = 15;
-
-    cells.forEach(cell => {
-      const text = cell.textContent.trim();
-      doc.text(text, xPosition, yPosition);
-      xPosition += 30; // Lebar column yang lebih kemas
-    });
-
-    yPosition += 10;
-
-    if (yPosition > 270) { // Margins bawah
-      doc.addPage();
-      yPosition = 20;
-      page++;
+      content += `<script>window.print();<\/script></body></html>`;
+      printWindow.document.write(content);
+      printWindow.document.close();
     }
-  });
 
-  doc.save('laporan_mengajar.pdf');
-}
-async function syncPendingOperations() {
-  if (pendingOperations.length === 0 || !currentUser) return;
+    // Export ke PDF
+    function exportTeachingReportPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
 
-  showToast(`Menyegerakkan ${pendingOperations.length} operasi...`);
-  const operations = [...pendingOperations];
-  pendingOperations = [];
+      doc.setFontSize(18);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Laporan Mengajar Harian Guru', 105, 15, { align: 'center' });
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'normal');
+      doc.text('INSTAQLIM - Institut Tahfiz Al-Quran lil Muttaqin', 105, 22, { align: 'center' });
+      doc.text(`Tarikh: ${new Date().toLocaleDateString('ms-MY')}`, 105, 29, { align: 'center' });
 
-  for (const op of operations) {
-    try {
-      await apiCall(op.action, op.payload);
-    } catch (e) {
-      // Jika action tidak sah, jangan simpan balik pending (mungkin action lama)
-      if (e.message.includes('Aksi tidak sah')) {
-        console.warn('Action lama diabaikan:', op.action);
+      const table = document.getElementById('teachingReportTable');
+      const rows = table.querySelectorAll('tr');
+
+      let yPosition = 40;
+      let page = 1;
+
+      rows.forEach((row, index) => {
+        if (index === 0) doc.setFont('helvetica', 'bold');
+        else doc.setFont('helvetica', 'normal');
+
+        const cells = row.querySelectorAll('td, th');
+        let xPosition = 15;
+
+        cells.forEach(cell => {
+          const text = cell.textContent.trim();
+          doc.text(text, xPosition, yPosition);
+          xPosition += 30;
+        });
+
+        yPosition += 10;
+
+        if (yPosition > 270) {
+          doc.addPage();
+          yPosition = 20;
+          page++;
+        }
+      });
+
+      doc.save('laporan_mengajar.pdf');
+    }
+
+    async function syncPendingOperations() {
+      if (pendingOperations.length === 0 || !currentUser) return;
+
+      showToast(`Menyegerakkan ${pendingOperations.length} operasi...`);
+      const operations = [...pendingOperations];
+      pendingOperations = [];
+
+      for (const op of operations) {
+        try {
+          await apiCall(op.action, op.payload);
+        } catch (e) {
+          if (e.message.includes('Aksi tidak sah')) {
+            console.warn('Action lama diabaikan:', op.action);
+          } else {
+            pendingOperations.push(op);
+          }
+        }
+      }
+
+      localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
+      if (pendingOperations.length === 0) {
+        showToast('Semua operasi disegerakkan');
       } else {
-        pendingOperations.push(op);
+        showToast(`${pendingOperations.length} operasi gagal disegerakkan`, 'error');
       }
     }
-  }
 
-  localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-  if (pendingOperations.length === 0) {
-    showToast('Semua operasi disegerakkan');
-  } else {
-    showToast(`${pendingOperations.length} operasi gagal disegerakkan`, 'error');
-  }
-}
+    // === PENGUMUMAN ===
+    let announcements = [];
 
-// Muat pengumuman dari server
-let announcements = [];
-
-// Muat senarai pengumuman
-async function loadAnnouncements() {
-  try {
-    const res = await apiCall('getAnnouncements');
-    announcements = res.announcements || [];
-    saveLocalData('getAnnouncements', res);
-  } catch (e) {
-    const local = getLocalData('getAnnouncements');
-    if (local && local.announcements) {
-      announcements = local.announcements;
-    } else {
-      announcements = [];
+    async function loadAnnouncements() {
+      try {
+        const res = await apiCall('getAnnouncements');
+        announcements = res.announcements || [];
+        saveLocalData('getAnnouncements', res);
+      } catch (e) {
+        const local = getLocalData('getAnnouncements');
+        if (local && local.announcements) {
+          announcements = local.announcements;
+        } else {
+          announcements = [];
+        }
+      }
+      renderAnnouncements();
     }
-  }
-  renderAnnouncements();
-}
 
-// Render senarai pengumuman
-function renderAnnouncements() {
-  const listEl = document.getElementById('announcementList');
-  const addBtn = document.getElementById('addAnnouncementBtn');
+    function renderAnnouncements() {
+      const listEl = document.getElementById('announcementList');
+      const addBtn = document.getElementById('addAnnouncementBtn');
 
-  if (announcements.length === 0) {
-    listEl.innerHTML = '<p class="text-center"><em>Tiada pengumuman buat masa ini.</em></p>';
-  } else {
-    listEl.innerHTML = '';
-    announcements.forEach((ann, index) => {
-      const isNew = index === 0 ? '<span style="background:#ef4444;color:white;padding:2px 8px;border-radius:12px;font-size:0.8rem;margin-left:10px;">BARU</span>' : '';
-      const item = document.createElement('div');
-      item.style = 'border-left:4px solid var(--primary); padding:1rem; margin-bottom:1rem; background:#f8fafc; border-radius:8px;';
-      item.innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:start;">
-          <div>
-            <strong>${ann.title || 'Tiada Tajuk'}</strong>${isNew}
-            <small style="display:block; color:#666; margin-top:4px;">${ann.date || ''}</small>
-            <div style="margin-top:8px; line-height:1.6;">${ann.text ? ann.text.replace(/\n/g, '<br>') : ''}</div>
-          </div>
-          ${currentUser && currentUser.role === 'admin' ? `<button class="btn btn-danger btn-small" style="font-size:0.8rem; padding:0.3rem 0.6rem;" onclick="deleteAnnouncement('${ann.id}')">Padam</button>` : ''}
-        </div>
-      `;
-      listEl.appendChild(item);
-    });
-  }
+      if (announcements.length === 0) {
+        listEl.innerHTML = '<p class="text-center"><em>Tiada pengumuman buat masa ini.</em></p>';
+      } else {
+        listEl.innerHTML = '';
+        announcements.forEach((ann, index) => {
+          const isNew = index === 0 ? '<span style="background:#ef4444;color:white;padding:2px 8px;border-radius:12px;font-size:0.8rem;margin-left:10px;">BARU</span>' : '';
+          const item = document.createElement('div');
+          item.style = 'border-left:4px solid var(--primary); padding:1rem; margin-bottom:1rem; background:#f8fafc; border-radius:8px;';
+          item.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:start;">
+              <div>
+                <strong>${ann.title || 'Tiada Tajuk'}</strong>${isNew}
+                <small style="display:block; color:#666; margin-top:4px;">${ann.date || ''}</small>
+                <div style="margin-top:8px; line-height:1.6;">${ann.text ? ann.text.replace(/\n/g, '<br>') : ''}</div>
+              </div>
+              ${currentUser && currentUser.role === 'admin' ? `<button class="btn btn-danger btn-small" style="font-size:0.8rem; padding:0.3rem 0.6rem;" onclick="deleteAnnouncement('${ann.id}')">Padam</button>` : ''}
+            </div>
+          `;
+          listEl.appendChild(item);
+        });
+      }
 
-  // Hanya Admin boleh tambah
-  addBtn.style.display = (currentUser && currentUser.role === 'admin') ? 'inline-block' : 'none';
-}
-
-// Buka modal tambah
-function openAddAnnouncement() {
-  document.getElementById('announcementModalTitle').textContent = 'Tambah Pengumuman Baru';
-  document.getElementById('announcementTitle').value = '';
-  document.getElementById('announcementText').value = '';
-  document.getElementById('announcementModal').classList.remove('hidden');
-}
-
-// Tutup modal
-function closeAnnouncementModal() {
-  document.getElementById('announcementModal').classList.add('hidden');
-}
-
-// Simpan pengumuman baru
-async function saveAnnouncement() {
-  const title = document.getElementById('announcementTitle').value.trim();
-  const text = document.getElementById('announcementText').value.trim();
-
-  if (!title || !text) {
-    showToast('Sila isi tajuk dan isi pengumuman', 'error');
-    return;
-  }
-
-  const newAnn = {
-    id: 'ann_' + Date.now(),
-    title: title,
-    text: text,
-    date: new Date().toLocaleDateString('ms-MY')
-  };
-
-  try {
-    await apiCall('addAnnouncement', { announcement: newAnn });
-    announcements.unshift(newAnn); // Tambah di atas
-    renderAnnouncements();
-    closeAnnouncementModal();
-    showToast('Pengumuman baru berjaya ditambah!');
-  } catch (e) {
-    showToast('Gagal tambah pengumuman: ' + e.message, 'error');
-  }
-}
-
-// Padam pengumuman (Admin sahaja)
-async function deleteAnnouncement(id) {
-  if (!confirm('Padam pengumuman ini?')) return;
-
-  try {
-    await apiCall('deleteAnnouncement', { id });
-    announcements = announcements.filter(a => a.id !== id);
-    renderAnnouncements();
-    showToast('Pengumuman berjaya dipadam');
-  } catch (e) {
-    showToast('Gagal padam: ' + e.message, 'error');
-  }
-}
-  function renderViewSchedule() {
-  const tbody = document.querySelector('#viewScheduleTable tbody');
-  tbody.innerHTML = '';
-
-  const timeSlots = [
-    '06:00-07:00', '07:00-08:00', '08:00-09:00', '09:00-10:00', '10:00-11:00',
-    '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00',
-    '16:00-17:00', '17:00-18:00', '18:00-19:00', '19:00-20:00', '20:00-21:00',
-    '21:00-22:00', '22:00-23:00'
-  ];
-
-  for (let row = 0; row < 17; row++) {
-    let rowHtml = `<tr><td>${timeSlots[row]}</td>`;
-    for (let col = 0; col < 7; col++) { // 7 hari penuh
-      const activity = (schedule[row] && schedule[row][col]) || '-';
-      rowHtml += `<td>${activity}</td>`;
+      addBtn.style.display = (currentUser && currentUser.role === 'admin') ? 'inline-block' : 'none';
     }
-    rowHtml += '</tr>';
-    tbody.innerHTML += rowHtml;
-  }
-}
+
+    function openAddAnnouncement() {
+      document.getElementById('announcementModalTitle').textContent = 'Tambah Pengumuman Baru';
+      document.getElementById('announcementTitle').value = '';
+      document.getElementById('announcementText').value = '';
+      document.getElementById('announcementModal').classList.remove('hidden');
+    }
+
+    function closeAnnouncementModal() {
+      document.getElementById('announcementModal').classList.add('hidden');
+    }
+
+    async function saveAnnouncement() {
+      const title = document.getElementById('announcementTitle').value.trim();
+      const text = document.getElementById('announcementText').value.trim();
+
+      if (!title || !text) {
+        showToast('Sila isi tajuk dan isi pengumuman', 'error');
+        return;
+      }
+
+      const newAnn = {
+        id: 'ann_' + Date.now(),
+        title: title,
+        text: text,
+        date: new Date().toLocaleDateString('ms-MY')
+      };
+
+      try {
+        await apiCall('addAnnouncement', { announcement: newAnn });
+        announcements.unshift(newAnn);
+        renderAnnouncements();
+        closeAnnouncementModal();
+        showToast('Pengumuman baru berjaya ditambah!');
+      } catch (e) {
+        showToast('Gagal tambah pengumuman: ' + e.message, 'error');
+      }
+    }
+
+    async function deleteAnnouncement(id) {
+      if (!confirm('Padam pengumuman ini?')) return;
+
+      try {
+        await apiCall('deleteAnnouncement', { id });
+        announcements = announcements.filter(a => a.id !== id);
+        renderAnnouncements();
+        showToast('Pengumuman berjaya dipadam');
+      } catch (e) {
+        showToast('Gagal padam: ' + e.message, 'error');
+      }
+    }
+    
+    // === UTILS ===
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      const target = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', target);
+      localStorage.setItem('theme', target);
+      document.getElementById('themeIcon').className = target === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+
+    function restrictViewerAccess() {
+      // Logic if needed to restrict certain sections based on role
+    }
+
     window.onload = () => {
       const theme = localStorage.getItem('theme') || 'light';
       document.documentElement.setAttribute('data-theme', theme);
@@ -2056,13 +2079,6 @@ async function deleteAnnouncement(id) {
         isOnline = false;
       }
     };
-</script>
-  
+  </script>
 </body>
 </html>
-
-
-
-
-
-
