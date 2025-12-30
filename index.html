@@ -1019,6 +1019,21 @@
       restrictViewerAccess();
     }
 
+    // === FUNGSI BANTUAN: FORMAT TARIKH MALAYSIA ===
+    function formatDateMY(dateString) {
+      if (!dateString) return '-';
+      const d = new Date(dateString);
+      
+      // Elak jika tarikh tidak sah (Invalid Date)
+      if (isNaN(d.getTime())) return dateString; 
+      
+      // Format ke DD/MM/YYYY
+      const day = String(d.getDate()).padStart(2, '0');
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const year = d.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
+
     // === PENGGUNA ===
     async function loadUsers() {
       try {
@@ -2048,7 +2063,7 @@
     }
 
     // Cetak laporan terpilih
-    function printSelectedReports() {
+       function printSelectedReports() {
       const checkboxes = document.querySelectorAll('#teachingReportTable tbody input[type="checkbox"]:checked');
       if (checkboxes.length === 0) {
         showToast('Sila pilih sekurang-kurangnya satu laporan', 'warning');
@@ -2102,7 +2117,8 @@
             <h3>Laporan #${i+1}</h3>
             <table>
               <tr><th>Guru</th><td>${r.teacher || '-'}</td></tr>
-              <tr><th>Tarikh</th><td>${r.date || '-'}</td></tr>
+              <!-- TUKAR BARIS DI BAWAH INI: GUNAKAN formatDateMY(r.date) -->
+              <tr><th>Tarikh</th><td>${formatDateMY(r.date)}</td></tr>
               <tr><th>Kelas</th><td>${r.class || '-'}</td></tr>
               <tr><th>Topik</th><td>${r.topic || '-'}</td></tr>
               <tr><th>Catatan</th><td class="notes">${r.notes || '-'}</td></tr>
@@ -2383,7 +2399,6 @@
   </script>
 </body>
 </html>
-
 
 
 
