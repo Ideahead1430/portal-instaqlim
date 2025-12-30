@@ -3,6 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- META TAGS UNTUK PWA & APLIKASI -->
+  <link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIklOU1RBUUxJTSIsCiAgInNob3J0X25hbWUiOiAiSU5TVEFRTElNIiwKICAic3RhcnRfdXJsIjogImh0dHBzOi8vc2NyaXB0Lmdvb2dsZS5jb20vbWFjcm9zL3MvQUtmeWNieW1JSGd0T0o2RVJRd2JydFVDUzJNMjJLLTZFcnk2V2s3Q3FBc2cwUHM3RExNZ19CNkx0NmRkV05YeFEybVZMWk9nL2V4ZWMiLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMxMGI5ODEiLAogICJ0aGVtZV9jb2xvciI6ICIjMTBiOTgxIiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiaHR0cHM6Ly9hcmxldGEuc2l0ZS9pbnRlcmFjdGl2ZWxpbmsvMjk1MC9Mb2dvLU1hYWhhZC5KUEciLAogICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICJ0eXBlIjogImltYWdlL2pwZyIKICAgIH0KICBdCn0=">
+  
+  <!-- Ikon iOS -->
+  <link rel="apple-touch-icon" href="https://arleta.site/interactivelink/2950/Logo-Maahad.JPG">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="INSTAQLIM">
+
   <title>INSTAQLIM - Institut Tahfiz Al-Quran lil Muttaqin</title>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
   <style>
@@ -146,30 +156,15 @@
       cursor: pointer;
       margin-right: 0.5rem;
     }
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-    }
-    .btn-success {
-      background: var(--secondary);
-      color: white;
-    }
-    .btn-danger {
-      background: var(--danger);
-      color: white;
-    }
-    .btn-edit {
-      background: #f59e0b;
-      color: white;
-    }
-    .form-group {
-      margin-bottom: 1rem;
-    }
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-    }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-success { background: var(--secondary); color: white; }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-edit { background: #f59e0b; color: white; }
+    .btn-print { background: var(--indigo); color: white; }
+    .btn-pdf { background: var(--red); color: white; }
+    
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
     input, textarea, select {
       width: 100%;
       padding: 0.75rem;
@@ -178,12 +173,9 @@
       background-color: var(--card-bg, white);
       color: var(--text-color, #333);
     }
-    .hidden {
-      display: none !important;
-    }
-    .text-center {
-      text-align: center;
-    }
+    .hidden { display: none !important; }
+    .text-center { text-align: center; }
+    
     .login-container {
       max-width: 400px;
       margin: 5rem auto;
@@ -234,10 +226,7 @@
       transition: transform 0.3s, opacity 0.3s;
       z-index: 2000;
     }
-    .toast.show {
-      transform: translateY(0);
-      opacity: 1;
-    }
+    .toast.show { transform: translateY(0); opacity: 1; }
     .theme-toggle {
       position: fixed;
       bottom: 20px;
@@ -273,9 +262,8 @@
       border-top-color: #fff;
       animation: spin 1s ease-in-out infinite;
     }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    
     .connection-status {
       position: fixed;
       top: 10px;
@@ -285,14 +273,8 @@
       font-size: 12px;
       z-index: 3000;
     }
-    .connection-status.online {
-      background: var(--success);
-      color: white;
-    }
-    .connection-status.offline {
-      background: var(--danger);
-      color: white;
-    }
+    .connection-status.online { background: var(--success); color: white; }
+    .connection-status.offline { background: var(--danger); color: white; }
     .offline-mode {
       background: #f8f9fa;
       color: #6c757d;
@@ -304,14 +286,15 @@
     #notesModal { display: none; }
     #notesModal:not(.hidden) { display: flex; }
     #fullNotes { font-size: 1.1rem; line-height: 1.6; word-wrap: break-word; }
+
     /* === FUTURISTIC CLOCK STYLE === */
     .futuristic-clock {
-      font-family: 'Courier New', Courier, monospace; /* Font Digital */
-      font-size: 0.75rem; /* Saiz lebih kecil */
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.75rem;
       letter-spacing: 1px;
-      color: #a5f3fc; /* Warna Neon Cyan (Biru Cerah) */
-      text-shadow: 0 0 5px #a5f3fc, 0 0 10px #22d3ee; /* Kesan Glow */
-      margin-top: 5px; /* Jarak dari teks di atas */
+      color: #a5f3fc;
+      text-shadow: 0 0 5px #a5f3fc, 0 0 10px #22d3ee;
+      margin-top: 5px;
       font-weight: bold;
       opacity: 0.9;
     }
@@ -340,28 +323,38 @@
 
   <!-- Main App -->
   <div id="mainApp" class="hidden">
-        <header>
+    <header>
       <div class="container flex">
         <h1>INSTAQLIM</h1>
-        <!-- KEMASKINI BAHAGIAN INI -->
+        <!-- Header yang telah dibersihkan (Tiada Duplikasi) -->
         <div style="text-align: right; display: flex; flex-direction: column;">
-          <div>
+          <div style="display:flex; align-items:center; justify-content:flex-end; gap:10px;">
             <span>Selamat Datang, <strong id="userName"></strong> (<span id="userRole"></span>)</span>
             <a href="#" class="btn-logout" onclick="logout()">Log Keluar</a>
+            <!-- Butang Notifikasi -->
+            <button onclick="requestNotificationPermission()" style="background:none; border:none; color: #fff; font-size: 1.2rem; cursor:pointer;" title="Tetapan Notifikasi">
+              <i class="fas fa-bell"></i>
+            </button>
           </div>
-          <!-- JAM DIGITAL FUTURISTIK -->
+          <!-- Jam Digital Futuristik -->
           <div class="futuristic-clock">
             <span id="clock-time">00:00:00</span> | 
             <span id="clock-miladi">01/01/2025</span> | 
             <span id="clock-hijri">01 Muharram 1446H</span>
           </div>
         </div>
-        <!-- TAMAT KEMASKINI -->
       </div>
     </header>
 
     <div class="container">
       <main>
+        <!-- BUTANG TERAPUNG: PASANG APLIKASI -->
+        <div id="installContainer" class="hidden" style="position:fixed; bottom: 20px; left: 20px; z-index: 950;">
+          <button id="btnInstall" class="btn" style="background: #3b82f6; color: white; border: 1px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-radius: 50px; padding: 0.8rem 1.5rem; font-weight: bold; display: flex; align-items: center; gap: 10px;">
+            <i class="fas fa-download"></i> Pasang Aplikasi
+          </button>
+        </div>
+
         <!-- Pengumuman Senarai -->
         <div id="announcementSection" class="card" style="margin: 1rem 0;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
@@ -372,7 +365,7 @@
             <p class="text-center"><em>Tiada pengumuman buat masa ini.</em></p>
           </div>
         </div>
-
+   
         <!-- Modal Tambah Pengumuman -->
         <div id="announcementModal" class="hidden">
           <div style="background: var(--card-bg, white); border-radius: 10px; padding: 2rem; width: 90%; max-width: 700px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
@@ -392,7 +385,7 @@
           </div>
         </div>
 
-                <!-- Admin Dashboard -->
+        <!-- Admin Dashboard -->
         <div id="adminDashboard" class="hidden">
           <h2 class="text-center">Papan Pemuka Pentadbir</h2>
           <div class="grid">
@@ -408,16 +401,14 @@
             <div class="menu-card" onclick="showSection('viewHafazanReports')">
               <i class="fas fa-file-alt"></i><h3>Senarai Laporan Hafazan</h3>
             </div>
-            
-            <!-- TAMBAHAN BUTANG KOD JAWI (ISLAMIK ICON) -->
+            <!-- BUTANG KOD JAWI -->
             <div class="menu-card" onclick="window.open('https://chatgpt.com/g/g-68c59510c0608191a74e770098fa9025-kod-jawi-gpt', '_blank')" style="background-color: #3b82f6;">
               <i class="fas fa-kaaba"></i><h3>KOD JAWI</h3>
             </div>
-            <!-- TAMAT -->
-            </div>
+          </div>
         </div>
 
-               <!-- Guru Dashboard -->
+        <!-- Guru Dashboard -->
         <div id="guruDashboard" class="hidden">
           <h2 class="text-center">Papan Pemuka Guru</h2>
           <div class="grid">
@@ -426,13 +417,10 @@
             <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Saya</h3></div>
             <div class="menu-card" onclick="showSection('hafazanReportForm')"><i class="fas fa-book-quran"></i><h3>Laporan Hafazan</h3></div>
             <div class="menu-card" onclick="showSection('viewHafazanReports')"><i class="fas fa-list"></i><h3>Senarai Hafazan</h3></div>
-            
-            <!-- TAMBAHAN BUTANG KOD JAWI (ISLAMIK ICON) -->
+            <!-- BUTANG KOD JAWI -->
             <div class="menu-card" onclick="window.open('https://chatgpt.com/g/g-68c59510c0608191a74e770098fa9025-kod-jawi-gpt', '_blank')" style="background-color: #3b82f6;">
               <i class="fas fa-kaaba"></i><h3>KOD JAWI</h3>
             </div>
-            <!-- TAMAT -->
-            
           </div>
         </div>
 
@@ -605,17 +593,14 @@
             <div class="form-group"><label>Kelas</label><select id="reportClass" required><option value="">Pilih Kelas</option></select></div>
             <div class="form-group"><label>Topik</label><input type="text" id="reportTopic" required></div>
             <div class="form-group"><label>Catatan</label><textarea id="reportNotes" rows="5" required></textarea></div>
-                        <!-- GANTIKAN BAHAGIAN LAMPIRAN INI -->
             <div class="form-group">
               <label>Lampiran (max 5MB)</label>
               <input type="file" id="reportAttachment" accept="image/*,.pdf">
               <div id="attachmentPreview"></div>
-              
               <!-- BUTANG PAUTAN KE TELEGRAM -->
               <a href="https://t.me/+MxXwRojj-GIzNjc1" target="_blank" class="btn" style="background-color: #229ED9; color: white; margin-top: 10px; display: block; width: 100%; text-align: center; text-decoration: none;">
                 <i class="fa-brands fa-telegram"></i> Hantar Gambar ke Telegram
               </a>
-            </div>
             </div>
             <button class="btn btn-success" onclick="saveTeachingReport()">Hantar Laporan</button>
           </div>
@@ -633,7 +618,7 @@
                 <option value="">Pilih Pelajar</option>
               </select>
             </div>
-                       <div class="form-group">
+            <div class="form-group">
               <label>Surah</label>
               <select id="hafazanSurah" required>
                 <option value="">Pilih Surah</option>
@@ -774,12 +759,12 @@
               <textarea id="hafazanNotes" rows="3"></textarea>
             </div>
            <button class="btn btn-success" onclick="saveHafazanReport()">Simpan Laporan Hafazan</button>
-</div>
-          <!-- Senarai Hafazan (Placehoder) -->
-            <div id="viewHafazanReports" class="card hidden">
+          </div>
+
+          <!-- Senarai Hafazan -->
+          <div id="viewHafazanReports" class="card hidden">
             <h3>Senarai Laporan Hafazan</h3>
             <div style="margin:1rem 0; text-align:right;">
-               <!-- Butang untuk cetak jika perlu -->
                <button class="btn btn-print" onclick="window.print()">Cetak Senarai</button>
             </div>
             <table id="hafazanTable">
@@ -798,6 +783,10 @@
               <tbody></tbody>
             </table>
           </div>
+        </div>
+      </main>
+    </div>
+  </div>
 
   <!-- Modal Generic -->
   <div id="modal" class="hidden">
@@ -818,7 +807,7 @@
   <!-- Modal Popup untuk Catatan Penuh -->
   <div id="notesModal" class="hidden" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:2000;">
     <div style="background:var(--card-bg,white);border-radius:10px;padding:2rem;width:90%;max-width:800px;max-height:80vh;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,0.3);">
-      <h3>Catatan Penuh</h3>
+      <h3 id="notesModalTitle">Catatan Penuh</h3>
       <p id="fullNotes" style="white-space:pre-wrap;"></p>
       <div style="margin-top:1.5rem;text-align:right;">
         <button class="btn btn-primary" onclick="document.getElementById('notesModal').classList.add('hidden')">Tutup</button>
@@ -833,6 +822,7 @@
     let classes = [], students = [], teachers = [], staff = [], users = [], schedule = Array(17).fill().map(() => Array(7).fill(''));
     let pendingOperations = [];
     let reports = [];
+    let hafazanReports = []; // PEMBOLEHUBAH GLOBAL YANG DITAMBAH
     let currentAnnouncement = { text: '', date: '' };
 
     async function apiCall(action, payload = {}) {
@@ -961,7 +951,6 @@
 
     async function loadCommonData() {
       try {
-        // TAMBAHAN: Muat data pelajar di sini supaya sedia ada semasa log masuk
         const [c, s, st] = await Promise.all([
           apiCall('getClasses'),
           apiCall('getSchedule'),
@@ -969,20 +958,19 @@
         ]);
         classes = c.classes || [];
         schedule = s.schedule || Array(17).fill().map(() => Array(7).fill(''));
-        students = st.students || []; // Simpan data pelajar
+        students = st.students || []; 
         saveLocalData('getClasses', c);
         saveLocalData('getSchedule', s);
         saveLocalData('getStudents', st);
         populateClassSelects();
       } catch (e) {
-        // Fallback kepada data tempatan jika gagal
         const c = getLocalData('getClasses');
         const s = getLocalData('getSchedule');
-        const st = getLocalData('getStudents'); // Dapatkan pelajar dari tempatan
+        const st = getLocalData('getStudents'); 
         if (c && s) {
           classes = c.classes || [];
           schedule = s.schedule || Array(17).fill().map(() => Array(7).fill(''));
-          if(st) students = st.students || []; // Pastikan pelajar ada
+          if(st) students = st.students || [];
           populateClassSelects();
           showToast('Menggunakan data tempatan', 'warning');
         }
@@ -1004,7 +992,7 @@
     }
 
     function showSection(id) {
-      // === SEMAKAN KESELAMATAN: Hanya Admin boleh masuk menu Pengurusan ===
+      // === SEMAKAN KESELAMATAN ===
       if (currentUser.role !== 'admin') {
         const adminOnlySections = ['manageUsers', 'manageStudents', 'manageTeachers', 'manageStaff', 'manageClasses', 'manageSchedule', 'manageAttendance'];
         if (adminOnlySections.includes(id)) {
@@ -1012,6 +1000,7 @@
           return; 
         }
       }
+      
       document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
       const sec = document.getElementById(id);
       if (sec) sec.classList.remove('hidden');
@@ -1028,17 +1017,14 @@
       if (id === 'viewSchedule') loadViewSchedule();
       if (id === 'viewTeachingReports') loadTeachingReports();
       
-      // Logik untuk borang hafazan
       if (id === 'hafazanReportForm') {
         document.getElementById('hafazanDate').value = new Date().toISOString().slice(0,10);
-        // Populate dropdown pelajar. Jika array pelajar kosong, cuba muat semula.
         populateHafazanStudentSelect();
         if (students.length === 0) {
            loadStudents().then(() => populateHafazanStudentSelect());
         }
       }
       
-       // PASTIKAN BARIS INI ADA
       if (id === 'viewHafazanReports') {
          loadHafazanReports();
       }
@@ -1051,11 +1037,7 @@
     function formatDateMY(dateString) {
       if (!dateString) return '-';
       const d = new Date(dateString);
-      
-      // Elak jika tarikh tidak sah (Invalid Date)
       if (isNaN(d.getTime())) return dateString; 
-      
-      // Format ke DD/MM/YYYY
       const day = String(d.getDate()).padStart(2, '0');
       const month = String(d.getMonth() + 1).padStart(2, '0');
       const year = d.getFullYear();
@@ -1079,7 +1061,7 @@
       }
     }
 
-       function renderUsers() {
+    function renderUsers() {
       const tbody = document.querySelector('#userTable tbody');
       tbody.innerHTML = '';
       users.forEach(u => {
@@ -1224,11 +1206,10 @@
       }
     }
 
-        function renderStudents() {
+    function renderStudents() {
       const tbody = document.querySelector('#studentTable tbody');
       tbody.innerHTML = '';
       students.forEach(s => {
-        // Logik: Jika bukan admin, jangan paparkan butang Kemaskini/Padam
         let actionButtons = '-';
         if (currentUser.role === 'admin') {
           actionButtons = `
@@ -1379,7 +1360,7 @@
       }
     }
 
-        function renderTeachers() {
+    function renderTeachers() {
       const tbody = document.querySelector('#teacherTable tbody');
       tbody.innerHTML = '';
       teachers.forEach(t => {
@@ -1913,13 +1894,64 @@
     }
 
     function populateHafazanClassFilter() {
-      // Placeholder untuk filter hafazan
     }
-    
-    function loadHafazanReports() {
-      // Placeholder untuk memuat laporan hafazan
-      const tbody = document.querySelector('#hafazanReportTable tbody'); 
-      if(tbody) tbody.innerHTML = '<tr><td colspan="5">Fungsi ini akan dikemaskini kelak.</td></tr>';
+
+    async function loadHafazanReports() {
+      try {
+        const res = await apiCall('getHafazanReports');
+        hafazanReports = res.reports || [];
+        saveLocalData('getHafazanReports', res);
+        renderHafazanReports();
+      } catch (e) {
+        const res = getLocalData('getHafazanReports');
+        if (res && res.reports) {
+          hafazanReports = res.reports;
+          renderHafazanReports();
+        } else {
+          hafazanReports = [];
+          renderHafazanReports();
+        }
+      }
+    }
+
+    function renderHafazanReports() {
+      const tbody = document.querySelector('#hafazanTable tbody');
+      tbody.innerHTML = '';
+
+      if (hafazanReports.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center">Tiada laporan hafazan dijumpai.</td></tr>';
+        return;
+      }
+
+      // Urutkan ikut tarikh terbaru
+      hafazanReports.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      hafazanReports.forEach((r, index) => {
+        const notesPreview = r.notes ? (r.notes.length > 100 ? r.notes.substring(0, 100) + '...' : r.notes) : '-';
+        tbody.innerHTML += `
+          <tr onclick="showFullHafazanNotes(${index})" style="cursor:pointer;">
+            <td>${formatDateMY(r.date) || '-'}</td>
+            <td>
+              ${r.studentname || 'Tanpa Nama'} 
+              <br><small style="color:#888">${r.studentid || ''}</small>
+            </td>
+            <td>${r.class || '-'}</td>
+            <td>${r.surah || '-'}</td>
+            <td>${r.ayatfrom || ''} - ${r.ayatto || ''}</td>
+            <td>
+              <span style="
+                padding: 4px 8px; 
+                border-radius: 12px; 
+                font-size: 0.8rem; 
+                color: white; 
+                background-color: ${r.status === 'Lancar' ? '#10b981' : r.status === 'Sederhana' ? '#f59e0b' : '#ef4444'}">
+                ${r.status || '-'}
+              </span>
+            </td>
+            <td>${r.teachername || '-'}</td>
+            <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${r.notes || ''}">${notesPreview}</td>
+          </tr>`;
+      });
     }
 
     // === REPORTS ===
@@ -1960,7 +1992,6 @@
       }
       reports.forEach((r, index) => {
         const notesPreview = r.notes ? (r.notes.length > 100 ? r.notes.substring(0, 100) + '...' : r.notes) : '-';
-       // GANTIKAN BAHAGIAN <tr> DI BAWAH INI:
         tbody.innerHTML += `
           <tr onclick="showFullNotes(${index})" style="cursor:pointer;">
             <td><input type="checkbox" class="report-checkbox"></td>
@@ -1975,18 +2006,27 @@
       });
 }
 
-        function showFullNotes(index) {
-      // Cari data dalam senarai reports berdasarkan indeks
+    function showFullNotes(index) {
       if (reports && reports[index]) {
         const notes = reports[index].notes;
-        
-        // Jika ada notes, paparkan. Jika tidak, paparkan "Tiada catatan"
+        document.querySelector('#notesModal h3').textContent = 'Catatan Penuh';
         document.getElementById('fullNotes').textContent = notes || 'Tiada catatan';
         document.getElementById('notesModal').classList.remove('hidden');
       } else {
-        // Jika data tidak dijumpai
-        console.error("Ralat: Data laporan tidak dijumpai untuk indeks", index);
+        console.error("Data tidak dijumpai untuk index:", index);
         showToast('Ralat memaparkan nota', 'error');
+      }
+    }
+
+    function showFullHafazanNotes(index) {
+      if (hafazanReports && hafazanReports[index]) {
+        const notes = hafazanReports[index].notes;
+        const student = hafazanReports[index].studentname;
+        document.querySelector('#notesModal h3').textContent = 'Catatan Hafazan Penuh - ' + student;
+        document.getElementById('fullNotes').textContent = notes || 'Tiada catatan';
+        document.getElementById('notesModal').classList.remove('hidden');
+      } else {
+        console.error("Data hafazan tidak dijumpai untuk index:", index);
       }
     }
 
@@ -2033,6 +2073,8 @@
         try {
           await apiCall('addTeachingReport', report);
           showToast('Laporan berjaya dihantar');
+          sendNotification('Berjaya', 'Laporan mengajar harian telah disimpan ke sistem.');
+          
           document.getElementById('reportDate').value = '';
           document.getElementById('reportClass').value = '';
           document.getElementById('reportTopic').value = '';
@@ -2044,56 +2086,6 @@
         }
       }
     }
-               // === HAFAZAN REPORT ===
-    async function saveHafazanReport() {
-      const date = document.getElementById('hafazanDate').value;
-      const studentId = document.getElementById('hafazanStudent').value;
-      const surah = document.getElementById('hafazanSurah').value;
-      const from = document.getElementById('hafazanFrom').value;
-      const to = document.getElementById('hafazanTo').value;
-      const status = document.getElementById('hafazanStatus').value;
-      const notes = document.getElementById('hafazanNotes').value;
-
-      // Pengesahan input
-      if (!date || !studentId || !surah || !from || !to) {
-        return showToast('Sila isi semua medan wajib (Tarikh, Pelajar, Surah, Ayat)', 'error');
-      }
-
-      // Cari nama pelajar berdasarkan ID untuk rekod
-      const studentObj = students.find(s => s.id === studentId);
-      const studentName = studentObj ? studentObj.name : 'Pelajar Tidak Diketahui';
-
-      const report = {
-        id: 'hafazan_' + Date.now(),
-        date: date,
-        studentId: studentId,
-        studentName: studentName,
-        surah: surah,
-        ayatFrom: from,
-        ayatTo: to,
-        status: status,
-        notes: notes,
-        teacherId: currentUser.id,
-        teacherName: currentUser.name,
-        class: studentObj ? studentObj.class : ''
-      };
-
-      try {
-        await apiCall('addHafazanReport', { report: report });
-        showToast('Laporan Hafazan berjaya disimpan');
-        
-        // Reset borang selepas berjaya
-        document.getElementById('hafazanSurah').value = '';
-        document.getElementById('hafazanFrom').value = '';
-        document.getElementById('hafazanTo').value = '';
-        document.getElementById('hafazanNotes').value = '';
-        document.getElementById('hafazanStudent').selectedIndex = 0;
-        // Kekalkan tarikh hari ini
-        document.getElementById('hafazanDate').value = new Date().toISOString().slice(0,10);
-      } catch (err) {
-        showToast('Gagal menyimpan: ' + err.message, 'error');
-      }
-    }
     // Toggle semua checkbox
     function toggleSelectAll() {
       const selectAll = document.getElementById('selectAll');
@@ -2102,7 +2094,7 @@
     }
 
     // Cetak laporan terpilih
-       function printSelectedReports() {
+    function printSelectedReports() {
       const checkboxes = document.querySelectorAll('#teachingReportTable tbody input[type="checkbox"]:checked');
       if (checkboxes.length === 0) {
         showToast('Sila pilih sekurang-kurangnya satu laporan', 'warning');
@@ -2156,7 +2148,6 @@
             <h3>Laporan #${i+1}</h3>
             <table>
               <tr><th>Guru</th><td>${r.teacher || '-'}</td></tr>
-              <!-- TUKAR BARIS DI BAWAH INI: GUNAKAN formatDateMY(r.date) -->
               <tr><th>Tarikh</th><td>${formatDateMY(r.date)}</td></tr>
               <tr><th>Kelas</th><td>${r.class || '-'}</td></tr>
               <tr><th>Topik</th><td>${r.topic || '-'}</td></tr>
@@ -2244,8 +2235,6 @@
     }
 
     // === PENGUMUMAN ===
-    let announcements = [];
-
     async function loadAnnouncements() {
       try {
         const res = await apiCall('getAnnouncements');
@@ -2341,54 +2330,6 @@
         showToast('Gagal padam: ' + e.message, 'error');
       }
     }
-    // === HAFAZAN REPORT LIST (SUDAH DIBETULKAN KE HURUF KECIL) ===
-    async function loadHafazanReports() {
-      try {
-        const res = await apiCall('getHafazanReports');
-        const reports = res.reports || [];
-        
-        const tbody = document.querySelector('#hafazanTable tbody');
-        tbody.innerHTML = '';
-        
-        if (reports.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="8" class="text-center">Tiada laporan hafazan dijumpai.</td></tr>';
-          return;
-        }
-
-        // Urutkan ikut tarikh terbaru
-        reports.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-        reports.forEach(r => {
-          tbody.innerHTML += `
-            <tr>
-              <td>${r.date || '-'}</td>
-              <td>
-                ${r.studentname || 'Tanpa Nama'} 
-                <br><small style="color:#888">${r.studentid || ''}</small>
-              </td>
-              <td>${r.class || '-'}</td>
-              <td>${r.surah || '-'}</td>
-              <td>${r.ayatfrom || ''} - ${r.ayatto || ''}</td>
-              <td>
-                <span style="
-                  padding: 4px 8px; 
-                  border-radius: 12px; 
-                  font-size: 0.8rem; 
-                  color: white; 
-                  background-color: ${r.status === 'Lancar' ? '#10b981' : r.status === 'Sederhana' ? '#f59e0b' : '#ef4444'}">
-                  ${r.status || '-'}
-                </span>
-              </td>
-              <td>${r.teachername || '-'}</td>
-              <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${r.notes || ''}">${r.notes || '-'}</td>
-            </tr>`;
-        });
-      } catch (e) {
-        console.error(e);
-        const tbody = document.querySelector('#hafazanTable tbody');
-        if(tbody) tbody.innerHTML = '<tr><td colspan="8" class="text-center">Gagal memuat data hafazan.</td></tr>';
-      }
-    }
     
     // === UTILS ===
     function toggleTheme() {
@@ -2400,10 +2341,8 @@
       document.getElementById('themeIcon').className = target === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
     }
 
-        function restrictViewerAccess() {
-      // Jika user bukan admin, sembunyikan semua butang Tambah di seksyen pengurusan
+    function restrictViewerAccess() {
       if (currentUser.role !== 'admin') {
-        // Cari semua butang yang mempunyai teks "Tambah" dan sembunyikannya
         const addButtons = document.querySelectorAll('button');
         addButtons.forEach(btn => {
           if (btn.textContent.includes('Tambah') || btn.textContent.includes('+ ')) {
@@ -2412,58 +2351,167 @@
         });
       }
     }
-                function updateFuturisticClock() {
-  // Dapatkan masa semasa di zon Malaysia (UTC+8)
-  const now = new Date();
-  const malaysiaTime = new Date(now.getTime() + (now.getTimezoneOffset() + 480) * 60000);
+    
+    // === ENGINE JAM (ZON MALAYSIA + BAHASA MELAYU) ===
+    
+    function updateFuturisticClock() {
+      // Dapatkan masa semasa di zon Malaysia (UTC+8)
+      const now = new Date();
+      const malaysiaTime = new Date(now.getTime() + (now.getTimezoneOffset() + 480) * 60000);
 
-  // Format Masa (HH:MM:SS) - 24 jam
-  const timeFormatter = new Intl.DateTimeFormat('ms-MY', {
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false,
-    timeZone: 'Asia/Kuala_Lumpur'
-  });
-  const timeString = timeFormatter.format(malaysiaTime);
+      // 1. Format Masa (HH:MM:SS) - 24 jam
+      const timeFormatter = new Intl.DateTimeFormat('ms-MY', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+        timeZone: 'Asia/Kuala_Lumpur'
+      });
+      const timeString = timeFormatter.format(malaysiaTime);
 
-  // Format Tarikh Miladi (DD/MM/YYYY)
-  const miladiFormatter = new Intl.DateTimeFormat('ms-MY', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-    timeZone: 'Asia/Kuala_Lumpur'
-  });
-  const miladiString = miladiFormatter.format(malaysiaTime);
+      // 2. Format Tarikh Miladi (DD/MM/YYYY)
+      const miladiFormatter = new Intl.DateTimeFormat('ms-MY', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        timeZone: 'Asia/Kuala_Lumpur'
+      });
+      const miladiString = miladiFormatter.format(malaysiaTime);
 
-  // Format Tarikh Hijriah menggunakan kalendar Umm al-Qura (paling tepat)
-  const hijriFormatter = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-    timeZone: 'Asia/Kuala_Lumpur'
-  });
-  let hijriParts = hijriFormatter.formatToParts(malaysiaTime);
+      // 3. Format Tarikh Hijriah (Bahasa Melayu)
+      const hijriFormatter = new Intl.DateTimeFormat('en-MY-u-ca-islamic-umalqura', {
+        day: 'numeric',
+        month: 'numeric', // Mendapat nombor bulan (contoh: 9)
+        year: 'numeric',
+        timeZone: 'Asia/Kuala_Lumpur'
+      });
+      let hijriParts = hijriFormatter.formatToParts(malaysiaTime);
   
-  const hijriDay = hijriParts.find(p => p.type === 'day')?.value || '';
-  const hijriMonth = hijriParts.find(p => p.type === 'month')?.value || '';
-  const hijriYear = hijriParts.find(p => p.type === 'year')?.value || '';
-  
-  const hijriString = `${hijriDay} ${hijriMonth} ${hijriYear}H`;
+      const hijriDay = hijriParts.find(p => p.type === 'day')?.value;
+      const hijriMonthIndex = parseInt(hijriParts.find(p => p.type === 'month')?.value);
+      const hijriYear = hijriParts.find(p => p.type === 'year')?.value;
 
-  // Update elemen HTML (dengan null check untuk keselamatan)
-  const timeEl = document.getElementById('clock-time');
-  const miladiEl = document.getElementById('clock-miladi');
-  const hijriEl = document.getElementById('clock-hijri');
+      const hMonths = [
+        "Muharram", "Safar", "Rabiulawal", "Rabiulakhir", 
+        "Jamadilawal", "Jamadilakhir", "Rejab", "Syaaban", 
+        "Ramadhan", "Syawal", "Zulkaedah", "Zulhijjah"
+      ];
+      const hijriMonthName = hMonths[hijriMonthIndex - 1] || "Muharram";
+      
+      const hijriString = `${hijriDay} ${hijriMonthName} ${hijriYear}H`;
 
-  if (timeEl) timeEl.textContent = timeString;
-  if (miladiEl) miladiEl.textContent = miladiString;
-  if (hijriEl) hijriEl.textContent = hijriString;
-}
+      // Update elemen HTML
+      const timeEl = document.getElementById('clock-time');
+      const miladiEl = document.getElementById('clock-miladi');
+      const hijriEl = document.getElementById('clock-hijri');
 
-// Jalankan setiap saat
-setInterval(updateFuturisticClock, 1000);
-updateFuturisticClock(); // Panggil sekali pada muat halaman
+      if (timeEl) timeEl.textContent = timeString;
+      if (miladiEl) miladiEl.textContent = miladiString;
+      if (hijriEl) hijriEl.textContent = hijriString;
+    }
+
+    // === LOGIC PWA (INSTALL APP) ===
+    let deferredPrompt;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      const installContainer = document.getElementById('installContainer');
+      if(installContainer) installContainer.classList.remove('hidden');
+    });
+
+    const installBtn = document.getElementById('btnInstall');
+    if (installBtn) {
+      installBtn.addEventListener('click', async () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          console.log(`User response: ${outcome}`);
+          deferredPrompt = null;
+          document.getElementById('installContainer').classList.add('hidden');
+        }
+      });
+    }
+
+    // === LOGIC NOTIFIKASI ===
+    function requestNotificationPermission() {
+      if (!("Notification" in window)) {
+        showToast('Pelayar anda tidak menyokong notifikasi.', 'error');
+        return;
+      }
+
+      Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+          showToast('Notifikasi diaktifkan!', 'success');
+          const notif = new Notification('INSTAQLIM', {
+            body: 'Notifikasi diaktifkan. Anda akan menerima kemas kini penting.',
+            icon: 'https://arleta.site/interactivelink/2950/Logo-Maahad.JPG'
+          });
+        } else {
+          showToast('Notifikasi ditolak.', 'error');
+        }
+      });
+    }
+
+    function sendNotification(title, body) {
+      if (Notification.permission === 'granted') {
+        new Notification(title, {
+          body: body,
+          icon: 'https://arleta.site/interactivelink/2950/Logo-Maahad.JPG',
+          badge: 'https://arleta.site/interactivelink/2950/Logo-Maahad.JPG'
+        });
+      }
+    }
+
+    // === HAFAZAN REPORT ===
+    async function saveHafazanReport() {
+      const date = document.getElementById('hafazanDate').value;
+      const studentId = document.getElementById('hafazanStudent').value;
+      const surah = document.getElementById('hafazanSurah').value;
+      const from = document.getElementById('hafazanFrom').value;
+      const to = document.getElementById('hafazanTo').value;
+      const status = document.getElementById('hafazanStatus').value;
+      const notes = document.getElementById('hafazanNotes').value;
+
+      // Pengesahan input
+      if (!date || !studentId || !surah || !from || !to) {
+        return showToast('Sila isi semua medan wajib (Tarikh, Pelajar, Surah, Ayat)', 'error');
+      }
+
+      const studentObj = students.find(s => s.id === studentId);
+      const studentName = studentObj ? studentObj.name : 'Pelajar Tidak Diketahui';
+
+      const report = {
+        id: 'hafazan_' + Date.now(),
+        date: date,
+        studentId: studentId,
+        studentName: studentName,
+        surah: surah,
+        ayatFrom: from,
+        ayatTo: to,
+        status: status,
+        notes: notes,
+        teacherId: currentUser.id,
+        teacherName: currentUser.name,
+        class: studentObj ? studentObj.class : ''
+      };
+
+      try {
+        await apiCall('addHafazanReport', { report: report });
+        showToast('Laporan Hafazan berjaya disimpan');
+        sendNotification('Berjaya', 'Laporan hafazan harian telah disimpan.');
+        
+        // Reset borang selepas berjaya
+        document.getElementById('hafazanSurah').value = '';
+        document.getElementById('hafazanFrom').value = '';
+        document.getElementById('hafazanTo').value = '';
+        document.getElementById('hafazanNotes').value = '';
+        document.getElementById('hafazanStudent').selectedIndex = 0;
+        document.getElementById('hafazanDate').value = new Date().toISOString().slice(0,10);
+      } catch (err) {
+        showToast('Gagal menyimpan: ' + err.message, 'error');
+      }
+    }
 
     window.onload = () => {
       const theme = localStorage.getItem('theme') || 'light';
@@ -2487,17 +2535,10 @@ updateFuturisticClock(); // Panggil sekali pada muat halaman
         isOnline = false;
       }
     };
+
+    // Jalankan setiap saat
+    setInterval(updateFuturisticClock, 1000);
+    updateFuturisticClock();
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
