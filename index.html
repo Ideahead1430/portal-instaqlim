@@ -304,6 +304,17 @@
     #notesModal { display: none; }
     #notesModal:not(.hidden) { display: flex; }
     #fullNotes { font-size: 1.1rem; line-height: 1.6; word-wrap: break-word; }
+    /* === FUTURISTIC CLOCK STYLE === */
+    .futuristic-clock {
+      font-family: 'Courier New', Courier, monospace; /* Font Digital */
+      font-size: 0.75rem; /* Saiz lebih kecil */
+      letter-spacing: 1px;
+      color: #a5f3fc; /* Warna Neon Cyan (Biru Cerah) */
+      text-shadow: 0 0 5px #a5f3fc, 0 0 10px #22d3ee; /* Kesan Glow */
+      margin-top: 5px; /* Jarak dari teks di atas */
+      font-weight: bold;
+      opacity: 0.9;
+    }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -329,13 +340,23 @@
 
   <!-- Main App -->
   <div id="mainApp" class="hidden">
-    <header>
+        <header>
       <div class="container flex">
         <h1>INSTAQLIM</h1>
-        <div>
-          <span>Selamat Datang, <strong id="userName"></strong> (<span id="userRole"></span>)</span>
-          <a href="#" class="btn-logout" onclick="logout()">Log Keluar</a>
+        <!-- KEMASKINI BAHAGIAN INI -->
+        <div style="text-align: right; display: flex; flex-direction: column;">
+          <div>
+            <span>Selamat Datang, <strong id="userName"></strong> (<span id="userRole"></span>)</span>
+            <a href="#" class="btn-logout" onclick="logout()">Log Keluar</a>
+          </div>
+          <!-- JAM DIGITAL FUTURISTIK -->
+          <div class="futuristic-clock">
+            <span id="clock-time">00:00:00</span> | 
+            <span id="clock-miladi">01/01/2025</span> | 
+            <span id="clock-hijri">01 Muharram 1446H</span>
+          </div>
         </div>
+        <!-- TAMAT KEMASKINI -->
       </div>
     </header>
 
@@ -2384,6 +2405,45 @@
         });
       }
     }
+        // === FUTURISTIC CLOCK ENGINE (ZON MALAYSIA) ===
+    function updateFuturisticClock() {
+      const now = new Date();
+      
+      // Tetapan Zon Waktu Malaysia
+      const myTimeZone = 'Asia/Kuala_Lumpur';
+
+      // 1. Masa (Format 24 Jam: HH:MM:SS) - Zon Malaysia
+      const timeString = now.toLocaleTimeString('ms-MY', { 
+        timeZone: myTimeZone, 
+        hour12: false 
+      });
+
+      // 2. Tarikh Miladi (Format Malaysia: DD/MM/YYYY) - Zon Malaysia
+      const miladiString = now.toLocaleDateString('ms-MY', { 
+        timeZone: myTimeZone 
+      });
+
+      // 3. Tarikh Hijri (Format Malaysia - Umm Al-Qura) - Zon Malaysia
+      const hijriFormatter = new Intl.DateTimeFormat('ms-MY', {
+        calendar: 'islamic-umalqura', // Piawaian rasmi Malaysia
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        timeZone: myTimeZone
+      });
+      const hijriString = hijriFormatter.format(now).toUpperCase() + 'H';
+
+      // Kemaskini DOM
+      document.getElementById('clock-time').textContent = timeString;
+      document.getElementById('clock-miladi').textContent = miladiString;
+      document.getElementById('clock-hijri').textContent = hijriString;
+    }
+
+    // Jalankan setiap saat
+    setInterval(updateFuturisticClock, 1000);
+    
+    // Jalankan serta-merta
+    updateFuturisticClock();
 
     window.onload = () => {
       const theme = localStorage.getItem('theme') || 'light';
