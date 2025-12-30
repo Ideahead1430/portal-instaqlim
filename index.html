@@ -1932,23 +1932,34 @@
       }
       reports.forEach((r, index) => {
         const notesPreview = r.notes ? (r.notes.length > 100 ? r.notes.substring(0, 100) + '...' : r.notes) : '-';
+       // GANTIKAN BAHAGIAN <tr> DI BAWAH INI:
         tbody.innerHTML += `
-          <tr onclick="showFullNotes('${r.notes ? r.notes.replace(/'/g, "\\'") : ''}')" style="cursor:pointer;">
+          <tr onclick="showFullNotes(${index})" style="cursor:pointer;">
             <td><input type="checkbox" class="report-checkbox"></td>
             <td>${index + 1}</td>
             <td>${r.teacher || 'Tiada Nama'}</td>
-            <td>${r.date || '-'}</td>
+            <td>${formatDateMY(r.date)}</td>
             <td>${r.class || '-'}</td>
             <td>${r.topic || '-'}</td>
             <td>${notesPreview}</td>
             <td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : '-'}</td>
           </tr>`;
       });
-    }
+}
 
-    function showFullNotes(notes) {
-      document.getElementById('fullNotes').textContent = notes || 'Tiada catatan';
-      document.getElementById('notesModal').classList.remove('hidden');
+        function showFullNotes(index) {
+      // Cari data dalam senarai reports berdasarkan indeks
+      if (reports && reports[index]) {
+        const notes = reports[index].notes;
+        
+        // Jika ada notes, paparkan. Jika tidak, paparkan "Tiada catatan"
+        document.getElementById('fullNotes').textContent = notes || 'Tiada catatan';
+        document.getElementById('notesModal').classList.remove('hidden');
+      } else {
+        // Jika data tidak dijumpai
+        console.error("Ralat: Data laporan tidak dijumpai untuk indeks", index);
+        showToast('Ralat memaparkan nota', 'error');
+      }
     }
 
     async function saveTeachingReport() {
