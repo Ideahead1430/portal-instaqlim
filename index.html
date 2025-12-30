@@ -2405,45 +2405,58 @@
         });
       }
     }
-        // === FUTURISTIC CLOCK ENGINE (ZON MALAYSIA) ===
-    function updateFuturisticClock() {
-      const now = new Date();
-      
-      // Tetapan Zon Waktu Malaysia
-      const myTimeZone = 'Asia/Kuala_Lumpur';
+                function updateFuturisticClock() {
+  // Dapatkan masa semasa di zon Malaysia (UTC+8)
+  const now = new Date();
+  const malaysiaTime = new Date(now.getTime() + (now.getTimezoneOffset() + 480) * 60000);
 
-      // 1. Masa (Format 24 Jam: HH:MM:SS) - Zon Malaysia
-      const timeString = now.toLocaleTimeString('ms-MY', { 
-        timeZone: myTimeZone, 
-        hour12: false 
-      });
+  // Format Masa (HH:MM:SS) - 24 jam
+  const timeFormatter = new Intl.DateTimeFormat('ms-MY', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+    timeZone: 'Asia/Kuala_Lumpur'
+  });
+  const timeString = timeFormatter.format(malaysiaTime);
 
-      // 2. Tarikh Miladi (Format Malaysia: DD/MM/YYYY) - Zon Malaysia
-      const miladiString = now.toLocaleDateString('ms-MY', { 
-        timeZone: myTimeZone 
-      });
+  // Format Tarikh Miladi (DD/MM/YYYY)
+  const miladiFormatter = new Intl.DateTimeFormat('ms-MY', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    timeZone: 'Asia/Kuala_Lumpur'
+  });
+  const miladiString = miladiFormatter.format(malaysiaTime);
 
-      // 3. Tarikh Hijri (Format Malaysia - Umm Al-Qura) - Zon Malaysia
-      const hijriFormatter = new Intl.DateTimeFormat('ms-MY', {
-        calendar: 'islamic-umalqura', // Piawaian rasmi Malaysia
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-        timeZone: myTimeZone
-      });
-      const hijriString = hijriFormatter.format(now).toUpperCase() + 'H';
+  // Format Tarikh Hijriah menggunakan kalendar Umm al-Qura (paling tepat)
+  const hijriFormatter = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'Asia/Kuala_Lumpur'
+  });
+  let hijriParts = hijriFormatter.formatToParts(malaysiaTime);
+  
+  const hijriDay = hijriParts.find(p => p.type === 'day')?.value || '';
+  const hijriMonth = hijriParts.find(p => p.type === 'month')?.value || '';
+  const hijriYear = hijriParts.find(p => p.type === 'year')?.value || '';
+  
+  const hijriString = `${hijriDay} ${hijriMonth} ${hijriYear}H`;
 
-      // Kemaskini DOM
-      document.getElementById('clock-time').textContent = timeString;
-      document.getElementById('clock-miladi').textContent = miladiString;
-      document.getElementById('clock-hijri').textContent = hijriString;
-    }
+  // Update elemen HTML (dengan null check untuk keselamatan)
+  const timeEl = document.getElementById('clock-time');
+  const miladiEl = document.getElementById('clock-miladi');
+  const hijriEl = document.getElementById('clock-hijri');
 
-    // Jalankan setiap saat
-    setInterval(updateFuturisticClock, 1000);
-    
-    // Jalankan serta-merta
-    updateFuturisticClock();
+  if (timeEl) timeEl.textContent = timeString;
+  if (miladiEl) miladiEl.textContent = miladiString;
+  if (hijriEl) hijriEl.textContent = hijriString;
+}
+
+// Jalankan setiap saat
+setInterval(updateFuturisticClock, 1000);
+updateFuturisticClock(); // Panggil sekali pada muat halaman
 
     window.onload = () => {
       const theme = localStorage.getItem('theme') || 'light';
