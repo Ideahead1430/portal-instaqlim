@@ -601,7 +601,17 @@
           <!-- Form Laporan Mengajar -->
           <div id="teachingReportForm" class="card hidden">
             <h3>Laporan Mengajar Harian</h3>
-            <div class="form-group"><label>Tarikh</label><input type="date" id="reportDate" required></div>
+                        <!-- GANTIKAN BAHAGIAN LAMPIRAN INI -->
+            <div class="form-group">
+              <label>Lampiran (max 5MB)</label>
+              <input type="file" id="reportAttachment" accept="image/*,.pdf">
+              <div id="attachmentPreview"></div>
+              
+              <!-- BUTANG PAUTAN KE TELEGRAM -->
+              <a href="https://t.me/+MxXwRojj-GIzNjc1" target="_blank" class="btn" style="background-color: #229ED9; color: white; margin-top: 10px; display: block; width: 100%; text-align: center; text-decoration: none;">
+                <i class="fa-brands fa-telegram"></i> Hantar Gambar ke Telegram
+              </a>
+            </div>
             <div class="form-group"><label>Kelas</label><select id="reportClass" required><option value="">Pilih Kelas</option></select></div>
             <div class="form-group"><label>Topik</label><input type="text" id="reportTopic" required></div>
             <div class="form-group"><label>Catatan</label><textarea id="reportNotes" rows="5" required></textarea></div>
