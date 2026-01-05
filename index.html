@@ -790,10 +790,19 @@
         }
         document.getElementById('userRole').textContent = roleText;
         
-        // Show appropriate dashboard based on role
-        document.getElementById('adminDashboard').classList.toggle('hidden', r.user.role !== 'admin');
-        document.getElementById('amilDashboard').classList.toggle('hidden', r.user.role !== 'amil');
-        document.getElementById('guruDashboard').classList.toggle('hidden', r.user.role !== 'guru');
+       // Sembunyikan semua dashboard terlebih dahulu
+document.getElementById('adminDashboard').classList.add('hidden');
+document.getElementById('guruDashboard').classList.add('hidden');
+document.getElementById('amilDashboard').classList.add('hidden');
+
+// Kemudian tunjukkan dashboard yang sesuai dengan role
+if (r.user.role === 'admin') {
+  document.getElementById('adminDashboard').classList.remove('hidden');
+} else if (r.user.role === 'guru') {
+  document.getElementById('guruDashboard').classList.remove('hidden');
+} else if (r.user.role === 'amil') {
+  document.getElementById('amilDashboard').classList.remove('hidden');
+}
         
         await loadCommonData();
         await loadAnnouncements();
@@ -813,8 +822,8 @@
         currentUser = null;
         document.getElementById('mainApp').classList.add('hidden');
         document.getElementById('adminDashboard').classList.add('hidden');
-        document.getElementById('amilDashboard').classList.add('hidden');
         document.getElementById('guruDashboard').classList.add('hidden');
+        document.getElementById('amilDashboard').classList.add('hidden');
         document.getElementById('sections').classList.add('hidden');
         document.getElementById('loginPage').classList.remove('hidden');
         document.getElementById('username').value = '';
