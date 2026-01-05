@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   
-  <!-- META TAGS UNTUK PWA & APLIKASI -->
-  <link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIklOU1RBUUxJTSIsCiAgInNob3J0X25hbWUiOiAiSU5TVEFRTElNIiwKICAic3RhcnRfdXJsIjogImh0dHBzOi8vc2NyaXB0Lmdvb2dsZS5jb20vbWFjcm9zL3MvQUtmeWNieW1JSGd0T0o2RVJRd2JydFVDUzJNMjJLLTZFcnk2V2s3Q3FBc2cwUHM3RExNZ19CNkx0NmRkV05YeFEybVZMWk9nL2V4ZWMiLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMxMGI5ODEiLAogICJ0aGVtZV9jb2xvciI6ICIjMTBiOTgxIiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiaHR0cHM6Ly9hcmxldGEuc2l0ZS9pbnRlcmFjdGl2ZWxpbmsvMjk1MC9Mb2dvLU1hYWhhZC5KUEciLAogICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICJ0eXBlIjogImltYWdlL2pwZyIKICAgIH0KICBdCn0=">
+   <!-- META TAGS UNTUK PWA (VERSION TERSAH) -->
+  <link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIklOU1RBUUxJTSIsCiAgInNob3J0X25hbWUiOiAiSU5TVEFRTElNIiwKICAic3RhcnRfdXJsIjogImh0dHBzOi8vc2NyaXB0Lmdvb2dsZS5jb20vbWFjcm9zL3MvQUtmeWNieU1JSGd0T0o2RVJRd2JydFVDUzJNMjJLLTZFcnk2V2s3Q3FBc2cwUHM3RExNZ19CNkx0NmRkV05YeFEybVZMWk9nL2V4ZWMiLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMxMGI5ODEiLAogICJ0aGVtZV9jb2xvciI6ICIjMTBiOTgxIiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiaHR0cHM6Ly9hcmxldGEuc2l0ZS9pbnRlcmFjdGl2ZWxpbmsvMjk1MC9Mb2dvLU1hYWhhZC5KUEciLAogICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICJ0eXBlIjogImltYWdlL2pwZyIKICAgIH0KICBdCn0=">
   
   <!-- Ikon iOS -->
   <link rel="apple-touch-icon" href="https://arleta.site/interactivelink/2950/Logo-Maahad.JPG">
@@ -398,10 +398,7 @@
             <div class="menu-card" onclick="showSection('manageAttendance')"><i class="fas fa-check-square"></i><h3>Kehadiran</h3></div>
             <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Mengajar</h3></div>
             <div class="menu-card" onclick="showSection('hafazanReportForm')"><i class="fas fa-book-quran"></i><h3>Laporan Hafazan Harian</h3></div>
-            <div class="menu-card" onclick="showSection('viewHafazanReports')">
-              <i class="fas fa-file-alt"></i><h3>Senarai Laporan Hafazan</h3>
-            </div>
-            <!-- BUTANG KOD JAWI -->
+            <div class="menu-card" onclick="showSection('viewHafazanReports')"><i class="fas fa-file-alt"></i><h3>Senarai Laporan Hafazan</h3></div>
             <div class="menu-card" onclick="window.open('https://chatgpt.com/g/g-68c59510c0608191a74e770098fa9025-kod-jawi-gpt', '_blank')" style="background-color: #3b82f6;">
               <i class="fas fa-kaaba"></i><h3>KOD JAWI</h3>
             </div>
@@ -417,9 +414,32 @@
             <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Saya</h3></div>
             <div class="menu-card" onclick="showSection('hafazanReportForm')"><i class="fas fa-book-quran"></i><h3>Laporan Hafazan</h3></div>
             <div class="menu-card" onclick="showSection('viewHafazanReports')"><i class="fas fa-list"></i><h3>Senarai Hafazan</h3></div>
-            <!-- BUTANG KOD JAWI -->
             <div class="menu-card" onclick="window.open('https://chatgpt.com/g/g-68c59510c0608191a74e770098fa9025-kod-jawi-gpt', '_blank')" style="background-color: #3b82f6;">
               <i class="fas fa-kaaba"></i><h3>KOD JAWI</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Amil Zakat Dashboard -->
+        <div id="amilDashboard" class="hidden">
+          <h2 class="text-center">Papan Pemuka Amil Zakat</h2>
+          <div class="grid">
+            <!-- Pengumuman Terkini -->
+            <div class="menu-card" onclick="document.getElementById('announcementSection').scrollIntoView({behavior: 'smooth'})">
+              <i class="fas fa-bullhorn"></i>
+              <h3>Pengumuman Terkini</h3>
+            </div>
+
+            <!-- KOD JAWI -->
+            <div class="menu-card" onclick="window.open('https://chatgpt.com/g/g-68c59510c0608191a74e770098fa9025-kod-jawi-gpt', '_blank')" style="background-color: #3b82f6;">
+              <i class="fas fa-kaaba"></i>
+              <h3>KOD JAWI</h3>
+            </div>
+
+            <!-- AMIL ZAKAT - Sistem Luar -->
+            <div class="menu-card" onclick="window.open('https://stiqdat.interactivelink.site/amil', '_blank')" style="background-color: #059669;">
+              <i class="fas fa-hand-holding-heart"></i>
+              <h3>AMIL ZAKAT</h3>
             </div>
           </div>
         </div>
@@ -437,6 +457,7 @@
                 <option value="admin">Pentadbir</option>
                 <option value="guru">Guru</option>
                 <option value="staff">Kakitangan</option>
+                <option value="amil">Amil Zakat</option>
               </select>
             </div>
             <table id="userTable">
@@ -816,7 +837,7 @@
   </div>
 
   <script>
-   const API_URL = 'https://script.google.com/macros/s/AKfycbyRCOHenkFOP5_sbHDpzS30j_ugTKYTrBJ68VhVwSZ6Jq5vjBEubsBsGb0XGDwkZSHa/exec';
+   const API_URL = 'https://script.google.com/macros/s/AKfycbyRCOHenkFOP5_sbHDpzS30j_ugTKYTrBJ68VhVwSZ6Jq5vjBEubsBsGb0XGDwkZSHa.exec';
     let currentUser = null;
     let currentSection = '';
     let classes = [], students = [], teachers = [], staff = [], users = [], schedule = Array(17).fill().map(() => Array(7).fill(''));
@@ -923,9 +944,27 @@
         document.getElementById('loginPage').classList.add('hidden');
         document.getElementById('mainApp').classList.remove('hidden');
         document.getElementById('userName').textContent = r.user.name || u;
-        document.getElementById('userRole').textContent = r.user.role === 'admin' ? 'Pentadbir' : 'Guru';
+        
+        // Update user role display
+        let roleText = '';
+        if (r.user.role === 'admin') {
+          roleText = 'Pentadbir';
+        } else if (r.user.role === 'guru') {
+          roleText = 'Guru';
+        } else if (r.user.role === 'amil') {
+          roleText = 'Amil Zakat';
+        } else if (r.user.role === 'staff') {
+          roleText = 'Kakitangan';
+        } else {
+          roleText = r.user.role;
+        }
+        document.getElementById('userRole').textContent = roleText;
+        
+        // Show appropriate dashboard based on role
         document.getElementById('adminDashboard').classList.toggle('hidden', r.user.role !== 'admin');
-        document.getElementById('guruDashboard').classList.toggle('hidden', r.user.role === 'admin');
+        document.getElementById('amilDashboard').classList.toggle('hidden', r.user.role !== 'amil');
+        document.getElementById('guruDashboard').classList.toggle('hidden', r.user.role !== 'guru');
+        
         await loadCommonData();
         await loadAnnouncements();
         renderAnnouncements();
@@ -943,6 +982,10 @@
       if (confirm('Log keluar?')) {
         currentUser = null;
         document.getElementById('mainApp').classList.add('hidden');
+        document.getElementById('adminDashboard').classList.add('hidden');
+        document.getElementById('amilDashboard').classList.add('hidden');
+        document.getElementById('guruDashboard').classList.add('hidden');
+        document.getElementById('sections').classList.add('hidden');
         document.getElementById('loginPage').classList.remove('hidden');
         document.getElementById('username').value = '';
         document.getElementById('password').value = '';
@@ -1065,7 +1108,18 @@
       const tbody = document.querySelector('#userTable tbody');
       tbody.innerHTML = '';
       users.forEach(u => {
-        const roleText = u.role === 'admin' ? 'Pentadbir' : u.role === 'guru' ? 'Guru' : 'Kakitangan';
+        let roleText = '';
+        if (u.role === 'admin') {
+          roleText = 'Pentadbir';
+        } else if (u.role === 'guru') {
+          roleText = 'Guru';
+        } else if (u.role === 'amil') {
+          roleText = 'Amil Zakat';
+        } else if (u.role === 'staff') {
+          roleText = 'Kakitangan';
+        } else {
+          roleText = u.role;
+        }
         
         let actionButtons = '-';
         if (currentUser.role === 'admin') {
@@ -1093,6 +1147,7 @@
         <div class="form-group"><label>Peranan</label><select id="u_role" required>
           <option value="guru">Guru</option>
           <option value="staff">Kakitangan</option>
+          <option value="amil">Amil Zakat</option>
           <option value="admin">Pentadbir</option>
         </select></div>
         <input type="hidden" id="u_id">
@@ -1159,6 +1214,7 @@
         <div class="form-group"><label>Peranan</label><select id="u_role" required>
           <option value="guru" ${user.role === 'guru' ? 'selected' : ''}>Guru</option>
           <option value="staff" ${user.role === 'staff' ? 'selected' : ''}>Kakitangan</option>
+          <option value="amil" ${user.role === 'amil' ? 'selected' : ''}>Amil Zakat</option>
           <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Pentadbir</option>
         </select></div>
         <input type="hidden" id="u_id" value="${user.id}">
@@ -2410,28 +2466,39 @@
       if (hijriEl) hijriEl.textContent = hijriString;
     }
 
-    // === LOGIC PWA (INSTALL APP) ===
-    let deferredPrompt;
+       // === KONFIGURASI PWA (LETAK DI BAWAH SEKALI) ===
+    let deferredPrompt; // Pembolehubah mesti global
 
     window.addEventListener('beforeinstallprompt', (e) => {
+      // Halang prompt pelayar (mini-popup) keluar
       e.preventDefault();
+      // Simpan acara untuk dipicu kemudian
       deferredPrompt = e;
+      // Tunjukkan butang Pasang Aplikasi kita
+      console.log("PWA Install Prompt Ready"); // Ujian Console
       const installContainer = document.getElementById('installContainer');
       if(installContainer) installContainer.classList.remove('hidden');
     });
 
+    // Butang Pasang diklik
     const installBtn = document.getElementById('btnInstall');
     if (installBtn) {
       installBtn.addEventListener('click', async () => {
         if (deferredPrompt) {
+          // Tunjukkan prompt pemasangan
           deferredPrompt.prompt();
+          // Tunggu respons user
           const { outcome } = await deferredPrompt.userChoice;
           console.log(`User response: ${outcome}`);
+          // Reset acara (guna sekali sahaja)
           deferredPrompt = null;
+          // Sembunyikan butang
           document.getElementById('installContainer').classList.add('hidden');
         }
       });
     }
+
+    // === TAMAT PWA ===
 
     // === LOGIC NOTIFIKASI ===
     function requestNotificationPermission() {
@@ -2514,10 +2581,12 @@
     }
 
     window.onload = () => {
+      // 1. Tema
       const theme = localStorage.getItem('theme') || 'light';
       document.documentElement.setAttribute('data-theme', theme);
       document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
 
+      // 2. Set Tarikh Default
       const today = new Date().toISOString().slice(0,10);
       const attendanceDateInput = document.getElementById('attendanceDate');
       if (attendanceDateInput) attendanceDateInput.value = today;
@@ -2525,6 +2594,7 @@
       const reportDateInput = document.getElementById('reportDate');
       if (reportDateInput) reportDateInput.value = today;
 
+      // 3. Sync Operations
       const savedPendingOperations = localStorage.getItem('pendingOperations');
       if (savedPendingOperations) pendingOperations = JSON.parse(savedPendingOperations);
 
@@ -2533,6 +2603,21 @@
         if (pendingOperations.length > 0) syncPendingOperations();
       } else {
         isOnline = false;
+      }
+
+      // 4. === LOGIC PWA (PENTING: JIKA DALAM ONLOAD, HTML SUDAH SIAP) ===
+      const installBtn = document.getElementById('btnInstall');
+      if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+          if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`User response: ${outcome}`);
+            deferredPrompt = null;
+            const installContainer = document.getElementById('installContainer');
+            if(installContainer) installContainer.classList.add('hidden');
+          }
+        });
       }
     };
 
