@@ -750,72 +750,80 @@
       document.getElementById('dataForm').innerHTML = '';
     }
 
-    async function login() {
-      const u = document.getElementById('username').value.trim();
-      const p = document.getElementById('password').value;
-      const errorEl = document.getElementById('loginError');
+ async function login() {
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value;
+  const errorEl = document.getElementById('loginError');
 
-      if (!u || !p) {
-        errorEl.textContent = 'Isi username dan kata laluan';
-        errorEl.classList.remove('hidden');
-        return;
-      }
+  // Validasi input
+  if (!username || !password) {
+    errorEl.textContent = 'Sila isi nama pengguna dan kata laluan';
+    errorEl.classList.remove('hidden');
+    return;
+  }
 
-      errorEl.classList.add('hidden');
+  errorEl.classList.add('hidden');
 
-      const loginBtn = document.querySelector('#loginPage button');
-      const originalText = loginBtn.innerHTML;
-      loginBtn.innerHTML = '<span class="loading"></span> Memuat...';
-      loginBtn.disabled = true;
+  // Butang login loading state
+  const loginBtn = document.querySelector('#loginPage button');
+  const originalText = loginBtn.innerHTML;
+  loginBtn.innerHTML = '<span class="loading"></span> Memuat...';
+  loginBtn.disabled = true;
 
-      try {
-        const r = await apiCall('login', { username: u, password: p });
-        currentUser = r.user;
-        document.getElementById('loginPage').classList.add('hidden');
-        document.getElementById('mainApp').classList.remove('hidden');
-        document.getElementById('userName').textContent = r.user.name || u;
-        
-        // Update user role display
-        let roleText = '';
-        if (r.user.role === 'admin') {
-          roleText = 'Pentadbir';
-        } else if (r.user.role === 'guru') {
-          roleText = 'Guru';
-        } else if (r.user.role === 'amil') {
-          roleText = 'Amil Zakat';
-        } else if (r.user.role === 'staff') {
-          roleText = 'Kakitangan';
-        } else {
-          roleText = r.user.role;
-        }
-        document.getElementById('userRole').textContent = roleText;
-        
-       // Sembunyikan semua dashboard terlebih dahulu
-document.getElementById('adminDashboard').classList.add('hidden');
-document.getElementById('guruDashboard').classList.add('hidden');
-document.getElementById('amilDashboard').classList.add('hidden');
+  try {
+    const response = await apiCall('login', { username, password });
+    currentUser = response.user;
 
-// Kemudian tunjukkan dashboard yang sesuai dengan role
-if (r.user.role === 'admin') {
-  document.getElementById('adminDashboard').classList.remove('hidden');
-} else if (r.user.role === 'guru') {
-  document.getElementById('guruDashboard').classList.remove('hidden');
-} else if (r.user.role === 'amil') {
-  document.getElementById('amilDashboard').classList.remove('hidden');
-}
-        
-        await loadCommonData();
-        await loadAnnouncements();
-        renderAnnouncements();
-        showToast('Log masuk berjaya');
-      } catch (err) {
-        errorEl.textContent = err.message || 'Login gagal';
-        errorEl.classList.remove('hidden');
-      } finally {
-        loginBtn.innerHTML = originalText;
-        loginBtn.disabled = false;
-      }
+    // Tukar paparan dari login ke app utama
+    document.getElementById('loginPage').classList.add('hidden');
+    document.getElementById('mainApp').classList.remove('hidden');
+
+    // Papar nama pengguna
+    document.getElementById('userName').textContent = currentUser.name || username;
+
+    // Papar peranan dalam bahasa Melayu
+    const roleDisplay = {
+      admin: 'Pentadbir',
+      guru: 'Guru',
+      amil: 'Amil Zakat',
+      staff: 'Kakitangan'
+    };
+    document.getElementById('userRole').textContent = 
+      roleDisplay[currentUser.role] || currentUser.role || 'Pengguna';
+
+    // === PERBAIKAN UTAMA: Pastikan hanya SATU dashboard sahaja kelihatan ===
+    // Sembunyikan semua dashboard dahulu
+    document.getElementById('adminDashboard').classList.add('hidden');
+    document.getElementById('guruDashboard').classList.add('hidden');
+    document.getElementById('amilDashboard').classList.add('hidden');
+
+    // Kemudian tunjukkan dashboard yang betul mengikut role
+    if (currentUser.role === 'admin') {
+      document.getElementById('adminDashboard').classList.remove('hidden');
+    } else if (currentUser.role === 'guru') {
+      document.getElementById('guruDashboard').classList.remove('hidden');
+    } else if (currentUser.role === 'amil') {
+      document.getElementById('amilDashboard').classList.remove('hidden');
     }
+    // Jika role lain (staff atau tidak diketahui), boleh fallback ke guru atau kosongkan
+
+    // Muat data penting
+    await loadCommonData();
+    await loadAnnouncements();
+    renderAnnouncements();
+
+    showToast('Log masuk berjaya! Selamat datang kembali.', 'success');
+
+  } catch (err) {
+    console.error('Login error:', err);
+    errorEl.textContent = err.message || 'Log masuk gagal. Sila cuba lagi.';
+    errorEl.classList.remove('hidden');
+  } finally {
+    // Pulihkan butang login
+    loginBtn.innerHTML = originalText;
+    loginBtn.disabled = false;
+  }
+}
 
     function logout() {
       if (confirm('Log keluar?')) {
