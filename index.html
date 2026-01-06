@@ -719,6 +719,30 @@ th { background: var(--light); }
     let hafazanReports = []; // PEMBOLEHUBAH GLOBAL YANG DITAMBAH
     let currentAnnouncement = { text: '', date: '' };
 
+// Fungsi untuk format tarikh Malaysia yang cantik dan selamat
+function formatDateMY(dateString) {
+  if (!dateString) return 'Tiada Tarikh';
+
+  // Sokong pelbagai format: ISO string, timestamp, atau string biasa
+  const date = new Date(dateString);
+
+  // Jika tarikh tak sah, kembali ke string asal
+  if (isNaN(date.getTime())) return dateString;
+
+  // Format cantik: 28 Februari 2026
+  const options = {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'Asia/Kuala_Lumpur'
+  };
+
+  return date.toLocaleDateString('ms-MY', options);
+}
+
+// Alternatif ringkas jika nak guna 28/02/2026:
+// return date.toLocaleDateString('ms-MY');
+
     async function apiCall(action, payload = {}) {
       try {
         updateConnectionStatus('Memuat...', 'loading');
