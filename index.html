@@ -967,15 +967,27 @@ th { background: var(--light); }
     }
 
     // === FUNGSI BANTUAN: FORMAT TARIKH MALAYSIA ===
-    function formatDateMY(dateString) {
-      if (!dateString) return '-';
-      const d = new Date(dateString);
-      if (isNaN(d.getTime())) return dateString; 
-      const day = String(d.getDate()).padStart(2, '0');
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const year = d.getFullYear();
-      return `${day}/${month}/${year}`;
-    }
+    function formatAnnouncementDate(isoString) {
+  if (!isoString) return 'Tiada Tarikh';
+
+  const date = new Date(isoString);
+
+  // Jika tarikh tak sah, kembali ke string asal
+  if (isNaN(date.getTime())) return isoString;
+
+  // Format cantik: 28 Februari 2026
+  const options = { 
+    day: 'numeric', 
+    month: 'long', 
+    year: 'numeric',
+    timeZone: 'Asia/Kuala_Lumpur' // Pastikan zona Malaysia
+  };
+
+  return date.toLocaleDateString('ms-MY', options);
+}
+
+// Alternatif: Jika nak format ringkas 28/02/2026
+// return date.toLocaleDateString('ms-MY');
 
     // === PENGGUNA ===
     async function loadUsers() {
@@ -2233,7 +2245,10 @@ function renderAnnouncements() {
           <div style="display:flex; justify-content:space-between; align-items:start;">
             <div style="flex:1;">
               <strong style="font-size:1.1rem;">${title}</strong>${isNew}
-              <small style="display:block; color:#666; margin:4px 0;">${date}</small>
+              <small style="display:block; color:#666; margin:4px 0;">
+  <i class="fas fa-calendar-alt" style="font-size:0.8rem; margin-right:4px;"></i>
+  ${formatAnnouncementDate(ann.date)}
+</small>
               <div style="margin-top:8px; line-height:1.5; color:#444;">
                 ${displayText}
                 ${rawText.length > 100 ? ' <span style="color:var(--primary); font-weight:600;">(baca lebih)</span>' : ''}
@@ -2287,12 +2302,13 @@ function showFullAnnouncement(title, text, date) {
         return;
       }
 
-      const newAnn = {
-        id: 'ann_' + Date.now(),
-        title: title,
-        text: text,
-        date: new Date().toLocaleDateString('ms-MY')
-      };
+     const newAnn = {
+  id: 'ann_' + Date.now(),
+  title: title,
+  text: text,
+  date: new Date().toISOString()  // Backend simpan ISO (untuk sorting betul)
+  // Tarikh paparan akan diformat oleh formatAnnouncementDate()
+};
 
       try {
         await apiCall('addAnnouncement', { announcement: newAnn });
@@ -2558,4 +2574,3 @@ function showFullAnnouncement(title, text, date) {
   </script>
 </body>
 </html>
-
