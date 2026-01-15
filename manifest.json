@@ -1,0 +1,15 @@
+{
+  "name": "INSTAQLIM",
+  "short_name": "INSTAQLIM",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#10b981",
+  "theme_color": "#10b981",
+  "icons": [
+    {
+      "src": "https://arleta.site/interactivelink/2950/Logo-Maahad-Png.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
