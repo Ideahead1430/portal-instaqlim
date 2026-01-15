@@ -3,19 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<!-- Tambah dalam head -->
+<meta name="theme-color" content="#10b981">
+<meta name="description" content="Sistem Pengurusan Institut Tahfiz Al-Quran lil Muttaqin">
 
-<!-- META TAGS UNTUK PWA -->
-  <link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIklOU1RBUUxJTSIsCiAgInNob3J0X25hbWUiOiAiSU5TVEFRTElNIiwKICAic3RhcnRfdXJsIjogImh0dHBzOi8vc2NyaXB0Lmdvb2dsZS5jb20vbWFjcm9zL3MvQUtmeWNieU1JSGd0T0o2RVJRd2JydFVDUzJNMjJLLTZFcnk2V2s3Q3FBc2cwUHM3RExNZ19CNkx0NmRkV05YeFEybVZMWk9nL2V4ZWMiLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMxMGI5ODEiLAogICJ0aGVtZV9jb2xvciI6ICIjMTBiOTgxIiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiaHR0cHM6Ly9hcmxldGEuc2l0ZS9pbnRlcmFjdGl2ZWxpbmsvMjk1MC9Mb2dvLU1hYWhhZC5KUEciLAogICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICJ0eXBlIjogImltYWdlL2pwZyIKICAgIH0KICBdCn0=">
-  <link rel="apple-touch-icon" href="https://arleta.site/interactivelink/2950/Logo-Maahad-Png.png">
-  <meta name="apple-mobile-web-app-capable" content="yes">
+<!-- Tambah icon untuk pelbagai saiz -->
+<link rel="icon" type="image/png" sizes="32x32" href="https://arleta.site/interactivelink/2950/Logo-Maahad-Png.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://arleta.site/interactivelink/2950/Logo-Maahad-Png.png">
+
+  <!-- META TAGS UNTUK PWA (DIPERBAIKI) -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="INSTAQLIM">
+  <link rel="apple-touch-icon" href="https://arleta.site/interactivelink/2950/Logo-Maahad-Png.png">
 
-<title>INSTAQLIM - Institut Tahfiz Al-Quran lil Muttaqin</title>
+  <title>INSTAQLIM - Institut Tahfiz Al-Quran lil Muttaqin</title>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
     :root {
@@ -2510,37 +2519,37 @@ function showFullAnnouncement(title, text, date) {
     }
 
        // === KONFIGURASI PWA (LETAK DI BAWAH SEKALI) ===
-    let deferredPrompt; // Pembolehubah mesti global
+   // Gantikan kod PWA sedia ada dengan ini
+let deferredPrompt;
 
-    window.addEventListener('beforeinstallprompt', (e) => {
-      // Halang prompt pelayar (mini-popup) keluar
-      e.preventDefault();
-      // Simpan acara untuk dipicu kemudian
-      deferredPrompt = e;
-      // Tunjukkan butang Pasang Aplikasi kita
-      console.log("PWA Install Prompt Ready"); // Ujian Console
-      const installContainer = document.getElementById('installContainer');
-      if(installContainer) installContainer.classList.remove('hidden');
-    });
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Halang prompt pelayar (mini-popup) keluar
+  e.preventDefault();
+  // Simpan acara untuk dipicu kemudian
+  deferredPrompt = e;
+  // Tunjukkan butang Pasang Aplikasi kita
+  console.log("PWA Install Prompt Ready");
+  const installContainer = document.getElementById('installContainer');
+  if(installContainer) installContainer.classList.remove('hidden');
+});
 
-    // Butang Pasang diklik
-    const installBtn = document.getElementById('btnInstall');
-    if (installBtn) {
-      installBtn.addEventListener('click', async () => {
-        if (deferredPrompt) {
-          // Tunjukkan prompt pemasangan
-          deferredPrompt.prompt();
-          // Tunggu respons user
-          const { outcome } = await deferredPrompt.userChoice;
-          console.log(`User response: ${outcome}`);
-          // Reset acara (guna sekali sahaja)
-          deferredPrompt = null;
-          // Sembunyikan butang
-          document.getElementById('installContainer').classList.add('hidden');
-        }
-      });
+// Butang Pasang diklik
+const installBtn = document.getElementById('btnInstall');
+if (installBtn) {
+  installBtn.addEventListener('click', async () => {
+    if (deferredPrompt) {
+      // Tunjukkan prompt pemasangan
+      deferredPrompt.prompt();
+      // Tunggu respons user
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log(`User response: ${outcome}`);
+      // Reset acara (guna sekali sahaja)
+      deferredPrompt = null;
+      // Sembunyikan butang
+      document.getElementById('installContainer').classList.add('hidden');
     }
-
+  });
+}
     // === TAMAT PWA ===
 
     // === LOGIC NOTIFIKASI ===
