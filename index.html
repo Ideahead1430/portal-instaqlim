@@ -471,8 +471,7 @@ th { background: var(--light); }
                     <th>Kelas</th>
                     <th>Topik</th>
                     <th>Catatan</th>
-                    <th>Lampiran</th>
-                  </tr>
+                    </tr>
                 </thead>
                 <tbody></tbody>
               </table>
@@ -480,23 +479,20 @@ th { background: var(--light); }
           </div>
 
 <!-- Form Laporan Mengajar -->
-          <div id="teachingReportForm" class="card hidden">
-            <h3>Laporan Mengajar Harian</h3>
-            <div class="form-group"><label>Tarikh</label><input type="date" id="reportDate" required></div>
-            <div class="form-group"><label>Kelas</label><select id="reportClass" required><option value="">Pilih Kelas</option></select></div>
-            <div class="form-group"><label>Topik</label><input type="text" id="reportTopic" required></div>
-            <div class="form-group"><label>Catatan</label><textarea id="reportNotes" rows="5" required></textarea></div>
-            <div class="form-group">
-              <label>Lampiran (max 5MB)</label>
-              <input type="file" id="reportAttachment" accept="image/*,.pdf">
-              <div id="attachmentPreview"></div>
-              <!-- BUTANG PAUTAN KE TELEGRAM -->
-              <a href="https://t.me/+MxXwRojj-GIzNjc1" target="_blank" class="btn" style="background-color: #229ED9; color: white; margin-top: 10px; display: block; width: 100%; text-align: center; text-decoration: none;">
-                <i class="fa-brands fa-telegram"></i> Hantar Gambar ke Telegram
-              </a>
-            </div>
-            <button class="btn btn-success" onclick="saveTeachingReport()">Hantar Laporan</button>
-          </div>
+<div id="teachingReportForm" class="card hidden">
+  <h3>Laporan Mengajar Harian</h3>
+  <div class="form-group"><label>Tarikh</label><input type="date" id="reportDate" required></div>
+  <div class="form-group"><label>Kelas</label><select id="reportClass" required><option value="">Pilih Kelas</option></select></div>
+  <div class="form-group"><label>Topik</label><input type="text" id="reportTopic" required></div>
+  <div class="form-group"><label>Catatan</label><textarea id="reportNotes" rows="5" required></textarea></div>
+  <div class="form-group">
+    <!-- BUTANG PAUTAN KE TELEGRAM -->
+    <a href="https://t.me/+MxXwRojj-GIzNjc1" target="_blank" class="btn" style="background-color: #229ED9; color: white; margin-top: 10px; display: block; width: 100%; text-align: center; text-decoration: none;">
+      <i class="fa-brands fa-telegram"></i> Hantar Gambar ke Telegram
+    </a>
+  </div>
+  <button class="btn btn-success" onclick="saveTeachingReport()">Hantar Laporan</button>
+</div>
 
 <!-- Hafazan Report Form -->
           <div id="hafazanReportForm" class="card hidden">
@@ -2012,62 +2008,138 @@ function formatDateMY(dateString) {
       }
     }
 
-    async function saveTeachingReport() {
-      const fileInput = document.getElementById('reportAttachment');
-      let attachmentUrl = '';
-      if (fileInput.files.length > 0) {
+    // Tambah fungsi ini sebelum window.onload
+function previewAttachment() {
+    const fileInput = document.getElementById('reportAttachment');
+    const preview = document.getElementById('attachmentPreview');
+    
+    if (fileInput.files && fileInput.files[0]) {
         const file = fileInput.files[0];
-        if (file.size > 5 * 1024 * 1024) return showToast('Fail terlalu besar (max 5MB)', 'error');
-
-        const reader = new FileReader();
-        reader.onload = async function(e) {
-          const base64 = e.target.result.split(',')[1];
-          try {
-            const res = await apiCall('uploadAttachment', {
-              fileName: file.name,
-              mimeType: file.type,
-              base64: base64
-            });
-            attachmentUrl = res.url;
-            await sendReport(attachmentUrl);
-          } catch (err) {
-            showToast('Gagal upload lampiran: ' + err.message, 'error');
-          }
-        };
-        reader.readAsDataURL(file);
-      } else {
-        await sendReport('');
-      }
-
-      async function sendReport(url) {
-        const report = {
-          date: document.getElementById('reportDate').value,
-          class: document.getElementById('reportClass').value,
-          topic: document.getElementById('reportTopic').value.trim(),
-          notes: document.getElementById('reportNotes').value.trim(),
-          teacher: currentUser.name,
-          teacherId: currentUser.id,
-          attachment: url
-        };
-        if (!report.date || !report.class || !report.topic || !report.notes) {
-          return showToast('Isi semua medan', 'error');
+        
+        // Semak saiz fail
+        if (file.size > 5 * 1024 * 1024) {
+            showToast('Fail terlalu besar (maksimum 5MB)', 'error');
+            fileInput.value = '';
+            preview.innerHTML = '';
+            return;
         }
-        try {
-          await apiCall('addTeachingReport', report);
-          showToast('Laporan berjaya dihantar');
-          sendNotification('Berjaya', 'Laporan mengajar harian telah disimpan ke sistem.');
-          
-          document.getElementById('reportDate').value = '';
-          document.getElementById('reportClass').value = '';
-          document.getElementById('reportTopic').value = '';
-          document.getElementById('reportNotes').value = '';
-          document.getElementById('reportAttachment').value = '';
-          document.getElementById('attachmentPreview').innerHTML = '';
-        } catch (e) {
-          showToast(e.message, 'error');
+        
+        // Paparkan maklumat fail
+        const fileSize = (file.size / 1024).toFixed(2) + ' KB';
+        const fileType = file.type || 'unknown';
+        
+        // Jika fail adalah gambar, paparkan preview
+        if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.innerHTML = `
+                    <div style="margin-top: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <img src="${e.target.result}" style="max-width: 100%; max-height: 200px; display: block; margin: 0 auto;">
+                        <p style="text-align: center; margin-top: 5px; font-size: 0.9em;">
+                            ${file.name} (${fileSize})
+                        </p>
+                    </div>
+                `;
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // Untuk fail bukan gambar, hanya paparkan maklumat
+            preview.innerHTML = `
+                <div style="margin-top: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <p style="text-align: center; margin: 0;">
+                        <i class="fas fa-file" style="font-size: 2em; margin-bottom: 5px; display: block;"></i>
+                        ${file.name} (${fileSize})<br>
+                        <small>Jenis: ${fileType}</small>
+                    </p>
+                </div>
+            `;
         }
-      }
+    } else {
+        preview.innerHTML = '';
     }
+}
+
+// Ubah fungsi saveTeachingReport untuk menggunakan previewAttachment
+async function saveTeachingReport() {
+    const fileInput = document.getElementById('reportAttachment');
+    let attachmentUrl = '';
+    
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        
+        // Semak saiz fail
+        if (file.size > 5 * 1024 * 1024) {
+            showToast('Fail terlalu besar (maksimum 5MB)', 'error');
+            return;
+        }
+
+        try {
+            // Baca fail sebagai base64
+            const reader = new FileReader();
+            
+            reader.onload = async function(e) {
+                try {
+                    const base64 = e.target.result.split(',')[1];
+                    
+                    // Hantar ke pelayan
+                    const res = await apiCall('uploadAttachment', {
+                        fileName: file.name,
+                        mimeType: file.type,
+                        base64: base64
+                    });
+                    
+                    attachmentUrl = res.url;
+                    await sendReport(attachmentUrl);
+                } catch (err) {
+                    showToast('Gagal memuat naik lampiran: ' + err.message, 'error');
+                }
+            };
+            
+            reader.onerror = function() {
+                showToast('Ralat membaca fail', 'error');
+            };
+            
+            reader.readAsDataURL(file);
+        } catch (err) {
+            showToast('Ralat memproses fail: ' + err.message, 'error');
+        }
+    } else {
+        // Tiada fail dipilih, hantar laporan tanpa lampiran
+        await sendReport('');
+    }
+
+    async function sendReport(url) {
+        const report = {
+            date: document.getElementById('reportDate').value,
+            class: document.getElementById('reportClass').value,
+            topic: document.getElementById('reportTopic').value.trim(),
+            notes: document.getElementById('reportNotes').value.trim(),
+            teacher: currentUser.name,
+            teacherId: currentUser.id,
+            attachment: url
+        };
+        
+        if (!report.date || !report.class || !report.topic || !report.notes) {
+            return showToast('Sila isi semua medan wajib', 'error');
+        }
+        
+        try {
+            await apiCall('addTeachingReport', report);
+            showToast('Laporan berjaya dihantar');
+            sendNotification('Berjaya', 'Laporan mengajar harian telah disimpan ke sistem.');
+            
+            // Reset borang
+            document.getElementById('reportDate').value = '';
+            document.getElementById('reportClass').value = '';
+            document.getElementById('reportTopic').value = '';
+            document.getElementById('reportNotes').value = '';
+            document.getElementById('reportAttachment').value = '';
+            document.getElementById('attachmentPreview').innerHTML = '';
+        } catch (e) {
+            showToast(e.message, 'error');
+        }
+    }
+}
     // Toggle semua checkbox
     function toggleSelectAll() {
       const selectAll = document.getElementById('selectAll');
