@@ -2068,55 +2068,35 @@ function previewAttachment() {
     }
 }
 
-// Ubah fungsi saveTeachingReport untuk menggunakan previewAttachment
+// Gantikan fungsi saveTeachingReport yang lama dengan ini
 async function saveTeachingReport() {
-    const fileInput = document.getElementById('reportAttachment');
-    let attachmentUrl = '';
+  const report = {
+    date: document.getElementById('reportDate').value,
+    class: document.getElementById('reportClass').value,
+    topic: document.getElementById('reportTopic').value.trim(),
+    notes: document.getElementById('reportNotes').value.trim(),
+    teacher: currentUser.name,
+    teacherId: currentUser.id
+  };
+  
+  if (!report.date || !report.class || !report.topic || !report.notes) {
+    return showToast('Sila isi semua medan wajib', 'error');
+  }
+  
+  try {
+    await apiCall('addTeachingReport', report);
+    showToast('Laporan berjaya dihantar');
+    sendNotification('Berjaya', 'Laporan mengajar harian telah disimpan ke sistem.');
     
-    if (fileInput.files.length > 0) {
-        const file = fileInput.files[0];
-        
-        // Semak saiz fail
-        if (file.size > 5 * 1024 * 1024) {
-            showToast('Fail terlalu besar (maksimum 5MB)', 'error');
-            return;
-        }
-
-        try {
-            // Baca fail sebagai base64
-            const reader = new FileReader();
-            
-            reader.onload = async function(e) {
-                try {
-                    const base64 = e.target.result.split(',')[1];
-                    
-                    // Hantar ke pelayan
-                    const res = await apiCall('uploadAttachment', {
-                        fileName: file.name,
-                        mimeType: file.type,
-                        base64: base64
-                    });
-                    
-                    attachmentUrl = res.url;
-                    await sendReport(attachmentUrl);
-                } catch (err) {
-                    showToast('Gagal memuat naik lampiran: ' + err.message, 'error');
-                }
-            };
-            
-            reader.onerror = function() {
-                showToast('Ralat membaca fail', 'error');
-            };
-            
-            reader.readAsDataURL(file);
-        } catch (err) {
-            showToast('Ralat memproses fail: ' + err.message, 'error');
-        }
-    } else {
-        // Tiada fail dipilih, hantar laporan tanpa lampiran
-        await sendReport('');
-    }
-
+    // Reset borang selepas berjaya
+    document.getElementById('reportDate').value = '';
+    document.getElementById('reportClass').value = '';
+    document.getElementById('reportTopic').value = '';
+    document.getElementById('reportNotes').value = '';
+  } catch (e) {
+    showToast(e.message, 'error');
+  }
+}
     async function sendReport(url) {
         const report = {
             date: document.getElementById('reportDate').value,
@@ -2679,3 +2659,4 @@ if (installBtn) {
   </script>
 </body>
 </html>
+
