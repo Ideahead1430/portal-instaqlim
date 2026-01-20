@@ -2068,7 +2068,7 @@ function previewAttachment() {
     }
 }
 
-// Gantikan fungsi saveTeachingReport yang lama dengan ini
+// INI ADALAH FUNGSI BARU YANG TIDAK ADA LAMPIRAN - GUNAKAN INI
 async function saveTeachingReport() {
   const report = {
     date: document.getElementById('reportDate').value,
@@ -2096,38 +2096,6 @@ async function saveTeachingReport() {
   } catch (e) {
     showToast(e.message, 'error');
   }
-}
-    async function sendReport(url) {
-        const report = {
-            date: document.getElementById('reportDate').value,
-            class: document.getElementById('reportClass').value,
-            topic: document.getElementById('reportTopic').value.trim(),
-            notes: document.getElementById('reportNotes').value.trim(),
-            teacher: currentUser.name,
-            teacherId: currentUser.id,
-            attachment: url
-        };
-        
-        if (!report.date || !report.class || !report.topic || !report.notes) {
-            return showToast('Sila isi semua medan wajib', 'error');
-        }
-        
-        try {
-            await apiCall('addTeachingReport', report);
-            showToast('Laporan berjaya dihantar');
-            sendNotification('Berjaya', 'Laporan mengajar harian telah disimpan ke sistem.');
-            
-            // Reset borang
-            document.getElementById('reportDate').value = '';
-            document.getElementById('reportClass').value = '';
-            document.getElementById('reportTopic').value = '';
-            document.getElementById('reportNotes').value = '';
-            document.getElementById('reportAttachment').value = '';
-            document.getElementById('attachmentPreview').innerHTML = '';
-        } catch (e) {
-            showToast(e.message, 'error');
-        }
-    }
 }
     // Toggle semua checkbox
     function toggleSelectAll() {
