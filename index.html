@@ -3,212 +3,298 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<!-- Tambah dalam head -->
-<meta name="theme-color" content="#10b981">
-<meta name="description" content="Sistem Pengurusan Institut Tahfiz Al-Quran lil Muttaqin">
-
-<!-- Tambah icon untuk pelbagai saiz -->
-<link rel="icon" type="image/png" sizes="32x32" href="https://arleta.site/interactivelink/2950/Logo-Maahad-Png.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://arleta.site/interactivelink/2950/Logo-Maahad-Png.png">
-
-  <!-- META TAGS UNTUK PWA (DIPERBAIKI) -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="INSTAQLIM">
-  <link rel="apple-touch-icon" href="https://arleta.site/interactivelink/2950/Logo-Maahad-Png.png">
-
+  <meta name="theme-color" content="#059669">
+  <meta name="description" content="Sistem Pengurusan Institut Tahfiz Al-Quran lil Muttaqin">
+  <link rel="icon" type="image/png" href="https://arleta.site/interactivelink/2950/Logo-Maahad-Png.png">
   <title>INSTAQLIM - Institut Tahfiz Al-Quran lil Muttaqin</title>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  
- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
     :root {
-    --primary: #10b981;
-    --primary-dark: #059669;
-    --secondary: #f59e0b;
-    --danger: #ef4444;
-    --success: #10b981;
-    --bg-light: #f8fafc;
-    --card-bg: rgba(255, 255, 255, 0.65);
-    --card-border: rgba(255, 255, 255, 0.3);
-    --text: #1e293b;
-    --text-muted: #64748b;
-  }
-
-[data-theme="dark"] {
-    --bg-light: #0f172a;
-    --card-bg: rgba(30, 41, 59, 0.65);
-    --card-border: rgba(255, 255, 255, 0.1);
-    --text: #e2e8f0;
-    --text-muted: #94a3b8;
-  }
+      --primary: #059669;
+      --primary-dark: #047857;
+      --primary-light: #10b981;
+      --secondary: #d97706;
+      --danger: #ef4444;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --bg-light: #f8fafc;
+      --card-bg: rgba(255, 255, 255, 0.88);
+      --card-border: rgba(226, 232, 240, 0.8);
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --input-bg: #ffffff;
+      --input-border: #cbd5e1;
+    }
+    [data-theme="dark"] {
+      --primary: #10b981;
+      --primary-dark: #059669;
+      --primary-light: #34d399;
+      --bg-light: #090d16;
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --card-border: rgba(51, 65, 85, 0.6);
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --input-bg: #1e293b;
+      --input-border: #334155;
+    }
 
 * { margin:0; padding:0; box-sizing:border-box; }
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: var(--bg-light);
-    color: var(--text);
-    min-height: 100vh;
-    background-image: 
-      radial-gradient(circle at 10% 20%, rgba(16,185,129,0.08) 0%, transparent 30%),
-      radial-gradient(circle at 90% 80%, rgba(245,158,11,0.08) 0%, transparent 30%);
-  }
-      position: relative;
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background: var(--bg-light);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(16,185,129,0.06) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(217,119,6,0.06) 0%, transparent 40%);
+      background-attachment: fixed;
     }
 
-body::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-image: linear-gradient(45deg, transparent 49%, rgba(16,185,129,0.03) 49%, rgba(16,185,129,0.03) 51%, transparent 51%),
-                       linear-gradient(-45deg, transparent 49%, rgba(245,158,11,0.03) 49%, rgba(245,158,11,0.03) 51%, transparent 51%);
-      background-size: 50px 50px;
-      pointer-events: none;
-      z-index: -1;
-    }
-    h1, h2, h3, .logo h2 { font-family: 'Amiri', serif; color: var(--primary); }
+h1, h2, h3, .logo h2 { font-family: 'Amiri', serif; }
+    .container { max-width: 1240px; margin: 0 auto; padding: 0 1.25rem; }
+
+/* Header */
     header {
-      background: linear-gradient(to right, var(--primary), #059669);
+      background: linear-gradient(135deg, #047857 0%, #065f46 50%, #0f172a 100%);
       color: white;
       padding: 1rem 0;
-      position: relative;
-      overflow: hidden;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      backdrop-filter: blur(10px);
     }
-    header::after {
-      content: "بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      font-family: 'Amiri', serif;
-      font-size: 4rem;
-      opacity: 0.07;
-      pointer-events: none;
-      color: white;
+    .header-content { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
+    .header-brand { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; color: white; }
+    .header-brand img { width: 44px; height: 44px; border-radius: 50%; background: white; padding: 2px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+    .header-brand h1 { font-size: 1.75rem; margin: 0; line-height: 1; letter-spacing: 0.5px; }
+    .header-actions { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+    .user-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); padding: 0.35rem 0.85rem; border-radius: 9999px; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.15); }
+
+.clock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.75rem;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      color: #a7f3d0;
     }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
-    .flex { display: flex; align-items: center; justify-content: space-between; }
-    .btn-logout { background: var(--danger); color: white; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none; font-weight: 500; }
-    main { padding: 2rem 0; }
+    .clock-time { color: #fde047; font-weight: 700; }
 
-/* Glassmorphism Card */
-  .card {
-    background: var(--card-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-radius: 16px;
-    border: 1px solid var(--card-border);
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1rem; 
-  }
+/* Cards */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+      backdrop-filter: blur(12px);
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; margin-top: 1.25rem; }
 
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
-  }
+/* Menu Cards */
+    .menu-card {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #ffffff;
+      padding: 1.75rem 1.25rem;
+      border-radius: 14px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+    .menu-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(5, 150, 105, 0.35);
+    }
+    .menu-card i { font-size: 2.25rem; color: #ffffff; }
+    .menu-card h3 { font-size: 1.1rem; color: #ffffff; margin: 0; font-weight: 600; font-family: 'Plus Jakarta Sans', sans-serif; }
 
-/* Modern Menu Card - Glass + Gradient */
-.menu-card {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: #ffffff !important; /* Putih solid & paksa override */
-  font-weight: 600;
-  text-align: center;
-  padding: 2rem 1.5rem;
-  border-radius: 16px;
-  cursor: pointer;
-  transition: all 0.4s ease;
-  box-shadow: 0 8px 25px rgba(16,185,129,0.3);
-  border: 1px solid rgba(255,255,255,0.2);
-  backdrop-filter: blur(10px);
-  position: relative;
-  overflow: hidden;
-}
-
-.menu-card:hover {
-  transform: translateY(-12px) scale(1.03);
-  box-shadow: 0 20px 40px rgba(16,185,129,0.4);
-}
-
-/* Teks utama: tajuk (h3) */
-.menu-card h3 {
-  color: #ffffff !important;
-  font-size: 1.2rem;
-  margin: 0;
-  text-shadow: 
-    0 2px 4px rgba(0,0,0,0.5),
-    0 0 8px rgba(0,0,0,0.3); /* Shadow lebih ketara & glow halus */
-  letter-spacing: 0.5px;
-}
-
-/* Ikon */
-.menu-card i {
-  font-size: 3.5rem;
-  margin-bottom: 1rem;
-  color: #ffffff;
-  text-shadow: 
-    0 4px 8px rgba(0,0,0,0.4),
-    0 0 15px rgba(16,185,129,0.5); /* Glow hijau halus untuk kesan premium */
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-}
-
-th { background: var(--light); }
-
-.btn { padding: 0.5rem 1rem; border: none; border-radius: 5px; cursor: pointer; margin-right: 0.5rem; }
+/* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.15rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn:active { transform: scale(0.98); }
     .btn-primary { background: var(--primary); color: white; }
-    .btn-success { background: var(--secondary); color: white; }
-    .btn-danger { background: var(--danger); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-success { background: #10b981; color: white; }
+    .btn-danger { background: #ef4444; color: white; }
     .btn-edit { background: #f59e0b; color: white; }
-    .btn-print { background: var(--indigo); color: white; }
-    .btn-pdf { background: var(--red); color: white; }
-    .form-group { margin-bottom: 1rem; }
-    label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
-    input, textarea, select { width: 100%; padding: 0.75rem; border: 1px solid var(--border-color, #ccc); border-radius: 5px; background-color: var(--card-bg, white); color: var(--text-color, #333); }
-    .hidden { display: none !important; }
+    .btn-print { background: #6366f1; color: white; }
+    .btn-pdf { background: #dc2626; color: white; }
+    .btn-secondary { background: #e2e8f0; color: #1e293b; }
+    .btn-logout { background: rgba(239, 68, 68, 0.85); color: white; padding: 0.4rem 0.85rem; border-radius: 6px; font-size: 0.825rem; }
+
+/* Navigation Bar */
+    .section-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      padding: 0.75rem 1rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+    }
+    .btn-back {
+      background: #f1f5f9;
+      color: #0f172a;
+      border: 1px solid #cbd5e1;
+      padding: 0.45rem 1rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    [data-theme="dark"] .btn-back {
+      background: #1e293b;
+      color: #f1f5f9;
+      border-color: #334155;
+    }
+
+/* Forms */
+    .form-group { margin-bottom: 1.15rem; }
+    label { display: block; margin-bottom: 0.4rem; font-size: 0.85rem; font-weight: 600; color: var(--text); }
+    input, textarea, select {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--input-border);
+      border-radius: 8px;
+      background-color: var(--input-bg);
+      color: var(--text);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+    }
+
+/* Tables */
+    .table-container { width: 100%; overflow-x: auto; margin-top: 1rem; border-radius: 10px; border: 1px solid var(--card-border); }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.875rem; }
+    th { background: rgba(5, 150, 105, 0.08); padding: 0.85rem 1rem; font-weight: 600; color: var(--text); border-bottom: 2px solid var(--card-border); white-space: nowrap; }
+    td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--card-border); vertical-align: middle; }
+    tr:hover td { background: rgba(16, 185, 129, 0.04); }
+
+.search-filter { display: flex; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .search-filter input, .search-filter select { flex: 1; min-width: 180px; }
+
+/* Modals */
+    #modal, #announcementModal, #notesModal {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000; padding: 1rem;
+    }
+    #modal > div, #announcementModal > div, #notesModal > div {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      width: 100%;
+      max-width: 620px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+.hidden { display: none !important; }
     .text-center { text-align: center; }
-    .login-container { max-width: 400px; margin: 5rem auto; padding: 2rem; background: var(--card-bg, white); border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-    .logo { text-align: center; margin-bottom: 2rem; font-size: 2rem; color: var(--primary); }
-    #modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-    #modal > div { background: var(--card-bg, white); border-radius: 10px; padding: 1.5rem; width: 90%; max-width: 600px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto; }
-    .toast { position: fixed; bottom: 20px; right: 20px; padding: 15px 25px; background: var(--success); color: white; border-radius: 5px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transform: translateY(100px); opacity: 0; transition: transform 0.3s, opacity 0.3s; z-index: 2000; }
+    .login-container {
+      max-width: 420px;
+      margin: 4rem auto;
+      padding: 2.25rem 2rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.08);
+    }
+
+.toast {
+      position: fixed; bottom: 24px; right: 24px;
+      padding: 12px 20px; background: var(--success); color: white;
+      border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      transform: translateY(100px); opacity: 0; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 3000; font-size: 0.875rem; font-weight: 500;
+    }
     .toast.show { transform: translateY(0); opacity: 1; }
-    .theme-toggle { position: fixed; bottom: 20px; left: 20px; background: var(--primary); color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1000; }
-    .search-filter { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
-    .search-filter input, .search-filter select { flex: 1; min-width: 200px; }
-    .loading { display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,.3); border-radius: 50%; border-top-color: #fff; animation: spin 1s ease-in-out infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .connection-status { position: fixed; top: 10px; right: 10px; padding: 5px 10px; border-radius: 5px; font-size: 12px; z-index: 3000; }
-    .connection-status.online { background: var(--success); color: white; }
-    .connection-status.offline { background: var(--danger); color: white; }
-    .offline-mode { background: #f8f9fa; color: #6c757d; padding: 10px; text-align: center; border-radius: 5px; margin-bottom: 10px; }
-    #notesModal { display: none; }
-    #notesModal:not(.hidden) { display: flex; }
-    #fullNotes { font-size: 1.1rem; line-height: 1.6; word-wrap: break-word; }
-    .futuristic-clock { font-family: 'Courier New', Courier, monospace; font-size: 0.75rem; letter-spacing: 1px; color: #a5f3fc; text-shadow: 0 0 5px #a5f3fc, 0 0 10px #22d3ee; margin-top: 5px; font-weight: bold; opacity: 0.9; }
+
+.theme-toggle {
+      position: fixed; bottom: 20px; right: 20px;
+      background: var(--primary); color: white;
+      border-radius: 50%; width: 46px; height: 46px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; box-shadow: 0 6px 18px rgba(0,0,0,0.2); z-index: 900;
+      border: 2px solid white;
+    }
+    .connection-status {
+      position: fixed; top: 12px; right: 12px;
+      padding: 4px 10px; border-radius: 6px; font-size: 11px; z-index: 3000; font-weight: 600;
+    }
+    .connection-status.online { background: #10b981; color: white; }
+    .connection-status.offline { background: #ef4444; color: white; }
+    .status-badge { display: inline-block; padding: 3px 8px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; color: white; }
   </style>
-</head>
+<script src="/_aistudio-iframe.js?v=2c34bde1"></script></head>
 <body>
-  <!-- Login Page -->
+
+<!-- Login Page -->
   <div id="loginPage" class="login-container">
-    <div class="logo">
-      <img src="https://arleta.site/interactivelink/2950/Logo-Maahad-Png.png" alt="Logo INSTAQLIM" style="width: 150px; margin-bottom: 1rem;">
-      <h2>INSTAQLIM</h2>
-      <p>Institut Tahfiz Al-Quran lil Muttaqin</p>
+    <div class="logo text-center" style="margin-bottom: 1.5rem;">
+      <img src="https://arleta.site/interactivelink/2950/Logo-Maahad-Png.png" alt="Logo INSTAQLIM" style="width: 120px; margin: 0 auto 1rem; display: block;">
+      <h2 style="color: var(--primary); font-size: 2rem; margin-bottom: 0.25rem;">INSTAQLIM</h2>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">Institut Tahfiz Al-Quran lil Muttaqin</p>
     </div>
-    <h3 class="text-center">Log Masuk Sistem</h3>
-    <div class="form-group"><label>Nama Pengguna</label><input type="text" id="username"/></div>
-    <div class="form-group"><label>Kata Laluan</label><input type="password" id="password"/></div>
-    <button class="btn btn-primary" style="width:100%" onclick="login()">Log Masuk</button>
-    <div id="loginError" class="hidden" style="margin-top: 1rem; color: var(--danger); text-align: center;"></div>
-    <div id="offlineMode" class="offline-mode hidden">
+    <h3 class="text-center" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.15rem; margin-bottom: 1.25rem;">Log Masuk Sistem</h3>
+    <div class="form-group">
+      <label for="username">Nama Pengguna</label>
+      <input type="text" id="username" placeholder="Masukkan nama pengguna" autocomplete="username"/>
+    </div>
+    <div class="form-group">
+      <label for="password">Kata Laluan</label>
+      <input type="password" id="password" placeholder="Masukkan kata laluan" autocomplete="current-password"/>
+    </div>
+    <button class="btn btn-primary" style="width:100%; padding: 0.75rem;" onclick="login()">Log Masuk</button>
+    <div id="loginError" class="hidden" style="margin-top: 1rem; color: var(--danger); text-align: center; font-size: 0.875rem;"></div>
+    <div id="offlineMode" class="hidden" style="margin-top: 1rem; background: #fee2e2; color: #991b1b; padding: 8px; border-radius: 6px; font-size: 0.8rem; text-align: center;">
       <i class="fas fa-wifi"></i> Mod Luar Talian - Sesetengah fungsi mungkin tidak tersedia
     </div>
   </div>
@@ -216,67 +302,70 @@ th { background: var(--light); }
 <!-- Main App -->
   <div id="mainApp" class="hidden">
     <header>
-      <div class="container flex">
-        <h1>INSTAQLIM</h1>
-        <div style="text-align: right; display: flex; flex-direction: column;">
-          <div style="display:flex; align-items:center; justify-content:flex-end; gap:10px;">
-            <span>Selamat Datang, <strong id="userName"></strong> (<span id="userRole"></span>)</span>
-            <a href="#" class="btn-logout" onclick="logout()">Log Keluar</a>
-            <button onclick="requestNotificationPermission()" style="background:none; border:none; color: #fff; font-size: 1.2rem; cursor:pointer;" title="Tetapan Notifikasi">
-              <i class="fas fa-bell"></i>
-            </button>
+      <div class="container header-content">
+        <a href="javascript:void(0)" class="header-brand" onclick="backToDashboard()">
+          <img src="https://arleta.site/interactivelink/2950/Logo-Maahad-Png.png" alt="Logo INSTAQLIM">
+          <div>
+            <h1>INSTAQLIM</h1>
+            <small style="opacity: 0.85; font-size: 0.75rem;">Institut Tahfiz Al-Quran lil Muttaqin</small>
           </div>
-          <div class="futuristic-clock">
-            <span id="clock-time">00:00:00</span> | 
-            <span id="clock-miladi">01/01/2025</span> | 
-            <span id="clock-hijri">01 Muharram 1446H</span>
+        </a>
+
+<div class="header-actions">
+          <div class="clock-badge">
+            <span id="clock-time" class="clock-time">00:00:00</span>
+            <span>|</span>
+            <span id="clock-miladi">01/01/2026</span>
+            <span>|</span>
+            <span id="clock-hijri">01 Muharram 1447H</span>
           </div>
+
+<div class="user-badge">
+            <i class="fas fa-user-circle"></i>
+            <span><strong id="userName"></strong> (<span id="userRole"></span>)</span>
+          </div>
+
+<button onclick="requestNotificationPermission()" class="btn" style="background: rgba(255,255,255,0.15); color: white; padding: 0.4rem 0.65rem;" title="Tetapan Notifikasi">
+            <i class="fas fa-bell"></i>
+          </button>
+
+<a href="#" class="btn btn-logout" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> Log Keluar
+          </a>
         </div>
       </div>
     </header>
 
-<div class="container">
+<div class="container" style="padding-top: 1.5rem; padding-bottom: 3rem;">
       <main>
-        <!-- Butang Pasang Aplikasi -->
+        <!-- Butang Pasang Aplikasi PWA -->
         <div id="installContainer" class="hidden" style="position:fixed; bottom: 20px; left: 20px; z-index: 950;">
-          <button id="btnInstall" class="btn" style="background: #3b82f6; color: white; border: 1px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-radius: 50px; padding: 0.8rem 1.5rem; font-weight: bold; display: flex; align-items: center; gap: 10px;">
+          <button id="btnInstall" class="btn" style="background: #2563eb; color: white; box-shadow: 0 4px 14px rgba(37,99,235,0.35); border-radius: 9999px; padding: 0.65rem 1.25rem;">
             <i class="fas fa-download"></i> Pasang Aplikasi
           </button>
         </div>
 
-<!-- Pengumuman -->
-        <div id="announcementSection" class="card" style="margin: 1rem 0;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-            <h3 style="margin: 0;"><i class="fas fa-bullhorn"></i> Pengumuman Terkini</h3>
-            <button id="addAnnouncementBtn" class="btn btn-success" style="display: none;" onclick="openAddAnnouncement()">+ Tambah Pengumuman</button>
+<!-- Pengumuman Section -->
+        <div id="announcementSection" class="card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--card-border); padding-bottom: 0.75rem;">
+            <h3 style="margin: 0; font-size: 1.25rem; color: var(--primary); display: flex; align-items: center; gap: 0.5rem;">
+              <i class="fas fa-bullhorn"></i> Pengumuman Terkini
+            </h3>
+            <button id="addAnnouncementBtn" class="btn btn-success" style="display: none;" onclick="openAddAnnouncement()">
+              <i class="fas fa-plus"></i> Tambah Pengumuman
+            </button>
           </div>
           <div id="announcementList">
-            <p class="text-center"><em>Tiada pengumuman buat masa ini.</em></p>
-          </div>
-        </div>
-
-<!-- Modal Tambah Pengumuman -->
-        <div id="announcementModal" class="hidden">
-          <div style="background: var(--card-bg, white); border-radius: 10px; padding: 2rem; width: 90%; max-width: 700px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-            <h3 id="announcementModalTitle">Tambah Pengumuman Baru</h3>
-            <div class="form-group">
-              <label>Tajuk Pengumuman</label>
-              <input type="text" id="announcementTitle" required>
-            </div>
-            <div class="form-group">
-              <label>Isi Pengumuman (Enter untuk baris baru)</label>
-              <textarea id="announcementText" rows="8" required></textarea>
-            </div>
-            <div style="text-align:right; margin-top:1rem;">
-              <button class="btn" onclick="closeAnnouncementModal()">Batal</button>
-              <button class="btn btn-primary" onclick="saveAnnouncement()">Simpan</button>
-            </div>
+            <p class="text-center" style="color: var(--text-muted);"><em>Tiada pengumuman buat masa ini.</em></p>
           </div>
         </div>
 
 <!-- Admin Dashboard -->
         <div id="adminDashboard" class="hidden">
-          <h2 class="text-center">Papan Pemuka Pentadbir</h2>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <h2 style="font-size: 1.6rem; color: var(--primary);">Papan Pemuka Pentadbir</h2>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Pilih modul untuk mula mengurus</span>
+          </div>
           <div class="grid">
             <div class="menu-card" onclick="showSection('manageUsers')"><i class="fas fa-users"></i><h3>Pengurusan Pengguna</h3></div>
             <div class="menu-card" onclick="showSection('manageStudents')"><i class="fas fa-user-graduate"></i><h3>Pengurusan Pelajar</h3></div>
@@ -287,8 +376,8 @@ th { background: var(--light); }
             <div class="menu-card" onclick="showSection('manageAttendance')"><i class="fas fa-check-square"></i><h3>Kehadiran</h3></div>
             <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Mengajar</h3></div>
             <div class="menu-card" onclick="showSection('hafazanReportForm')"><i class="fas fa-book-quran"></i><h3>Laporan Hafazan Harian</h3></div>
-            <div class="menu-card" onclick="showSection('viewHafazanReports')"><i class="fas fa-file-alt"></i><h3>Senarai Laporan Hafazan</h3></div>
-            <div class="menu-card" onclick="window.open('https://stiqdat.interactivelink.site/KODJAWI-BUNYI', '_blank')" style="background-color: #3b82f6;">
+            <div class="menu-card" onclick="showSection('viewHafazanReports')"><i class="fas fa-list"></i><h3>Senarai Laporan Hafazan</h3></div>
+            <div class="menu-card" onclick="window.open('https://kodjawi.instaqlim.edu.my', '_blank')" style="background: linear-gradient(135deg, #2563eb, #1d4ed8);">
               <i class="fas fa-kaaba"></i><h3>KOD JAWI</h3>
             </div>
           </div>
@@ -296,14 +385,17 @@ th { background: var(--light); }
 
 <!-- Guru Dashboard -->
         <div id="guruDashboard" class="hidden">
-          <h2 class="text-center">Papan Pemuka Guru</h2>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <h2 style="font-size: 1.6rem; color: var(--primary);">Papan Pemuka Guru</h2>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Aktiviti & Rekod Pengajaran</span>
+          </div>
           <div class="grid">
             <div class="menu-card" onclick="showSection('viewSchedule')"><i class="fas fa-calendar-alt"></i><h3>Lihat Jadual</h3></div>
             <div class="menu-card" onclick="showSection('teachingReportForm')"><i class="fas fa-file-alt"></i><h3>Laporan Harian</h3></div>
             <div class="menu-card" onclick="showSection('viewTeachingReports')"><i class="fas fa-file-alt"></i><h3>Laporan Saya</h3></div>
             <div class="menu-card" onclick="showSection('hafazanReportForm')"><i class="fas fa-book-quran"></i><h3>Laporan Hafazan</h3></div>
             <div class="menu-card" onclick="showSection('viewHafazanReports')"><i class="fas fa-list"></i><h3>Senarai Hafazan</h3></div>
-            <div class="menu-card" onclick="window.open('https://stiqdat.interactivelink.site/KODJAWI-BUNYI', '_blank')" style="background-color: #3b82f6;">
+            <div class="menu-card" onclick="window.open('https://kodjawi.instaqlim.edu.my', '_blank')" style="background: linear-gradient(135deg, #2563eb, #1d4ed8);">
               <i class="fas fa-kaaba"></i><h3>KOD JAWI</h3>
             </div>
           </div>
@@ -311,26 +403,38 @@ th { background: var(--light); }
 
 <!-- Amil Zakat Dashboard -->
         <div id="amilDashboard" class="hidden">
-          <h2 class="text-center">Papan Pemuka Amil Zakat</h2>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <h2 style="font-size: 1.6rem; color: var(--primary);">Papan Pemuka Amil Zakat</h2>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Pautan Pantas Amil</span>
+          </div>
           <div class="grid">
             <div class="menu-card" onclick="document.getElementById('announcementSection').scrollIntoView({behavior: 'smooth'})">
               <i class="fas fa-bullhorn"></i><h3>Pengumuman Terkini</h3>
             </div>
-            <div class="menu-card" onclick="window.open('https://stiqdat.interactivelink.site/KODJAWI-BUNYI', '_blank')" style="background-color: #3b82f6;">
+            <div class="menu-card" onclick="window.open('https://stiqdat.interactivelink.site/KODJAWI-BUNYI', '_blank')" style="background: linear-gradient(135deg, #2563eb, #1d4ed8);">
               <i class="fas fa-kaaba"></i><h3>KOD JAWI</h3>
             </div>
-            <div class="menu-card" onclick="window.open('https://stiqdat.interactivelink.site/amil', '_blank')" style="background-color: #059669;">
+            <div class="menu-card" onclick="window.open('https://stiqdat.interactivelink.site/amil', '_blank')" style="background: linear-gradient(135deg, #059669, #047857);">
               <i class="fas fa-hand-holding-heart"></i><h3>AMIL ZAKAT</h3>
             </div>
           </div>
         </div>
 
-<!-- Sections -->
+<!-- Sections Container with Navigation Header -->
         <div id="sections" class="hidden">
-          <!-- Pengurusan Pengguna -->
+          <div class="section-nav">
+            <button class="btn-back" onclick="backToDashboard()">
+              <i class="fas fa-arrow-left"></i> Kembali ke Papan Pemuka
+            </button>
+            <span id="activeSectionBadge" style="font-size: 0.85rem; font-weight: 600; color: var(--primary);"></span>
+          </div>
+
+<!-- Pengurusan Pengguna -->
           <div id="manageUsers" class="card hidden">
-            <h3>Pengurusan Pengguna Sistem</h3>
-            <button class="btn btn-success" onclick="openAddUser()">+ Tambah Pengguna</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+              <h3 style="font-size: 1.35rem; color: var(--primary); margin:0;">Pengurusan Pengguna Sistem</h3>
+              <button class="btn btn-success" onclick="openAddUser()"><i class="fas fa-plus"></i> Tambah Pengguna</button>
+            </div>
             <div class="search-filter">
               <input type="text" id="userSearch" placeholder="Cari nama/username..." onkeyup="filterTable('userTable', this.value)">
               <select id="userRoleFilter" onchange="filterTable('userTable', document.getElementById('userSearch').value, this.value)">
@@ -341,310 +445,186 @@ th { background: var(--light); }
                 <option value="amil">Amil Zakat</option>
               </select>
             </div>
-            <table id="userTable">
-              <thead><tr><th>Username</th><th>Nama</th><th>Peranan</th><th>No. KP</th><th>Status</th><th>Tindakan</th></tr></thead>
-              <tbody></tbody>
-            </table>
+            <div class="table-container">
+              <table id="userTable">
+                <thead><tr><th>Username</th><th>Nama</th><th>Peranan</th><th>No. KP</th><th>Status</th><th>Tindakan</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
           </div>
 
 <!-- Pengurusan Pelajar -->
           <div id="manageStudents" class="card hidden">
-            <h3>Pengurusan Pelajar</h3>
-            <button class="btn btn-success" onclick="openAddStudent()">+ Tambah Pelajar</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+              <h3 style="font-size: 1.35rem; color: var(--primary); margin:0;">Pengurusan Pelajar</h3>
+              <button class="btn btn-success" onclick="openAddStudent()"><i class="fas fa-plus"></i> Tambah Pelajar</button>
+            </div>
             <div class="search-filter">
               <input type="text" id="studentSearch" placeholder="Cari nama/no KP..." onkeyup="filterTable('studentTable', this.value)">
-              <select id="studentClassFilter"><option value="">Semua Kelas</option></select>
+              <select id="studentClassFilter" onchange="filterTable('studentTable', document.getElementById('studentSearch').value, this.value)">
+                <option value="">Semua Kelas</option>
+              </select>
             </div>
-            <table id="studentTable">
-              <thead><tr><th>ID</th><th>Nama</th><th>No. KP</th><th>Kelas</th><th>Wali</th><th>No HP Wali</th><th>Tindakan</th></tr></thead>
-              <tbody></tbody>
-            </table>
+            <div class="table-container">
+              <table id="studentTable">
+                <thead><tr><th>ID</th><th>Nama</th><th>No. KP</th><th>Kelas</th><th>Wali</th><th>No HP Wali</th><th>Tindakan</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
           </div>
 
 <!-- Pengurusan Guru -->
           <div id="manageTeachers" class="card hidden">
-            <h3>Pengurusan Guru</h3>
-            <button class="btn btn-success" onclick="openAddTeacher()">+ Tambah Guru</button>
-            <table id="teacherTable">
-              <thead><tr><th>ID</th><th>Nama</th><th>No. KP</th><th>Mata Pelajaran</th><th>No HP</th><th>Tindakan</th></tr></thead>
-              <tbody></tbody>
-            </table>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+              <h3 style="font-size: 1.35rem; color: var(--primary); margin:0;">Pengurusan Guru</h3>
+              <button class="btn btn-success" onclick="openAddTeacher()"><i class="fas fa-plus"></i> Tambah Guru</button>
+            </div>
+            <div class="table-container">
+              <table id="teacherTable">
+                <thead><tr><th>ID</th><th>Nama</th><th>No. KP</th><th>Mata Pelajaran</th><th>No HP</th><th>Tindakan</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
           </div>
 
 <!-- Pengurusan Kakitangan -->
           <div id="manageStaff" class="card hidden">
-            <h3>Pengurusan Kakitangan</h3>
-            <button class="btn btn-success" onclick="openAddStaff()">+ Tambah Kakitangan</button>
-            <table id="staffTable">
-              <thead><tr><th>ID</th><th>Nama</th><th>No. KP</th><th>Jawatan</th><th>No HP</th><th>Tindakan</th></tr></thead>
-              <tbody></tbody>
-            </table>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+              <h3 style="font-size: 1.35rem; color: var(--primary); margin:0;">Pengurusan Kakitangan</h3>
+              <button class="btn btn-success" onclick="openAddStaff()"><i class="fas fa-plus"></i> Tambah Kakitangan</button>
+            </div>
+            <div class="table-container">
+              <table id="staffTable">
+                <thead><tr><th>ID</th><th>Nama</th><th>No. KP</th><th>Jawatan</th><th>No HP</th><th>Tindakan</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
           </div>
 
 <!-- Pengurusan Kelas -->
           <div id="manageClasses" class="card hidden">
-            <h3>Pengurusan Kelas</h3>
-            <button class="btn btn-success" onclick="openAddClass()">+ Tambah Kelas</button>
-            <table id="classTable">
-              <thead><tr><th>ID</th><th>Nama Kelas</th><th>Guru Kelas</th><th>Tindakan</th></tr></thead>
-              <tbody></tbody>
-            </table>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+              <h3 style="font-size: 1.35rem; color: var(--primary); margin:0;">Pengurusan Kelas</h3>
+              <button class="btn btn-success" onclick="openAddClass()"><i class="fas fa-plus"></i> Tambah Kelas</button>
+            </div>
+            <div class="table-container">
+              <table id="classTable">
+                <thead><tr><th>ID</th><th>Nama Kelas</th><th>Guru Kelas</th><th>Tindakan</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
           </div>
 
 <!-- Jadual Waktu -->
           <div id="manageSchedule" class="card hidden">
-            <h3>Jadual Waktu</h3>
-            <button class="btn btn-success" onclick="saveSchedule()">Simpan Jadual</button>
-            <table id="scheduleTable">
-              <thead>
-                <tr><th>Waktu/Hari</th><th>Isnin</th><th>Selasa</th><th>Rabu</th><th>Khamis</th><th>Jumaat</th><th>Sabtu</th><th>Ahad</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>06:00-07:00</td><td><input type="text" data-row="0" data-col="0"></td><td><input type="text" data-row="0" data-col="1"></td><td><input type="text" data-row="0" data-col="2"></td><td><input type="text" data-row="0" data-col="3"></td><td><input type="text" data-row="0" data-col="4"></td><td><input type="text" data-row="0" data-col="5"></td><td><input type="text" data-row="0" data-col="6"></td></tr>
-                <tr><td>07:00-08:00</td><td><input type="text" data-row="1" data-col="0"></td><td><input type="text" data-row="1" data-col="1"></td><td><input type="text" data-row="1" data-col="2"></td><td><input type="text" data-row="1" data-col="3"></td><td><input type="text" data-row="1" data-col="4"></td><td><input type="text" data-row="1" data-col="5"></td><td><input type="text" data-row="1" data-col="6"></td></tr>
-                <tr><td>08:00-09:00</td><td><input type="text" data-row="2" data-col="0"></td><td><input type="text" data-row="2" data-col="1"></td><td><input type="text" data-row="2" data-col="2"></td><td><input type="text" data-row="2" data-col="3"></td><td><input type="text" data-row="2" data-col="4"></td><td><input type="text" data-row="2" data-col="5"></td><td><input type="text" data-row="2" data-col="6"></td></tr>
-                <tr><td>09:00-10:00</td><td><input type="text" data-row="3" data-col="0"></td><td><input type="text" data-row="3" data-col="1"></td><td><input type="text" data-row="3" data-col="2"></td><td><input type="text" data-row="3" data-col="3"></td><td><input type="text" data-row="3" data-col="4"></td><td><input type="text" data-row="3" data-col="5"></td><td><input type="text" data-row="3" data-col="6"></td></tr>
-                <tr><td>10:00-11:00</td><td><input type="text" data-row="4" data-col="0"></td><td><input type="text" data-row="4" data-col="1"></td><td><input type="text" data-row="4" data-col="2"></td><td><input type="text" data-row="4" data-col="3"></td><td><input type="text" data-row="4" data-col="4"></td><td><input type="text" data-row="4" data-col="5"></td><td><input type="text" data-row="4" data-col="6"></td></tr>
-                <tr><td>11:00-12:00</td><td><input type="text" data-row="5" data-col="0"></td><td><input type="text" data-row="5" data-col="1"></td><td><input type="text" data-row="5" data-col="2"></td><td><input type="text" data-row="5" data-col="3"></td><td><input type="text" data-row="5" data-col="4"></td><td><input type="text" data-row="5" data-col="5"></td><td><input type="text" data-row="5" data-col="6"></td></tr>
-                <tr><td>12:00-13:00</td><td><input type="text" data-row="6" data-col="0"></td><td><input type="text" data-row="6" data-col="1"></td><td><input type="text" data-row="6" data-col="2"></td><td><input type="text" data-row="6" data-col="3"></td><td><input type="text" data-row="6" data-col="4"></td><td><input type="text" data-row="6" data-col="5"></td><td><input type="text" data-row="6" data-col="6"></td></tr>
-                <tr><td>13:00-14:00</td><td><input type="text" data-row="7" data-col="0"></td><td><input type="text" data-row="7" data-col="1"></td><td><input type="text" data-row="7" data-col="2"></td><td><input type="text" data-row="7" data-col="3"></td><td><input type="text" data-row="7" data-col="4"></td><td><input type="text" data-row="7" data-col="5"></td><td><input type="text" data-row="7" data-col="6"></td></tr>
-                <tr><td>14:00-15:00</td><td><input type="text" data-row="8" data-col="0"></td><td><input type="text" data-row="8" data-col="1"></td><td><input type="text" data-row="8" data-col="2"></td><td><input type="text" data-row="8" data-col="3"></td><td><input type="text" data-row="8" data-col="4"></td><td><input type="text" data-row="8" data-col="5"></td><td><input type="text" data-row="8" data-col="6"></td></tr>
-                <tr><td>15:00-16:00</td><td><input type="text" data-row="9" data-col="0"></td><td><input type="text" data-row="9" data-col="1"></td><td><input type="text" data-row="9" data-col="2"></td><td><input type="text" data-row="9" data-col="3"></td><td><input type="text" data-row="9" data-col="4"></td><td><input type="text" data-row="9" data-col="5"></td><td><input type="text" data-row="9" data-col="6"></td></tr>
-                <tr><td>16:00-17:00</td><td><input type="text" data-row="10" data-col="0"></td><td><input type="text" data-row="10" data-col="1"></td><td><input type="text" data-row="10" data-col="2"></td><td><input type="text" data-row="10" data-col="3"></td><td><input type="text" data-row="10" data-col="4"></td><td><input type="text" data-row="10" data-col="5"></td><td><input type="text" data-row="10" data-col="6"></td></tr>
-                <tr><td>17:00-18:00</td><td><input type="text" data-row="11" data-col="0"></td><td><input type="text" data-row="11" data-col="1"></td><td><input type="text" data-row="11" data-col="2"></td><td><input type="text" data-row="11" data-col="3"></td><td><input type="text" data-row="11" data-col="4"></td><td><input type="text" data-row="11" data-col="5"></td><td><input type="text" data-row="11" data-col="6"></td></tr>
-                <tr><td>18:00-19:00</td><td><input type="text" data-row="12" data-col="0"></td><td><input type="text" data-row="12" data-col="1"></td><td><input type="text" data-row="12" data-col="2"></td><td><input type="text" data-row="12" data-col="3"></td><td><input type="text" data-row="12" data-col="4"></td><td><input type="text" data-row="12" data-col="5"></td><td><input type="text" data-row="12" data-col="6"></td></tr>
-                <tr><td>19:00-20:00</td><td><input type="text" data-row="13" data-col="0"></td><td><input type="text" data-row="13" data-col="1"></td><td><input type="text" data-row="13" data-col="2"></td><td><input type="text" data-row="13" data-col="3"></td><td><input type="text" data-row="13" data-col="4"></td><td><input type="text" data-row="13" data-col="5"></td><td><input type="text" data-row="13" data-col="6"></td></tr>
-                <tr><td>20:00-21:00</td><td><input type="text" data-row="14" data-col="0"></td><td><input type="text" data-row="14" data-col="1"></td><td><input type="text" data-row="14" data-col="2"></td><td><input type="text" data-row="14" data-col="3"></td><td><input type="text" data-row="14" data-col="4"></td><td><input type="text" data-row="14" data-col="5"></td><td><input type="text" data-row="14" data-col="6"></td></tr>
-                <tr><td>21:00-22:00</td><td><input type="text" data-row="15" data-col="0"></td><td><input type="text" data-row="15" data-col="1"></td><td><input type="text" data-row="15" data-col="2"></td><td><input type="text" data-row="15" data-col="3"></td><td><input type="text" data-row="15" data-col="4"></td><td><input type="text" data-row="15" data-col="5"></td><td><input type="text" data-row="15" data-col="6"></td></tr>
-                <tr><td>22:00-23:00</td><td><input type="text" data-row="16" data-col="0"></td><td><input type="text" data-row="16" data-col="1"></td><td><input type="text" data-row="16" data-col="2"></td><td><input type="text" data-row="16" data-col="3"></td><td><input type="text" data-row="16" data-col="4"></td><td><input type="text" data-row="16" data-col="5"></td><td><input type="text" data-row="16" data-col="6"></td></tr>
-              </tbody>
-            </table>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+              <h3 style="font-size: 1.35rem; color: var(--primary); margin:0;">Jadual Waktu</h3>
+              <button class="btn btn-success" onclick="saveSchedule()"><i class="fas fa-save"></i> Simpan Jadual</button>
+            </div>
+            <div class="table-container">
+              <table id="scheduleTable">
+                <thead>
+                  <tr><th>Waktu/Hari</th><th>Isnin</th><th>Selasa</th><th>Rabu</th><th>Khamis</th><th>Jumaat</th><th>Sabtu</th><th>Ahad</th></tr>
+                </thead>
+                <tbody id="scheduleTableBody"></tbody>
+              </table>
+            </div>
           </div>
 
 <!-- Kehadiran -->
           <div id="manageAttendance" class="card hidden">
-            <h3>Kehadiran Pelajar</h3>
-            <div class="form-group">
-              <label>Tarikh</label>
-              <input type="date" id="attendanceDate">
-              <button class="btn btn-primary" onclick="loadAttendance()">Muat Kehadiran</button>
+            <h3 style="font-size: 1.35rem; color: var(--primary); margin-bottom: 1rem;">Kehadiran Pelajar</h3>
+            <div style="display: flex; gap: 0.75rem; align-items: flex-end; margin-bottom: 1.25rem; flex-wrap: wrap;">
+              <div style="flex:1; min-width: 200px;">
+                <label for="attendanceDate">Tarikh Kehadiran</label>
+                <input type="date" id="attendanceDate">
+              </div>
+              <button class="btn btn-primary" onclick="loadAttendance()"><i class="fas fa-sync"></i> Muat Kehadiran</button>
             </div>
-            <table id="attendanceTable">
-              <thead><tr><th>Bil</th><th>Nama Pelajar</th><th>Kelas</th><th>Hadir</th><th>Tidak Hadir</th></tr></thead>
-              <tbody></tbody>
-            </table>
-            <button class="btn btn-success" onclick="saveAttendance()">Simpan Kehadiran</button>
+            <div class="table-container">
+              <table id="attendanceTable">
+                <thead><tr><th>Bil</th><th>Nama Pelajar</th><th>Kelas</th><th>Hadir</th><th>Tidak Hadir</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div style="margin-top: 1.25rem; text-align: right;">
+              <button class="btn btn-success" onclick="saveAttendance()"><i class="fas fa-check"></i> Simpan Kehadiran</button>
+            </div>
           </div>
 
 <!-- Lihat Jadual Guru -->
           <div id="viewSchedule" class="card hidden">
-            <h3>Jadual Waktu Saya</h3>
-            <table id="viewScheduleTable">
-              <thead>
-                <tr>
-                  <th>Waktu/Hari</th>
-                  <th>Isnin</th>
-                  <th>Selasa</th>
-                  <th>Rabu</th>
-                  <th>Khamis</th>
-                  <th>Jumaat</th>
-                  <th>Sabtu</th>
-                  <th>Ahad</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          </div>
-
-<!-- Laporan Mengajar -->
-          <div id="viewTeachingReports" class="card hidden">
-            <h3>Laporan Mengajar Guru</h3>
-            <div style="margin:1rem 0; text-align:right;">
-              <button class="btn btn-primary" onclick="printSelectedReports()">Cetak Terpilih</button>
-              <button class="btn btn-print" onclick="window.print()">Cetak Semua</button>
-              <button class="btn btn-pdf" onclick="exportTeachingReportPDF()">PDF</button>
-            </div>
-            <div id="teachingReportPrintSection">
-              <div class="report-header text-center">
-                <img src="https://arleta.site/interactivelink/2950/Logo-Maahad-Png.png" alt="Logo" style="width:120px;">
-                <h2>Laporan Mengajar Harian Guru</h2>
-                <p><strong>INSTAQLIM</strong> | Tarikh: <span id="printDate"></span></p>
-              </div>
-              <table id="teachingReportTable">
+            <h3 style="font-size: 1.35rem; color: var(--primary); margin-bottom: 1rem;">Jadual Waktu Saya</h3>
+            <div class="table-container">
+              <table id="viewScheduleTable">
                 <thead>
-                  <tr>
-                    <th><input type="checkbox" id="selectAll" onclick="toggleSelectAll()"></th>
-                    <th>Bil</th>
-                    <th>Guru</th>
-                    <th>Tarikh</th>
-                    <th>Kelas</th>
-                    <th>Topik</th>
-                    <th>Catatan</th>
-                    </tr>
+                  <tr><th>Waktu/Hari</th><th>Isnin</th><th>Selasa</th><th>Rabu</th><th>Khamis</th><th>Jumaat</th><th>Sabtu</th><th>Ahad</th></tr>
                 </thead>
                 <tbody></tbody>
               </table>
             </div>
           </div>
 
+<!-- Laporan Mengajar -->
+          <div id="viewTeachingReports" class="card hidden">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+              <h3 style="font-size: 1.35rem; color: var(--primary); margin:0;">Laporan Mengajar Guru</h3>
+              <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                <button class="btn btn-primary" onclick="printSelectedReports()"><i class="fas fa-print"></i> Cetak Terpilih</button>
+                <button class="btn btn-print" onclick="window.print()"><i class="fas fa-file-invoice"></i> Cetak Semua</button>
+                <button class="btn btn-pdf" onclick="exportTeachingReportPDF()"><i class="fas fa-file-pdf"></i> PDF</button>
+              </div>
+            </div>
+            <div id="teachingReportPrintSection">
+              <div class="report-header text-center" style="margin-bottom: 1rem; display:none;">
+                <img src="https://arleta.site/interactivelink/2950/Logo-Maahad-Png.png" alt="Logo" style="width:90px; margin: 0 auto;">
+                <h2>Laporan Mengajar Harian Guru</h2>
+                <p><strong>INSTAQLIM</strong> | Tarikh: <span id="printDate"></span></p>
+              </div>
+              <div class="table-container">
+                <table id="teachingReportTable">
+                  <thead>
+                    <tr>
+                      <th style="width: 40px;"><input type="checkbox" id="selectAll" onclick="toggleSelectAll()"></th>
+                      <th>Bil</th><th>Guru</th><th>Tarikh</th><th>Kelas</th><th>Topik</th><th>Catatan</th><th>Lampiran</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
 <!-- Form Laporan Mengajar -->
-<div id="teachingReportForm" class="card hidden">
-  <h3>Laporan Mengajar Harian</h3>
-  <div class="form-group"><label>Tarikh</label><input type="date" id="reportDate" required></div>
-  <div class="form-group"><label>Kelas</label><select id="reportClass" required><option value="">Pilih Kelas</option></select></div>
-  <div class="form-group"><label>Topik</label><input type="text" id="reportTopic" required></div>
-  <div class="form-group"><label>Catatan</label><textarea id="reportNotes" rows="5" required></textarea></div>
-  <div class="form-group">
-    <!-- BUTANG PAUTAN KE TELEGRAM -->
-    <a href="https://t.me/+MxXwRojj-GIzNjc1" target="_blank" class="btn" style="background-color: #229ED9; color: white; margin-top: 10px; display: block; width: 100%; text-align: center; text-decoration: none;">
-      <i class="fa-brands fa-telegram"></i> Hantar Gambar ke Telegram
-    </a>
-  </div>
-  <button class="btn btn-success" onclick="saveTeachingReport()">Hantar Laporan</button>
-</div>
+          <div id="teachingReportForm" class="card hidden" style="max-width: 720px; margin: 0 auto 1.5rem;">
+            <h3 style="font-size: 1.35rem; color: var(--primary); margin-bottom: 1rem;">Laporan Mengajar Harian</h3>
+            <div class="form-group"><label for="reportDate">Tarikh</label><input type="date" id="reportDate" required></div>
+            <div class="form-group"><label for="reportClass">Kelas</label><select id="reportClass" required><option value="">Pilih Kelas</option></select></div>
+            <div class="form-group"><label for="reportTopic">Topik</label><input type="text" id="reportTopic" placeholder="Tajuk atau topik pelajaran hari ini" required></div>
+            <div class="form-group"><label for="reportNotes">Catatan</label><textarea id="reportNotes" rows="5" placeholder="Catatan aktiviti pengajaran & pembelajaran..." required></textarea></div>
+            <div class="form-group">
+              <a href="https://t.me/+MxXwRojj-GIzNjc1" target="_blank" class="btn" style="background-color: #229ED9; color: white; display: flex; width: 100%; text-decoration: none;">
+                <i class="fa-brands fa-telegram"></i> Hantar Gambar ke Telegram
+              </a>
+            </div>
+            <button class="btn btn-success" style="width:100%; padding:0.75rem;" onclick="saveTeachingReport()"><i class="fas fa-paper-plane"></i> Hantar Laporan</button>
+          </div>
 
 <!-- Hafazan Report Form -->
-          <div id="hafazanReportForm" class="card hidden">
-            <h3>Laporan Hafazan Harian</h3>
-            <div class="form-group">
-              <label>Tarikh</label>
-              <input type="date" id="hafazanDate" required>
-            </div>
-            <div class="form-group">
-              <label>Nama Pelajar</label>
-              <select id="hafazanStudent" required>
-                <option value="">Pilih Pelajar</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Surah</label>
-              <select id="hafazanSurah" required>
-                <option value="">Pilih Surah</option>
-                <option value="Al-Fatihah">1. Al-Fatihah</option>
-                <option value="Al-Baqarah">2. Al-Baqarah</option>
-                <option value="Ali 'Imran">3. Ali 'Imran</option>
-                <option value="An-Nisa'">4. An-Nisa'</option>
-                <option value="Al-Ma'idah">5. Al-Ma'idah</option>
-                <option value="Al-An'am">6. Al-An'am</option>
-                <option value="Al-A'raf">7. Al-A'raf</option>
-                <option value="Al-Anfal">8. Al-Anfal</option>
-                <option value="At-Taubah">9. At-Taubah</option>
-                <option value="Yunus">10. Yunus</option>
-                <option value="Hud">11. Hud</option>
-                <option value="Yusuf">12. Yusuf</option>
-                <option value="Ar-Ra'd">13. Ar-Ra'd</option>
-                <option value="Ibrahim">14. Ibrahim</option>
-                <option value="Al-Hijr">15. Al-Hijr</option>
-                <option value="An-Nahl">16. An-Nahl</option>
-                <option value="Al-Isra'">17. Al-Isra'</option>
-                <option value="Al-Kahf">18. Al-Kahf</option>
-                <option value="Maryam">19. Maryam</option>
-                <option value="Ta-Ha">20. Ta-Ha</option>
-                <option value="Al-Anbiya'">21. Al-Anbiya'</option>
-                <option value="Al-Hajj">22. Al-Hajj</option>
-                <option value="Al-Mu'minun">23. Al-Mu'minun</option>
-                <option value="An-Nur">24. An-Nur</option>
-                <option value="Al-Furqan">25. Al-Furqan</option>
-                <option value="Asy-Syura">26. Asy-Syura</option>
-                <option value="An-Naml">27. An-Naml</option>
-                <option value="Al-Qasas">28. Al-Qasas</option>
-                <option value="Al-Ankabut">29. Al-Ankabut</option>
-                <option value="Ar-Rum">30. Ar-Rum</option>
-                <option value="Luqman">31. Luqman</option>
-                <option value="As-Sajdah">32. As-Sajdah</option>
-                <option value="Al-Ahzab">33. Al-Ahzab</option>
-                <option value="Saba'">34. Saba'</option>
-                <option value="Fatir">35. Fatir</option>
-                <option value="Ya-Sin">36. Ya-Sin</option>
-                <option value="As-Saffat">37. As-Saffat</option>
-                <option value="Sad">38. Sad</option>
-                <option value="Az-Zumar">39. Az-Zumar</option>
-                <option value="Ghafir">40. Ghafir</option>
-                <option value="Fussilat">41. Fussilat</option>
-                <option value="Asy-Syura">42. Asy-Syura</option>
-                <option value="Az-Zukhruf">43. Az-Zukhruf</option>
-                <option value="Ad-Dukhan">44. Ad-Dukhan</option>
-                <option value="Al-Jasiyah">45. Al-Jasiyah</option>
-                <option value="Al-Ahqaf">46. Al-Ahqaf</option>
-                <option value="Muhammad">47. Muhammad</option>
-                <option value="Al-Fath">48. Al-Fath</option>
-                <option value="Al-Hujurat">49. Al-Hujurat</option>
-                <option value="Qaf">50. Qaf</option>
-                <option value="Az-Zariyat">51. Az-Zariyat</option>
-                <option value="At-Tur">52. At-Tur</option>
-                <option value="An-Najm">53. An-Najm</option>
-                <option value="Al-Qamar">54. Al-Qamar</option>
-                <option value="Ar-Rahman">55. Ar-Rahman</option>
-                <option value="Al-Waqi'ah">56. Al-Waqi'ah</option>
-                <option value="Al-Hadid">57. Al-Hadid</option>
-                <option value="Al-Mujadilah">58. Al-Mujadilah</option>
-                <option value="Al-Hashr">59. Al-Hashr</option>
-                <option value="Al-Mumtahanah">60. Al-Mumtahanah</option>
-                <option value="As-Saf">61. As-Saf</option>
-                <option value="Al-Jumu'ah">62. Al-Jumu'ah</option>
-                <option value="Al-Munafiqun">63. Al-Munafiqun</option>
-                <option value="At-Taghabun">64. At-Taghabun</option>
-                <option value="At-Talaq">65. At-Talaq</option>
-                <option value="At-Tahrim">66. At-Tahrim</option>
-                <option value="Al-Mulk">67. Al-Mulk</option>
-                <option value="Al-Qalam">68. Al-Qalam</option>
-                <option value="Al-Haqqah">69. Al-Haqqah</option>
-                <option value="Al-Ma'arij">70. Al-Ma'arij</option>
-                <option value="Nuh">71. Nuh</option>
-                <option value="Al-Jinn">72. Al-Jinn</option>
-                <option value="Al-Muzzammil">73. Al-Muzzammil</option>
-                <option value="Al-Muddassir">74. Al-Muddassir</option>
-                <option value="Al-Qiyamah">75. Al-Qiyamah</option>
-                <option value="Al-Insan">76. Al-Insan</option>
-                <option value="Al-Mursalat">77. Al-Mursalat</option>
-                <option value="An-Naba'">78. An-Naba'</option>
-                <option value="An-Nazi'at">79. An-Nazi'at</option>
-                <option value="'Abasa">80. 'Abasa</option>
-                <option value="At-Takwir">81. At-Takwir</option>
-                <option value="Al-Infitar">82. Al-Infatar</option>
-                <option value="Al-Mutaffifin">83. Al-Mutaffifin</option>
-                <option value="Al-Insyiqaq">84. Al-Insyiqaq</option>
-                <option value="Al-Buruj">85. Al-Buruj</option>
-                <option value="At-Tariq">86. At-Tariq</option>
-                <option value="Al-A'la">87. Al-A'la</option>
-                <option value="Al-Ghasyiyah">88. Al-Ghasyiyah</option>
-                <option value="Al-Fajr">89. Al-Fajr</option>
-                <option value="Al-Balad">90. Al-Balad</option>
-                <option value="Asy-Syams">91. Asy-Syams</option>
-                <option value="Al-Lail">92. Al-Lail</option>
-                <option value="Ad-Duha">93. Ad-Duha</option>
-                <option value="Al-Insyirah">94. Al-Insyirah</option>
-                <option value="At-Tin">95. At-Tin</option>
-                <option value="Al-'Alaq">96. Al-'Alaq</option>
-                <option value="Al-Qadr">97. Al-Qadr</option>
-                <option value="Al-Bayyinah">98. Al-Bayyinah</option>
-                <option value="Az-Zalzalah">99. Az-Zalzalah</option>
-                <option value="Al-'Adiyat">100. Al-'Adiyat</option>
-                <option value="Al-Qari'ah">101. Al-Qari'ah</option>
-                <option value="At-Takatsur">102. At-Takatsur</option>
-                <option value="Al-Asr">103. Al-Asr</option>
-                <option value="Al-Humazah">104. Al-Humazah</option>
-                <option value="Al-Fil">105. Al-Fil</option>
-                <option value="Quraisy">106. Quraisy</option>
-                <option value="Al-Ma'un">107. Al-Ma'un</option>
-                <option value="Al-Kautsar">108. Al-Kautsar</option>
-                <option value="Al-Kafirun">109. Al-Kafirun</option>
-                <option value="An-Nasr">110. An-Nasr</option>
-                <option value="Al-Lahab">111. Al-Lahab</option>
-                <option value="Al-Ikhlas">112. Al-Ikhlas</option>
-                <option value="Al-Falaq">113. Al-Falaq</option>
-                <option value="An-Nas">114. An-Nas</option>
-              </select>
-            </div>
+          <div id="hafazanReportForm" class="card hidden" style="max-width: 720px; margin: 0 auto 1.5rem;">
+            <h3 style="font-size: 1.35rem; color: var(--primary); margin-bottom: 1rem;">Laporan Hafazan Harian</h3>
+            <div class="form-group"><label for="hafazanDate">Tarikh</label><input type="date" id="hafazanDate" required></div>
+            <div class="form-group"><label for="hafazanStudent">Nama Pelajar</label><select id="hafazanStudent" required><option value="">Pilih Pelajar</option></select></div>
+            <div class="form-group"><label for="hafazanSurah">Surah</label><select id="hafazanSurah" required><option value="">Pilih Surah</option></select></div>
             <div class="form-group">
               <label>Ayat (Dari - Hingga)</label>
               <div style="display: flex; gap: 10px;">
-                <input type="text" id="hafazanFrom" placeholder="1" style="flex:1">
-                <input type="text" id="hafazanTo" placeholder="10" style="flex:1">
+                <input type="text" id="hafazanFrom" placeholder="Contoh: 1" style="flex:1">
+                <input type="text" id="hafazanTo" placeholder="Contoh: 10" style="flex:1">
               </div>
             </div>
             <div class="form-group">
-              <label>Status Hafazan</label>
+              <label for="hafazanStatus">Status Hafazan</label>
               <select id="hafazanStatus" required>
                 <option value="Lancar">Lancar</option>
                 <option value="Sederhana">Sederhana</option>
@@ -652,36 +632,25 @@ th { background: var(--light); }
                 <option value="Ulangan">Ulangan</option>
               </select>
             </div>
-            <div class="form-group">
-              <label>Catatan Guru</label>
-              <textarea id="hafazanNotes" rows="3"></textarea>
-            </div>
-           <button class="btn btn-success" onclick="saveHafazanReport()">Simpan Laporan Hafazan</button>
+            <div class="form-group"><label for="hafazanNotes">Catatan Guru</label><textarea id="hafazanNotes" rows="3" placeholder="Catatan bacaan, tajwid, makraj..."></textarea></div>
+            <button class="btn btn-success" style="width:100%; padding:0.75rem;" onclick="saveHafazanReport()"><i class="fas fa-save"></i> Simpan Laporan Hafazan</button>
           </div>
 
 <!-- Senarai Hafazan -->
           <div id="viewHafazanReports" class="card hidden">
-            <h3>Senarai Laporan Hafazan</h3>
-            <div style="margin:1rem 0; text-align:right;">
-               <button class="btn btn-print" onclick="window.print()">Cetak Senarai</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+              <h3 style="font-size: 1.35rem; color: var(--primary); margin:0;">Senarai Laporan Hafazan</h3>
+              <button class="btn btn-print" onclick="window.print()"><i class="fas fa-print"></i> Cetak Senarai</button>
             </div>
-            <table id="hafazanTable">
-              <thead>
-                <tr>
-                  <th>Tarikh</th>
-                  <th>Nama Pelajar</th>
-                  <th>Kelas</th>
-                  <th>Surah</th>
-                  <th>Ayat</th>
-                  <th>Status</th>
-                  <th>Guru</th>
-                  <th>Catatan</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
+            <div class="table-container">
+              <table id="hafazanTable">
+                <thead><tr><th>Tarikh</th><th>Nama Pelajar</th><th>Kelas</th><th>Surah</th><th>Ayat</th><th>Status</th><th>Guru</th><th>Catatan</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
           </div>
-        </div>
+
+</div>
       </main>
     </div>
   </div>
@@ -689,86 +658,162 @@ th { background: var(--light); }
 <!-- Modal Generic -->
   <div id="modal" class="hidden">
     <div>
-      <h3 id="modalTitle">Tambah Data</h3>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <h3 id="modalTitle" style="font-size: 1.3rem; color: var(--primary); margin:0;">Tambah Data</h3>
+        <button onclick="closeModal()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--text-muted);">×</button>
+      </div>
       <div id="dataForm"></div>
-      <div style="margin-top:1.5rem; text-align:right;">
-        <button type="button" class="btn" onclick="closeModal()">Batal</button>
+      <div style="margin-top:1.5rem; text-align:right; display:flex; gap:0.5rem; justify-content:flex-end;">
+        <button type="button" class="btn btn-secondary" onclick="closeModal()">Batal</button>
         <button type="button" class="btn btn-primary" id="saveBtn">Simpan</button>
       </div>
     </div>
   </div>
 
-<div id="toast" class="toast"></div>
-  <div class="theme-toggle" onclick="toggleTheme()" title="Tukar Tema"><i class="fas fa-moon" id="themeIcon"></i></div>
-  <div id="connectionStatus" class="connection-status hidden">Memeriksa sambungan...</div>
-
-<!-- Modal Popup untuk Catatan Penuh -->
-  <div id="notesModal" class="hidden" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:2000;">
-  <div style="background:var(--card-bg,white);border-radius:10px;padding:2rem;width:90%;max-width:800px;max-height:80vh;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,0.3);">
-    <h3 id="notesModalTitle" style="margin-top:0; color:var(--primary);">Pengumuman Penuh</h3>
-    <div id="fullNotes" style="font-size:1.1rem; line-height:1.7; word-wrap:break-word; margin:1rem 0;"></div>
-    <div style="text-align:right;">
-      <button class="btn btn-primary" onclick="document.getElementById('notesModal').classList.add('hidden')">Tutup</button>
+<!-- Modal Tambah Pengumuman -->
+  <div id="announcementModal" class="hidden">
+    <div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <h3 id="announcementModalTitle" style="font-size: 1.3rem; color: var(--primary); margin:0;">Tambah Pengumuman Baru</h3>
+        <button onclick="closeAnnouncementModal()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--text-muted);">×</button>
+      </div>
+      <div class="form-group">
+        <label for="announcementTitle">Tajuk Pengumuman</label>
+        <input type="text" id="announcementTitle" placeholder="Tajuk pengumuman ringkas..." required>
+      </div>
+      <div class="form-group">
+        <label for="announcementText">Isi Pengumuman (Enter untuk baris baru)</label>
+        <textarea id="announcementText" rows="6" placeholder="Kandungan penuh pengumuman..." required></textarea>
+      </div>
+      <div style="text-align:right; margin-top:1rem; display:flex; gap:0.5rem; justify-content:flex-end;">
+        <button class="btn btn-secondary" onclick="closeAnnouncementModal()">Batal</button>
+        <button class="btn btn-primary" onclick="saveAnnouncement()"><i class="fas fa-save"></i> Simpan</button>
+      </div>
     </div>
   </div>
-</div>
+
+<!-- Modal Popup untuk Catatan Penuh -->
+  <div id="notesModal" class="hidden">
+    <div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <h3 id="notesModalTitle" style="margin:0; color:var(--primary); font-size:1.3rem;">Pengumuman Penuh</h3>
+        <button onclick="document.getElementById('notesModal').classList.add('hidden')" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--text-muted);">×</button>
+      </div>
+      <div id="fullNotes" style="font-size:1rem; line-height:1.7; word-wrap:break-word; margin:1rem 0; color:var(--text);"></div>
+      <div style="text-align:right;">
+        <button class="btn btn-primary" onclick="document.getElementById('notesModal').classList.add('hidden')">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+<div id="toast" class="toast"></div>
+  <div class="theme-toggle" onclick="toggleTheme()" title="Tukar Tema Antara Cerah / Gelap"><i class="fas fa-moon" id="themeIcon"></i></div>
+  <div id="connectionStatus" class="connection-status hidden">Memeriksa sambungan...</div>
 
 <script>
     const API_URL = 'https://script.google.com/macros/s/AKfycbyRCOHenkFOP5_sbHDpzS30j_ugTKYTrBJ68VhVwSZ6Jq5vjBEubsBsGb0XGDwkZSHa/exec';
-    // ... semua JavaScript anda ...
+
     let currentUser = null;
     let currentSection = '';
-    let classes = [], students = [], teachers = [], staff = [], users = [], schedule = Array(17).fill().map(() => Array(7).fill(''));
+    let isOnline = navigator.onLine;
+    let classes = [], students = [], teachers = [], staff = [], users = [];
+    let schedule = Array(17).fill().map(() => Array(7).fill(''));
     let pendingOperations = [];
     let reports = [];
-    let hafazanReports = []; // PEMBOLEHUBAH GLOBAL YANG DITAMBAH
-    let currentAnnouncement = { text: '', date: '' };
+    let hafazanReports = [];
+    let announcements = [];
+    let deferredPrompt;
 
-// Fungsi untuk format tarikh Malaysia yang cantik dan selamat
-function formatDateMY(dateString) {
-  if (!dateString) return 'Tiada Tarikh';
+    const SURAH_NAMES = [
+      "1. Al-Fatihah", "2. Al-Baqarah", "3. Ali 'Imran", "4. An-Nisa'", "5. Al-Ma'idah",
+      "6. Al-An'am", "7. Al-A'raf", "8. Al-Anfal", "9. At-Taubah", "10. Yunus",
+      "11. Hud", "12. Yusuf", "13. Ar-Ra'd", "14. Ibrahim", "15. Al-Hijr",
+      "16. An-Nahl", "17. Al-Isra'", "18. Al-Kahf", "19. Maryam", "20. Ta-Ha",
+      "21. Al-Anbiya'", "22. Al-Hajj", "23. Al-Mu'minun", "24. An-Nur", "25. Al-Furqan",
+      "26. Asy-Syu'ara'", "27. An-Naml", "28. Al-Qasas", "29. Al-Ankabut", "30. Ar-Rum",
+      "31. Luqman", "32. As-Sajdah", "33. Al-Ahzab", "34. Saba'", "35. Fatir",
+      "36. Ya-Sin", "37. As-Saffat", "38. Sad", "39. Az-Zumar", "40. Ghafir",
+      "41. Fussilat", "42. Asy-Syura", "43. Az-Zukhruf", "44. Ad-Dukhan", "45. Al-Jasiyah",
+      "46. Al-Ahqaf", "47. Muhammad", "48. Al-Fath", "49. Al-Hujurat", "50. Qaf",
+      "51. Az-Zariyat", "52. At-Tur", "53. An-Najm", "54. Al-Qamar", "55. Ar-Rahman",
+      "56. Al-Waqi'ah", "57. Al-Hadid", "58. Al-Mujadilah", "59. Al-Hashr", "60. Al-Mumtahanah",
+      "61. As-Saf", "62. Al-Jumu'ah", "63. Al-Munafiqun", "64. At-Taghabun", "65. At-Talaq",
+      "66. At-Tahrim", "67. Al-Mulk", "68. Al-Qalam", "69. Al-Haqqah", "70. Al-Ma'arij",
+      "71. Nuh", "72. Al-Jinn", "73. Al-Muzzammil", "74. Al-Muddassir", "75. Al-Qiyamah",
+      "76. Al-Insan", "77. Al-Mursalat", "78. An-Naba'", "79. An-Nazi'at", "80. 'Abasa",
+      "81. At-Takwir", "82. Al-Infitar", "83. Al-Mutaffifin", "84. Al-Insyiqaq", "85. Al-Buruj",
+      "86. At-Tariq", "87. Al-A'la", "88. Al-Ghasyiyah", "89. Al-Fajr", "90. Al-Balad",
+      "91. Asy-Syams", "92. Al-Lail", "93. Ad-Duha", "94. Al-Insyirah", "95. At-Tin",
+      "96. Al-'Alaq", "97. Al-Qadr", "98. Al-Bayyinah", "99. Az-Zalzalah", "100. Al-'Adiyat",
+      "101. Al-Qari'ah", "102. At-Takatsur", "103. Al-Asr", "104. Al-Humazah", "105. Al-Fil",
+      "106. Quraisy", "107. Al-Ma'un", "108. Al-Kautsar", "109. Al-Kafirun", "110. An-Nasr",
+      "111. Al-Lahab", "112. Al-Ikhlas", "113. Al-Falaq", "114. An-Nas"
+    ];
 
-  // Sokong pelbagai format: ISO string, timestamp, atau string biasa
-  const date = new Date(dateString);
+    function initSurahs() {
+      const select = document.getElementById('hafazanSurah');
+      if (!select) return;
+      select.innerHTML = '<option value="">Pilih Surah</option>';
+      SURAH_NAMES.forEach(s => {
+        const val = s.replace(/^[0-9]+\.\s*/, '');
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.textContent = s;
+        select.appendChild(opt);
+      });
+    }
 
-  // Jika tarikh tak sah, kembali ke string asal
-  if (isNaN(date.getTime())) return dateString;
+    function initScheduleRows() {
+      const tbody = document.getElementById('scheduleTableBody');
+      if (!tbody) return;
+      const times = [
+        '06:00-07:00','07:00-08:00','08:00-09:00','09:00-10:00','10:00-11:00',
+        '11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00',
+        '16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00',
+        '21:00-22:00','22:00-23:00'
+      ];
+      tbody.innerHTML = '';
+      times.forEach((t, r) => {
+        let cols = `<td><strong>${t}</strong></td>`;
+        for (let c = 0; c < 7; c++) {
+          cols += `<td><input type="text" data-row="${r}" data-col="${c}" style="min-width:110px;"></td>`;
+        }
+        tbody.innerHTML += `<tr>${cols}</tr>`;
+      });
+    }
 
-  // Format cantik: 28 Februari 2026
-  const options = {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-    timeZone: 'Asia/Kuala_Lumpur'
-  };
+    function formatDateMY(dateString) {
+      if (!dateString) return 'Tiada Tarikh';
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return dateString;
+      return date.toLocaleDateString('ms-MY', {
+        day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Kuala_Lumpur'
+      });
+    }
 
-  return date.toLocaleDateString('ms-MY', options);
-}
-
-// Alternatif ringkas jika nak guna 28/02/2026:
-// return date.toLocaleDateString('ms-MY');
+    function formatAnnouncementDate(isoString) {
+      if (!isoString) return 'Tiada Tarikh';
+      const date = new Date(isoString);
+      if (isNaN(date.getTime())) return isoString;
+      return date.toLocaleDateString('ms-MY', {
+        day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Kuala_Lumpur'
+      });
+    }
 
     async function apiCall(action, payload = {}) {
       try {
         updateConnectionStatus('Memuat...', 'loading');
-       const res = await fetch(API_URL, {
+        const res = await fetch(API_URL, {
           method: 'POST',
           body: JSON.stringify({ action, ...payload }),
-          headers: {
-            'Content-Type': 'text/plain;charset=utf-8'
-          }
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' }
         });
-
         const responseText = await res.text();
         let data;
-        try {
-          data = JSON.parse(responseText);
-        } catch (e) {
+        try { data = JSON.parse(responseText); } catch (e) {
           throw new Error('Respons tidak sah dari server: ' + responseText.substring(0, 200));
         }
-
         if (data.status !== 'success') throw new Error(data.message || 'Ralat server');
-        
         updateConnectionStatus('Dalam talian', 'success');
         return data;
       } catch (e) {
@@ -778,43 +823,42 @@ function formatDateMY(dateString) {
         localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
         const localData = getLocalData(action);
         if (localData) {
-          showToast('Menggunakan data tempatan', 'warning');
+          showToast('Menggunakan data tempatan (luar talian)', 'warning');
           return { status: 'success', ...localData };
         }
-        throw new Error('Tidak dapat menyambung ke pelayan.');
+        throw new Error('Tidak dapat menyambung ke pelayan: ' + e.message);
       }
     }
 
     function getLocalData(action) {
-      const dataKey = `local_${action}`;
-      const data = localStorage.getItem(dataKey);
+      const data = localStorage.getItem(`local_${action}`);
       return data ? JSON.parse(data) : null;
     }
-
     function saveLocalData(action, data) {
-      const dataKey = `local_${action}`;
-      localStorage.setItem(dataKey, JSON.stringify(data));
+      localStorage.setItem(`local_${action}`, JSON.stringify(data));
     }
 
     function updateConnectionStatus(message, type) {
-      const statusEl = document.getElementById('connectionStatus');
-      statusEl.textContent = message;
-      statusEl.className = 'connection-status';
-      if (type === 'loading') statusEl.style.background = 'var(--warning)';
-      else if (type === 'error') statusEl.style.background = 'var(--danger)';
+      const el = document.getElementById('connectionStatus');
+      if (!el) return;
+      el.textContent = message;
+      el.className = 'connection-status';
+      if (type === 'loading') el.style.background = 'var(--warning)';
+      else if (type === 'error') el.style.background = 'var(--danger)';
       else if (type === 'success') {
-        statusEl.style.background = 'var(--success)';
-        setTimeout(() => statusEl.classList.add('hidden'), 3000);
+        el.style.background = 'var(--success)';
+        setTimeout(() => el.classList.add('hidden'), 3000);
       }
-      statusEl.classList.remove('hidden');
+      el.classList.remove('hidden');
     }
 
     function showToast(msg, type = 'success') {
       const t = document.getElementById('toast');
+      if (!t) return;
       t.textContent = msg;
-      t.style.background = type === 'success' ? 'var(--success)' : type === 'warning' ? 'var(--warning)' : 'var(--danger)';
+      t.style.background = type === 'success' ? '#10b981' : type === 'warning' ? '#f59e0b' : '#ef4444';
       t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 4000);
+      setTimeout(() => t.classList.remove('show'), 3500);
     }
 
     function closeModal() {
@@ -822,83 +866,56 @@ function formatDateMY(dateString) {
       document.getElementById('dataForm').innerHTML = '';
     }
 
- async function login() {
-  const username = document.getElementById('username').value.trim();
-  const password = document.getElementById('password').value;
-  const errorEl = document.getElementById('loginError');
+    async function login() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const errorEl = document.getElementById('loginError');
 
-  // Validasi input
-  if (!username || !password) {
-    errorEl.textContent = 'Sila isi nama pengguna dan kata laluan';
-    errorEl.classList.remove('hidden');
-    return;
-  }
+      if (!username || !password) {
+        errorEl.textContent = 'Sila isi nama pengguna dan kata laluan';
+        errorEl.classList.remove('hidden');
+        return;
+      }
+      errorEl.classList.add('hidden');
 
-  errorEl.classList.add('hidden');
+      const loginBtn = document.querySelector('#loginPage button');
+      const originalText = loginBtn.innerHTML;
+      loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memuat...';
+      loginBtn.disabled = true;
 
-  // Butang login loading state
-  const loginBtn = document.querySelector('#loginPage button');
-  const originalText = loginBtn.innerHTML;
-  loginBtn.innerHTML = '<span class="loading"></span> Memuat...';
-  loginBtn.disabled = true;
+      try {
+        const response = await apiCall('login', { username, password });
+        currentUser = response.user;
 
-  try {
-    const response = await apiCall('login', { username, password });
-    currentUser = response.user;
+        document.getElementById('loginPage').classList.add('hidden');
+        document.getElementById('mainApp').classList.remove('hidden');
+        document.getElementById('userName').textContent = currentUser.name || username;
 
-    // Tukar paparan dari login ke app utama
-    document.getElementById('loginPage').classList.add('hidden');
-    document.getElementById('mainApp').classList.remove('hidden');
+        const roleDisplay = { admin: 'Pentadbir', guru: 'Guru', amil: 'Amil Zakat', staff: 'Kakitangan' };
+        document.getElementById('userRole').textContent = roleDisplay[currentUser.role] || currentUser.role || 'Pengguna';
 
-    // Papar nama pengguna
-    document.getElementById('userName').textContent = currentUser.name || username;
+        document.getElementById('adminDashboard').classList.add('hidden');
+        document.getElementById('guruDashboard').classList.add('hidden');
+        document.getElementById('amilDashboard').classList.add('hidden');
 
-    // Papar peranan dalam bahasa Melayu
-    const roleDisplay = {
-      admin: 'Pentadbir',
-      guru: 'Guru',
-      amil: 'Amil Zakat',
-      staff: 'Kakitangan'
-    };
-    document.getElementById('userRole').textContent = 
-      roleDisplay[currentUser.role] || currentUser.role || 'Pengguna';
+        if (currentUser.role === 'admin') document.getElementById('adminDashboard').classList.remove('hidden');
+        else if (currentUser.role === 'guru') document.getElementById('guruDashboard').classList.remove('hidden');
+        else if (currentUser.role === 'amil') document.getElementById('amilDashboard').classList.remove('hidden');
 
-    // === PERBAIKAN UTAMA: Pastikan hanya SATU dashboard sahaja kelihatan ===
-    // Sembunyikan semua dashboard dahulu
-    document.getElementById('adminDashboard').classList.add('hidden');
-    document.getElementById('guruDashboard').classList.add('hidden');
-    document.getElementById('amilDashboard').classList.add('hidden');
-
-    // Kemudian tunjukkan dashboard yang betul mengikut role
-    if (currentUser.role === 'admin') {
-      document.getElementById('adminDashboard').classList.remove('hidden');
-    } else if (currentUser.role === 'guru') {
-      document.getElementById('guruDashboard').classList.remove('hidden');
-    } else if (currentUser.role === 'amil') {
-      document.getElementById('amilDashboard').classList.remove('hidden');
+        await loadCommonData();
+        await loadAnnouncements();
+        showToast('Log masuk berjaya! Selamat datang.', 'success');
+      } catch (err) {
+        errorEl.textContent = err.message || 'Log masuk gagal. Sila cuba lagi.';
+        errorEl.classList.remove('hidden');
+      } finally {
+        loginBtn.innerHTML = originalText;
+        loginBtn.disabled = false;
+      }
     }
-    // Jika role lain (staff atau tidak diketahui), boleh fallback ke guru atau kosongkan
-
-    // Muat data penting
-    await loadCommonData();
-    await loadAnnouncements();
-    renderAnnouncements();
-
-    showToast('Log masuk berjaya! Selamat datang kembali.', 'success');
-
-  } catch (err) {
-    console.error('Login error:', err);
-    errorEl.textContent = err.message || 'Log masuk gagal. Sila cuba lagi.';
-    errorEl.classList.remove('hidden');
-  } finally {
-    // Pulihkan butang login
-    loginBtn.innerHTML = originalText;
-    loginBtn.disabled = false;
-  }
-}
 
     function logout() {
-      if (confirm('Log keluar?')) {
+      if (confirm('Log keluar dari sistem INSTAQLIM?')) {
         currentUser = null;
         document.getElementById('mainApp').classList.add('hidden');
         document.getElementById('adminDashboard').classList.add('hidden');
@@ -911,16 +928,27 @@ function formatDateMY(dateString) {
       }
     }
 
+    function backToDashboard() {
+      document.getElementById('sections').classList.add('hidden');
+      document.querySelectorAll('#sections > div:not(.section-nav)').forEach(d => d.classList.add('hidden'));
+      if (currentUser) {
+        if (currentUser.role === 'admin') document.getElementById('adminDashboard').classList.remove('hidden');
+        else if (currentUser.role === 'guru') document.getElementById('guruDashboard').classList.remove('hidden');
+        else if (currentUser.role === 'amil') document.getElementById('amilDashboard').classList.remove('hidden');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     async function loadCommonData() {
       try {
         const [c, s, st] = await Promise.all([
           apiCall('getClasses'),
           apiCall('getSchedule'),
-          apiCall('getStudents') 
+          apiCall('getStudents')
         ]);
         classes = c.classes || [];
         schedule = s.schedule || Array(17).fill().map(() => Array(7).fill(''));
-        students = st.students || []; 
+        students = st.students || [];
         saveLocalData('getClasses', c);
         saveLocalData('getSchedule', s);
         saveLocalData('getStudents', st);
@@ -928,13 +956,12 @@ function formatDateMY(dateString) {
       } catch (e) {
         const c = getLocalData('getClasses');
         const s = getLocalData('getSchedule');
-        const st = getLocalData('getStudents'); 
+        const st = getLocalData('getStudents');
         if (c && s) {
           classes = c.classes || [];
           schedule = s.schedule || Array(17).fill().map(() => Array(7).fill(''));
-          if(st) students = st.students || [];
+          if (st) students = st.students || [];
           populateClassSelects();
-          showToast('Menggunakan data tempatan', 'warning');
         }
       }
     }
@@ -943,7 +970,7 @@ function formatDateMY(dateString) {
       ['reportClass', 'studentClassFilter'].forEach(id => {
         const sel = document.getElementById(id);
         if (!sel) return;
-        sel.innerHTML = '<option value="">Pilih/Semua Kelas</option>';
+        sel.innerHTML = '<option value="">Semua / Pilih Kelas</option>';
         classes.forEach(cls => {
           const opt = document.createElement('option');
           opt.value = cls.name;
@@ -954,20 +981,29 @@ function formatDateMY(dateString) {
     }
 
     function showSection(id) {
-      // === SEMAKAN KESELAMATAN ===
       if (currentUser.role !== 'admin') {
-        const adminOnlySections = ['manageUsers', 'manageStudents', 'manageTeachers', 'manageStaff', 'manageClasses', 'manageSchedule', 'manageAttendance'];
-        if (adminOnlySections.includes(id)) {
-          showToast('Akses Ditolak: Hanya Admin dibenarkan.', 'error');
-          return; 
+        const adminOnly = ['manageUsers', 'manageStudents', 'manageTeachers', 'manageStaff', 'manageClasses', 'manageSchedule', 'manageAttendance'];
+        if (adminOnly.includes(id)) {
+          showToast('Akses Ditolak: Hanya Pentadbir dibenarkan.', 'error');
+          return;
         }
       }
+
+      document.getElementById('adminDashboard').classList.add('hidden');
+      document.getElementById('guruDashboard').classList.add('hidden');
+      document.getElementById('amilDashboard').classList.add('hidden');
       
-      document.querySelectorAll('#sections > div').forEach(d => d.classList.add('hidden'));
+      document.querySelectorAll('#sections > div:not(.section-nav)').forEach(d => d.classList.add('hidden'));
       const sec = document.getElementById(id);
       if (sec) sec.classList.remove('hidden');
       document.getElementById('sections').classList.remove('hidden');
       currentSection = id;
+
+      const badge = document.getElementById('activeSectionBadge');
+      if (badge && sec) {
+        const h3 = sec.querySelector('h3');
+        badge.textContent = h3 ? h3.textContent.trim() : '';
+      }
 
       if (id === 'manageUsers') loadUsers();
       if (id === 'manageStudents') loadStudents();
@@ -978,47 +1014,28 @@ function formatDateMY(dateString) {
       if (id === 'manageAttendance') loadAttendance();
       if (id === 'viewSchedule') loadViewSchedule();
       if (id === 'viewTeachingReports') loadTeachingReports();
-      
       if (id === 'hafazanReportForm') {
         document.getElementById('hafazanDate').value = new Date().toISOString().slice(0,10);
         populateHafazanStudentSelect();
-        if (students.length === 0) {
-           loadStudents().then(() => populateHafazanStudentSelect());
-        }
       }
-      
-      if (id === 'viewHafazanReports') {
-         loadHafazanReports();
-      }
+      if (id === 'viewHafazanReports') loadHafazanReports();
 
-      loadAnnouncements().then(() => renderAnnouncements());
-      restrictViewerAccess();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // === FUNGSI BANTUAN: FORMAT TARIKH MALAYSIA ===
-    function formatAnnouncementDate(isoString) {
-  if (!isoString) return 'Tiada Tarikh';
+    function filterTable(tableId, query, roleOrClass) {
+      const q = (query || '').toLowerCase().trim();
+      const r = (roleOrClass || '').toLowerCase().trim();
+      const rows = document.querySelectorAll(`#${tableId} tbody tr`);
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        const matchQ = !q || text.includes(q);
+        const matchR = !r || text.includes(r);
+        row.style.display = (matchQ && matchR) ? '' : 'none';
+      });
+    }
 
-  const date = new Date(isoString);
-
-  // Jika tarikh tak sah, kembali ke string asal
-  if (isNaN(date.getTime())) return isoString;
-
-  // Format cantik: 28 Februari 2026
-  const options = { 
-    day: 'numeric', 
-    month: 'long', 
-    year: 'numeric',
-    timeZone: 'Asia/Kuala_Lumpur' // Pastikan zona Malaysia
-  };
-
-  return date.toLocaleDateString('ms-MY', options);
-}
-
-// Alternatif: Jika nak format ringkas 28/02/2026
-// return date.toLocaleDateString('ms-MY');
-
-    // === PENGGUNA ===
+    // === USERS ===
     async function loadUsers() {
       try {
         const res = await apiCall('getUsers');
@@ -1027,44 +1044,25 @@ function formatDateMY(dateString) {
         renderUsers();
       } catch (e) {
         const res = getLocalData('getUsers');
-        if (res) {
-          users = res.users || [];
-          renderUsers();
-          showToast('Menggunakan data tempatan', 'warning');
-        }
+        if (res) { users = res.users || []; renderUsers(); }
       }
     }
-
     function renderUsers() {
       const tbody = document.querySelector('#userTable tbody');
       tbody.innerHTML = '';
       users.forEach(u => {
-        let roleText = '';
-        if (u.role === 'admin') {
-          roleText = 'Pentadbir';
-        } else if (u.role === 'guru') {
-          roleText = 'Guru';
-        } else if (u.role === 'amil') {
-          roleText = 'Amil Zakat';
-        } else if (u.role === 'staff') {
-          roleText = 'Kakitangan';
-        } else {
-          roleText = u.role;
-        }
-        
-        let actionButtons = '-';
-        if (currentUser.role === 'admin') {
-          actionButtons = `
-            <button class="btn btn-edit" onclick="editUser('${u.id}')">Kemaskini</button>
-            ${u.username !== 'admin' ? `<button class="btn btn-danger" onclick="deleteUser('${u.id}')">Padam</button>` : ''}
-          `;
-        }
-
-        tbody.innerHTML += `
-          <tr>
-            <td>${u.username}</td><td>${u.name}</td><td>${roleText}</td><td>${u.ic || '-'}</td><td>${u.status || 'active'}</td>
-            <td>${actionButtons}</td>
-          </tr>`;
+        const roleText = { admin: 'Pentadbir', guru: 'Guru', amil: 'Amil Zakat', staff: 'Kakitangan' }[u.role] || u.role;
+        const actions = (currentUser && currentUser.role === 'admin') ? `
+          <button class="btn btn-edit" style="padding:4px 8px; font-size:0.75rem;" onclick="editUser('${u.id}')">Kemaskini</button>
+          ${u.username !== 'admin' ? `<button class="btn btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="deleteUser('${u.id}')">Padam</button>` : ''}
+        ` : '-';
+        tbody.innerHTML += `<tr>
+          <td><strong>${u.username}</strong></td><td>${u.name}</td>
+          <td><span class="status-badge" style="background:#059669">${roleText}</span></td>
+          <td>${u.ic || '-'}</td>
+          <td><span class="status-badge" style="background:${u.status === 'inactive' ? '#ef4444' : '#10b981'}">${u.status || 'active'}</span></td>
+          <td>${actions}</td>
+        </tr>`;
       });
     }
 
@@ -1090,52 +1088,26 @@ function formatDateMY(dateString) {
     async function saveUser() {
       const id = document.getElementById('u_id').value;
       const user = {
-        id: id || undefined,
+        id: id || ('user_' + Date.now()),
         username: document.getElementById('u_username').value.trim(),
         password: document.getElementById('u_password').value,
         name: document.getElementById('u_name').value.trim(),
         ic: document.getElementById('u_ic').value.trim(),
         role: document.getElementById('u_role').value
       };
-
-      if (!id) {
-        user.id = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-      }
-
-      if (!user.username || !user.name || !user.role || (!id && !user.password)) {
-        return showToast('Isi semua medan', 'error');
-      }
-
+      if (!user.username || !user.name || !user.role || (!id && !user.password)) return showToast('Isi semua medan wajib', 'error');
       try {
-        if (isOnline) {
-          if (id) await apiCall('updateUser', { user });
-          else await apiCall('addUser', { user });
-        } else {
-          pendingOperations.push({ action: id ? 'updateUser' : 'addUser', payload: { user } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          if (id) {
-            const index = users.findIndex(u => u.id === id);
-            if (index !== -1) users[index] = user;
-          } else {
-            users.push(user);
-          }
-          saveLocalData('getUsers', { users });
-          renderUsers();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-
+        if (id) await apiCall('updateUser', { user });
+        else await apiCall('addUser', { user });
         closeModal();
-        if (isOnline) loadUsers();
+        loadUsers();
         showToast('Pengguna berjaya disimpan');
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
+      } catch (err) { showToast(err.message, 'error'); }
     }
 
     function editUser(id) {
       const user = users.find(u => u.id === id);
       if (!user) return;
-
       document.getElementById('modalTitle').textContent = 'Kemaskini Pengguna';
       document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Username</label><input type="text" id="u_username" value="${user.username}" required></div>
@@ -1155,28 +1127,15 @@ function formatDateMY(dateString) {
     }
 
     async function deleteUser(id) {
-      if (!confirm('Adakah anda pasti ingin memadam pengguna ini?')) return;
-
+      if (!confirm('Padam pengguna ini?')) return;
       try {
-        if (isOnline) {
-          await apiCall('deleteUser', { id });
-        } else {
-          pendingOperations.push({ action: 'deleteUser', payload: { id } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          users = users.filter(u => u.id !== id);
-          saveLocalData('getUsers', { users });
-          renderUsers();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-
-        if (isOnline) loadUsers();
+        await apiCall('deleteUser', { id });
+        loadUsers();
         showToast('Pengguna berjaya dipadam');
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
+      } catch (err) { showToast(err.message, 'error'); }
     }
 
-    // === PELAJAR ===
+    // === STUDENTS ===
     async function loadStudents() {
       try {
         const res = await apiCall('getStudents');
@@ -1185,53 +1144,39 @@ function formatDateMY(dateString) {
         renderStudents();
       } catch (e) {
         const res = getLocalData('getStudents');
-        if (res) {
-          students = res.students || [];
-          renderStudents();
-          showToast('Menggunakan data tempatan', 'warning');
-        }
+        if (res) { students = res.students || []; renderStudents(); }
       }
     }
-
     function renderStudents() {
       const tbody = document.querySelector('#studentTable tbody');
       tbody.innerHTML = '';
       students.forEach(s => {
-        let actionButtons = '-';
-        if (currentUser.role === 'admin') {
-          actionButtons = `
-            <button class="btn btn-edit" onclick="editStudent('${s.id}')">Kemaskini</button>
-            <button class="btn btn-danger" onclick="deleteStudent('${s.id}')">Padam</button>
-          `;
-        }
-
-        tbody.innerHTML += `
-          <tr>
-            <td>${s.id}</td><td>${s.name}</td><td>${s.ic}</td><td>${s.class}</td><td>${s.guardian}</td><td>${s.guardianphone}</td>
-            <td>${actionButtons}</td>
-          </tr>`;
+        const actions = (currentUser && currentUser.role === 'admin') ? `
+          <button class="btn btn-edit" style="padding:4px 8px; font-size:0.75rem;" onclick="editStudent('${s.id}')">Kemaskini</button>
+          <button class="btn btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="deleteStudent('${s.id}')">Padam</button>
+        ` : '-';
+        tbody.innerHTML += `<tr>
+          <td><small style="color:var(--text-muted)">${s.id}</small></td>
+          <td><strong>${s.name}</strong></td><td>${s.ic}</td>
+          <td><span class="status-badge" style="background:#2563eb">${s.class}</span></td>
+          <td>${s.guardian}</td><td>${s.guardianphone}</td>
+          <td>${actions}</td>
+        </tr>`;
       });
     }
 
     function openAddStudent() {
       document.getElementById('modalTitle').textContent = 'Tambah Pelajar';
+      let classOptions = '<option value="">Pilih Kelas</option>';
+      classes.forEach(c => { classOptions += `<option value="${c.name}">${c.name}</option>`; });
       document.getElementById('dataForm').innerHTML = `
-        <div class="form-group"><label>Nama</label><input type="text" id="s_name" required></div>
-        <div class="form-group"><label>No. KP</label><input type="text" id="s_ic" required></div>
-        <div class="form-group"><label>Kelas</label><select id="s_class" required><option value="">Pilih Kelas</option></select></div>
+        <div class="form-group"><label>Nama Penuh</label><input type="text" id="s_name" required></div>
+        <div class="form-group"><label>No. Kad Pengenalan</label><input type="text" id="s_ic" required></div>
+        <div class="form-group"><label>Kelas</label><select id="s_class" required>${classOptions}</select></div>
         <div class="form-group"><label>Nama Wali</label><input type="text" id="s_guardian" required></div>
         <div class="form-group"><label>No. HP Wali</label><input type="text" id="s_guardian_phone" required></div>
         <input type="hidden" id="s_id">
       `;
-
-      const classSelect = document.getElementById('s_class');
-      classes.forEach(cls => {
-        const opt = document.createElement('option');
-        opt.value = cls.name;
-        opt.textContent = cls.name;
-        classSelect.appendChild(opt);
-      });
-
       document.getElementById('saveBtn').onclick = saveStudent;
       document.getElementById('modal').classList.remove('hidden');
     }
@@ -1239,98 +1184,53 @@ function formatDateMY(dateString) {
     async function saveStudent() {
       const id = document.getElementById('s_id').value;
       const student = {
-        id: id || undefined,
+        id: id || ('student_' + Date.now()),
         name: document.getElementById('s_name').value.trim(),
         ic: document.getElementById('s_ic').value.trim(),
         class: document.getElementById('s_class').value,
         guardian: document.getElementById('s_guardian').value.trim(),
         guardianphone: document.getElementById('s_guardian_phone').value.trim()
       };
-
-      if (!id) {
-        student.id = 'student_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-      }
-
       if (!student.name || !student.ic || !student.class || !student.guardian || !student.guardianphone) {
-        return showToast('Isi semua medan', 'error');
+        return showToast('Isi semua medan wajib', 'error');
       }
-
       try {
-        if (isOnline) {
-          if (id) await apiCall('updateStudent', { student });
-          else await apiCall('addStudent', { student });
-        } else {
-          pendingOperations.push({ action: id ? 'updateStudent' : 'addStudent', payload: { student } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          if (id) {
-            const index = students.findIndex(s => s.id === id);
-            if (index !== -1) students[index] = student;
-          } else {
-            students.push(student);
-          }
-          saveLocalData('getStudents', { students });
-          renderStudents();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-
+        if (id) await apiCall('updateStudent', { student });
+        else await apiCall('addStudent', { student });
         closeModal();
-        if (isOnline) loadStudents();
+        loadStudents();
         showToast('Pelajar berjaya disimpan');
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
+      } catch (err) { showToast(err.message, 'error'); }
     }
 
     function editStudent(id) {
       const student = students.find(s => s.id === id);
       if (!student) return;
-
+      let classOptions = '<option value="">Pilih Kelas</option>';
+      classes.forEach(c => { classOptions += `<option value="${c.name}" ${c.name === student.class ? 'selected' : ''}>${c.name}</option>`; });
       document.getElementById('modalTitle').textContent = 'Kemaskini Pelajar';
       document.getElementById('dataForm').innerHTML = `
-        <div class="form-group"><label>Nama</label><input type="text" id="s_name" value="${student.name}" required></div>
-        <div class="form-group"><label>No. KP</label><input type="text" id="s_ic" value="${student.ic}" required></div>
-        <div class="form-group"><label>Kelas</label><select id="s_class" required><option value="">Pilih Kelas</option></select></div>
+        <div class="form-group"><label>Nama Penuh</label><input type="text" id="s_name" value="${student.name}" required></div>
+        <div class="form-group"><label>No. Kad Pengenalan</label><input type="text" id="s_ic" value="${student.ic}" required></div>
+        <div class="form-group"><label>Kelas</label><select id="s_class" required>${classOptions}</select></div>
         <div class="form-group"><label>Nama Wali</label><input type="text" id="s_guardian" value="${student.guardian}" required></div>
         <div class="form-group"><label>No. HP Wali</label><input type="text" id="s_guardian_phone" value="${student.guardianphone}" required></div>
         <input type="hidden" id="s_id" value="${student.id}">
       `;
-
-      const classSelect = document.getElementById('s_class');
-      classes.forEach(cls => {
-        const opt = document.createElement('option');
-        opt.value = cls.name;
-        opt.textContent = cls.name;
-        if (cls.name === student.class) opt.selected = true;
-        classSelect.appendChild(opt);
-      });
-
       document.getElementById('saveBtn').onclick = saveStudent;
       document.getElementById('modal').classList.remove('hidden');
     }
 
     async function deleteStudent(id) {
-      if (!confirm('Adakah anda pasti ingin memadam pelajar ini?')) return;
-
+      if (!confirm('Padam pelajar ini?')) return;
       try {
-        if (isOnline) {
-          await apiCall('deleteStudent', { id });
-        } else {
-          pendingOperations.push({ action: 'deleteStudent', payload: { id } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          students = students.filter(s => s.id !== id);
-          saveLocalData('getStudents', { students });
-          renderStudents();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-
-        if (isOnline) loadStudents();
+        await apiCall('deleteStudent', { id });
+        loadStudents();
         showToast('Pelajar berjaya dipadam');
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
+      } catch (err) { showToast(err.message, 'error'); }
     }
 
-    // === GURU ===
+    // === TEACHERS ===
     async function loadTeachers() {
       try {
         const res = await apiCall('getTeachers');
@@ -1339,40 +1239,32 @@ function formatDateMY(dateString) {
         renderTeachers();
       } catch (e) {
         const res = getLocalData('getTeachers');
-        if (res) {
-          teachers = res.teachers || [];
-          renderTeachers();
-          showToast('Menggunakan data tempatan', 'warning');
-        }
+        if (res) { teachers = res.teachers || []; renderTeachers(); }
       }
     }
-
     function renderTeachers() {
       const tbody = document.querySelector('#teacherTable tbody');
       tbody.innerHTML = '';
       teachers.forEach(t => {
-        let actionButtons = '-';
-        if (currentUser.role === 'admin') {
-          actionButtons = `
-            <button class="btn btn-edit" onclick="editTeacher('${t.id}')">Kemaskini</button>
-            <button class="btn btn-danger" onclick="deleteTeacher('${t.id}')">Padam</button>
-          `;
-        }
-        tbody.innerHTML += `
-          <tr>
-            <td>${t.id}</td><td>${t.name}</td><td>${t.ic}</td><td>${t.subject}</td><td>${t.phone}</td>
-            <td>${actionButtons}</td>
-          </tr>`;
+        const actions = (currentUser && currentUser.role === 'admin') ? `
+          <button class="btn btn-edit" style="padding:4px 8px; font-size:0.75rem;" onclick="editTeacher('${t.id}')">Kemaskini</button>
+          <button class="btn btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="deleteTeacher('${t.id}')">Padam</button>
+        ` : '-';
+        tbody.innerHTML += `<tr>
+          <td><small style="color:var(--text-muted)">${t.id}</small></td>
+          <td><strong>${t.name}</strong></td><td>${t.ic}</td><td>${t.subject}</td><td>${t.phone}</td>
+          <td>${actions}</td>
+        </tr>`;
       });
     }
 
     function openAddTeacher() {
       document.getElementById('modalTitle').textContent = 'Tambah Guru';
       document.getElementById('dataForm').innerHTML = `
-        <div class="form-group"><label>Nama</label><input type="text" id="t_name" required></div>
-        <div class="form-group"><label>No. KP</label><input type="text" id="t_ic" required></div>
+        <div class="form-group"><label>Nama Penuh</label><input type="text" id="t_name" required></div>
+        <div class="form-group"><label>No. Kad Pengenalan</label><input type="text" id="t_ic" required></div>
         <div class="form-group"><label>Mata Pelajaran</label><input type="text" id="t_subject" required></div>
-        <div class="form-group"><label>No. HP</label><input type="text" id="t_phone" required></div>
+        <div class="form-group"><label>No. Telefon</label><input type="text" id="t_phone" required></div>
         <input type="hidden" id="t_id">
       `;
       document.getElementById('saveBtn').onclick = saveTeacher;
@@ -1382,51 +1274,25 @@ function formatDateMY(dateString) {
     async function saveTeacher() {
       const id = document.getElementById('t_id').value;
       const teacher = {
-        id: id || undefined,
+        id: id || ('teacher_' + Date.now()),
         name: document.getElementById('t_name').value.trim(),
         ic: document.getElementById('t_ic').value.trim(),
         subject: document.getElementById('t_subject').value.trim(),
         phone: document.getElementById('t_phone').value.trim()
       };
-
-      if (!id) {
-        teacher.id = 'teacher_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-      }
-
-      if (!teacher.name || !teacher.ic || !teacher.subject || !teacher.phone) {
-        return showToast('Isi semua medan', 'error');
-      }
-
+      if (!teacher.name || !teacher.ic || !teacher.subject || !teacher.phone) return showToast('Isi semua medan wajib', 'error');
       try {
-        if (isOnline) {
-          if (id) await apiCall('updateTeacher', { teacher });
-          else await apiCall('addTeacher', { teacher });
-        } else {
-          pendingOperations.push({ action: id ? 'updateTeacher' : 'addTeacher', payload: { teacher } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          if (id) {
-            const index = teachers.findIndex(t => t.id === id);
-            if (index !== -1) teachers[index] = teacher;
-          } else {
-            teachers.push(teacher);
-          }
-          saveLocalData('getTeachers', { teachers });
-          renderTeachers();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-
+        if (id) await apiCall('updateTeacher', { teacher });
+        else await apiCall('addTeacher', { teacher });
         closeModal();
-        if (isOnline) loadTeachers();
+        loadTeachers();
         showToast('Guru berjaya disimpan');
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
+      } catch (err) { showToast(err.message, 'error'); }
     }
 
     function editTeacher(id) {
       const teacher = teachers.find(t => t.id === id);
       if (!teacher) return;
-
       document.getElementById('modalTitle').textContent = 'Kemaskini Guru';
       document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Nama</label><input type="text" id="t_name" value="${teacher.name}" required></div>
@@ -1440,45 +1306,12 @@ function formatDateMY(dateString) {
     }
 
     async function deleteTeacher(id) {
-      if (!confirm('Adakah anda pasti ingin memadam guru ini?')) return;
-
+      if (!confirm('Padam guru ini?')) return;
       try {
-        if (isOnline) {
-          await apiCall('deleteTeacher', { id });
-        } else {
-          pendingOperations.push({ action: 'deleteTeacher', payload: { id } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          teachers = teachers.filter(t => t.id !== id);
-          saveLocalData('getTeachers', { teachers });
-          renderTeachers();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-
-        if (isOnline) loadTeachers();
+        await apiCall('deleteTeacher', { id });
+        loadTeachers();
         showToast('Guru berjaya dipadam');
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
-    }
-
-    async function populateHafazanStudentSelect() {
-      const sel = document.getElementById('hafazanStudent');
-      if (!sel) return;
-
-      sel.innerHTML = '<option value="">Pilih Pelajar</option>';
-
-      if (students.length === 0) {
-        sel.innerHTML += '<option value="">Tiada pelajar dijumpai</option>';
-        return;
-      }
-
-      students.forEach(s => {
-        const opt = document.createElement('option');
-        opt.value = s.id;
-        opt.textContent = `${s.name} (${s.class || 'Tiada Kelas'})`;
-        opt.dataset.class = s.class || '';
-        sel.appendChild(opt);
-      });
+      } catch (err) { showToast(err.message, 'error'); }
     }
 
     // === STAFF ===
@@ -1490,26 +1323,21 @@ function formatDateMY(dateString) {
         renderStaff();
       } catch (e) {
         const res = getLocalData('getStaff');
-        if (res) {
-          staff = res.staff || [];
-          renderStaff();
-          showToast('Menggunakan data tempatan', 'warning');
-        }
+        if (res) { staff = res.staff || []; renderStaff(); }
       }
     }
-
     function renderStaff() {
       const tbody = document.querySelector('#staffTable tbody');
       tbody.innerHTML = '';
       staff.forEach(s => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${s.id}</td><td>${s.name}</td><td>${s.ic}</td><td>${s.position}</td><td>${s.phone}</td>
-            <td>
-              <button class="btn btn-edit" onclick="editStaff('${s.id}')">Kemaskini</button>
-              <button class="btn btn-danger" onclick="deleteStaff('${s.id}')">Padam</button>
-            </td>
-          </tr>`;
+        tbody.innerHTML += `<tr>
+          <td><small style="color:var(--text-muted)">${s.id}</small></td>
+          <td><strong>${s.name}</strong></td><td>${s.ic}</td><td>${s.position}</td><td>${s.phone}</td>
+          <td>
+            <button class="btn btn-edit" style="padding:4px 8px; font-size:0.75rem;" onclick="editStaff('${s.id}')">Kemaskini</button>
+            <button class="btn btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="deleteStaff('${s.id}')">Padam</button>
+          </td>
+        </tr>`;
       });
     }
 
@@ -1529,51 +1357,25 @@ function formatDateMY(dateString) {
     async function saveStaff() {
       const id = document.getElementById('st_id').value;
       const staffMember = {
-        id: id || undefined,
+        id: id || ('staff_' + Date.now()),
         name: document.getElementById('st_name').value.trim(),
         ic: document.getElementById('st_ic').value.trim(),
         position: document.getElementById('st_position').value.trim(),
         phone: document.getElementById('st_phone').value.trim()
       };
-
-      if (!id) {
-        staffMember.id = 'staff_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-      }
-
-      if (!staffMember.name || !staffMember.ic || !staffMember.position || !staffMember.phone) {
-        return showToast('Isi semua medan', 'error');
-      }
-
+      if (!staffMember.name || !staffMember.ic || !staffMember.position || !staffMember.phone) return showToast('Isi semua medan', 'error');
       try {
-        if (isOnline) {
-          if (id) await apiCall('updateStaff', { staff: staffMember });
-          else await apiCall('addStaff', { staff: staffMember });
-        } else {
-          pendingOperations.push({ action: id ? 'updateStaff' : 'addStaff', payload: { staff: staffMember } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          if (id) {
-            const index = staff.findIndex(s => s.id === id);
-            if (index !== -1) staff[index] = staffMember;
-          } else {
-            staff.push(staffMember);
-          }
-          saveLocalData('getStaff', { staff });
-          renderStaff();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-
+        if (id) await apiCall('updateStaff', { staff: staffMember });
+        else await apiCall('addStaff', { staff: staffMember });
         closeModal();
-        if (isOnline) loadStaff();
+        loadStaff();
         showToast('Kakitangan berjaya disimpan');
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
+      } catch (err) { showToast(err.message, 'error'); }
     }
 
     function editStaff(id) {
       const staffMember = staff.find(s => s.id === id);
       if (!staffMember) return;
-
       document.getElementById('modalTitle').textContent = 'Kemaskini Kakitangan';
       document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Nama</label><input type="text" id="st_name" value="${staffMember.name}" required></div>
@@ -1587,28 +1389,15 @@ function formatDateMY(dateString) {
     }
 
     async function deleteStaff(id) {
-      if (!confirm('Adakah anda pasti ingin memadam kakitangan ini?')) return;
-
+      if (!confirm('Padam kakitangan ini?')) return;
       try {
-        if (isOnline) {
-          await apiCall('deleteStaff', { id });
-        } else {
-          pendingOperations.push({ action: 'deleteStaff', payload: { id } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          staff = staff.filter(s => s.id !== id);
-          saveLocalData('getStaff', { staff });
-          renderStaff();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-
-        if (isOnline) loadStaff();
+        await apiCall('deleteStaff', { id });
+        loadStaff();
         showToast('Kakitangan berjaya dipadam');
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
+      } catch (err) { showToast(err.message, 'error'); }
     }
 
-    // === KELAS ===
+    // === CLASSES ===
     async function loadClasses() {
       try {
         const res = await apiCall('getClasses');
@@ -1617,50 +1406,33 @@ function formatDateMY(dateString) {
         renderClasses();
       } catch (e) {
         const res = getLocalData('getClasses');
-        if (res) {
-          classes = res.classes || [];
-          renderClasses();
-          showToast('Menggunakan data tempatan', 'warning');
-        }
+        if (res) { classes = res.classes || []; renderClasses(); }
       }
     }
-
     function renderClasses() {
       const tbody = document.querySelector('#classTable tbody');
       tbody.innerHTML = '';
       classes.forEach(c => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${c.id}</td><td>${c.name}</td><td>${c.teacher}</td>
-            <td>
-              <button class="btn btn-edit" onclick="editClass('${c.id}')">Kemaskini</button>
-              <button class="btn btn-danger" onclick="deleteClass('${c.id}')">Padam</button>
-            </td>
-          </tr>`;
+        tbody.innerHTML += `<tr>
+          <td><small style="color:var(--text-muted)">${c.id}</small></td>
+          <td><strong>${c.name}</strong></td><td>${c.teacher}</td>
+          <td>
+            <button class="btn btn-edit" style="padding:4px 8px; font-size:0.75rem;" onclick="editClass('${c.id}')">Kemaskini</button>
+            <button class="btn btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="deleteClass('${c.id}')">Padam</button>
+          </td>
+        </tr>`;
       });
     }
 
     function openAddClass() {
-      if (teachers.length === 0) {
-        showToast('Sila muatkan data guru terlebih dahulu', 'warning');
-        return;
-      }
-
+      let tOptions = '<option value="">Pilih Guru</option>';
+      teachers.forEach(t => { tOptions += `<option value="${t.name}">${t.name}</option>`; });
       document.getElementById('modalTitle').textContent = 'Tambah Kelas';
       document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Nama Kelas</label><input type="text" id="c_name" required></div>
-        <div class="form-group"><label>Guru Kelas</label><select id="c_teacher" required><option value="">Pilih Guru</option></select></div>
+        <div class="form-group"><label>Guru Kelas</label><select id="c_teacher" required>${tOptions}</select></div>
         <input type="hidden" id="c_id">
       `;
-
-      const teacherSelect = document.getElementById('c_teacher');
-      teachers.forEach(t => {
-        const opt = document.createElement('option');
-        opt.value = t.name;
-        opt.textContent = t.name;
-        teacherSelect.appendChild(opt);
-      });
-
       document.getElementById('saveBtn').onclick = saveClass;
       document.getElementById('modal').classList.remove('hidden');
     }
@@ -1668,97 +1440,45 @@ function formatDateMY(dateString) {
     async function saveClass() {
       const id = document.getElementById('c_id').value;
       const classData = {
-        id: id || undefined,
+        id: id || ('class_' + Date.now()),
         name: document.getElementById('c_name').value.trim(),
         teacher: document.getElementById('c_teacher').value
       };
-
-      if (!id) {
-        classData.id = 'class_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-      }
-
-      if (!classData.name || !classData.teacher) {
-        return showToast('Isi semua medan', 'error');
-      }
-
+      if (!classData.name || !classData.teacher) return showToast('Isi semua medan', 'error');
       try {
-        if (isOnline) {
-          if (id) await apiCall('updateClass', { cls: classData });
-          else await apiCall('addClass', { cls: classData });
-        } else {
-          pendingOperations.push({ action: id ? 'updateClass' : 'addClass', payload: { cls: classData } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          if (id) {
-            const index = classes.findIndex(c => c.id === id);
-            if (index !== -1) classes[index] = classData;
-          } else {
-            classes.push(classData);
-          }
-          saveLocalData('getClasses', { classes });
-          renderClasses();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-
+        if (id) await apiCall('updateClass', { cls: classData });
+        else await apiCall('addClass', { cls: classData });
         closeModal();
-        if (isOnline) loadClasses();
+        loadClasses();
         showToast('Kelas berjaya disimpan');
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
+      } catch (err) { showToast(err.message, 'error'); }
     }
 
     function editClass(id) {
-      if (teachers.length === 0) {
-        showToast('Sila muatkan data guru terlebih dahulu', 'warning');
-        return;
-      }
-
       const classData = classes.find(c => c.id === id);
       if (!classData) return;
-
+      let tOptions = '<option value="">Pilih Guru</option>';
+      teachers.forEach(t => { tOptions += `<option value="${t.name}" ${t.name === classData.teacher ? 'selected' : ''}>${t.name}</option>`; });
       document.getElementById('modalTitle').textContent = 'Kemaskini Kelas';
       document.getElementById('dataForm').innerHTML = `
         <div class="form-group"><label>Nama Kelas</label><input type="text" id="c_name" value="${classData.name}" required></div>
-        <div class="form-group"><label>Guru Kelas</label><select id="c_teacher" required><option value="">Pilih Guru</option></select></div>
+        <div class="form-group"><label>Guru Kelas</label><select id="c_teacher" required>${tOptions}</select></div>
         <input type="hidden" id="c_id" value="${classData.id}">
       `;
-
-      const teacherSelect = document.getElementById('c_teacher');
-      teachers.forEach(t => {
-        const opt = document.createElement('option');
-        opt.value = t.name;
-        opt.textContent = t.name;
-        if (t.name === classData.teacher) opt.selected = true;
-        teacherSelect.appendChild(opt);
-      });
-
       document.getElementById('saveBtn').onclick = saveClass;
       document.getElementById('modal').classList.remove('hidden');
     }
 
     async function deleteClass(id) {
-      if (!confirm('Adakah anda pasti ingin memadam kelas ini?')) return;
-
+      if (!confirm('Padam kelas ini?')) return;
       try {
-        if (isOnline) {
-          await apiCall('deleteClass', { id });
-        } else {
-          pendingOperations.push({ action: 'deleteClass', payload: { id } });
-          localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-          classes = classes.filter(c => c.id !== id);
-          saveLocalData('getClasses', { classes });
-          renderClasses();
-          showToast('Data akan disegerakkan apabila sambungan dipulihkan', 'warning');
-        }
-
-        if (isOnline) loadClasses();
+        await apiCall('deleteClass', { id });
+        loadClasses();
         showToast('Kelas berjaya dipadam');
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
+      } catch (err) { showToast(err.message, 'error'); }
     }
 
-    // === JADUAL ===
+    // === SCHEDULE ===
     async function loadSchedule() {
       try {
         const res = await apiCall('getSchedule');
@@ -1767,14 +1487,9 @@ function formatDateMY(dateString) {
         renderSchedule();
       } catch (e) {
         const res = getLocalData('getSchedule');
-        if (res) {
-          schedule = res.schedule || Array(17).fill().map(() => Array(7).fill(''));
-          renderSchedule();
-          showToast('Menggunakan data tempatan', 'warning');
-        }
+        if (res) { schedule = res.schedule || Array(17).fill().map(() => Array(7).fill('')); renderSchedule(); }
       }
     }
-
     function renderSchedule() {
       for (let row = 0; row < 17; row++) {
         for (let col = 0; col < 7; col++) {
@@ -1783,7 +1498,6 @@ function formatDateMY(dateString) {
         }
       }
     }
-
     async function saveSchedule() {
       const newSchedule = Array(17).fill().map(() => Array(7).fill(''));
       for (let row = 0; row < 17; row++) {
@@ -1795,10 +1509,8 @@ function formatDateMY(dateString) {
       try {
         await apiCall('saveSchedule', { schedule: newSchedule });
         schedule = newSchedule;
-        showToast('Jadual berjaya disimpan');
-      } catch (e) {
-        showToast(e.message, 'error');
-      }
+        showToast('Jadual waktu berjaya disimpan');
+      } catch (e) { showToast(e.message, 'error'); }
     }
 
     async function loadViewSchedule() {
@@ -1808,35 +1520,29 @@ function formatDateMY(dateString) {
         renderViewSchedule();
       } catch (e) {
         const res = getLocalData('getSchedule');
-        if (res) {
-          schedule = res.schedule || Array(17).fill().map(() => Array(7).fill(''));
-          renderViewSchedule();
-        }
+        if (res) { schedule = res.schedule || Array(17).fill().map(() => Array(7).fill('')); renderViewSchedule(); }
       }
     }
-
     function renderViewSchedule() {
       const tbody = document.querySelector('#viewScheduleTable tbody');
       tbody.innerHTML = '';
-
-      const timeSlots = [
-        '06:00-07:00', '07:00-08:00', '08:00-09:00', '09:00-10:00', '10:00-11:00',
-        '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00',
-        '16:00-17:00', '17:00-18:00', '18:00-19:00', '19:00-20:00', '20:00-21:00',
-        '21:00-22:00', '22:00-23:00'
+      const times = [
+        '06:00-07:00','07:00-08:00','08:00-09:00','09:00-10:00','10:00-11:00',
+        '11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00',
+        '16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00',
+        '21:00-22:00','22:00-23:00'
       ];
-
-      for (let row = 0; row < 17; row++) {
-        let rowHtml = `<tr><td>${timeSlots[row]}</td>`;
-        for (let col = 0; col < 7; col++) {
-          const activity = (schedule[row] && schedule[row][col]) || '-';
-          rowHtml += `<td>${activity}</td>`;
+      times.forEach((t, r) => {
+        let cols = `<td><strong>${t}</strong></td>`;
+        for (let c = 0; c < 7; c++) {
+          const val = (schedule[r] && schedule[r][c]) || '-';
+          cols += `<td>${val}</td>`;
         }
-        rowHtml += '</tr>';
-        tbody.innerHTML += rowHtml;
-      }
+        tbody.innerHTML += `<tr>${cols}</tr>`;
+      });
     }
 
+    // === ATTENDANCE ===
     async function loadAttendance() {
       const date = document.getElementById('attendanceDate').value || new Date().toISOString().slice(0,10);
       try {
@@ -1844,43 +1550,195 @@ function formatDateMY(dateString) {
         renderAttendance(res.attendance || {});
       } catch (e) {
         renderAttendance({});
-        showToast('Tiada data kehadiran untuk tarikh ini', 'warning');
       }
     }
-
     function renderAttendance(attendance) {
       const tbody = document.querySelector('#attendanceTable tbody');
       tbody.innerHTML = '';
       students.forEach((s, i) => {
         const hadir = attendance[s.id] !== false;
-        tbody.innerHTML += `
-          <tr>
-            <td>${i+1}</td>
-            <td>${s.name}</td>
-            <td>${s.class || '-'}</td>
-            <td><input type="radio" name="att_${s.id}" value="true" ${hadir ? 'checked' : ''}></td>
-            <td><input type="radio" name="att_${s.id}" value="false" ${!hadir ? 'checked' : ''}></td>
-          </tr>`;
+        tbody.innerHTML += `<tr>
+          <td>${i+1}</td>
+          <td><strong>${s.name}</strong></td>
+          <td>${s.class || '-'}</td>
+          <td><label style="cursor:pointer;"><input type="radio" name="att_${s.id}" value="true" ${hadir ? 'checked' : ''}> Hadir</label></td>
+          <td><label style="cursor:pointer;"><input type="radio" name="att_${s.id}" value="false" ${!hadir ? 'checked' : ''}> Tidak Hadir</label></td>
+        </tr>`;
       });
     }
-
     async function saveAttendance() {
       const date = document.getElementById('attendanceDate').value;
       if (!date) return showToast('Pilih tarikh', 'error');
       const att = {};
       students.forEach(s => {
-        const radio = document.querySelector(`input[name="att_${s.id}"]:checked`);
-        att[s.id] = radio ? radio.value === 'true' : true;
+        const r = document.querySelector(`input[name="att_${s.id}"]:checked`);
+        att[s.id] = r ? (r.value === 'true') : true;
       });
       try {
         await apiCall('saveAttendance', { date, attendance: att });
         showToast('Kehadiran berjaya disimpan');
+      } catch (e) { showToast(e.message, 'error'); }
+    }
+
+    // === TEACHING REPORTS ===
+    async function loadTeachingReports() {
+      try {
+        const res = await apiCall('getTeachingReports');
+        reports = res.reports || [];
+        saveLocalData('getTeachingReports', res);
+        if (currentUser && currentUser.role !== 'admin') {
+          reports = reports.filter(r => r.teacherId === currentUser.id || r.teacher === currentUser.name);
+        }
+        renderTeachingReports(reports);
       } catch (e) {
-        showToast(e.message, 'error');
+        const local = getLocalData('getTeachingReports');
+        if (local && local.reports) {
+          reports = local.reports;
+          if (currentUser && currentUser.role !== 'admin') {
+            reports = reports.filter(r => r.teacherId === currentUser.id || r.teacher === currentUser.name);
+          }
+          renderTeachingReports(reports);
+        } else { renderTeachingReports([]); }
+      }
+    }
+    function renderTeachingReports(reportsList) {
+      document.getElementById('printDate').textContent = new Date().toLocaleDateString('ms-MY');
+      const tbody = document.querySelector('#teachingReportTable tbody');
+      tbody.innerHTML = '';
+      if (!reportsList || reportsList.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center">Tiada laporan dijumpai</td></tr>';
+        return;
+      }
+      reportsList.forEach((r, idx) => {
+        const notesPreview = r.notes ? (r.notes.length > 80 ? r.notes.substring(0, 80) + '...' : r.notes) : '-';
+        tbody.innerHTML += `<tr onclick="showFullNotes(${idx})" style="cursor:pointer;">
+          <td onclick="event.stopPropagation()"><input type="checkbox" class="report-checkbox"></td>
+          <td>${idx + 1}</td>
+          <td><strong>${r.teacher || 'Tiada Nama'}</strong></td>
+          <td>${formatDateMY(r.date)}</td>
+          <td><span class="status-badge" style="background:#059669">${r.class || '-'}</span></td>
+          <td>${r.topic || '-'}</td>
+          <td style="max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${notesPreview}</td>
+          <td>${r.attachment ? `<a href="${r.attachment}" target="_blank" onclick="event.stopPropagation()">Lihat</a>` : '-'}</td>
+        </tr>`;
+      });
+    }
+
+    function showFullNotes(index) {
+      if (reports && reports[index]) {
+        document.querySelector('#notesModal h3').textContent = 'Catatan Penuh - ' + (reports[index].topic || 'Laporan');
+        document.getElementById('fullNotes').textContent = reports[index].notes || 'Tiada catatan';
+        document.getElementById('notesModal').classList.remove('hidden');
       }
     }
 
-    function populateHafazanClassFilter() {
+    async function saveTeachingReport() {
+      const report = {
+        date: document.getElementById('reportDate').value,
+        class: document.getElementById('reportClass').value,
+        topic: document.getElementById('reportTopic').value.trim(),
+        notes: document.getElementById('reportNotes').value.trim(),
+        teacher: currentUser.name,
+        teacherId: currentUser.id
+      };
+      if (!report.date || !report.class || !report.topic || !report.notes) {
+        return showToast('Sila isi semua medan wajib', 'error');
+      }
+      try {
+        await apiCall('addTeachingReport', report);
+        showToast('Laporan mengajar berjaya dihantar');
+        document.getElementById('reportDate').value = new Date().toISOString().slice(0,10);
+        document.getElementById('reportClass').value = '';
+        document.getElementById('reportTopic').value = '';
+        document.getElementById('reportNotes').value = '';
+      } catch (e) { showToast(e.message, 'error'); }
+    }
+
+    function toggleSelectAll() {
+      const all = document.getElementById('selectAll').checked;
+      document.querySelectorAll('#teachingReportTable tbody input[type="checkbox"]').forEach(cb => cb.checked = all);
+    }
+
+    function printSelectedReports() {
+      const cbs = document.querySelectorAll('#teachingReportTable tbody input[type="checkbox"]:checked');
+      if (cbs.length === 0) return showToast('Pilih sekurang-kurangnya satu laporan', 'warning');
+      window.print();
+    }
+
+    function exportTeachingReportPDF() {
+      if (!window.jspdf) return showToast('Pustaka PDF sedang dimuat...', 'warning');
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+      doc.setFontSize(16);
+      doc.text('Laporan Mengajar Harian Guru - INSTAQLIM', 105, 18, { align: 'center' });
+      doc.setFontSize(10);
+      doc.text(`Tarikh Cetak: ${new Date().toLocaleDateString('ms-MY')}`, 105, 26, { align: 'center' });
+      
+      let y = 38;
+      reports.forEach((r, i) => {
+        if (y > 260) { doc.addPage(); y = 20; }
+        doc.setFont('helvetica', 'bold');
+        doc.text(`${i+1}. ${r.teacher || 'Guru'} | ${r.class || '-'} | ${formatDateMY(r.date)}`, 14, y);
+        y += 6;
+        doc.setFont('helvetica', 'normal');
+        doc.text(`Topik: ${r.topic || '-'}`, 14, y);
+        y += 6;
+        doc.text(`Catatan: ${r.notes || '-'}`, 14, y);
+        y += 10;
+      });
+      doc.save('laporan_mengajar_instaqlim.pdf');
+    }
+
+    // === HAFAZAN ===
+    function populateHafazanStudentSelect() {
+      const sel = document.getElementById('hafazanStudent');
+      if (!sel) return;
+      sel.innerHTML = '<option value="">Pilih Pelajar</option>';
+      students.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.id;
+        opt.textContent = `${s.name} (${s.class || 'Tiada Kelas'})`;
+        sel.appendChild(opt);
+      });
+    }
+
+    async function saveHafazanReport() {
+      const date = document.getElementById('hafazanDate').value;
+      const studentId = document.getElementById('hafazanStudent').value;
+      const surah = document.getElementById('hafazanSurah').value;
+      const from = document.getElementById('hafazanFrom').value;
+      const to = document.getElementById('hafazanTo').value;
+      const status = document.getElementById('hafazanStatus').value;
+      const notes = document.getElementById('hafazanNotes').value;
+
+      if (!date || !studentId || !surah || !from || !to) {
+        return showToast('Sila isi semua medan wajib (Tarikh, Pelajar, Surah, Ayat)', 'error');
+      }
+
+      const st = students.find(s => s.id === studentId);
+      const report = {
+        id: 'hafazan_' + Date.now(),
+        date: date,
+        studentId: studentId,
+        studentName: st ? st.name : 'Pelajar',
+        surah: surah,
+        ayatFrom: from,
+        ayatTo: to,
+        status: status,
+        notes: notes,
+        teacherId: currentUser.id,
+        teacherName: currentUser.name,
+        class: st ? st.class : ''
+      };
+
+      try {
+        await apiCall('addHafazanReport', { report });
+        showToast('Laporan hafazan harian berjaya disimpan');
+        document.getElementById('hafazanSurah').value = '';
+        document.getElementById('hafazanFrom').value = '';
+        document.getElementById('hafazanTo').value = '';
+        document.getElementById('hafazanNotes').value = '';
+      } catch (err) { showToast('Ralat: ' + err.message, 'error'); }
     }
 
     async function loadHafazanReports() {
@@ -1891,361 +1749,44 @@ function formatDateMY(dateString) {
         renderHafazanReports();
       } catch (e) {
         const res = getLocalData('getHafazanReports');
-        if (res && res.reports) {
-          hafazanReports = res.reports;
-          renderHafazanReports();
-        } else {
-          hafazanReports = [];
-          renderHafazanReports();
-        }
+        hafazanReports = (res && res.reports) ? res.reports : [];
+        renderHafazanReports();
       }
     }
 
     function renderHafazanReports() {
       const tbody = document.querySelector('#hafazanTable tbody');
       tbody.innerHTML = '';
-
       if (hafazanReports.length === 0) {
         tbody.innerHTML = '<tr><td colspan="8" class="text-center">Tiada laporan hafazan dijumpai.</td></tr>';
         return;
       }
-
-      // Urutkan ikut tarikh terbaru
-      hafazanReports.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-      hafazanReports.forEach((r, index) => {
-        const notesPreview = r.notes ? (r.notes.length > 100 ? r.notes.substring(0, 100) + '...' : r.notes) : '-';
-        tbody.innerHTML += `
-          <tr onclick="showFullHafazanNotes(${index})" style="cursor:pointer;">
-            <td>${formatDateMY(r.date) || '-'}</td>
-            <td>
-              ${r.studentname || 'Tanpa Nama'} 
-              <br><small style="color:#888">${r.studentid || ''}</small>
-            </td>
-            <td>${r.class || '-'}</td>
-            <td>${r.surah || '-'}</td>
-            <td>${r.ayatfrom || ''} - ${r.ayatto || ''}</td>
-            <td>
-              <span style="
-                padding: 4px 8px; 
-                border-radius: 12px; 
-                font-size: 0.8rem; 
-                color: white; 
-                background-color: ${r.status === 'Lancar' ? '#10b981' : r.status === 'Sederhana' ? '#f59e0b' : '#ef4444'}">
-                ${r.status || '-'}
-              </span>
-            </td>
-            <td>${r.teachername || '-'}</td>
-            <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${r.notes || ''}">${notesPreview}</td>
-          </tr>`;
+      hafazanReports.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+      hafazanReports.forEach((r, idx) => {
+        const color = r.status === 'Lancar' ? '#10b981' : r.status === 'Sederhana' ? '#f59e0b' : '#ef4444';
+        tbody.innerHTML += `<tr onclick="showFullHafazanNotes(${idx})" style="cursor:pointer;">
+          <td>${formatDateMY(r.date)}</td>
+          <td><strong>${r.studentname || r.studentName || '-'}</strong></td>
+          <td>${r.class || '-'}</td>
+          <td><strong>${r.surah || '-'}</strong></td>
+          <td>Ayat ${r.ayatfrom || r.ayatFrom || ''} - ${r.ayatto || r.ayatTo || ''}</td>
+          <td><span class="status-badge" style="background:${color}">${r.status || '-'}</span></td>
+          <td>${r.teachername || r.teacherName || '-'}</td>
+          <td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${r.notes || '-'}</td>
+        </tr>`;
       });
-    }
-
-    // === REPORTS ===
-    async function loadTeachingReports() {
-      try {
-        const res = await apiCall('getTeachingReports');
-        reports = res.reports || [];
-        saveLocalData('getTeachingReports', res);
-
-        if (currentUser && currentUser.role !== 'admin') {
-          reports = reports.filter(r => r.teacherId === currentUser.id || r.teacher === currentUser.name);
-        }
-
-        renderTeachingReports(reports);
-      } catch (e) {
-        const localRes = getLocalData('getTeachingReports');
-        if (localRes && localRes.reports) {
-          reports = localRes.reports;
-          if (currentUser && currentUser.role !== 'admin') {
-            reports = reports.filter(r => r.teacherId === currentUser.id || r.teacher === currentUser.name);
-          }
-          renderTeachingReports(reports);
-          showToast('Menggunakan data tempatan', 'warning');
-        } else {
-          renderTeachingReports([]);
-          showToast('Tiada laporan dijumpai', 'warning');
-        }
-      }
-    }
-
-    function renderTeachingReports(reports) {
-      document.getElementById('printDate').textContent = new Date().toLocaleDateString('ms-MY');
-      const tbody = document.querySelector('#teachingReportTable tbody');
-      tbody.innerHTML = '';
-      if (reports.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" class="text-center">Tiada laporan dijumpai</td></tr>';
-        return;
-      }
-      reports.forEach((r, index) => {
-        const notesPreview = r.notes ? (r.notes.length > 100 ? r.notes.substring(0, 100) + '...' : r.notes) : '-';
-        tbody.innerHTML += `
-          <tr onclick="showFullNotes(${index})" style="cursor:pointer;">
-            <td><input type="checkbox" class="report-checkbox"></td>
-            <td>${index + 1}</td>
-            <td>${r.teacher || 'Tiada Nama'}</td>
-            <td>${formatDateMY(r.date)}</td>
-            <td>${r.class || '-'}</td>
-            <td>${r.topic || '-'}</td>
-            <td>${notesPreview}</td>
-            <td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : '-'}</td>
-          </tr>`;
-      });
-}
-
-    function showFullNotes(index) {
-      if (reports && reports[index]) {
-        const notes = reports[index].notes;
-        document.querySelector('#notesModal h3').textContent = 'Catatan Penuh';
-        document.getElementById('fullNotes').textContent = notes || 'Tiada catatan';
-        document.getElementById('notesModal').classList.remove('hidden');
-      } else {
-        console.error("Data tidak dijumpai untuk index:", index);
-        showToast('Ralat memaparkan nota', 'error');
-      }
     }
 
     function showFullHafazanNotes(index) {
       if (hafazanReports && hafazanReports[index]) {
-        const notes = hafazanReports[index].notes;
-        const student = hafazanReports[index].studentname;
-        document.querySelector('#notesModal h3').textContent = 'Catatan Hafazan Penuh - ' + student;
-        document.getElementById('fullNotes').textContent = notes || 'Tiada catatan';
+        const r = hafazanReports[index];
+        document.querySelector('#notesModal h3').textContent = `Catatan Hafazan: ${r.studentname || r.studentName} (${r.surah})`;
+        document.getElementById('fullNotes').textContent = r.notes || 'Tiada catatan';
         document.getElementById('notesModal').classList.remove('hidden');
-      } else {
-        console.error("Data hafazan tidak dijumpai untuk index:", index);
       }
     }
 
-    // Tambah fungsi ini sebelum window.onload
-function previewAttachment() {
-    const fileInput = document.getElementById('reportAttachment');
-    const preview = document.getElementById('attachmentPreview');
-    
-    if (fileInput.files && fileInput.files[0]) {
-        const file = fileInput.files[0];
-        
-        // Semak saiz fail
-        if (file.size > 5 * 1024 * 1024) {
-            showToast('Fail terlalu besar (maksimum 5MB)', 'error');
-            fileInput.value = '';
-            preview.innerHTML = '';
-            return;
-        }
-        
-        // Paparkan maklumat fail
-        const fileSize = (file.size / 1024).toFixed(2) + ' KB';
-        const fileType = file.type || 'unknown';
-        
-        // Jika fail adalah gambar, paparkan preview
-        if (file.type.startsWith('image/')) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                preview.innerHTML = `
-                    <div style="margin-top: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-                        <img src="${e.target.result}" style="max-width: 100%; max-height: 200px; display: block; margin: 0 auto;">
-                        <p style="text-align: center; margin-top: 5px; font-size: 0.9em;">
-                            ${file.name} (${fileSize})
-                        </p>
-                    </div>
-                `;
-            };
-            reader.readAsDataURL(file);
-        } else {
-            // Untuk fail bukan gambar, hanya paparkan maklumat
-            preview.innerHTML = `
-                <div style="margin-top: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-                    <p style="text-align: center; margin: 0;">
-                        <i class="fas fa-file" style="font-size: 2em; margin-bottom: 5px; display: block;"></i>
-                        ${file.name} (${fileSize})<br>
-                        <small>Jenis: ${fileType}</small>
-                    </p>
-                </div>
-            `;
-        }
-    } else {
-        preview.innerHTML = '';
-    }
-}
-
-// INI ADALAH FUNGSI BARU YANG TIDAK ADA LAMPIRAN - GUNAKAN INI
-async function saveTeachingReport() {
-  const report = {
-    date: document.getElementById('reportDate').value,
-    class: document.getElementById('reportClass').value,
-    topic: document.getElementById('reportTopic').value.trim(),
-    notes: document.getElementById('reportNotes').value.trim(),
-    teacher: currentUser.name,
-    teacherId: currentUser.id
-  };
-  
-  if (!report.date || !report.class || !report.topic || !report.notes) {
-    return showToast('Sila isi semua medan wajib', 'error');
-  }
-  
-  try {
-    await apiCall('addTeachingReport', report);
-    showToast('Laporan berjaya dihantar');
-    sendNotification('Berjaya', 'Laporan mengajar harian telah disimpan ke sistem.');
-    
-    // Reset borang selepas berjaya
-    document.getElementById('reportDate').value = '';
-    document.getElementById('reportClass').value = '';
-    document.getElementById('reportTopic').value = '';
-    document.getElementById('reportNotes').value = '';
-  } catch (e) {
-    showToast(e.message, 'error');
-  }
-}
-    // Toggle semua checkbox
-    function toggleSelectAll() {
-      const selectAll = document.getElementById('selectAll');
-      const checkboxes = document.querySelectorAll('#teachingReportTable tbody input[type="checkbox"]');
-      checkboxes.forEach(cb => cb.checked = selectAll.checked);
-    }
-
-    // Cetak laporan terpilih
-    function printSelectedReports() {
-      const checkboxes = document.querySelectorAll('#teachingReportTable tbody input[type="checkbox"]:checked');
-      if (checkboxes.length === 0) {
-        showToast('Sila pilih sekurang-kurangnya satu laporan', 'warning');
-        return;
-      }
-
-      const selectedReports = [];
-      checkboxes.forEach(cb => {
-        const row = cb.closest('tr');
-        const indexCell = row.querySelector('td:nth-child(2)');
-        if (!indexCell) {
-          console.warn('Column Bil tidak dijumpai');
-          return;
-        }
-        const index = parseInt(indexCell.textContent.trim());
-        const r = reports[index - 1];
-        if (r) selectedReports.push(r);
-        else console.warn('Laporan index tidak wujud:', index);
-      });
-
-      if (selectedReports.length === 0) {
-        showToast('Tiada laporan dipilih atau data tidak lengkap', 'error');
-        return;
-      }
-
-      const printWindow = window.open('', '', 'width=800,height=600');
-      let content = `
-        <html><head><title>Cetak Laporan Terpilih - INSTAQLIM</title>
-        <style>
-          body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
-          .header { text-align: center; margin-bottom: 30px; }
-          .header img { width: 120px; }
-          .report { margin-bottom: 40px; page-break-after: always; }
-          table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-          th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-          th { background-color: #10b981; color: white; }
-          .notes { white-space: pre-wrap; word-break: break-word; }
-          @media print { .report:last-child { page-break-after: avoid; } }
-        </style>
-        </head><body>
-          <div class="header">
-            <img src="https://arleta.site/interactivelink/2950/Logo-Maahad-Png.png" alt="Logo">
-            <h2>INSTAQLIM - Laporan Mengajar Harian Terpilih</h2>
-            <p>Tarikh Cetak: ${new Date().toLocaleDateString('ms-MY')}</p>
-          </div>
-      `;
-
-      selectedReports.forEach((r, i) => {
-        content += `
-          <div class="report">
-            <h3>Laporan #${i+1}</h3>
-            <table>
-              <tr><th>Guru</th><td>${r.teacher || '-'}</td></tr>
-              <tr><th>Tarikh</th><td>${formatDateMY(r.date)}</td></tr>
-              <tr><th>Kelas</th><td>${r.class || '-'}</td></tr>
-              <tr><th>Topik</th><td>${r.topic || '-'}</td></tr>
-              <tr><th>Catatan</th><td class="notes">${r.notes || '-'}</td></tr>
-              <tr><th>Lampiran</th><td>${r.attachment ? `<a href="${r.attachment}" target="_blank">Lihat Lampiran</a>` : 'Tiada'}</td></tr>
-            </table>
-          </div>
-        `;
-      });
-
-      content += `<script>window.print();<\/script></body></html>`;
-      printWindow.document.write(content);
-      printWindow.document.close();
-    }
-
-    // Export ke PDF
-    function exportTeachingReportPDF() {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-
-      doc.setFontSize(18);
-      doc.setFont('helvetica', 'bold');
-      doc.text('Laporan Mengajar Harian Guru', 105, 15, { align: 'center' });
-      doc.setFontSize(12);
-      doc.setFont('helvetica', 'normal');
-      doc.text('INSTAQLIM - Institut Tahfiz Al-Quran lil Muttaqin', 105, 22, { align: 'center' });
-      doc.text(`Tarikh: ${new Date().toLocaleDateString('ms-MY')}`, 105, 29, { align: 'center' });
-
-      const table = document.getElementById('teachingReportTable');
-      const rows = table.querySelectorAll('tr');
-
-      let yPosition = 40;
-      let page = 1;
-
-      rows.forEach((row, index) => {
-        if (index === 0) doc.setFont('helvetica', 'bold');
-        else doc.setFont('helvetica', 'normal');
-
-        const cells = row.querySelectorAll('td, th');
-        let xPosition = 15;
-
-        cells.forEach(cell => {
-          const text = cell.textContent.trim();
-          doc.text(text, xPosition, yPosition);
-          xPosition += 30;
-        });
-
-        yPosition += 10;
-
-        if (yPosition > 270) {
-          doc.addPage();
-          yPosition = 20;
-          page++;
-        }
-      });
-
-      doc.save('laporan_mengajar.pdf');
-    }
-
-    async function syncPendingOperations() {
-      if (pendingOperations.length === 0 || !currentUser) return;
-
-      showToast(`Menyegerakkan ${pendingOperations.length} operasi...`);
-      const operations = [...pendingOperations];
-      pendingOperations = [];
-
-      for (const op of operations) {
-        try {
-          await apiCall(op.action, op.payload);
-        } catch (e) {
-          if (e.message.includes('Aksi tidak sah')) {
-            console.warn('Action lama diabaikan:', op.action);
-          } else {
-            pendingOperations.push(op);
-          }
-        }
-      }
-
-      localStorage.setItem('pendingOperations', JSON.stringify(pendingOperations));
-      if (pendingOperations.length === 0) {
-        showToast('Semua operasi disegerakkan');
-      } else {
-        showToast(`${pendingOperations.length} operasi gagal disegerakkan`, 'error');
-      }
-    }
-
-    // === PENGUMUMAN ===
+    // === ANNOUNCEMENTS ===
     async function loadAnnouncements() {
       try {
         const res = await apiCall('getAnnouncements');
@@ -2253,378 +1794,170 @@ async function saveTeachingReport() {
         saveLocalData('getAnnouncements', res);
       } catch (e) {
         const local = getLocalData('getAnnouncements');
-        if (local && local.announcements) {
-          announcements = local.announcements;
-        } else {
-          announcements = [];
-        }
+        announcements = (local && local.announcements) ? local.announcements : [];
       }
       renderAnnouncements();
     }
 
-function renderAnnouncements() {
-  const listEl = document.getElementById('announcementList');
-  const addBtn = document.getElementById('addAnnouncementBtn');
+    function renderAnnouncements() {
+      const listEl = document.getElementById('announcementList');
+      const addBtn = document.getElementById('addAnnouncementBtn');
+      if (addBtn) addBtn.style.display = (currentUser && currentUser.role === 'admin') ? 'inline-flex' : 'none';
 
-  if (announcements.length === 0) {
-    listEl.innerHTML = '<p class="text-center"><em>Tiada pengumuman buat masa ini.</em></p>';
-  } else {
-    listEl.innerHTML = '';
-    // Urutkan pengumuman terkini dulu
-    announcements.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
-
-    announcements.forEach((ann, index) => {
-      const title = ann.title || 'Tiada Tajuk';
-      const rawText = ann.text || '';
-      const date = ann.date || '';
-
-      // Potong isi untuk preview: maksimum ~100 aksara atau 2 baris
-      let previewText = rawText;
-      if (rawText.length > 100) {
-        previewText = rawText.substring(0, 100).trim() + '...';
+      if (announcements.length === 0) {
+        listEl.innerHTML = '<p class="text-center" style="color:var(--text-muted); padding:1rem;"><em>Tiada pengumuman buat masa ini.</em></p>';
+        return;
       }
-      // Ganti \n dengan <br> untuk baris baru dalam preview
-      const displayText = previewText.replace(/\n/g, '<br>');
+      listEl.innerHTML = '';
+      announcements.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+      announcements.forEach((ann, idx) => {
+        const item = document.createElement('div');
+        item.style.padding = '0.9rem 1rem';
+        item.style.marginBottom = '0.75rem';
+        item.style.borderRadius = '10px';
+        item.style.background = 'rgba(16,185,129,0.05)';
+        item.style.border = '1px solid var(--card-border)';
+        item.style.cursor = 'pointer';
+        item.onclick = () => showFullAnnouncement(ann.title, ann.text, formatAnnouncementDate(ann.date));
 
-      const isNew = index === 0 ? '<span style="background:#ef4444;color:white;padding:2px 8px;border-radius:12px;font-size:0.8rem;margin-left:10px;">BARU</span>' : '';
+        const isNew = idx === 0 ? '<span class="status-badge" style="background:#ef4444; margin-left:8px;">BARU</span>' : '';
+        const preview = ann.text.length > 120 ? ann.text.substring(0, 120) + '... <strong style="color:var(--primary);">(baca lagi)</strong>' : ann.text;
 
-      const item = document.createElement('div');
-      item.className = 'card';
-      item.style.cursor = 'pointer';
-      item.onclick = () => showFullAnnouncement(title, rawText, date); // Klik untuk popup penuh
-
-      item.innerHTML = `
-        <div style="padding:1rem;">
-          <div style="display:flex; justify-content:space-between; align-items:start;">
+        item.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;">
             <div style="flex:1;">
-              <strong style="font-size:1.1rem;">${title}</strong>${isNew}
-              <small style="display:block; color:#666; margin:4px 0;">
-  <i class="fas fa-calendar-alt" style="font-size:0.8rem; margin-right:4px;"></i>
-  ${formatAnnouncementDate(ann.date)}
-</small>
-              <div style="margin-top:8px; line-height:1.5; color:#444;">
-                ${displayText}
-                ${rawText.length > 100 ? ' <span style="color:var(--primary); font-weight:600;">(baca lebih)</span>' : ''}
-              </div>
+              <div style="font-size:1.05rem; font-weight:700; color:var(--text);">${ann.title} ${isNew}</div>
+              <small style="color:var(--text-muted); display:inline-block; margin:3px 0 6px;"><i class="far fa-calendar-alt"></i> ${formatAnnouncementDate(ann.date)}</small>
+              <p style="margin:0; font-size:0.9rem; line-height:1.5; color:var(--text);">${preview}</p>
             </div>
-            ${currentUser && currentUser.role === 'admin' ? `
-              <button class="btn btn-danger" style="font-size:0.8rem; padding:0.4rem 0.8rem; margin-left:10px;" onclick="event.stopPropagation(); deleteAnnouncement('${ann.id}')">
-                Padam
-              </button>` : ''}
+            ${(currentUser && currentUser.role === 'admin') ? `
+              <button class="btn btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="event.stopPropagation(); deleteAnnouncement('${ann.id}')">
+                <i class="fas fa-trash"></i>
+              </button>
+            ` : ''}
           </div>
-        </div>
-      `;
-      listEl.appendChild(item);
-    });
-  }
+        `;
+        listEl.appendChild(item);
+      });
+    }
 
-  // Butang Tambah hanya untuk Admin
-  addBtn.style.display = (currentUser && currentUser.role === 'admin') ? 'inline-block' : 'none';
-}
-
-function showFullAnnouncement(title, text, date) {
-  // Gunakan modal sedia ada atau cipta popup ringkas
-  const modal = document.getElementById('notesModal'); // Kita guna modal catatan sedia ada
-  if (!modal) return;
-
-  document.querySelector('#notesModal h3').textContent = title;
-  document.getElementById('fullNotes').innerHTML = 
-    `<small style="color:#666; display:block; margin-bottom:10px;">${date}</small>` +
-    text.replace(/\n/g, '<br>');
-
-  modal.classList.remove('hidden');
-}
+    function showFullAnnouncement(title, text, date) {
+      document.querySelector('#notesModal h3').textContent = title;
+      document.getElementById('fullNotes').innerHTML = `<small style="color:var(--text-muted); display:block; margin-bottom:12px;"><i class="far fa-calendar-alt"></i> ${date}</small>` + (text || '').replace(/\n/g, '<br>');
+      document.getElementById('notesModal').classList.remove('hidden');
+    }
 
     function openAddAnnouncement() {
-      document.getElementById('announcementModalTitle').textContent = 'Tambah Pengumuman Baru';
       document.getElementById('announcementTitle').value = '';
       document.getElementById('announcementText').value = '';
       document.getElementById('announcementModal').classList.remove('hidden');
     }
-
     function closeAnnouncementModal() {
       document.getElementById('announcementModal').classList.add('hidden');
     }
-
     async function saveAnnouncement() {
       const title = document.getElementById('announcementTitle').value.trim();
       const text = document.getElementById('announcementText').value.trim();
+      if (!title || !text) return showToast('Sila isi tajuk dan kandungan', 'error');
 
-      if (!title || !text) {
-        showToast('Sila isi tajuk dan isi pengumuman', 'error');
-        return;
-      }
-
-     const newAnn = {
-  id: 'ann_' + Date.now(),
-  title: title,
-  text: text,
-  date: new Date().toISOString()  // Backend simpan ISO (untuk sorting betul)
-  // Tarikh paparan akan diformat oleh formatAnnouncementDate()
-};
-
+      const newAnn = { id: 'ann_' + Date.now(), title, text, date: new Date().toISOString() };
       try {
         await apiCall('addAnnouncement', { announcement: newAnn });
         announcements.unshift(newAnn);
         renderAnnouncements();
         closeAnnouncementModal();
-        showToast('Pengumuman baru berjaya ditambah!');
-      } catch (e) {
-        showToast('Gagal tambah pengumuman: ' + e.message, 'error');
-      }
+        showToast('Pengumuman baru berjaya ditambah');
+      } catch (e) { showToast('Ralat: ' + e.message, 'error'); }
     }
-
     async function deleteAnnouncement(id) {
       if (!confirm('Padam pengumuman ini?')) return;
-
       try {
         await apiCall('deleteAnnouncement', { id });
         announcements = announcements.filter(a => a.id !== id);
         renderAnnouncements();
-        showToast('Pengumuman berjaya dipadam');
-      } catch (e) {
-        showToast('Gagal padam: ' + e.message, 'error');
-      }
+        showToast('Pengumuman dipadam');
+      } catch (e) { showToast(e.message, 'error'); }
     }
-    
-    // === UTILS ===
+
+    // === THEME & CLOCK ===
     function toggleTheme() {
       const html = document.documentElement;
-      const current = html.getAttribute('data-theme');
-      const target = current === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', target);
-      localStorage.setItem('theme', target);
-      document.getElementById('themeIcon').className = target === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+      const current = html.getAttribute('data-theme') || 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      document.getElementById('themeIcon').className = next === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
     }
 
-    function restrictViewerAccess() {
-      if (currentUser.role !== 'admin') {
-        const addButtons = document.querySelectorAll('button');
-        addButtons.forEach(btn => {
-          if (btn.textContent.includes('Tambah') || btn.textContent.includes('+ ')) {
-             btn.classList.add('hidden');
-          }
-        });
-      }
-    }
-    
-    // === ENGINE JAM (ZON MALAYSIA + BAHASA MELAYU) ===
-    
     function updateFuturisticClock() {
-      // Dapatkan masa semasa di zon Malaysia (UTC+8)
       const now = new Date();
-      const malaysiaTime = new Date(now.getTime() + (now.getTimezoneOffset() + 480) * 60000);
+      const myTime = new Date(now.getTime() + (now.getTimezoneOffset() + 480) * 60000);
 
-      // 1. Format Masa (HH:MM:SS) - 24 jam
-      const timeFormatter = new Intl.DateTimeFormat('ms-MY', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false,
-        timeZone: 'Asia/Kuala_Lumpur'
-      });
-      const timeString = timeFormatter.format(malaysiaTime);
+      const timeStr = myTime.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: 'Asia/Kuala_Lumpur' });
+      const miladiStr = myTime.toLocaleDateString('ms-MY', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Asia/Kuala_Lumpur' });
 
-      // 2. Format Tarikh Miladi (DD/MM/YYYY)
-      const miladiFormatter = new Intl.DateTimeFormat('ms-MY', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        timeZone: 'Asia/Kuala_Lumpur'
-      });
-      const miladiString = miladiFormatter.format(malaysiaTime);
+      try {
+        const hijriFmt = new Intl.DateTimeFormat('en-MY-u-ca-islamic-umalqura', { day: 'numeric', month: 'numeric', year: 'numeric', timeZone: 'Asia/Kuala_Lumpur' });
+        const parts = hijriFmt.formatToParts(myTime);
+        const d = parts.find(p => p.type === 'day')?.value || '1';
+        const mIdx = parseInt(parts.find(p => p.type === 'month')?.value || '1', 10);
+        const y = parts.find(p => p.type === 'year')?.value || '1447';
+        const months = ["Muharram", "Safar", "Rabiulawal", "Rabiulakhir", "Jamadilawal", "Jamadilakhir", "Rejab", "Syaaban", "Ramadhan", "Syawal", "Zulkaedah", "Zulhijjah"];
+        const hStr = `${d} ${months[mIdx - 1] || 'Muharram'} ${y}H`;
 
-      // 3. Format Tarikh Hijriah (Bahasa Melayu)
-      const hijriFormatter = new Intl.DateTimeFormat('en-MY-u-ca-islamic-umalqura', {
-        day: 'numeric',
-        month: 'numeric', // Mendapat nombor bulan (contoh: 9)
-        year: 'numeric',
-        timeZone: 'Asia/Kuala_Lumpur'
-      });
-      let hijriParts = hijriFormatter.formatToParts(malaysiaTime);
-  
-      const hijriDay = hijriParts.find(p => p.type === 'day')?.value;
-      const hijriMonthIndex = parseInt(hijriParts.find(p => p.type === 'month')?.value);
-      const hijriYear = hijriParts.find(p => p.type === 'year')?.value;
-
-      const hMonths = [
-        "Muharram", "Safar", "Rabiulawal", "Rabiulakhir", 
-        "Jamadilawal", "Jamadilakhir", "Rejab", "Syaaban", 
-        "Ramadhan", "Syawal", "Zulkaedah", "Zulhijjah"
-      ];
-      const hijriMonthName = hMonths[hijriMonthIndex - 1] || "Muharram";
-      
-      const hijriString = `${hijriDay} ${hijriMonthName} ${hijriYear}H`;
-
-      // Update elemen HTML
-      const timeEl = document.getElementById('clock-time');
-      const miladiEl = document.getElementById('clock-miladi');
-      const hijriEl = document.getElementById('clock-hijri');
-
-      if (timeEl) timeEl.textContent = timeString;
-      if (miladiEl) miladiEl.textContent = miladiString;
-      if (hijriEl) hijriEl.textContent = hijriString;
-    }
-
-       // === KONFIGURASI PWA (LETAK DI BAWAH SEKALI) ===
-   // Gantikan kod PWA sedia ada dengan ini
-let deferredPrompt;
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  // Halang prompt pelayar (mini-popup) keluar
-  e.preventDefault();
-  // Simpan acara untuk dipicu kemudian
-  deferredPrompt = e;
-  // Tunjukkan butang Pasang Aplikasi kita
-  console.log("PWA Install Prompt Ready");
-  const installContainer = document.getElementById('installContainer');
-  if(installContainer) installContainer.classList.remove('hidden');
-});
-
-// Butang Pasang diklik
-const installBtn = document.getElementById('btnInstall');
-if (installBtn) {
-  installBtn.addEventListener('click', async () => {
-    if (deferredPrompt) {
-      // Tunjukkan prompt pemasangan
-      deferredPrompt.prompt();
-      // Tunggu respons user
-      const { outcome } = await deferredPrompt.userChoice;
-      console.log(`User response: ${outcome}`);
-      // Reset acara (guna sekali sahaja)
-      deferredPrompt = null;
-      // Sembunyikan butang
-      document.getElementById('installContainer').classList.add('hidden');
-    }
-  });
-}
-    // === TAMAT PWA ===
-
-    // === LOGIC NOTIFIKASI ===
-    function requestNotificationPermission() {
-      if (!("Notification" in window)) {
-        showToast('Pelayar anda tidak menyokong notifikasi.', 'error');
-        return;
+        const timeEl = document.getElementById('clock-time');
+        const miladiEl = document.getElementById('clock-miladi');
+        const hijriEl = document.getElementById('clock-hijri');
+        if (timeEl) timeEl.textContent = timeStr;
+        if (miladiEl) miladiEl.textContent = miladiStr;
+        if (hijriEl) hijriEl.textContent = hStr;
+      } catch (e) {
+        // Fallback if calendar unavailable
       }
+    }
 
-      Notification.requestPermission().then(permission => {
-        if (permission === 'granted') {
-          showToast('Notifikasi diaktifkan!', 'success');
-          const notif = new Notification('INSTAQLIM', {
-            body: 'Notifikasi diaktifkan. Anda akan menerima kemas kini penting.',
-            icon: 'https://arleta.site/interactivelink/2950/Logo-Maahad-Png.png'
-          });
-        } else {
-          showToast('Notifikasi ditolak.', 'error');
+    function requestNotificationPermission() {
+      if (!("Notification" in window)) return showToast('Pelayar tidak menyokong notifikasi', 'error');
+      Notification.requestPermission().then(p => {
+        if (p === 'granted') showToast('Notifikasi telah diaktifkan', 'success');
+        else showToast('Notifikasi tidak dibenarkan', 'warning');
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.getElementById('themeIcon').className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+
+      initSurahs();
+      initScheduleRows();
+
+      const today = new Date().toISOString().slice(0,10);
+      if (document.getElementById('attendanceDate')) document.getElementById('attendanceDate').value = today;
+      if (document.getElementById('reportDate')) document.getElementById('reportDate').value = today;
+
+      setInterval(updateFuturisticClock, 1000);
+      updateFuturisticClock();
+    });
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      const c = document.getElementById('installContainer');
+      if (c) c.classList.remove('hidden');
+    });
+
+    const installBtn = document.getElementById('btnInstall');
+    if (installBtn) {
+      installBtn.addEventListener('click', async () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          await deferredPrompt.userChoice;
+          deferredPrompt = null;
+          document.getElementById('installContainer').classList.add('hidden');
         }
       });
     }
-
-    function sendNotification(title, body) {
-      if (Notification.permission === 'granted') {
-        new Notification(title, {
-          body: body,
-          icon: 'https://arleta.site/interactivelink/2950/Logo-Maahad-Png.png',
-          badge: 'https://arleta.site/interactivelink/2950/Logo-Maahad-Png.png'
-        });
-      }
-    }
-
-    // === HAFAZAN REPORT ===
-    async function saveHafazanReport() {
-      const date = document.getElementById('hafazanDate').value;
-      const studentId = document.getElementById('hafazanStudent').value;
-      const surah = document.getElementById('hafazanSurah').value;
-      const from = document.getElementById('hafazanFrom').value;
-      const to = document.getElementById('hafazanTo').value;
-      const status = document.getElementById('hafazanStatus').value;
-      const notes = document.getElementById('hafazanNotes').value;
-
-      // Pengesahan input
-      if (!date || !studentId || !surah || !from || !to) {
-        return showToast('Sila isi semua medan wajib (Tarikh, Pelajar, Surah, Ayat)', 'error');
-      }
-
-      const studentObj = students.find(s => s.id === studentId);
-      const studentName = studentObj ? studentObj.name : 'Pelajar Tidak Diketahui';
-
-      const report = {
-        id: 'hafazan_' + Date.now(),
-        date: date,
-        studentId: studentId,
-        studentName: studentName,
-        surah: surah,
-        ayatFrom: from,
-        ayatTo: to,
-        status: status,
-        notes: notes,
-        teacherId: currentUser.id,
-        teacherName: currentUser.name,
-        class: studentObj ? studentObj.class : ''
-      };
-
-      try {
-        await apiCall('addHafazanReport', { report: report });
-        showToast('Laporan Hafazan berjaya disimpan');
-        sendNotification('Berjaya', 'Laporan hafazan harian telah disimpan.');
-        
-        // Reset borang selepas berjaya
-        document.getElementById('hafazanSurah').value = '';
-        document.getElementById('hafazanFrom').value = '';
-        document.getElementById('hafazanTo').value = '';
-        document.getElementById('hafazanNotes').value = '';
-        document.getElementById('hafazanStudent').selectedIndex = 0;
-        document.getElementById('hafazanDate').value = new Date().toISOString().slice(0,10);
-      } catch (err) {
-        showToast('Gagal menyimpan: ' + err.message, 'error');
-      }
-    }
-
-    window.onload = () => {
-      // 1. Tema
-      const theme = localStorage.getItem('theme') || 'light';
-      document.documentElement.setAttribute('data-theme', theme);
-      document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-
-      // 2. Set Tarikh Default
-      const today = new Date().toISOString().slice(0,10);
-      const attendanceDateInput = document.getElementById('attendanceDate');
-      if (attendanceDateInput) attendanceDateInput.value = today;
-
-      const reportDateInput = document.getElementById('reportDate');
-      if (reportDateInput) reportDateInput.value = today;
-
-      // 3. Sync Operations
-      const savedPendingOperations = localStorage.getItem('pendingOperations');
-      if (savedPendingOperations) pendingOperations = JSON.parse(savedPendingOperations);
-
-      if (navigator.onLine) {
-        isOnline = true;
-        if (pendingOperations.length > 0) syncPendingOperations();
-      } else {
-        isOnline = false;
-      }
-
-      // 4. === LOGIC PWA (PENTING: JIKA DALAM ONLOAD, HTML SUDAH SIAP) ===
-      const installBtn = document.getElementById('btnInstall');
-      if (installBtn) {
-        installBtn.addEventListener('click', async () => {
-          if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            console.log(`User response: ${outcome}`);
-            deferredPrompt = null;
-            const installContainer = document.getElementById('installContainer');
-            if(installContainer) installContainer.classList.add('hidden');
-          }
-        });
-      }
-    };
-
-    // Jalankan setiap saat
-    setInterval(updateFuturisticClock, 1000);
-    updateFuturisticClock();
   </script>
 </body>
 </html>
-
